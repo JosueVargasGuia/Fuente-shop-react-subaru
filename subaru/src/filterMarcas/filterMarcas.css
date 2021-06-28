@@ -1,0 +1,379 @@
+@media (min-width: 200px) and (max-width: 830px) {
+    .header-nav,
+    .filter-row-1,
+    .filter-row-2 {
+        display: none !important;
+    }
+    .filter-marca-categoria {
+        margin-right: 0.5em
+    }
+    .filter-row-mobile,
+    .filter-row-mobile-input {
+        display: flex !important;
+    }
+    .nav-marcas span {
+        display: block !important;
+    }
+    .nav-marcas li ul {
+        display: none !important;
+    }
+    .nav-marcas li:hover>ul {
+        display: block !important;
+        cursor: pointer !important;
+    }
+    .nav-marcas-li-ul-li {
+        display: block !important;
+        padding: 0px 0px 0px 5px;
+    }
+    .nav-marcas li ul {
+        display: none;
+        position: absolute;
+        width: 195px;
+        background: white;
+        padding: 0px 0px 0px 0px;
+        z-index: 999;
+    }
+}
+
+@media (min-width: 200px) and (max-width: 576px) {
+    /*Pantallas extra pequeñas (móviles) < 576px*/
+    .filter-marcas {
+        /*background-color: chartreuse;*/
+    }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+    /*Pantallas medianas (md, para tablets en horizontal)  ≥ 768px */
+    .filter-marcas {
+        /* background-color: pink;*/
+    }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+    /* Pantallas grandes (lg, tamaño escritorio) ≥ 992px*/
+    .filter-marcas {
+        /*background-color: orange;*/
+    }
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+    /*Pantallas extra grandes (xl, escritorio grande) ≥ 1200px */
+    .filter-marcas {
+        /* background-color: blue;*/
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+    /*Pantallas extra grandes (xl, escritorio grande) ≥ 1200px */
+    .lista-marca .nav-marcas ul li img {
+        width: 95px !important;
+    }
+  
+   
+}
+@media (min-width: 975px) and (max-width: 1100px) {  
+    
+    .nav-marcas-li-ul-li {
+        width: 110px !important;
+    }
+}
+@media (min-width: 830px) and (max-width: 974px) {
+    .nav-marcas-li-ul-li {
+      width: 100px !important;
+    }
+}
+.filter-row-mobile {
+    height: 60px;
+}
+
+.filter-row-mobile,
+.filter-row-mobile-input {
+    display: none;
+    width: 100%;
+    margin-top: 0.5em;
+}
+
+.filter-row-mobile-input input {
+    border: solid 1px #e5e5ec;
+    height: 25px;
+    font-size: 1em;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.filter-row-mobile-input .filter-input-search {
+    width: 100%;
+}
+
+.filter-row-mobile .header-link {
+    width: 26%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filter-row-mobile .header-link {
+    width: 26%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filter-row-mobile .header-link a {
+    color: var(--color-font);
+}
+
+.filter-row-mobile .header-link a:hover {
+    color: var(--color-font-hover);
+}
+
+.filter-row-mobile .nav-marcas {
+    width: 8%;
+}
+
+.filter-row-mobile .filter-image {
+    text-align: center;
+    width: 60%;
+}
+
+.filter-row-mobile .nav-marcas .header-link-tipcambio {
+    width: 100%;
+    margin-left: 1em;
+}
+
+.filter-marcas {
+    display: block;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.filter-row-1 {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 0.2em;
+    margin-top: 0.2em !important;
+}
+
+.filter-row-2 {
+    width: 90%;
+    margin: auto;
+    display: flex;
+
+}
+.filter-row-2-goto{
+    margin-top: 0px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.filter-row-2-start{
+    justify-content: flex-start;
+}
+.filter-row-2-right{
+    justify-content: flex-end;
+}
+.filter-row-2-center{
+    justify-content: center;
+}
+.filter-image {
+    width: 180px;
+    max-height: 60px;
+    cursor: pointer;
+    margin-right: 1em;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-width: 180px;
+}
+
+.filter-marcas img {
+    width: 180px;
+    height: 37px;
+    
+    object-fit: contain;
+}
+
+.filter-home img {
+    max-width: 150px;
+    max-height: 80px;
+    object-fit: contain;
+}
+/*
+.lista-marca .nav-marcas ul li img {
+    width: 110px;
+    max-height: 36px;
+   
+    object-fit: scale-down;
+}
+*/
+.class-marca-bosch img{
+    width: 100px;
+    max-width: 100%;
+    max-height: 26px;   
+    object-fit: fill;
+    vertical-align: middle;    
+    border-style: none;
+}
+.class-marca-tokico img{
+    width: 97px;
+    max-height: 34px;
+    object-fit: scale-down;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.class-marca-hyundai img{
+    width: 107px;
+    max-height: 26px;   
+    object-fit: scale-down;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.class-marca-sonax img{
+    width: 91px;
+    max-height: 39px;   
+    object-fit: scale-down;
+    vertical-align: middle;
+    border-style: none;
+}
+.class-marca-sportrack img{
+    width: 110px;
+    max-height: 36px;   
+    object-fit: scale-down;
+    vertical-align: middle;
+    border-style: none;
+}
+.class-marca-sparco img{
+    width: 84px;
+    max-height: 36px;   
+    object-fit: scale-down;
+    vertical-align: middle;
+    border-style: none;
+}
+.class-marca-ecco img{
+    width: 115px;     
+    object-fit: scale-down;
+    vertical-align: middle;
+    border-style: none;    
+    height: 31px;
+    
+}
+.class-marca-all img{
+    width: 100px;
+    max-height: 36px;   
+    object-fit: scale-down;
+    vertical-align: middle;
+    border: solid 1px blue;
+}
+
+.lista-marca {
+    text-align: left;
+    margin-left: 0;
+}
+
+.nav-marcas span {
+    display: none;
+    cursor: pointer;
+    font-size: 2em;
+    width: 40px;
+}
+
+.nav-marcas {
+    display: flex;
+    list-style: none;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+}
+
+.lista-marca .nav-marcas li ul {
+    list-style: none;
+    display: flex;
+}
+
+.nav-marcas-li-ul-li {
+    margin: 0px 0px 0px 0px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-align: left;     
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 0.5em;
+    width: 115px;
+}
+.nav-marcas-lista{   
+    height: inherit !important;
+    width: inherit !important;
+    margin-left: 1em !important;
+     
+    font-size: 0.75em !important;
+    font-weight: bold !important;
+ 
+}
+.nav-marcas-lista a {
+    text-decoration: none;
+    color: var( --color-font);
+    /*margin-left: 1em;*/
+    /*padding-top: 1em;*/
+}
+
+.nav-marcas-lista a:hover {
+    color: var(--color-font-hover);
+}
+
+.nav-marcas li {
+    margin: 0px 0px 0px 0px;
+}
+
+.filter-home {
+    text-align: right;
+}
+
+.filter-input {
+    width: 35%;
+}
+
+.filter-input input {
+    border: solid 1px #e5e5ec;
+    height: 25px;
+    font-size: 1em;
+    border-radius: 10px;
+    width: 90%;
+}
+
+.filter-input input:focus {
+    border: solid 1px #e5e5ec;
+    height: 25px;
+    font-size: 1em;
+    border-radius: 10px;
+    outline: none;
+}
+
+.filter-input .filter-home {
+    display: inline-flex;
+}
+
+.filter-input .filter-home i {
+    outline: none;
+    font-size: 16px;
+    border: none;
+    background: none;
+    float: right;
+}
+
+.container-Carousel-img {
+    height: 240px;
+    width: 90%;
+}
+
+.marca-select a {
+    color: var(--color-font-hover) !important;
+}
+
+.lista-marca ul {
+    padding-inline-start: 0;
+    margin-block-end: 0;
+}

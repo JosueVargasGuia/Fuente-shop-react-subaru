@@ -1,0 +1,164 @@
+.header-top{
+    padding-bottom: 0.2em;
+    margin-bottom: 0.2em;;
+    background-color:transparent;
+    @media ($md) {
+        background-color: #fff;
+    }
+
+    .filter-marca-categoria{
+        display: block;
+    }
+
+    .filter-marcas{
+        .filter-row-mobile{
+            height: auto;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 0.5rem 15px;
+            margin-top:0;
+            width: calc(100% + 30px);
+            margin-left: -15px;
+            .nav-marcas{
+                align-items: center;
+                span{
+                    font-size: 24px;
+                }
+            }
+            .filter-image{
+                align-items: center;
+                display: flex;
+            }
+            .header-link{
+                align-items: center;
+                i{
+                    font-size: 24px;
+                }
+            }
+            .filter-image{
+                width: 40%;
+            }
+        }
+        .filter-row-mobile-input{
+            position: relative;
+            margin-top: 0.8rem;;
+            input{
+                width: 100%;
+                height: auto;
+                padding:5px 10px;
+                border-radius: 25px;
+                border: 1px solid rgba(0,0,0,.25);
+                &::placeholder {
+                    color: rgb(179, 179, 179);
+                    opacity: 1
+                }
+            }
+            .search-link{
+                position: absolute;
+                right: 10px;
+                top:6px;
+            }
+        }
+        .header-nav{
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            width: 100%;
+            align-items: center;
+            padding:4px 0;
+            border-bottom: 1px solid #f1f1f1;
+            padding-top: 0.3em;
+            .header-phone{
+                padding:0;
+                text-align: left;
+            }
+            &__wrapper{
+                display: flex;
+                justify-content: flex-end;
+                align-items:center;
+                .header-link-tipcambio{
+                    width:auto;
+                    font-size:16px;
+                    color:#7a7a7a;
+                    .tip-cambio-select {
+                        color:#232323;
+                        outline: none;
+                        border: 0;
+                    }
+                }
+                .header-link{
+                    width:auto;
+                    align-items: center;
+                    margin-left: 3rem;
+                    .btn_link{
+                        margin:0;
+                        padding: 0;
+                        display: flex;
+                        align-items:center;
+                        .box_shop{
+                            display: flex;
+                            align-items:center;
+                        }
+                        &.shop{
+                            margin-left: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+        .filter-row-1{
+            width:100%;
+            margin:0;
+            padding:0 0;
+            &.isbrand{
+                justify-content: space-between;
+            }
+            .outer-header{
+                display: flex;
+                align-items: center;
+            }
+            .inner-header{
+                display: flex;
+                align-items: center;
+            }
+            .filter-image{
+                width: auto;
+                max-height: inherit;
+                min-width: inherit;
+                img{
+                    max-width: 140px;
+                    margin: 0;
+                    object-fit: scale-down;
+                }
+            }
+            .filter-input{
+                width: 220px;
+                margin-left: 0.5rem;
+                position: relative;
+                input{
+                    padding: 5px 10px;
+                    font-size: .875rem;
+                    border-radius: 25px;
+                    color: #7a7a7a;
+                    border: 1px solid rgba(0,0,0,.25);
+                    height: auto;
+                    width:100%;
+                    &::placeholder {
+                        color: rgb(179, 179, 179);
+                        opacity: 1
+                    }
+                }
+                .search-link{
+                    position: absolute;
+                    margin:0;
+                    top: 8px;
+                    right: 14px;
+                }
+            }
+        }
+        .filter-row-2{
+            width:100%;
+            padding:4px 0;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+//Variables
+@import "./styles/utils/variables";
+
+// Layou Original
+@import "./styles/layout/style-shop";
+@import "./styles/layout/header";
+
+// pages
+@import "./styles/pages/home.scss";
+@import "./styles/pages/detail";
+@import "./styles/pages/login";
+
+//josue 
+@import "./css/style-add.css";
+@import "./styles/others/othersClass.scss";

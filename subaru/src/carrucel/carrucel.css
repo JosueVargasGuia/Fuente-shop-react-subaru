@@ -1,0 +1,11 @@
+.slider {
+    min-height: 340px;
+}
+
+.slider-item {
+    display: none;
+}
+
+.active-item {
+    display: block !important;
+}

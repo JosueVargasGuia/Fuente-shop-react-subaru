@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<body style='background: #a29e9e;'>
+    <div style='background:#fbfbfb;width: 500px; min-width: 500px;
+    margin: auto;margin-top: 2em;   
+    font-family: sans-serif,monospace,arial; 
+    font-size:  1em; color:#000;
+    border:solid 1px #fbfbfb'>
+        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;height: 25px;'>
+
+        </div>
+        <div style='width: 250px;height: auto;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>
+            <a href='"+empresa.getWeburl()+"'>
+                <img src='"+empresa.getLogourl()+"' alt='"+empresa.getAlias()+"' style='width: 250px;height: auto;'></img>
+            </a>
+        </div>
+        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight:  bold;  '>Hola " +nombrecompleto +",</div>
+        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>Confirmación de la solicitud de contraseña en "+empresa.getAlias()+" </div>
+
+        <div style='margin-left: 1.5em;margin-right: 1.5em;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;border: solid 1px #a29e9e;text-align: justify;'>
+            Ha solicitado restablecer sus datos de inicio de sesión en "+empresa.getAlias()+". Tenga en cuenta que esta acción cambiará su contraseña actual. Para confirmar esta acción, por favor utilice el siguiente enlace:
+            <br/> <a href='"+tokenUrl+"' style='color: #25B9D7;    word-wrap: break-word;'>"+tokenUrl+"</a>
+        </div>
+        <br></br>
+        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;'>Si usted no hizo esta solicitud, simplemente ignore este correo electrónico.</div>
+
+        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7'>
+            <a href='"+empresa.getWeburl()+"' style='color: #25B9D7;'>"+empresa.getAlias()+"</a>
+        </div>
+        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;height: 35px;'>
+
+        </div>
+    </div>
+</body>
+
+</html>

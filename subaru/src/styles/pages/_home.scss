@@ -1,0 +1,194 @@
+body{
+    background-color: #f1f1f1;
+    font-family: 'Noto Sans', sans-serif;
+}
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }
+.App{
+    .produc-destacado{
+        padding-bottom: 1rem;
+        .produc-destacado-title{
+            padding: 20px;
+            h4{
+                font-size: 1.25rem;
+                text-align: left;
+                color: #fff;
+                margin: 0;;
+                padding:0;
+            }
+            ul{
+                margin: 0;
+                padding: 0;
+            }
+            h5{
+                margin: 0;
+                font-size: 18px;
+            }
+        }
+        .produc-destacado-wrapper{
+            background-color: #fff;
+            padding-bottom: 0.5rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            .produc-destacado-item-right{
+                padding-top: 1rem;
+                color: #7a7a7a;
+                font-weight: 700;
+                font-size: 18px;
+                @media ($md){
+                    justify-content: flex-end;
+                }
+                a{
+                    color: #7a7a7a;
+                    font-weight: 700;
+                    font-size: 18px;
+                    &:hover{
+                        text-decoration:underline;
+                    }
+                }
+            }
+        }
+        .produc-destacado-item, .produc-destacado-item-recomentado{
+            justify-content:flex-start;
+            .producto-card{
+                width:23.33%;
+                height:auto;
+                padding-left: 0;
+                padding-right:0;
+                &:hover{
+                    .producto-card-vista{
+                        opacity: 1;
+                        visibility:visible;
+                        bottom:0;
+                    }
+                }
+                .producto-card-img{
+                    position: relative;
+                    z-index: 1;
+                    height:auto;
+                    border:0;
+                }
+                .producto-card-vista{
+                    display: block;
+                    height:auto;
+                    top:inherit;
+                    background-color:white;
+                    position: absolute;
+                    width: 100%;
+                    left:0;
+                    bottom:-2.5rem;
+                    z-index: 1;
+                    transition:ease-in-out all 250ms;
+                    // opacity: 0;
+                    // visibility:hidden;
+                    box-shadow: 0 -5px 10px -5px rgba(0, 0,0, 0.2%);
+                    border:0;
+                    padding:0.8rem;
+                }
+                .producto-card-text{
+                    position: relative;
+                    z-index: 2;
+                    background: white;
+                    padding-top: .7rem;
+                    // box-shadow: 0 -5px 10px -5px rgba(0, 0,0, 0.2%);
+                    .producto-card-nombre{
+                        font-size: 15px;
+                        text-align: center;
+                        text-transform: capitalize;
+                    }
+                    .producto-card-precio{
+                        color: #C85055;
+                        font-weight: 800;
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+    .suscripcion{
+        color:#7a7a7a;
+        border:0;
+        @media ($md){
+            padding: 1.3rem 0;
+        }
+        .suscripcion-body{
+            @media ($md){
+                width: 100%;
+            }
+            .suscripcion-input{
+                padding: 0;
+                @media ($md){
+                    align-items: center;
+                }
+                > div{
+                    font-size: 14px;
+                    @media ($md){
+                        max-width: 320px;
+                    }
+                }
+                .suscripcion-input-in{
+                    padding: 0;
+                    position: relative;
+                    margin:8px 0;
+                    max-width: 100%;
+                    @media ($md){
+                        width: 38%;
+                    }
+                    input{
+                        width: 75%;
+                        padding: .45rem .75rem;
+                        line-height: normal;
+                        font-size: 14px;
+                        &::placeholder {
+                            color: rgb(179, 179, 179);
+                            opacity: 1
+                        }
+                    }
+                    button{
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    }
+                }
+            }
+            .suscripcion-info{
+                font-size: 14px;
+                color:#7a7a7a;
+                font-weight: 400;
+                padding-top: 0.5rem;
+            }
+        }
+    }
+    .footer{
+        padding: 1.3rem 0;
+        height: auto !important;
+        box-shadow: 2px 2px 11px 0 rgba(0,0,0,.3);
+        ul{
+            margin: 0;
+            padding: 0;
+            flex-flow: column;
+            @media ($md){
+                flex-flow: row;
+            }
+        }
+    }
+}

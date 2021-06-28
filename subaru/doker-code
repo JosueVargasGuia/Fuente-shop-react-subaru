@@ -1,0 +1,7 @@
+Iniciando la imagen 
+docker build -t eanet-app .  
+Exponiendo el servicio en background
+docker  run  -d -p  3000:3000 eanet-app
+
+
+ docker rm -f eanet-app
