@@ -7,7 +7,7 @@ const SUCCESS_SERVER = {
     "SUCCES_SERVER_INFO" /*indica que el endpoints tiene un mensaje para el usuario ejm:Acceso denegado--> al ingresar una contraseña invalida */,
   SUCCES_SERVER_ERROR:
     "SUCCES_SERVER_ERROR" /*indica que se tiene un error interno, la cual se debe hacer el seguimiento para corregir el error */,
-    SUCCES_SERVER_WARRING:
+  SUCCES_SERVER_WARRING:
     "SUCCES_SERVER_WARRING" /*indica que se tiene un error interno, la cual se debe hacer el seguimiento para corregir el error */,
 };
 /*Constante que nos indica que el endpoints   */
@@ -107,8 +107,8 @@ const InfoCondicionCompra = {
 };
 /* Secuencia de pago */
 const PagoMenu = {
-  PERSONALES: { index: 1 },  
-  ENVIO: { index: 2},
+  PERSONALES: { index: 1 },
+  ENVIO: { index: 2 },
   PASARELA: { index: 3 },
 };
 /*Para la visualizacion de los productos*/
@@ -169,221 +169,21 @@ const TipoDocumento = {
 
 const lstMarcas = [
   {
-    codigoMarca: 0,
-    decripcion: "All",
-    srcImage: "",
-    chrcodigofamilia: null,
-    classMarca:"class-marca-all",
-    lstCarrucel: [
-      { codigoCarrucel: 1, srcImage: "/marcas/banner/SONAX.jpg" },
-      { codigoCarrucel: 2, srcImage: "/marcas/banner/HYUNDAI.jpg" },
-      { codigoCarrucel: 3, srcImage: "/marcas/banner/BOSCH.jpg" },
-      { codigoCarrucel: 4, srcImage: "/marcas/banner/TOKICO.jpg" },
-      { codigoCarrucel: 5, srcImage: "/marcas/banner/SPARCO.jpg" },
-      { codigoCarrucel: 6, srcImage: "/marcas/banner/SPORTRACK.jpg" },
-    ],
-    lstBannerPromocion: [
-      {
-        codigoBanner: 1,
-        descripcion: "banner promocion 1",
-        srcImage: "/marcas/banner/promocion/1.png",
-      },
-      {
-        codigoBanner: 2,
-        descripcion: "banner promocion 2",
-        srcImage: "/marcas/banner/promocion/2.png",
-      },
-      {
-        codigoBanner: 3,
-        descripcion: "banner promocion 3",
-        srcImage: "/marcas/banner/promocion/3.png",
-      },
-      {
-        codigoBanner: 4,
-        descripcion: "banner promocion 4",
-        srcImage: "/marcas/banner/promocion/4.png",
-      },
-    ],
-  },
-  {
     codigoMarca: 1,
-    decripcion: "BOSCH",
+    decripcion: "Subaru",
     srcImage: "/marcas/bosch.jpg",
     chrcodigofamilia: "110C",
-    classMarca:"class-marca-bosch",
+    classMarca: "class-marca-subaru",
     lstCarrucel: [
-      { codigoCarrucel: 1, srcImage: "/marcas/bosch/1.jpg" },
-      { codigoCarrucel: 2, srcImage: "/marcas/bosch/2.jpg" },
-      { codigoCarrucel: 3, srcImage: "/marcas/bosch/3.jpg" },
-      { codigoCarrucel: 4, srcImage: "/marcas/bosch/4.jpg" },
-      { codigoCarrucel: 5, srcImage: "/marcas/bosch/5.jpg" },
-      { codigoCarrucel: 6, srcImage: "/marcas/bosch/6.jpg" },
-      { codigoCarrucel: 7, srcImage: "/marcas/bosch/7.jpg" },
-      { codigoCarrucel: 8, srcImage: "/marcas/bosch/8.jpg" },
+      { codigoCarrucel: 1, srcImage: "/marcas/subaru/1.png" },
+      { codigoCarrucel: 2, srcImage: "/marcas/subaru/2.png" },
+      { codigoCarrucel: 3, srcImage: "/marcas/subaru/3.png" },
+      { codigoCarrucel: 4, srcImage: "/marcas/subaru/4.png" },    
     ],
     lstBannerPromocion: [
-      {
-        codigoBanner: 1,
-        descripcion: "banner promocion 1",
-        srcImage: "/marcas/bosch/promocion/1.png",
-      },
-      {
-        codigoBanner: 2,
-        descripcion: "banner promocion 2",
-        srcImage: "/marcas/bosch/promocion/2.png",
-      },
-      {
-        codigoBanner: 3,
-        descripcion: "banner promocion 3",
-        srcImage: "/marcas/bosch/promocion/3.png",
-      },
-      {
-        codigoBanner: 4,
-        descripcion: "banner promocion 4",
-        srcImage: "/marcas/bosch/promocion/4.png",
-      },
     ],
   },
-  {
-    codigoMarca: 6,
-    decripcion: "TOKICO",
-    srcImage: "/marcas/tokico.jpg",
-    chrcodigofamilia: "110H",
-    classMarca:"class-marca-tokico",
-    lstCarrucel: [
-      { codigoCarrucel: 1, srcImage: "/marcas/tokico/1.jpg" },
-      { codigoCarrucel: 2, srcImage: "/marcas/tokico/2.jpg" },
-    ],
-    lstBannerPromocion: [],
-  },
-  
-  {
-    codigoMarca: 3,
-    decripcion: "HYUNDAI",
-    srcImage: "/marcas/hyundai.jpg",
-    chrcodigofamilia: "110G",
-    classMarca:"class-marca-hyundai",
-    lstCarrucel: [
-      { codigoCarrucel: 1, srcImage: "/marcas/hyundai/1.jpg" },
-      { codigoCarrucel: 2, srcImage: "/marcas/hyundai/2.jpg" },
-      { codigoCarrucel: 3, srcImage: "/marcas/hyundai/3.jpg" },
-    ],
-    lstBannerPromocion: [],
-  },
-  {
-    codigoMarca: 4,
-    decripcion: "SONAX",
-    srcImage: "/marcas/sonax.jpg",
-    chrcodigofamilia: "110D",
-    classMarca:"class-marca-sonax",
-    lstCarrucel: [
-      { codigoCarrucel: 1, srcImage: "/marcas/sonax/1.jpg" },
-      { codigoCarrucel: 2, srcImage: "/marcas/sonax/2.jpg" },
-      { codigoCarrucel: 3, srcImage: "/marcas/sonax/3.jpg" },
-      { codigoCarrucel: 4, srcImage: "/marcas/sonax/4.jpg" },
-    ],
-    lstBannerPromocion: [
-      {
-        codigoBanner: 1,
-        descripcion: "banner promocion 1",
-        srcImage: "/marcas/sonax/promocion/1.png",
-      },
-      {
-        codigoBanner: 2,
-        descripcion: "banner promocion 2",
-        srcImage: "/marcas/sonax/promocion/2.png",
-      },
-      {
-        codigoBanner: 3,
-        descripcion: "banner promocion 3",
-        srcImage: "/marcas/sonax/promocion/3.png",
-      },
-      {
-        codigoBanner: 4,
-        descripcion: "banner promocion 4",
-        srcImage: "/marcas/sonax/promocion/4.png",
-      },
-    ],
-  },
-  {
-    codigoMarca: 7,
-    decripcion: "SPORTRACK",
-    srcImage: "/marcas/sportrack.jpg",
-    chrcodigofamilia: "110F",
-    classMarca:"class-marca-sportrack",
-    lstCarrucel: [
-      { codigoCarrucel: 1, srcImage: "/marcas/sportrack/1.jpg" },
-      { codigoCarrucel: 2, srcImage: "/marcas/sportrack/2.jpg" },
-    ],
-    lstBannerPromocion: [
-      {
-        codigoBanner: 1,
-        descripcion: "banner promocion 1",
-        srcImage: "/marcas/sportrack/promocion/1.png",
-      },
-      {
-        codigoBanner: 2,
-        descripcion: "banner promocion 2",
-        srcImage: "/marcas/sportrack/promocion/2.png",
-      },
-      {
-        codigoBanner: 3,
-        descripcion: "banner promocion 3",
-        srcImage: "/marcas/sportrack/promocion/3.png",
-      },
-      {
-        codigoBanner: 4,
-        descripcion: "banner promocion 4",
-        srcImage: "/marcas/sportrack/promocion/4.png",
-      },
-    ],
-  },
-  {
-    codigoMarca: 5,
-    decripcion: "SPARCO",
-    srcImage: "/marcas/sparco.jpg",
-    chrcodigofamilia: "110E",
-    classMarca:"class-marca-sparco",
-    lstCarrucel: [
-      { codigoCarrucel: 1, srcImage: "/marcas/sparco/1.jpg" },
-      { codigoCarrucel: 2, srcImage: "/marcas/sparco/2.jpg" },
-      { codigoCarrucel: 3, srcImage: "/marcas/sparco/3.jpg" },
-      { codigoCarrucel: 4, srcImage: "/marcas/sparco/4.jpg" },
-    ],
-    lstBannerPromocion: [
-      {
-        codigoBanner: 1,
-        descripcion: "banner promocion 1",
-        srcImage: "/marcas/sparco/promocion/1.png",
-      },
-      {
-        codigoBanner: 2,
-        descripcion: "banner promocion 2",
-        srcImage: "/marcas/sparco/promocion/2.png",
-      },
-      {
-        codigoBanner: 3,
-        descripcion: "banner promocion 3",
-        srcImage: "/marcas/sparco/promocion/3.png",
-      },
-      {
-        codigoBanner: 4,
-        descripcion: "banner promocion 4",
-        srcImage: "/marcas/sparco/promocion/4.png",
-      },
-    ],
-  },
-  
- 
-  {
-    codigoMarca: 2,
-    decripcion: "ECCO",
-    srcImage: "/marcas/ecco.jpg",
-    chrcodigofamilia: "110I",
-    classMarca:"class-marca-ecco",
-    lstCarrucel: [{ codigoCarrucel: 1, srcImage: "/marcas/ecco/1.jpg" }],
-    lstBannerPromocion: [],
-  },
+
 ];
 
 const FilterProducto = {
@@ -405,17 +205,17 @@ const filterOrder = {
   FilterDescDescripcion: "FilterDescDescripcion",
   FilterAscDescripcion: "FilterAscDescripcion",
   FilterDescPrecio: "FilterDescPrecio",
-  FilterAscPrecio:'FilterAscPrecio',
-  FilterConImagen:'FilterConImagen',
+  FilterAscPrecio: 'FilterAscPrecio',
+  FilterConImagen: 'FilterConImagen',
 };
-const nav_banner={
+const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */
-  status:1,
-  text:"Página en Modo de Prueba. Próximamente estará habilitada al 100%"
+  status: 1,
+  text: "Página en Modo de Prueba. Próximamente estará habilitada al 100%"
 }
-const tipoDireccion={
-  DESPACHO:"Dirección de Despacho",
-  FACTURACION:"Dirección de Facturación"
+const tipoDireccion = {
+  DESPACHO: "Dirección de Despacho",
+  FACTURACION: "Dirección de Facturación"
 };
 export {
   SUCCESS_SERVER,
@@ -437,7 +237,7 @@ export {
   displayLista,
   FilterProducto,
   FilterSubFamilia,
-  filterOrder,nav_banner,
+  filterOrder, nav_banner,
   tipoDireccion
 };
 

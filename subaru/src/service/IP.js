@@ -36,9 +36,9 @@ function IP(uri) {
    //return `http://localhost:5000/ShopAutoPartsServices/service${uri}`;
  
   
-   return `http://localhost:8084/service${uri}`;
+  // return `http://localhost:8084/service${uri}`;
  
-  // return `http://190.81.61.102:8085/ShopAutoPartsServices/service${uri}`;
+   return `http://190.81.61.102:8085/ShopAutoPartsServices/service${uri}`;
 }
 function IziPay() {
   return `https://api.micuentaweb.pe/api-payment/V4/Charge/SDKTest`;

@@ -2,7 +2,7 @@
     /*Josue 19/05/2021 cambios de la reunion Nroº1*/
     .header-nav-banner{
         padding: 0.5em;
-        background-color: var( --color-background-red);
+        background-color: var( --color-background-blue);
         color: var(--color-font3);
         text-align: center;
     }
@@ -315,4 +315,111 @@
     color: var(--color-font-default);
     font-weight: bold;
     font-size: 1.1em;
+}
+
+.nav-span {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+    margin-bottom: 0em;
+    cursor: pointer;     
+    list-style: none;
+    display: flex;   
+    text-align: start;
+    font-weight: bold;
+   
+   li{
+    &:hover{
+        color: var(--color-button-hover2);  
+    }
+    width: 120px;
+        ul{
+        display: none;
+        width: 250px;
+        box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+            li{
+                list-style: none;
+                text-align: start;
+                margin-left: 1em;
+                width: 230px;
+                a{
+                    &:hover{
+                        color: var(--color-button-hover2);  
+                      }
+                }
+                
+            }  
+        }
+    }   
+}
+
+.nav-span li:hover > ul{
+    display: block;
+    position: absolute;   
+    background: white;
+    padding: 0px 0px 0px 0px;
+    z-index: 999;    
+}
+.filter-home-concecionario{
+    color: var(--color-font-default);    
+    font-size: 0.85em;
+    &:hover{
+        text-decoration: none;
+        color: var(--color-button-hover2);  
+    }
+  
+}
+.fa-peru {
+    content: url('peru.png');
+    height: 20px;
+    width: 25px;
+}
+
+.produc-destacado-links{
+    background-color: var( --color-background-white); 
+    hr{
+        margin-top: 0em !important;
+        margin-bottom: 0em !important;
+    }
+}
+
+.produc-destacado-links-title{
+    font-weight: bold;
+    margin-left: 0.5em;
+}   
+
+.produc-link{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;   
+  
+    div{
+        width: 15%;        
+        min-height: 15%;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+        padding-bottom: 0.4em;
+        text-align: center;
+       a{        
+        text-decoration: none;
+        color: var(--color-font-default);  
+        font-size: 0.8em;
+            &:hover{
+                color: var(--color-button-hover2);
+            }
+        } 
+        
+        img{
+            border: none;
+            width: 99%;
+        }
+    }
+}
+.produc-destacado-links-title{
+    font-family: "Lato",sans-serif;
+    font-size: 17pt;
 }

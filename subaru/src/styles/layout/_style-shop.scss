@@ -4,9 +4,12 @@
     --color-background-contenido: #dbdbdb;
     --color-background-white: #ffffff;
     --color-background-red: #ff0000;
+    --color-background-Gray:#787878;
+    --color-background-blue: #0225C7;
     /*--color-4:#4B908E;
 --color-5:#316064;  */
     --color-button-hover: #4992ff;
+    --color-button-hover2: #2fb5d2;
     --color-font-default: #000000;
     --color-font: #7a7a7a;
     --color-font2: #4992ff;
@@ -1917,7 +1920,7 @@ h4 {
 
 .produc-destacado-title {
     border-radius: 15px 15px 0 0;
-    background-color: var(--color-background-red);
+    background-color: var(--color-background-Gray);
     padding: 0.5em;
 }
 
@@ -1985,10 +1988,17 @@ h4 {
 }
 
 .filter-marca-categoria {
-    margin-right: 3em;
-    margin-top: 5px;
+    margin-left: 3em;
+    margin-top: -15px;
 }
 
+.filter-marca-categoria {
+    span{
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        font-weight: bold;
+    }
+}
 .filter-marca-categoria a {
     text-decoration: none;
     color: var(--color-font);

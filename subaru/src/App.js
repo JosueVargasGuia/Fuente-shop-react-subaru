@@ -246,8 +246,7 @@ function App() {
       type: actionType.SELECT_MARCAS,
       marca: marca,
       findProducto: true,
-      displayLista:
-        marca.codigoMarca === 0 ? displayLista.RESUMEN : displayLista.DETALLE,
+      displayLista:  displayLista.DETALLE,
     });
 
 
