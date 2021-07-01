@@ -4,15 +4,15 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import "../filterMarcas/filterMarcas.css";
+import { homepage } from "../service/ENUM";
 
-export default function Carrucel(props) {  
-  
+export default function Carrucel(props) {    
   let rowItem = props.marca.lstCarrucel.map((objImagen) => (
     <img
       className="container-Carousel-img"
       key={objImagen.codigoCarrucel}
       alt={ objImagen.srcImage}
-      src={window.location.origin + objImagen.srcImage}
+      src={window.location.origin +(homepage==undefined?"":"/"+homepage) + objImagen.srcImage}
     ></img>
   ));
 

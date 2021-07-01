@@ -6,6 +6,7 @@ import FilterMarcas from "./filterMarcas/filterMarcas";
 import Carrucel from "./carrucel/carrucel";
 import {
   displayLista,
+  homepage,
   HttpStatus,
   localStoreEnum,
   LOGGIN,
@@ -22,7 +23,7 @@ import PagoSeguroEstatico from "./estaticos/pagoSeguroEstatico";
 import LugarRecojoEstatico from "./estaticos/lugarRecojoEstatico";
 /*Administracion de cuenta requieren login */
 import DashboardCliente from "./loginCliente/dashboardCliente";
- 
+
 import TusCompras from "./loginCliente/dashboard/TusCompras";
 import DireccionCliente from "./loginCliente/dashboard/direccionCliente";
 import RecuperarPassword from "./loginCliente/recuperarPassword";
@@ -113,7 +114,7 @@ function App() {
   let _marca = lstMarcas.find(
     (marca) => marca.decripcion === parsed.descripcion
   );
-
+  console.log(_marca)
 
   /**/
   // console.log(params.decripcion)
@@ -135,7 +136,7 @@ function App() {
     findProducto: false,
     islogin: localStorage.getItem(localStoreEnum.ISLOGIN),
     usuario: usuario,
-    numTipoCambio: 3.65,
+    numTipoCambio: 0.00,
     moneda: Moneda.DOLARES,
     indexCarrucel: 0,
     displayLista: displayLista.RESUMEN,
@@ -241,12 +242,11 @@ function App() {
   /*Al seleccionar la marca del producto */
   async function handleSelectMarcaChange(e, invoke) {
     let marca = lstMarcas.find((marca) => marca.codigoMarca === e);
-
     dispatch({
       type: actionType.SELECT_MARCAS,
       marca: marca,
       findProducto: true,
-      displayLista:  displayLista.DETALLE,
+      displayLista: displayLista.DETALLE,
     });
 
 
@@ -284,7 +284,8 @@ function App() {
 
   return (
     <div className="App" style={{ height: height }}>
-      <BrowserRouter>
+       
+      <BrowserRouter basename={homepage}>
         <BannerHeader></BannerHeader>
         <div className="header-top">
           <div className="container">
@@ -421,7 +422,7 @@ function App() {
                   PRODUCTOS
                   <ul>
                     <li><Link to="/shop/oferta/filter/all">Ofertas</Link></li>
-                    
+
                   </ul>
                 </span>
               </li>
@@ -463,7 +464,7 @@ function App() {
                         Información personal
                       </Link>
                     </li>
-                     
+
                     <li>
                       <Link
                         to={
@@ -496,22 +497,24 @@ function App() {
                 <span>
                   INFORMACIÓN DE LA TIENDA
                   <p>
+                    Av. Republica de Panama 4259
+                    <br />
                     Peru
                     <br />
                     Llámenos:{" "}
                     <a className="class-telf" href="tel:">
-                      01 631 5020
+                      01 630 7600
                     </a>
                     <br />
                     Envíenos un correo electrónico:
                     <br />
                     <a
                       className="class-telf"
-                      href="mailto:consultas@eanetautoparts.pe"
+                      href="mailto:repuestos.subaru@eanet.pe"
                     >
                       {" "}
                       <span className="text-break">
-                        consultas@eanetautoparts.pe
+                        repuestos.subaru@eanet.pe
                       </span>
                     </a>
                   </p>

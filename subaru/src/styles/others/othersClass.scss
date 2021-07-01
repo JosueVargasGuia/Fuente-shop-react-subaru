@@ -331,6 +331,7 @@
     font-weight: bold;
    
    li{
+    color: var(--color-font-default);   
     &:hover{
         color: var(--color-button-hover2);  
     }
@@ -345,6 +346,8 @@
                 margin-left: 1em;
                 width: 230px;
                 a{
+                    color: var(--color-font-default);
+                    text-decoration: none;
                     &:hover{
                         color: var(--color-button-hover2);  
                       }
@@ -422,4 +425,82 @@
 .produc-destacado-links-title{
     font-family: "Lato",sans-serif;
     font-size: 17pt;
+}
+.produc-link-accesorio{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; 
+    .produc-link-card{
+            width: 48%;                 
+            margin-top: 0.1em;
+            margin-bottom: 0.1em;
+            margin-right: 0.1em;
+            margin-left: 0.1em;   
+            height: 200px;
+            position: relative;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;    
+    }
+    .produc-link-accesorio-left{
+        position: relative;
+        width: 33.33%;
+        height: 100%;
+        padding-right: 10px;
+        padding-left: 10px;
+        background-color: rgba(255,255,255,.8);
+       
+        .title{         
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+            padding-top: 40px;
+            text-transform: uppercase;
+        }
+        .content{
+            font-size: 14px;
+        }
+    }
+ 
+}
+@media (min-width: 0px) and (max-width: 994px){
+    .produc-link-accesorio .produc-link-card {
+        width: 98%;  
+    }
+}
+.wspclass{
+    background-color: transparent;
+    display: inline-block;
+    top: 92%;    
+    right: 2%;
+    z-index: 100;
+    position: fixed;
+    border-radius: 2px;
+    text-align: center;
+    width: 57px;
+    height: 47px;
+    vertical-align: middle;
+    padding: 1px;
+    div{
+        color: white;        
+        height: 30px;      
+        i{
+            margin-right: 0em;
+            font-size: 26px;
+            background-color: #25d366;
+            height: 30px;
+            width: 36px;
+            border-radius: 100%;
+            padding: 2px;
+        }
+        p{
+            color: var(--color-font-default);
+            font-size: 12px;
+            font-weight: bold;
+        }
+    }
+    a{
+        text-decoration: none;
+    }
+    
 }

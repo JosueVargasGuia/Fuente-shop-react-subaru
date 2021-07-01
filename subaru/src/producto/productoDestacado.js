@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { FilterProducto, HttpStatus, SUCCESS_SERVER } from "../service/ENUM";
+import { FilterProducto, homepage, HttpStatus, SUCCESS_SERVER } from "../service/ENUM";
 import { findProductos } from "../service/producto.service";
 import { displayLista } from "../service/ENUM";
 import ProductosCard from "./productoCard";
@@ -34,7 +34,16 @@ const listaAccesorios = [
   { discripcion: "Spoilers", srcimg: "/marcas/subaru/accesorios/11.png" },
   { discripcion: "Todos los Accesorios", srcimg: "/marcas/subaru/accesorios/12.png" },
 ];
+const listaCategoria = [
+  { title: "Audio/Media", content: "Donde quiera que la te aventura conduzca, mantente conectado en tu Subaru.", srcimg: "/marcas/subaru/categoria/1.png" },
+  { title: "Comodidad y conveniencia", content: "Menos dificultad Más disfrute. Todo personalizado para ti y tu Subaru.", srcimg: "/marcas/subaru/categoria/2.png" },
+  { title: "Estilo de Vida", content: "Estilo Subaru sintonizado precisamente para usted y su Subaru.", srcimg: "/marcas/subaru/categoria/3.png" },
+  { title: "Protección y seguridad", content: "Ayuda a prevenir lo peor y a disminuir el impacto de lo inevitable en tu Subaru.", srcimg: "/marcas/subaru/categoria/4.png" },
+  { title: "Marca de STI", content: "Las modificaciones de Subaru que deseas para el poder que anhelas.", srcimg: "/marcas/subaru/categoria/5.png" },
+  { title: "Estilo", content: "Cuando lo que está afuera de tu Subaru es lo que cuenta.", srcimg: "/marcas/subaru/categoria/6.png" },
 
+];
+const whatsAppLink="https://api.whatsapp.com/send?phone=51989174932&text=";
 export default function ProductoDestacado(props) {
   const [state, dispatch] = useReducer(reducer, {
     rowProducto: [],
@@ -46,16 +55,26 @@ export default function ProductoDestacado(props) {
 
   let rowRepuesto = listaRepuesto.map((rowRep) => <div>
     <Link>
-    <img src={window.location.origin+rowRep.srcimg}></img>
+      <img src={window.location.origin + (homepage == undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg}></img>
       {rowRep.discripcion}
     </Link>
   </div>);
-let rowAccesorios = listaAccesorios.map((rowAcce) => <div>
-<Link>
-<img src={window.location.origin+rowAcce.srcimg}></img>
-  {rowAcce.discripcion}
-</Link>
-</div>);
+  let rowAccesorios = listaAccesorios.map((rowAcce) => <div>
+    <Link>
+      <img src={window.location.origin + (homepage == undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg}></img>
+      {rowAcce.discripcion}
+    </Link>
+  </div>);
+
+  let rowCategoria = listaCategoria.map((rowCate) =>
+    <div className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage == undefined ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
+      <div className="produc-link-accesorio-left">
+        <div className="title">{rowCate.title}</div>
+        <div className="content">{rowCate.content}</div>
+      </div>
+
+    </div>);
+
 
   useEffect(() => {
     handleServicioBuscarProductos(
@@ -185,10 +204,24 @@ let rowAccesorios = listaAccesorios.map((rowAcce) => <div>
             {rowAccesorios}
           </div>
         </div>
+        <div className="produc-destacado-links">
+          <h3 className="produc-destacado-links-title">Accesorios subaru por categoría</h3>
+          <hr />
+          <div className="produc-link-accesorio">
+            {rowCategoria}
+          </div>
+        </div>
       </div>
 
       <ServerException server={state.server}></ServerException>
-
+      <div className="wspclass">
+        <a href={whatsAppLink} target="_blank">
+          <div>
+            <i className="fa fa-whatsapp" aria-hidden="true"></i>
+            <p>Consulta</p>
+          </div>
+        </a>
+      </div>
     </>
   );
 }

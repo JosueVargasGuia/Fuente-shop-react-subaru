@@ -217,6 +217,7 @@ const tipoDireccion = {
   DESPACHO: "Dirección de Despacho",
   FACTURACION: "Dirección de Facturación"
 };
+const homepage="subaru-versionbeta";
 export {
   SUCCESS_SERVER,
   HttpStatus,
@@ -238,6 +239,7 @@ export {
   FilterProducto,
   FilterSubFamilia,
   filterOrder, nav_banner,
-  tipoDireccion
+  tipoDireccion,
+  homepage
 };
 

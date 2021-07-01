@@ -2,7 +2,7 @@ import "./filterMarcas.css";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import TipoCambio from "../producto/tipoCambio";
-import { LOGGIN, Moneda } from "../service/ENUM";
+import { homepage, LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
 import BottonCarrito from "../utils/bottonCarrito";
 
 const listaRepuesto = [
@@ -31,7 +31,7 @@ FilterMarcas(props) {
 
 
 
-  const [srcLogo] = useState(window.location.origin + "/marcas/logo.png");
+  const [srcLogo] = useState(window.location.origin+(homepage==undefined?"":"/"+homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
   let rowRepuesto = listaRepuesto.map((rowRepu) => <li>
     <Link>{rowRepu.descripcion}</Link>
@@ -43,7 +43,9 @@ FilterMarcas(props) {
 
   let history = useHistory();
   const onClickImage = () => {
-    props.handleSelectMarcaChange(props.marcaSelect.codigoMarca, 'FilterMarcas');
+    console.log(props.marcaSelec);
+    //props.handleSelectMarcaChange(props.marcaSelect.codigoMarca, 'FilterMarcas');
+    props.handleSelectMarcaChange(lstMarcas[0].codigoMarca, 'FilterMarcas');
     history.push("/shop");
   };
   const onClickImageShop = () => {
@@ -147,11 +149,11 @@ FilterMarcas(props) {
         </div>
         <div className="inner-header">
           <div className="filter-home">
-            <Link className="filter-home-concecionario"> EA Corp - Concesionario Autorizado<i className="fa fa-peru" aria-hidden="true"></i>
+            <Link className="filter-home-concecionario"> EA Corp - Concesionario Autorizado
             </Link>
-            
+           
           </div>
-
+          <i className="fa fa-peru" aria-hidden="true"></i>
           <div className="filter-input">
             <div className="filter-input-search">
               <input

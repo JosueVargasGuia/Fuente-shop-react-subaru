@@ -1,5 +1,6 @@
 {
   "name": "shop",
+  "homepage": "http://localhost/subaru-versionbeta",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
