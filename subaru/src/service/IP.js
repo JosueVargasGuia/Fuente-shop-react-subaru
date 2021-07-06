@@ -23,6 +23,7 @@ const URL = {
   LISTAR_PRODUCTO_IMAGEN:"/productoImagen/listaImangen",
   CRUD_PRODUCTO_IMAGEN:"/productoImagen/subirImagen",
   LISTAR_ATRIBUTO:"/productoImagen/listaAtributo",
+  LISTAR_PRODUCTO_REPORTE:"/productoImagen/listaProductoReporte",
   LISTAR_PRODUCTO_ATRIBUTO:"/productoImagen/listaProductoAtributo",
   CRUD_PRODUCTO_ATRIBUTO:"/productoImagen/productoAtributo",
   CRUD_PRODUCTO_CATEGORIA:"/productoImagen/productoCategoria",
@@ -36,9 +37,9 @@ function IP(uri) {
    //return `http://localhost:5000/ShopAutoPartsServices/service${uri}`;
  
   
-  // return `http://localhost:8084/service${uri}`;
+  return `http://localhost:8084/service${uri}`;
  
-   return `http://190.81.61.102:8085/ShopAutoPartsServices/service${uri}`;
+   // return `http://190.81.61.102:8085/ShopAutoPartsServices/service${uri}`;
 }
 function IziPay() {
   return `https://api.micuentaweb.pe/api-payment/V4/Charge/SDKTest`;

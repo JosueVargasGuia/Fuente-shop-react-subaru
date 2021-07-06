@@ -48,7 +48,12 @@ https://www.npmjs.com/package/@storybook/addon-knobs
 npm i @storybook/addon-knobs
 
 
-
+06/07/2021
+https://www.npmjs.com/package/react-html-to-excel
+npm i xlsx
+npm i file-saver
+npm install react@17.0.2 react-dom@17.0.2
+npm install --save react-html-table-to-excel --legacy-peer-deps
 
 
 npm install --save react-jquery-plugin

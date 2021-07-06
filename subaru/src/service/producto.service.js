@@ -51,6 +51,15 @@ async function listaAtributo(body) {
   );
   return response;
 }
+async function listaProductoReporte(body) {  
+  console.log(body)
+  const response = await fetchService(
+    IP(URL.LISTAR_PRODUCTO_REPORTE),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 async function listaProductoAtributo(body) {
   
   const response = await fetchService(
@@ -88,5 +97,5 @@ export {
   listaAtributo,
   listaProductoAtributo,
   crudProductoAtributo,
-  crudProductoCategoria
+  crudProductoCategoria,listaProductoReporte
 };

@@ -2262,7 +2262,59 @@ h4 {
     border-radius: 10px;
     min-height: 360px;
 }
+.prod-img-search-row-reporte {
+    width: 97%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+    padding-bottom: 0.4em;
+    padding-left: 0.85em;
+    padding-right: 0.2em;
+    padding-top: 0.4em;
+    background: var(--color-background-white);
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    border-radius: 10px;
+    min-height: 360px;
+    hr{
+        
+        margin: 0em;
+        margin-bottom: 0.2em;
+    }
+    thead{
+        tr{
+            td{
+                border: solid 0.5px var(--color-font2);
+                color:var(--color-font3);
+                background-color: var(--color-font2);
+            }
+        }
+    }
 
+   td {
+        border: solid 0.5px var(--color-font2);
+        font-size: 12px;
+        .fa-check{
+            color: #36df36;
+        }
+    }
+}
+.prod-img-search-row-reporte-filter{
+    display: flex;
+    flex-wrap: wrap;
+    .div-row-1{
+        width: 100%;
+        margin-left: 1em;
+    }
+    .prod-card-row{
+        margin-top: 0em;
+        margin-left: 1em;
+        .btn{
+            padding: .1rem .75rem;
+        }
+    }
+   
+}
 .prod-img-search-row2 {
     width: 45%;
 }

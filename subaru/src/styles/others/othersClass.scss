@@ -2,7 +2,7 @@
     /*Josue 19/05/2021 cambios de la reunion Nroº1*/
     .header-nav-banner{
         padding: 0.5em;
-        background-color: var( --color-background-blue);
+        background-color: #00a3e0;
         color: var(--color-font3);
         text-align: center;
     }
@@ -503,4 +503,17 @@
         text-decoration: none;
     }
     
+}
+.carousel .slide img{
+    height: inherit !important;
+}
+.prod-det-carrousel .carousel .slide img {
+    width: 80%;
+    object-fit: contain;
+}
+
+.tbl-rpt-display{
+    min-height: 360px;
+    overflow-x: auto;
+    max-height: 360px;
 }
