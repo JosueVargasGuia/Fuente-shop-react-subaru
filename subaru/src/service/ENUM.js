@@ -217,7 +217,7 @@ const tipoDireccion = {
   DESPACHO: "Dirección de Despacho",
   FACTURACION: "Dirección de Facturación"
 };
-const homepage="subaru-versionbeta";
+const homepage="subaruparts/desarrollo";
 export {
   SUCCESS_SERVER,
   HttpStatus,
