@@ -172,7 +172,7 @@ const lstMarcas = [
     codigoMarca: 1,
     decripcion: "Subaru",
     srcImage: "/marcas/bosch.jpg",
-    chrcodigofamilia: "110C",
+    chrcodigofamilia: "110A",
     classMarca: "class-marca-subaru",
     lstCarrucel: [
       { codigoCarrucel: 1, srcImage: "/marcas/subaru/1.png" },
