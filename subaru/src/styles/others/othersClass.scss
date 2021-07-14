@@ -518,14 +518,38 @@
     max-height: 360px;
 }
 
+ 
 .outlet{
     z-index: 2;
-    position: absolute;
-    top: 0;
-    right: 11%;
-    top: 18%;
+    position: relative;
+    top: -290px;
+    float: right;
     img{
         width: 150px;
         height: 131px;
     }
+}
+
+
+/*-----*/
+.form-row-option{
+    display: flex;
+    flex-direction: row;
+    margin-left: 0.3em;
+    label{
+        width: auto !important;
+        margin-bottom: 0;
+        margin-right: 0.3em;
+        font-style: italic;
+    }
+    input[type=checkbox] {
+        font-size: 0.2em;
+        text-align: left;
+        margin-left: 0.2em;
+        width: 15px !important;
+        margin-right: 1em;
+    }
+}
+.span-opcion{
+    font-size: 12px;
 }

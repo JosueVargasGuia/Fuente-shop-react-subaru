@@ -22,7 +22,7 @@ import {
 import ServerException from "../utils/serverException";
 import { Modal } from "react-bootstrap";
 import { ModalConfirmar } from "../utils/modal";
-import e from "cors";
+
 
 let actionType = {
   DEPARTAMENTO: "DEPARTAMENTO",
@@ -67,6 +67,7 @@ let actionType = {
   vchTelefono_DIRECCION: "vchTelefono_DIRECCION",
   flgPredeterminado_DIRECCION: "flgPredeterminado_DIRECCION",
   flgDespacho_DIRECCION: "flgDespacho_DIRECCION",
+  flgMismoRecepciona_DIRECCION: "flgMismoRecepciona_DIRECCION",
   vchrAlias_DIRECCION: "vchrAlias_DIRECCION",
   numTipoDocumento_DIRECCION: "numTipoDocumento_DIRECCION",
   vchDocumento_DIRECCION: "vchDocumento_DIRECCION",
@@ -175,6 +176,16 @@ const reducer = (state, action) => {
       };
     case actionType.flgDespacho_DIRECCION:
       _direccion.flgDespacho = action.flgDespacho;
+      return {
+        ...state,
+        direccion: _direccion
+      };
+    case actionType.flgMismoRecepciona_DIRECCION:
+      _direccion.flgMismoRecepciona = action.flgMismoRecepciona;
+      _direccion.numTipoDocumento = action.numTipoDocumento;
+      _direccion.vchDocumento = action.vchDocumento;
+      _direccion.vchNombre = action.vchNombre;
+      _direccion.vchApellido = action.vchApellido;
       return {
         ...state,
         direccion: _direccion
@@ -447,6 +458,7 @@ export default function RegistrarClienteV1(props) {
     flgPredeterminado: "",
     flgDespacho: "",
     flgFacturacion: "0",
+    flgMismoRecepciona: false,
     nsecuencia: 0,
     vchrAlias: "",
     numTipoDocumento: 0,
@@ -665,6 +677,7 @@ export default function RegistrarClienteV1(props) {
                 flgRegistro: direccion.flgRegistro,
                 flgPredeterminado: direccion.flgPredeterminado,
                 flgFacturacion: direccion.flgFacturacion,
+                flgMismoRecepciona: direccion.flgMismoRecepciona,
                 vchrAlias: direccion.vchrAlias,
                 numTipoDocumento: direccion.numTipoDocumento,
                 vchDocumento: direccion.vchDocumento,
@@ -924,6 +937,7 @@ export default function RegistrarClienteV1(props) {
           vchTelefono: element.vchTelefono,
           //flgPredeterminado: element.flgPredeterminado,
           flgFacturacion: element.flgFacturacion,
+          flgMismoRecepciona: element.flgMismoRecepciona,
           nsecuencia: element.nsecuencia,
           departamento: { chrCodigoDepartamento: element.departamento.chrCodigoDepartamento },
           provincia: { chrCodigoProvincia: element.provincia.chrCodigoProvincia },
@@ -1025,6 +1039,7 @@ export default function RegistrarClienteV1(props) {
       flgPredeterminado: _direccion.flgPredeterminado,
       flgDespacho: (parseInt(_direccion.numTipoDocumento, 10) === 0 ? false : true),
       flgFacturacion: _direccion.flgFacturacion,
+      flgMismoRecepciona: _direccion.flgMismoRecepciona,
       vchrAlias: _direccion.vchrAlias,
       numTipoDocumento: _direccion.numTipoDocumento,
       vchDocumento: _direccion.vchDocumento,
@@ -1212,16 +1227,17 @@ export default function RegistrarClienteV1(props) {
       flgRegistro: "",
       flgPredeterminado: "",
       flgDespacho: _flgDespacho,
+      flgMismoRecepciona: false,
       vchrAlias: "",
       numTipoDocumento: 0,
       vchDocumento: "",
       departamento: {
         chrCodigoDepartamento: "15",
-        vchDescripcion: "",
+        vchDescripcion: "LIMA",
       },
       provincia: {
         chrCodigoProvincia: "01",
-        vchDescripcion: "",
+        vchDescripcion: "LIMA",
       },
       distrito: {
         chrCodigoDistrito: "00",
@@ -1323,6 +1339,35 @@ export default function RegistrarClienteV1(props) {
       mensaje: "",
       title: "",
     });
+  }
+  function handleEventMismoRecepciona(value) {
+    console.log(state);
+
+    if ((parseInt(state.numTipoCliente, 10) === parseInt(TipoDocumento.DNI.numtipocliente, 10) ||
+      parseInt(state.numTipoCliente, 10) === parseInt(TipoDocumento.PASAPORTE.numtipocliente, 10) ||
+      parseInt(state.numTipoCliente, 10) === parseInt(TipoDocumento.CARNET_EXT.numtipocliente, 10)) &&
+      value === true) {
+      console.log('OK');
+      dispatch({
+        type: actionType.flgMismoRecepciona_DIRECCION,
+        flgMismoRecepciona: value,
+        numTipoDocumento: state.numTipoCliente,
+        vchDocumento: state.vchDocumento,
+        vchNombre: state.vchNombre,
+        vchApellido: state.vchApellidoPaterno + " " + state.vchApellidoMaterno
+      });
+    } else {
+      console.log('No_OK');
+      dispatch({
+        type: actionType.flgMismoRecepciona_DIRECCION,
+        flgMismoRecepciona: value,
+        numTipoDocumento: TipoDocumento.DEFAULT.numtipocliente,
+        vchDocumento: "",
+        vchNombre: "",
+        vchApellido: ""
+      });
+    }
+
   }
 
   return (
@@ -1756,7 +1801,7 @@ export default function RegistrarClienteV1(props) {
 
           </div>
           <div className="form-row-direccion">
-            <label className="form-row-direccion-title">Direccion de Despacho (diferente a direccíon de facturacíon)</label>
+            <label className="form-row-direccion-title">Dirección de Despacho (diferente a dirección de facturacíon)</label>
             <input
               type="checkbox"
               name="flgDireccionDespacho"
@@ -1771,8 +1816,26 @@ export default function RegistrarClienteV1(props) {
                 })
               }
             ></input>
+             {state.direccion.flgDespacho ? <>
+            <div className="form-row-option">
+              <label className="span-opcion" >¿Yo mismo voy a recepcionar?</label>
+              <input
+                type="checkbox"
+                name="flgMismo"
+                className="form-control span-opcion"
+                autoComplete="false"
+                autoSave="false"
+                checked={state.direccion.flgMismoRecepciona}
+                onChange={(e) => handleEventMismoRecepciona(e.target.checked)
+
+                }
+              ></input>
+            </div>
+                </>:""}
           </div>
           {state.direccion.flgDespacho ? <>
+
+
 
             <div className="form-row-direccion">
               <label htmlFor="numTipoDocumento">Tipo Documento</label>

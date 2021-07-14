@@ -32,7 +32,7 @@ export default function Carrucel(props) {
         {rowItem}
       </Carousel>
       <div className="outlet">
-        <img alt="outlet" src={window.location.origin +(homepage==undefined?"":"/"+homepage) +"/marcas/outlet.png"}></img>
+        <img alt="outlet"  src={window.location.origin +(homepage==undefined?"":"/"+homepage) +"/marcas/outlet.png"}></img>
       </div>
     </div>
   );
