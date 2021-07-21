@@ -39,9 +39,9 @@ const URL = {
 function IP(uri) {
 
     //local Host
-  return `http://localhost:8084/service${uri}`;
+ // return `http://localhost:8084/service${uri}`;
   //Configuracion Docker Local host
- //return `http://localhost:8086/ShopAutoPartsServices/service${uri}`;
+ return `http://localhost:8086/ShopAutoPartsServices/service${uri}`;
  //Configuracion Docker Ip Publica
   // return `http://190.81.61.102:8086/ShopAutoPartsServices/service${uri}`;
 }

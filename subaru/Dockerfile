@@ -14,6 +14,8 @@ RUN apk add --no-cache make gcc g++ python3
 # install app dependencies Instalar dependencias
 COPY package.json ./
 COPY package-lock.json ./
+RUN npm i npm@latest 
+RUN npm install 
 RUN npm install 
 #RUN npm install sass-loader sass webpack --save-dev
 # add app
