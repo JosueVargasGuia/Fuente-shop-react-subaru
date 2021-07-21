@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
-import { SUCCESS_SERVER } from "../service/ENUM";
-
+import { CRUD, homepage, HttpStatus, localStoreEnum, SUCCESS_SERVER } from "../service/ENUM";
+import { validacionToken } from "../service/loginCliente.service";
+import { useHistory } from "react-router-dom";
 const actionType = { LOAD: "LOAD" };
 /*Funcion reducer */
 const reducer = (state, action) => {
@@ -39,14 +40,53 @@ export default function ServerException(props) {
     }
     // eslint-disable-next-line
   }, [props.server]);
+  let history = useHistory();
+  async function _validacionToken() {
+    let _value = "";
+    const rpt = await validacionToken({
+      token: localStorage.getItem(localStoreEnum.TOKEN),
+    });
+   
+    console.log(rpt);
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+      const json =  await rpt.json();
+      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_EXPIRE) {
+        /*Redireccionando al login */
+        _value = "REDIRECT";
+      } else {
+        /*Visualizando el */
+        _value = "SHOW_MESSAGE";
+      }
+    } else {
+      _value = "SHOW_MESSAGE";
+    }
+    return _value;
+  }
+
   if (state.isLoad === true) {
-    timeoutID = setTimeout(() => {
-      dispatch({
-        type: actionType.LOAD,
-        className: "server-exception server-exception-opacity",
-        isLoad: false,
-      });
-    }, 10000);
+    let _status = _validacionToken();
+    console.log(_status);
+    if (_status = "REDIRECT") {
+      /*Redireccionando al login */
+      history.push("/loginCliente")
+      timeoutID = setTimeout(() => {
+        dispatch({
+          type: actionType.LOAD,
+          className: "server-exception server-exception-opacity",
+          isLoad: false,
+        });
+      }, 10000);
+    } else {
+      /*Caso de error que la back end no responda */
+      timeoutID = setTimeout(() => {
+        dispatch({
+          type: actionType.LOAD,
+          className: "server-exception server-exception-opacity",
+          isLoad: false,
+        });
+      }, 10000);
+    }
+
   }
   function handleEventClose() {
     dispatch({
@@ -59,13 +99,13 @@ export default function ServerException(props) {
   return (
     <>
       {success !== SUCCESS_SERVER.SUCCES_SERVER_OK &&
-      success !== SUCCESS_SERVER.SUCCES_SERVER_DEFAULT ? (
+        success !== SUCCESS_SERVER.SUCCES_SERVER_DEFAULT ? (
         <div className={state.className}>
           <div className="server-exception-title">
             Mensaje de eanet auto parts
           </div>
           {success === SUCCESS_SERVER.SUCCES_SERVER_INFO ? (
-            <div>
+            <div className="server-exception-body">
               <br />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +127,7 @@ export default function ServerException(props) {
             ""
           )}
           {success === SUCCESS_SERVER.SUCCES_SERVER_ERROR ? (
-            <div>
+            <div className="server-exception-body">
               <br />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +149,7 @@ export default function ServerException(props) {
             ""
           )}
           {success === SUCCESS_SERVER.SUCCES_SERVER_WARRING ? (
-            <div>
+            <div className="server-exception-body">
               <br />
               <svg
                 xmlns="http://www.w3.org/2000/svg"

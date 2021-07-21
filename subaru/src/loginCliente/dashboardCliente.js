@@ -35,7 +35,7 @@ export default function DashboardCliente(props) {
   }, [props.numCodigoCliente]);
 
   async function handleObtenerCliente(_numCodigoCliente) {
-    let _rol = "ROLE_USER1";
+    let _rol = "ROLE_USER";
     const rpt = await obtenerCliente({ numCodigoCliente: _numCodigoCliente });
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();

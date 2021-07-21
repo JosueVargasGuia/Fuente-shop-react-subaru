@@ -9,7 +9,11 @@ const SUCCESS_SERVER = {
     "SUCCES_SERVER_ERROR" /*indica que se tiene un error interno, la cual se debe hacer el seguimiento para corregir el error */,
   SUCCES_SERVER_WARRING:
     "SUCCES_SERVER_WARRING" /*indica que se tiene un error interno, la cual se debe hacer el seguimiento para corregir el error */,
+  SUCCES_SERVER_EXPIRE:
+    "SUCCES_SERVER_EXPIRE" /*Validacion de token */,
+
 };
+
 /*Constante que nos indica que el endpoints   */
 const HttpStatus = {
   HttpStatus_OK: 200 /*retorno datos sin ningun mensaje de validacion */,

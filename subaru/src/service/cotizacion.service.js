@@ -1,4 +1,4 @@
-import {  fetchService, METHOD } from "../matchService/fetchService";
+import {  fetchService, METHOD, tokenFetchService } from "../matchService/fetchService";
 
 import { IP, IziPay, URL } from "./IP";
 async function registrarCotizacion(body) {
@@ -77,7 +77,7 @@ async function initCreatePayment(body) {
   return response;
 }
 async function obtenerTusCompras(body) { 
-  const response = await fetchService(
+  const response = await tokenFetchService(
     IP(URL.LISTAR_TUS_COMPRAS),
     body,
     METHOD.POST

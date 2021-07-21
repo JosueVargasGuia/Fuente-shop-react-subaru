@@ -1,11 +1,10 @@
- 
+import { localStoreEnum } from "../service/ENUM"; 
 const METHOD = {
   POST: "post",
   GET: "get",
   PUT: "put",
   DELETE: "delete",
 };
-
 async function tokenFetchService(url, body = {}, method) {   
   const header = {
     method: method, // *GET, POST, PUT, DELETE, etc.
@@ -14,7 +13,7 @@ async function tokenFetchService(url, body = {}, method) {
       Accept: "application/json",
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": "true",
-      "Authorization": "Bearer " +localStorage.getItem("token")       
+      "Authorization": "Bearer " +localStorage.getItem(localStoreEnum.TOKEN)       
     },
     body: JSON.stringify(body) 
   };
@@ -25,7 +24,6 @@ async function tokenFetchService(url, body = {}, method) {
   } catch (error) {
     console.log("------------catch----------");
     console.log(error);
-   
     console.log("------------catch----------");
     return error;
   }

@@ -66,19 +66,19 @@ a{
 
 .server-exception-action {
     position: fixed;
-    margin-top: 1em;
-    top: 55%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     width: inherit;
+    flex-direction: column;
 }
 
 .server-exception {
     position: fixed;
     z-index: 1000;
-    height: 28%;
+    height: 18%;
     width: 50%;
+    min-height: 163px;
     top: 35%;
     background-color: var(--color-background-contenido);
     margin: 0;
@@ -91,8 +91,21 @@ a{
     text-align: justify;
     opacity: 1;
     display: block;
+  
+  
 }
-
+@media (min-width: 10px) and (max-width: 900px) {
+    .server-exception {
+        width: 73%;
+        left: 15%;
+        height: 18%;
+        min-height: 205px !important;
+    }
+}
+.server-exception-body{
+    min-width: 150px;
+    display: flex;
+}
 .server-exception-opacity {
     opacity: 0;
     display: none;
