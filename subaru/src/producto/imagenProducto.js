@@ -548,7 +548,10 @@ export default function ImagenProducto() {
         for (let i = 0; i < json.lista.length; i++) {
           let obj = json.lista[i];
           _rowsAtributo.push(<tr>
-            <td>{obj.chrCodigoProducto}</td>
+            <td><i
+            className="fa-btn fa fa-check"
+            onClick={() => handleEventFindProducto(obj.chrCodigoProducto)}
+          ></i>{obj.chrCodigoProducto}</td>
             <td>{obj.vchDescripcion}</td>
             <td>{obj.familia.vchDescripcion}</td>
             <td style={{ textAlign: "center", }}>{obj.chrDestacado === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
