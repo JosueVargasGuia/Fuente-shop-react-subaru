@@ -37,7 +37,7 @@ const URL = {
 };
 
 function IP(uri) {
-  let _CONTEXT = 'DESARROLLO';
+  let _CONTEXT = 'DESARROLLO_LOCAL';
   let _IP = '';
   let _PORT = '';
   let _API = '';

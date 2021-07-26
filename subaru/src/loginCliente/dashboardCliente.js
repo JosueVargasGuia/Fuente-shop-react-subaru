@@ -3,9 +3,11 @@ import { Link, useHistory } from "react-router-dom";
 import {
   HttpStatus,
   localStoreEnum,
-  LOGGIN, 
+  LOGGIN,
+  SUCCESS_SERVER, 
 } from "../service/ENUM";
 import { obtenerCliente } from "../service/loginCliente.service";
+import ServerException from "../utils/serverException";
 
 let actionType = { ROL: "ROL" };
 /*Funcion reducer */
@@ -15,6 +17,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         rol: action.rol,
+        server: action.server
       };
     default:
       return state;
@@ -28,6 +31,7 @@ export default function DashboardCliente(props) {
   const [state, dispatch] = useReducer(reducer, {
     numCodigoCliente: props.numCodigoCliente,
     rol: "ROLE_USER",
+    server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
   useEffect(() => {
     handleObtenerCliente(props.numCodigoCliente);
@@ -37,12 +41,20 @@ export default function DashboardCliente(props) {
   async function handleObtenerCliente(_numCodigoCliente) {
     let _rol = "ROLE_USER";
     const rpt = await obtenerCliente({ numCodigoCliente: _numCodigoCliente });
+    console.log(rpt);
+    let _server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT };
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
       _rol = json.rol;
+      _server.error = "";
+      _server.success = SUCCESS_SERVER.SUCCES_SERVER_OK;
+    } else {
+      _server.error = "";
+      _server.success = SUCCESS_SERVER.SUCCES_SERVER_ERROR;
     }
-    dispatch({ type: actionType.ROL, rol: _rol });
+    dispatch({ type: actionType.ROL, rol: _rol, server: _server });
   }
+
 
   if (localStorage.getItem(localStoreEnum.ISLOGIN) !== LOGGIN.LOGGIN) {
     /*Verificando que el cliente este logeado */
@@ -122,6 +134,7 @@ export default function DashboardCliente(props) {
           ""
         )}
       </div>
+      <ServerException server={state.server}></ServerException>
     </div>
   );
 }

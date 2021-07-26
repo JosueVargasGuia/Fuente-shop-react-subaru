@@ -42,14 +42,12 @@ export default function ServerException(props) {
   }, [props.server]);
   let history = useHistory();
   async function _validacionToken() {
-    let _value = "";
+    let _value = "SHOW_MESSAGE";
     const rpt = await validacionToken({
       token: localStorage.getItem(localStoreEnum.TOKEN),
     });
-   
-    console.log(rpt);
     if (rpt.status === HttpStatus.HttpStatus_OK) {
-      const json =  await rpt.json();
+      const json = await rpt.json();
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_EXPIRE) {
         /*Redireccionando al login */
         _value = "REDIRECT";
@@ -67,7 +65,12 @@ export default function ServerException(props) {
     let _status = _validacionToken();
     console.log(_status);
     if (_status = "REDIRECT") {
+      localStorage.removeItem(localStoreEnum.ISLOGIN);
+      localStorage.removeItem(localStoreEnum.USUARIO);
+      localStorage.removeItem(localStoreEnum.TOKEN);
+      localStorage.removeItem(localStoreEnum.COTIZACION);
       /*Redireccionando al login */
+      window.location.reload();
       history.push("/loginCliente")
       timeoutID = setTimeout(() => {
         dispatch({
