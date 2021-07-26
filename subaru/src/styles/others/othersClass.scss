@@ -553,3 +553,43 @@
 .span-opcion{
     font-size: 12px;
 }
+
+
+
+.progres-container{
+    flex-direction: column;
+    width: 70%;
+    input{
+        width: 100% !important;
+    }
+    .progres-ui{
+        height: 2px;  
+        margin: 0;
+        margin-top: 2px;
+    } 
+    .progres-ui-level0{
+        background-color: #d00;
+        width: 20%;
+    }
+    .progres-ui-level1{
+        width: 40%;
+        background-color: #f50;
+    }
+    .progres-ui-level2{
+        width: 60%;
+        background-color: #ff0;
+    }
+    .progres-ui-level3{
+        width: 80%;
+        background-color: #05b105;
+    }
+    .progres-ui-level4{
+        width: 100%;
+        background-color: #0094f7;
+    }
+}
+@media (min-width: 200px) and (max-width: 800px){
+    .progres-container{
+        width: 100% !important;
+    }
+}

@@ -23,7 +23,7 @@ import ServerException from "../utils/serverException";
 import { Modal } from "react-bootstrap";
 import { ModalConfirmar } from "../utils/modal";
 
-
+import zxcvbn from 'zxcvbn';
 let actionType = {
   DEPARTAMENTO: "DEPARTAMENTO",
   PROVINCIA: "PROVINCIA",
@@ -282,6 +282,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         chrPassword: action.chrPassword,
+        statusPassword:action.statusPassword
       };
     case actionType.flgOfertas:
       return {
@@ -477,6 +478,7 @@ export default function RegistrarClienteV1(props) {
     },
     estado: CRUD.UPDATE.estado,
     accion: CRUD.UPDATE,
+    statusPassword: -1,
     error: {
       vchDireccion: { mensaje: "", isValidado: false },
       vchNombre: { mensaje: "", isValidado: false },
@@ -1369,7 +1371,14 @@ export default function RegistrarClienteV1(props) {
     }
 
   }
+  function handleEventChangePassword(_value) {
 
+    dispatch({
+      type: actionType.chrPassword,
+      chrPassword: _value,
+      statusPassword: zxcvbn(_value).score
+    })
+  }
   return (
     <div className="registrar-cliente">
       <div className="link-href">
@@ -1636,22 +1645,21 @@ export default function RegistrarClienteV1(props) {
           <div className="row-body">
             <div className="row-body-registro-row" >
               <label htmlFor="chrPassword" className="label-registro">Contraseña</label>
-              <input
-                type="password"
-                className={`form-control imput-registro-width ${state.error.chrPassword.isValidado ? 'imput-registro-error' : ''}`}
-                name="chrPassword"
-                autoComplete="false"
-                autoSave="false"
-                value={state.chrPassword}
-                placeholder={state.error.chrPassword.isValidado ? state.error.chrPassword.mensaje : ""}
-                title={state.error.chrPassword.isValidado ? state.error.chrPassword.mensaje : ""}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.chrPassword,
-                    chrPassword: e.target.value,
-                  })
-                }
-              ></input>
+              <div className="progres-container">
+                <input
+                  type="password"
+                  className={`form-control imput-registro-width ${state.error.chrPassword.isValidado ? 'imput-registro-error' : ''}`}
+                  name="chrPassword"
+                  autoComplete="false"
+                  autoSave="false"
+                  value={state.chrPassword}
+                  placeholder={state.error.chrPassword.isValidado ? state.error.chrPassword.mensaje : ""}
+                  title={state.error.chrPassword.isValidado ? state.error.chrPassword.mensaje : ""}
+                  onChange={(e) => handleEventChangePassword(e.target.value)}
+                ></input>
+                <div className={`progres-ui progres-ui-level${state.statusPassword}`}> </div>
+
+              </div>
             </div>
           </div>
           <div className="action-cliente">
@@ -1816,22 +1824,22 @@ export default function RegistrarClienteV1(props) {
                 })
               }
             ></input>
-             {state.direccion.flgDespacho ? <>
-            <div className="form-row-option">
-              <label className="span-opcion" >¿Yo mismo voy a recepcionar?</label>
-              <input
-                type="checkbox"
-                name="flgMismo"
-                className="form-control span-opcion"
-                autoComplete="false"
-                autoSave="false"
-                checked={state.direccion.flgMismoRecepciona}
-                onChange={(e) => handleEventMismoRecepciona(e.target.checked)
+            {state.direccion.flgDespacho ? <>
+              <div className="form-row-option">
+                <label className="span-opcion" >¿Yo mismo voy a recepcionar?</label>
+                <input
+                  type="checkbox"
+                  name="flgMismo"
+                  className="form-control span-opcion"
+                  autoComplete="false"
+                  autoSave="false"
+                  checked={state.direccion.flgMismoRecepciona}
+                  onChange={(e) => handleEventMismoRecepciona(e.target.checked)
 
-                }
-              ></input>
-            </div>
-                </>:""}
+                  }
+                ></input>
+              </div>
+            </> : ""}
           </div>
           {state.direccion.flgDespacho ? <>
 
