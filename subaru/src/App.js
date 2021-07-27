@@ -54,6 +54,8 @@ import ImagenProducto from "./producto/imagenProducto";
 import ProductoFilter from "./producto/productoFilter";
 import BannerHeader from "./utils/BannerHeader";
 import { Succespayment } from "./pago/succespayment";
+import LoginAdmin from "./loginAdmin/loginAdmin";
+import DashboardAdmin from "./loginAdmin/dashboardAdmin";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -150,6 +152,7 @@ function App() {
       vchDocumento: usuarioLogin.usuario.cliente.vchDocumento,
       chrEmail: usuarioLogin.usuario.chrEmail,
       numCodigoClienteUsuario: usuarioLogin.usuario.numCodigoClienteUsuario,
+      chrRol:usuarioLogin.usuario.chrRol
     };
 
     localStorage.setItem(localStoreEnum.ISLOGIN, LOGGIN.LOGGIN);
@@ -355,6 +358,9 @@ function App() {
             <Route path="/loginCliente">
               <LoginCliente islogin={handleIsLoggin} />
             </Route>
+            <Route path="/Admin">
+              <LoginAdmin islogin={handleIsLoggin} />
+            </Route>
             <Route path="/registrarCliente">
               <RegistrarCliente invocacion="R" />
             </Route>
@@ -363,6 +369,11 @@ function App() {
             </Route>
             <Route path="/dashboard" exact={true}>
               <DashboardCliente
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              />
+            </Route>
+            <Route path="/dashboardAdmin" exact={true}>
+              <DashboardAdmin
                 numCodigoCliente={state.usuario.numCodigoCliente}
               />
             </Route>

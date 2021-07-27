@@ -1,10 +1,11 @@
 import React, { useEffect, useReducer } from "react";
 import { Link, useHistory } from "react-router-dom";
 import {
+  chrRol,
   HttpStatus,
   localStoreEnum,
   LOGGIN,
-  SUCCESS_SERVER, 
+  SUCCESS_SERVER,
 } from "../service/ENUM";
 import { obtenerCliente } from "../service/loginCliente.service";
 import ServerException from "../utils/serverException";
@@ -30,7 +31,7 @@ export default function DashboardCliente(props) {
   // eslint-disable-next-line
   const [state, dispatch] = useReducer(reducer, {
     numCodigoCliente: props.numCodigoCliente,
-    rol: "ROLE_USER",
+    rol: chrRol.ROLE_ANONIMO,
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
   useEffect(() => {
@@ -39,13 +40,24 @@ export default function DashboardCliente(props) {
   }, [props.numCodigoCliente]);
 
   async function handleObtenerCliente(_numCodigoCliente) {
-    let _rol = "ROLE_USER";
+    let _rol = chrRol.ROLE_ANONIMO;
     const rpt = await obtenerCliente({ numCodigoCliente: _numCodigoCliente });
-    console.log(rpt);
+
     let _server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT };
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
-      _rol = json.rol;
+      let _usuario = {};
+      if (localStorage.getItem(localStoreEnum.USUARIO) !== null) {
+        _usuario = JSON.parse(localStorage.getItem(localStoreEnum.USUARIO));
+        if (_usuario.chrRol === chrRol.ROLE_ADMIN && json.chrRol === chrRol.ROLE_ADMIN) {
+          _rol = json.chrRol;
+        } else {
+          _rol = chrRol.ROLE_ANONIMO;
+        }
+      } else {
+        _rol = chrRol.ROLE_ANONIMO;
+      }
+
       _server.error = "";
       _server.success = SUCCESS_SERVER.SUCCES_SERVER_OK;
     } else {
@@ -55,16 +67,15 @@ export default function DashboardCliente(props) {
     dispatch({ type: actionType.ROL, rol: _rol, server: _server });
   }
 
-
   if (localStorage.getItem(localStoreEnum.ISLOGIN) !== LOGGIN.LOGGIN) {
     /*Verificando que el cliente este logeado */
     history.push("/loginCliente");
     return <div className="dashboard"></div>;
   }
-  console.log(state);
+
   return (
     <div className="dashboard">
-      <h3>Su Cuenta</h3> 
+      <h3>Su Cuenta</h3>
       <div className="dashboard-content">
         <Link
           to={"/informacion/" + state.numCodigoCliente + "/DashboardCliente"}
@@ -117,17 +128,17 @@ export default function DashboardCliente(props) {
             <span>FACTURAS POR ABONO</span>
           </div>
         </Link>
-        {state.rol === "ROLE_ADMIN" ? (
+        {state.rol === chrRol.ROLE_ADMIN ? (
           <Link
-            to={"/productoimagen"}
+            to={"/dashboardAdmin"}
             className="dashboard-card"
           >
             <div>
               <i
-                className="fa fa-opencart dashboard-info"
+                className="fa fa-cogs dashboard-info"
                 aria-hidden="true"
               ></i>
-              <span>PRODUCTOS</span>
+              <span>ADMINISTRADOR</span>
             </div>
           </Link>
         ) : (

@@ -222,6 +222,11 @@ const tipoDireccion = {
   FACTURACION: "Dirección de Facturación"
 };
 const homepage="subaruparts/desarrollo";
+const chrRol = {
+  ROLE_USER: 'ROLE_USER',
+  ROLE_ADMIN: 'ROLE_ADMIN',
+  ROLE_ANONIMO: "ROLE_ANONIMO"
+};
 export {
   SUCCESS_SERVER,
   HttpStatus,
@@ -244,6 +249,7 @@ export {
   FilterSubFamilia,
   filterOrder, nav_banner,
   tipoDireccion,
-  homepage
+  homepage,
+  chrRol
 };
 
