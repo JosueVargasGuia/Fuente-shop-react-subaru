@@ -25,16 +25,92 @@ const reducer = (state, action) => {
   }
 };
 
-export default function DashboardAdmin(props) {   
+export default function DashboardAdmin(props) {
+  let history = useHistory();
+
+  // eslint-disable-next-line
   const [state, dispatch] = useReducer(reducer, {
     numCodigoCliente: props.numCodigoCliente,
     rol: chrRol.ROLE_ANONIMO,
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
+  useEffect(() => {
+    handleObtenerCliente(props.numCodigoCliente);
+    console.log("useEffect[DashboardAdmin]");
+  }, []);
+
+  async function handleObtenerCliente(_numCodigoCliente) {
+    let _rol = chrRol.ROLE_ANONIMO;
+    const rpt = await obtenerCliente({ numCodigoCliente: _numCodigoCliente });
+    let _server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT };
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+      const json = await rpt.json();
+      let _usuario = {};
+      if (localStorage.getItem(localStoreEnum.USUARIO) !== null) {
+        _usuario = JSON.parse(localStorage.getItem(localStoreEnum.USUARIO));
+        if (_usuario.chrRol === chrRol.ROLE_ADMIN && json.chrRol === chrRol.ROLE_ADMIN) {
+          _rol = json.chrRol;
+        } else {
+          _rol = chrRol.ROLE_ANONIMO;
+        }
+      } else {
+        _rol = chrRol.ROLE_ANONIMO;
+      }
+      _server.error = "";
+      _server.success = SUCCESS_SERVER.SUCCES_SERVER_OK;
+    } else {
+      _server.error = "";
+      _server.success = SUCCESS_SERVER.SUCCES_SERVER_ERROR;
+    }
+    dispatch({ type: actionType.ROL, rol: _rol, server: _server });
+    if (JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)) !== null) {
+      if (!(JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)).chrRol === chrRol.ROLE_ADMIN
+        && _rol === chrRol.ROLE_ADMIN
+        && localStorage.getItem(localStoreEnum.ISLOGIN) === LOGGIN.LOGGIN)) {
+        history.push("/admin");
+      }
+    } else {
+      history.push("/admin");
+    }
+
+  }
+
+
+
   return (
     <div className="dashboard">
-       ADMIN
+      <h3>Panel de Control</h3>{state.rol === chrRol.ROLE_ADMIN ?
+        <div className="dashboard-content">
+          <Link
+            to={"/productoimagen"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-opencart dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>PRODUCTOS</span>
+            </div>
+          </Link>
+
+          <Link
+            to={"/productoimagen"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-users dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>USUARIOS</span>
+            </div>
+          </Link>
+        </div>
+        : <></>}
       <ServerException server={state.server}></ServerException>
     </div>
   );
 }
+
+

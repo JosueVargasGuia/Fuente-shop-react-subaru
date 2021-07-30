@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { CRUD, homepage, HttpStatus, localStoreEnum, SUCCESS_SERVER } from "../service/ENUM";
+import {  HttpStatus, localStoreEnum, SUCCESS_SERVER } from "../service/ENUM";
 import { validacionToken } from "../service/loginCliente.service";
 import { useHistory } from "react-router-dom";
 const actionType = { LOAD: "LOAD" };

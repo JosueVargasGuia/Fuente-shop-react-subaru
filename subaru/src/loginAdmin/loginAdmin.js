@@ -119,10 +119,12 @@ export default function LoginAdmin(props) {
 
             if (rpt.status === HttpStatus.HttpStatus_OK) {
                 const json = await rpt.json();
-
                 if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
                     props.islogin(e, { isLogin: LOGGIN.LOGGIN, usuario: json });
-                    history.push("/dashboardAdmin");
+                    setTimeout(function () {
+                        history.push("/dashboardAdmin");
+                    }, 1000);
+
                 }
                 if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
                     dispatch({
