@@ -11,9 +11,13 @@ import {
   listaAtributo,
   listaProductoAtributo,
   crudProductoAtributo,
-  crudProductoCategoria
+  crudProductoCategoria,
+  listaProductoReporte,
+   
 } from "../service/producto.service";
 import ServerException from "../utils/serverException";
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+
 export default function ImagenProducto() {
   const [chrCodigoProducto, setChrCodigoProducto] = useState("");
   const [file, setFile] = useState("");
@@ -21,6 +25,7 @@ export default function ImagenProducto() {
     rowsProductoImage: [],
     rowsProductoImageHtml: [],
     rowsProductoAtributoHtml: [],
+    rowsReporte: [],
     productoImangen: {
       numCodigoProductoImagen: 1,
       chrCodigoProducto: "",
@@ -46,11 +51,25 @@ export default function ImagenProducto() {
     rowsAtributo: [],
     numCodigoCaracteristica: 0,
     chrValue: "",
+    filterReporte: {
+      isDestacado: false,
+      isRecomendado: false,
+      isOferta: false,
+      isRemate: false,
+      isDestacadoMarca: false,
+    },
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
   useEffect(() => {
     console.log("useEffect [ImagenProducto]");
     handleLoadAtributos();
+    handleLoadReporte({
+      isDestacado: false,
+      isRecomendado: false,
+      isOferta: false,
+      isRemate: false,
+      isDestacadoMarca: false
+    })
   }, []);
   const [tabsIndex, setTabsIndex] = useState(_TabsIndex.TABS_IMAGEN);
 
@@ -92,7 +111,7 @@ export default function ImagenProducto() {
             _producto.familia.vchDescripcion = json.producto.familia.vchDescripcion;
           }
         }
-    
+
         if (json.producto.productoOnlineCategoria !== null) {
           _producto.productoOnlineCategoria.numCodigoProductoCategoria = json.productoOnlineCategoria.numCodigoProductoCategoria;
           _producto.productoOnlineCategoria.chrCodigoProducto = json.productoOnlineCategoria.chrCodigoProducto;
@@ -115,7 +134,7 @@ export default function ImagenProducto() {
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
       });
     }
-    
+
     setChrCodigoProducto(_chrCodigoProducto);
     handleEventBuiltList(_rowsProductoImage, _producto);
     handleLoadAtributoProducto(_chrCodigoProducto)
@@ -199,7 +218,7 @@ export default function ImagenProducto() {
     });
   }
   async function handleEventEliminarAtributoProducto(_numCodProdCaracteristica) {
-    handleEventGuardarProductoAtributo(_numCodProdCaracteristica,state.producto.chrCodigoProducto,
+    handleEventGuardarProductoAtributo(_numCodProdCaracteristica, state.producto.chrCodigoProducto,
       "", "", CRUD.DELETE)
   }
   async function handleEventSelectItem(obj) {
@@ -220,7 +239,7 @@ export default function ImagenProducto() {
 
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
-      
+
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let i = 0; i < json.lista.length; i++) {
           let obj = json.lista[i];
@@ -286,7 +305,7 @@ export default function ImagenProducto() {
   }
   function handleEventChangePredeterminado(_productoImangen, value) {
     _productoImangen.chrPredeterminado = value ? "1" : "0";
- 
+
     dispatch({
       type: actionType.SET_PRODUCTO,
       productoImangen: _productoImangen,
@@ -512,6 +531,57 @@ export default function ImagenProducto() {
 
   }
 
+
+  async function handleLoadReporte(filter) {
+
+    let _rowsAtributo = [];
+    const rpt = await listaProductoReporte({
+      chrDestacado: filter.isDestacado === true ? "1" : "0",
+      chrRecomendado: filter.isRecomendado === true ? "1" : "0",
+      chrOferta: filter.isOferta === true ? "1" : "0",
+      chrRemate: filter.isRemate === true ? "1" : "0",
+      chrDestacadoMarca: filter.isDestacadoMarca === true ? "1" : "0"
+    });
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+      const json = await rpt.json();
+      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+        for (let i = 0; i < json.lista.length; i++) {
+          let obj = json.lista[i];
+          _rowsAtributo.push(<tr>
+            <td><i
+            className="fa-btn fa fa-check"
+            onClick={() => handleEventFindProducto(obj.chrCodigoProducto)}
+          ></i>{obj.chrCodigoProducto}</td>
+            <td>{obj.vchDescripcion}</td>
+            <td>{obj.familia.vchDescripcion}</td>
+            <td style={{ textAlign: "center", }}>{obj.chrDestacado === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
+            <td style={{ textAlign: "center", }}>{obj.chrOferta === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
+            <td style={{ textAlign: "center", }}>{obj.chrRecomendado === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
+            <td style={{ textAlign: "center", }}>{obj.chrRemate === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
+            <td style={{ textAlign: "center", }}>{obj.chrDestacadoMarca === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
+          </tr>);
+        }
+        dispatch({
+          type: actionType.LST_REPORTE,
+          rowsReporte: _rowsAtributo,
+          server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_OK },
+        });
+      }
+      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+        dispatch({
+          type: actionType.ERROR,
+          server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO },
+        });
+      }
+    } else {
+      dispatch({
+        type: actionType.ERROR,
+        server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
+      });
+    }
+
+  }
+
   async function handleLoadAtributoProducto(_chrCodigoProducto) {
     let _rowsProductoAtributo = [];
     const rpt = await listaProductoAtributo({ chrCodigoProducto: _chrCodigoProducto });
@@ -545,49 +615,49 @@ export default function ImagenProducto() {
     handleEventBuiltListProductoCaracteristica(_rowsProductoAtributo)
   }
 
-async function handleEventGuardarCategoria(){ 
-  if (state.producto.chrCodigoProducto !== "") {
-    const rpt = await crudProductoCategoria({
-      chrCodigoProducto:state.producto.chrCodigoProducto,
-      chrRecomendado:state.isRecomendado,
-      chrDestacadoMarca:state.isDestacadoMarca,
-      chrDestacado:state.isDestacado,
-      chrOferta:state.isOferta,
-      chrRemate:state.isRemate,
-      crud:CRUD.UPDATE.descripcion    
+  async function handleEventGuardarCategoria() {
+    if (state.producto.chrCodigoProducto !== "") {
+      const rpt = await crudProductoCategoria({
+        chrCodigoProducto: state.producto.chrCodigoProducto,
+        chrRecomendado: state.isRecomendado,
+        chrDestacadoMarca: state.isDestacadoMarca,
+        chrDestacado: state.isDestacado,
+        chrOferta: state.isOferta,
+        chrRemate: state.isRemate,
+        crud: CRUD.UPDATE.descripcion
 
-    });
+      });
 
-    if (rpt.status === HttpStatus.HttpStatus_OK) {
-      const json = await rpt.json();
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-        handleEventFindProducto(state.producto.chrCodigoProducto);
-         
-      }
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+      if (rpt.status === HttpStatus.HttpStatus_OK) {
+        const json = await rpt.json();
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+          handleEventFindProducto(state.producto.chrCodigoProducto);
+
+        }
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+          dispatch({
+            type: actionType.ERROR,
+            server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO },
+          });
+        }
+      } else {
         dispatch({
           type: actionType.ERROR,
-          server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO },
+          server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
         });
       }
     } else {
       dispatch({
         type: actionType.ERROR,
-        server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
+        server: {
+          error: "Es necesario seleccionar un producto.",
+          success: SUCCESS_SERVER.SUCCES_SERVER_WARRING,
+        },
       });
     }
-  } else {
-    dispatch({
-      type: actionType.ERROR,
-      server: {
-        error: "Es necesario seleccionar un producto.",
-        success: SUCCESS_SERVER.SUCCES_SERVER_WARRING,
-      },
-    });
   }
-}
 
-  
+
   return (
     <>
       <div className="prod-img-upload">
@@ -634,6 +704,21 @@ async function handleEventGuardarCategoria(){
                 }
               >
                 Atributo
+              </span>
+            </li>
+
+            <li
+              className="nav-item"
+              onClick={() => setTabsIndex(_TabsIndex.TABS_REPORTE)}
+            >
+              <span
+                className={
+                  tabsIndex === _TabsIndex.TABS_REPORTE
+                    ? "nav-link active"
+                    : "nav-link"
+                }
+              >
+                Reporte
               </span>
             </li>
           </ul>
@@ -831,7 +916,7 @@ async function handleEventGuardarCategoria(){
                         }}
                       >
                         Codigo
-                    </td>
+                      </td>
                       <td
                         style={{
                           width: "20%",
@@ -840,7 +925,7 @@ async function handleEventGuardarCategoria(){
                         }}
                       >
                         Atributo
-                    </td>
+                      </td>
                       <td
                         style={{
                           width: "20%",
@@ -849,7 +934,7 @@ async function handleEventGuardarCategoria(){
                         }}
                       >
                         Valor
-                    </td>
+                      </td>
                       <td
                         style={{
                           width: "5%",
@@ -858,7 +943,7 @@ async function handleEventGuardarCategoria(){
                         }}
                       >
                         Acciones
-                    </td>
+                      </td>
                     </tr>
                   </thead>
                   <tbody>{state.rowsProductoAtributoHtml}</tbody>
@@ -934,7 +1019,7 @@ async function handleEventGuardarCategoria(){
                   <button
                     className="btn btn-primary  fa fa-save"
                     title="Guardar"
-                    onClick={(e)=>handleEventGuardarCategoria()}
+                    onClick={(e) => handleEventGuardarCategoria()}
                   >
                     &nbsp;Guardar
                   </button>
@@ -945,6 +1030,225 @@ async function handleEventGuardarCategoria(){
         ) : (
           ""
         )}
+        {tabsIndex === _TabsIndex.TABS_REPORTE ? <>
+          <div className="prod-img-search-row-reporte">
+            <div className="prod-img-search-row-reporte-filter">
+
+              <div className="prod-card-row">
+                <div className="div-row-1">
+                  <label>Filtrar solo:</label>
+                </div>
+              </div>
+              <div className="prod-card-row">
+                <div className="div-row-1">
+                  <label>Destacado:</label>
+                </div>
+                <div className="div-row-2">
+                  <input
+                    type="checkbox"
+                    checked={state.filterReporte.isDestacado}
+                    onChange={(e) => {
+                      dispatch({ type: actionType.SET_DESTACADO_FILTER, isDestacado: e.target.checked })
+                      let _filter = {
+                        isDestacado: e.target.checked,
+                        isRecomendado: state.filterReporte.isRecomendado,
+                        isOferta: state.filterReporte.isOferta,
+                        isRemate: state.filterReporte.isRemate,
+                        isDestacadoMarca: state.filterReporte.isDestacadoMarca,
+                      }
+                      handleLoadReporte(_filter);
+                    }}></input>
+                </div>
+              </div>
+
+
+              <div className="prod-card-row">
+                <div className="div-row-1">
+                  <label>Recomendado:</label>
+                </div>
+                <div className="div-row-2">
+                  <input
+                    type="checkbox"
+                    checked={state.filterReporte.isRecomendado}
+                    onChange={(e) => {
+                      dispatch({ type: actionType.SET_RECOMENDADO_FILTER, isRecomendado: e.target.checked })
+                      let _filter = {
+                        isDestacado: state.filterReporte.isDestacado,
+                        isRecomendado: e.target.checked,
+                        isOferta: state.filterReporte.isOferta,
+                        isRemate: state.filterReporte.isRemate,
+                        isDestacadoMarca: state.filterReporte.isDestacadoMarca,
+                      }
+                      handleLoadReporte(_filter);
+                    }}></input>
+                </div>
+              </div>
+
+              <div className="prod-card-row">
+                <div className="div-row-1">
+                  <label>Oferta:</label>
+                </div>
+                <div className="div-row-2">
+                  <input
+                    type="checkbox"
+                    checked={state.filterReporte.isOferta}
+                    onChange={(e) => {
+                      dispatch({ type: actionType.SET_OFERTA_FILTER, isOferta: e.target.checked })
+                      let _filter = {
+                        isDestacado: state.filterReporte.isDestacado,
+                        isRecomendado: state.filterReporte.isRecomendado,
+                        isOferta: e.target.checked,
+                        isRemate: state.filterReporte.isRemate,
+                        isDestacadoMarca: state.filterReporte.isDestacadoMarca,
+                      }
+                      handleLoadReporte(_filter);
+                    }}></input>
+                </div>
+              </div>
+              <div className="prod-card-row">
+                <div className="div-row-1">
+                  <label>Remate:</label>
+                </div>
+                <div className="div-row-2">
+                  <input
+                    type="checkbox"
+                    checked={state.filterReporte.isRemate}
+                    onChange={(e) => {
+                      dispatch({ type: actionType.SET_REMATE_FILTER, isRemate: e.target.checked })
+                      let _filter = {
+                        isDestacado: state.filterReporte.isDestacado,
+                        isRecomendado: state.filterReporte.isRecomendado,
+                        isOferta: state.filterReporte.isOferta,
+                        isRemate: e.target.checked,
+                        isDestacadoMarca: state.filterReporte.isDestacadoMarca,
+                      }
+                      handleLoadReporte(_filter);
+                    }}></input>
+                </div>
+              </div>
+              <div className="prod-card-row">
+                <div className="div-row-1">
+                  <label>Destacado en marca:</label>
+                </div>
+                <div className="div-row-2">
+                  <input
+                    type="checkbox"
+                    checked={state.filterReporte.isDestacadoMarca}
+                    onChange={(e) => {
+                      dispatch({ type: actionType.SET_DESTACADO_MARCA_FILTER, isDestacadoMarca: e.target.checked })
+                      let _filter = {
+                        isDestacado: state.filterReporte.isDestacado,
+                        isRecomendado: state.filterReporte.isRecomendado,
+                        isOferta: state.filterReporte.isOferta,
+                        isRemate: state.filterReporte.isRemate,
+                        isDestacadoMarca: e.target.checked,
+                      }
+                      handleLoadReporte(_filter);
+                    }}></input>
+                </div>
+              </div>
+              <div className="prod-card-row">
+                <div className="div-row-1">             
+                <ReactHTMLTableToExcel
+                    id="table-xls1"
+                    className="btn btn-primary"
+                    table="table-xls"
+                    filename="Reporte"
+                    sheet="Reporte"
+                    buttonText="Exportar">
+              
+                      </ReactHTMLTableToExcel>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div className="tbl-rpt-display">
+              
+              <table  id="table-xls">
+                <thead>
+                  <tr>
+                    <td
+                      style={{
+                        width: "13%",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Codigo
+                    </td>
+
+                    <td
+                      style={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Descripcion
+                    </td>
+                    <td
+                      style={{
+                        width: "8%",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Marca
+                    </td>
+                    <td
+                      style={{
+                        width: "8%",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Destacado
+                    </td>
+                    <td
+                      style={{
+                        width: "8%",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Oferta
+                    </td>
+
+                    <td
+                      style={{
+                        width: "8%",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Recomendado
+                    </td>
+                    <td
+                      style={{
+                        width: "8%",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Remate
+                    </td>
+                    <td
+                      style={{
+                        width: "12%",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Destacado en Marca
+                    </td>
+                  </tr>
+
+                </thead>
+                <tbody>
+                  {state.rowsReporte}
+                </tbody>
+              </table>
+            </div> </div>
+        </> : ""}
       </div>
 
       <ServerException server={state.server}></ServerException>
@@ -954,6 +1258,7 @@ async function handleEventGuardarCategoria(){
 const _TabsIndex = {
   TABS_IMAGEN: 0,
   TABS_ATRIBUTO: 1,
+  TABS_REPORTE: 2,
 };
 let actionType = {
   chrCodigoProducto: "chrCodigoProducto",
@@ -970,8 +1275,16 @@ let actionType = {
   SET_CODIGO_CARACTERISTICA: "SET_CODIGO_CARACTERISTICA",
   SET_VALUE_CARACTERISTICA: "SET_VALUE_CARACTERISTICA",
   SET_RESET: "SET_RESET",
+  LST_REPORTE: "LST_REPORTE",
+
+  SET_DESTACADO_FILTER: "SET_DESTACADO_FILTER",
+  SET_RECOMENDADO_FILTER: "SET_RECOMENDADO_FILTER",
+  SET_OFERTA_FILTER: "SET_OFERTA_FILTER",
+  SET_REMATE_FILTER: "SET_REMATE_FILTER",
+  SET_DESTACADO_MARCA_FILTER: "SET_DESTACADO_MARCA_FILTER",
 };
 const reducer = (state, action) => {
+  let _filterReporte = state.filterReporte;
   switch (action.type) {
     case actionType.chrCodigoProducto:
       return {
@@ -1032,6 +1345,12 @@ const reducer = (state, action) => {
         rowsAtributo: action.rowsAtributo,
 
       };
+    case actionType.LST_REPORTE:
+      return {
+        ...state,
+        rowsReporte: action.rowsReporte,
+
+      };
 
     case actionType.LIST_PRODUCTO_ATRIBUTO:
       return {
@@ -1056,8 +1375,31 @@ const reducer = (state, action) => {
         chrValue: action.chrValue,
         numCodigoCaracteristica: action.numCodigoCaracteristica,
       };
+    case actionType.SET_DESTACADO_FILTER:
 
+      _filterReporte.isDestacado = action.isDestacado;
+      return { ...state, filterReporte: _filterReporte };
+
+    case actionType.SET_OFERTA_FILTER:
+
+      _filterReporte.isOferta = action.isOferta;
+      return { ...state, filterReporte: _filterReporte };
+
+    case actionType.SET_REMATE_FILTER:
+
+      _filterReporte.isRemate = action.isRemate;
+      return { ...state, filterReporte: _filterReporte };
+
+    case actionType.SET_RECOMENDADO_FILTER:
+      _filterReporte.isRecomendado = action.isRecomendado;
+      return { ...state, filterReporte: _filterReporte };
+
+    case actionType.SET_DESTACADO_MARCA_FILTER:
+      _filterReporte.isDestacadoMarca = action.isDestacadoMarca;
+      return { ...state, filterReporte: _filterReporte };
     default:
       return state;
   }
 };
+
+

@@ -1,3 +1,4 @@
+import { homepage } from "../service/ENUM";
 
 export default function ProductoMarcaResumen(props) {
   let rowPromo = props.marcaSelect.lstBannerPromocion.map((row) => (
@@ -18,9 +19,9 @@ export default function ProductoMarcaResumen(props) {
 function ProductoResumenMarcaCard(props) {
    
   return (
-    <div className="prod-resumen-card"  >
-      <img
-        src={props.promocion.srcImage}
+    <div className="prod-resumen-card" key={props.key}  >
+      <img key={props.key}
+        src={(homepage===undefined?"":"/"+homepage) +props.promocion.srcImage}
         alt={props.promocion.descripcion}
       ></img>
     </div>

@@ -2,64 +2,50 @@ import "./filterMarcas.css";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import TipoCambio from "../producto/tipoCambio";
-import { LOGGIN, Moneda } from "../service/ENUM";
+import { homepage, LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
 import BottonCarrito from "../utils/bottonCarrito";
 
-export default function FilterMarcas(props) {
-  let status = props.marcaSelect.codigoMarca === 0 ? 0 : 1;
-  const [srcLogo] = useState(window.location.origin + "/marcas/logo.jpg");
-  const [descripcion, setDescripcion] = useState(props.decripcion);
-  let rowMarcas = props.lstMarcas.map((objMarcas) =>
-    objMarcas.codigoMarca !== 0 ? (
-      <li
-        className={
-          props.marcaSelect !== undefined &&
-            objMarcas.codigoMarca === props.marcaSelect.codigoMarca
-            ? " nav-marcas-lista marca-select "
-            : (status === 0?"nav-marcas-li-ul-li "+ objMarcas.classMarca:" nav-marcas-lista ")
-        }
-        value={objMarcas.codigoMarca}
-        key={objMarcas.codigoMarca}
-        onClick={(e) => props.handleSelectMarcaChange(e.currentTarget.value, 'FilterMarcas')}
-      >
-        <Link to={"/shop?descripcion=" + objMarcas.decripcion}>
-          {status === 0 ? (
-            <img src={objMarcas.srcImage} alt={objMarcas.decripcion}></img>
-          ) : (
-            objMarcas.decripcion
-          )}
-        </Link>
-      </li>
-    ) : (
-      ""
-    )
-  );
+const listaRepuesto = [
+  { descripcion: "Tren de Transmisión" },
+  { descripcion: "Sistema Eléctrico" },
+  { descripcion: "Sistema de enfriamiento" },
+  { descripcion: "Repuestos de Mantenimiento" },
+  { descripcion: "Sistema de Dirección" },
+  { descripcion: "Estilo de Vida Subaru" },
+  { descripcion: "Interior" },
+  { descripcion: "Fluidos" },
+  { descripcion: "Sistemas de Frenos" },
+  { descripcion: "Puertas y Paneles" },
+  { descripcion: "Suspensión" },]
 
-  let rowMarcasList = props.lstMarcas.map((objMarcas) =>
-    objMarcas.codigoMarca !== 0 ? (
-      <li
-        className={
-          props.marcaSelect !== undefined &&
-            objMarcas.codigoMarca === props.marcaSelect.codigoMarca
-            ? "marca-select"
-            : ""
-        }
-        value={objMarcas.codigoMarca}
-        key={objMarcas.codigoMarca}
-        onClick={(e) => props.handleSelectMarcaChange(e.currentTarget.value, 'FilterMarcas')}
-      >
-        <Link to={"/shop?descripcion=" + objMarcas.decripcion}>
-          {objMarcas.decripcion}
-        </Link>
-      </li>
-    ) : (
-      ""
-    )
-  );
+const listaAcesorios = [
+  { descripcion: "Audio / Media" },
+  { descripcion: "Comodidad y Conveniencia" },
+  { descripcion: " Estilo de Vida" },
+  { descripcion: "Protección y Seguridad" },
+  { descripcion: "Estilo" },
+  { descripcion: " Productos STI" },]
+export default function 
+FilterMarcas(props) {
+  //let status = props.marcaSelect.codigoMarca === 0 ? 0 : 1;
+
+
+
+  const [srcLogo] = useState(window.location.origin+(homepage==undefined?"":"/"+homepage) + "/marcas/logo.png");
+  const [descripcion, setDescripcion] = useState(props.decripcion);
+  let rowRepuesto = listaRepuesto.map((rowRepu) => <li>
+    <Link>{rowRepu.descripcion}</Link>
+  </li>);
+  let rowAccesorio = listaAcesorios.map((rowAcce) => <li>
+    <Link>{rowAcce.descripcion}</Link>
+  </li>);
+
 
   let history = useHistory();
   const onClickImage = () => {
-    props.handleSelectMarcaChange(props.marcaSelect.codigoMarca, 'FilterMarcas');
+    console.log(props.marcaSelec);
+    //props.handleSelectMarcaChange(props.marcaSelect.codigoMarca, 'FilterMarcas');
+    props.handleSelectMarcaChange(lstMarcas[0].codigoMarca, 'FilterMarcas');
     history.push("/shop");
   };
   const onClickImageShop = () => {
@@ -75,7 +61,7 @@ export default function FilterMarcas(props) {
   }
 
 
-  return (<>  
+  return (<>
     <div className="filter-marcas">
       <div className="header-nav">
         <div className="header-phone">
@@ -100,10 +86,10 @@ export default function FilterMarcas(props) {
               onChange={props.handleChangeTipoMoneda}
             >
               <option value={Moneda.DOLARES.numCodigoMoneda}>
-                {Moneda.DOLARES.codigoIso4217  }
+                {Moneda.DOLARES.codigoIso4217}
               </option>
               <option value={Moneda.SOLES.numCodigoMoneda}>
-                {Moneda.SOLES.codigoIso4217  }
+                {Moneda.SOLES.codigoIso4217}
               </option>
             </select>
           </div>
@@ -136,46 +122,42 @@ export default function FilterMarcas(props) {
         </div>
       </div>
 
-      <div className={`filter-row-1 ${status == !0 ? "isbrand" : ""}`}>
+      <div className={`filter-row-1 isbrand`}>
         <div className="outer-header">
-         {status === 0 ? (
-            ""
-          ) : (
-            <div className="filter-image">
-              <img
-                src={
-                  props.marcaSelect !== undefined
-                    ? props.marcaSelect.srcImage
-                    : ""
-                }
-                alt=""
-                onClick={onClickImage}
-              ></img>
-            </div>
-          )}
+          <div className="filter-image">
+            <img
+              src={srcLogo}
+              alt=""
+              onClick={onClickImage}
+            ></img>
+          </div>
+          <div className="filter-marca-categoria">
+            <ul className="nav-span">
+              <li>REPUESTOS
+                <ul>
+                  {rowRepuesto}
+                </ul>
+              </li>
+              <li >ACCESORIOS
+                <ul>
+                  {rowAccesorio}
+                </ul>
+              </li>
+            </ul>
 
-          
-        
-
-
-          {status !== 0 ?
-            <div className="filter-marca-categoria">
-              <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"} title="Búsqueda Avanzada">
-                <i className="" aria-hidden="true" title="Búsqueda Avanzada"></i>Menú
-            </Link>
-            </div> : ''}
+          </div>
         </div>
         <div className="inner-header">
-        <div className="filter-home">
-            <Link onClick={onClickImageShop} to="/shop">
-              <img src={srcLogo} alt="/marcas/logo.jpg"></img>
+          <div className="filter-home">
+            <Link className="filter-home-concecionario"> EA Corp - Concesionario Autorizado
             </Link>
+           
           </div>
-
+          <i className="fa fa-peru" aria-hidden="true"></i>
           <div className="filter-input">
             <div className="filter-input-search">
               <input
-                placeholder="Busqueda en Catálogo"
+                placeholder="Búsqueda en Catálogo"
                 value={props.decripcion}
                 onChange={(e) => handleInputChangeDescripcion(e)}
               ></input>
@@ -189,71 +171,34 @@ export default function FilterMarcas(props) {
         </div>
 
       </div>
-      <div className={`filter-row-2 ${status ===0 ? "filter-row-2-start" : "filter-row-2-center"} `}>
-        {status === 0 ? "" : (<span className="filter-row-2-goto">Ir a:</span>)}
+      <div className={`filter-row-2 filter-row-2-start`}>
+
         <div className="lista-marca">
-          <ul className="nav-marcas">
-            <li>
-              <ul>{rowMarcas}</ul>
-            </li>
-          </ul>
+
         </div>
       </div>
 
       <div className="filter-row-mobile">
-        <ul className="nav-marcas">
-          <li>
-            <span>
-              <i className="fa fa-bars menu-bar" aria-hidden="true"></i>
-            </span>
-            <ul>
-              {rowMarcasList}
-              <li>
-                <div className="header-link-tipcambio">
-                  Moneda
-                  <select
-                    className="tip-cambio-select "
-                    name="numTipoMoneda"
-                    value={props.moneda.numCodigoMoneda}
-                    onChange={props.handleChangeTipoMoneda}
-                  >
-                    <option value={Moneda.DOLARES.numCodigoMoneda}>
-                      {Moneda.DOLARES.codigoIso4217  }
-                    </option>
-                    <option value={Moneda.SOLES.numCodigoMoneda}>
-                      {Moneda.SOLES.codigoIso4217 }
-                    </option>
-                  </select>
-                </div>
+
+
+        <>
+          <div className="filter-image">
+            <img src={srcLogo} alt="" onClick={onClickImage}></img>
+          </div>
+          <ul className="nav-span">
+              <li>REPUESTOS
+                <ul>
+                  {rowRepuesto}
+                </ul>
+              </li>
+              <li >ACCESORIOS
+                <ul>
+                  {rowAccesorio}
+                </ul>
               </li>
             </ul>
-          </li>
-        </ul>
-        {status === 0 ? (
-          <>
-            <div className="filter-image">
-              <img src={srcLogo} alt="" onClick={onClickImage}></img>
-            </div></>
-        ) : (
-          <>
-            <div className="filter-marca-categoria">
-              <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"} title="Búsqueda Avanzada">
-                <i className="fa fa-filter" aria-hidden="true" title="Búsqueda Avanzada" ></i>
-              </Link>
-            </div>
+          </>
 
-            <div className="filter-image">
-              <img
-                src={
-                  props.marcaSelect !== undefined
-                    ? props.marcaSelect.srcImage
-                    : ""
-                }
-                alt={props.marcaSelect.decripcion}
-                onClick={onClickImage}
-              ></img>
-            </div></>
-        )}
         <div className="header-link">
           {props.islogin !== LOGGIN.LOGGIN ? (
             <Link aria-hidden="true" to="/loginCliente" title="Iniciar sesión">
@@ -285,7 +230,7 @@ export default function FilterMarcas(props) {
       <div className="filter-row-mobile-input">
         <div className="filter-input-search">
           <input
-            placeholder="Busqueda en Catálogo"
+            placeholder="Búsqueda en Catálogo"
             value={props.decripcion}
             onChange={(e) => props.handleInputChangeDescripcion(e)}
           ></input>

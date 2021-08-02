@@ -4,9 +4,12 @@
     --color-background-contenido: #dbdbdb;
     --color-background-white: #ffffff;
     --color-background-red: #ff0000;
+    --color-background-Gray:#787878;
+    --color-background-blue: #0225C7;
     /*--color-4:#4B908E;
 --color-5:#316064;  */
     --color-button-hover: #4992ff;
+    --color-button-hover2: #2fb5d2;
     --color-font-default: #000000;
     --color-font: #7a7a7a;
     --color-font2: #4992ff;
@@ -63,19 +66,19 @@ a{
 
 .server-exception-action {
     position: fixed;
-    margin-top: 1em;
-    top: 55%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     width: inherit;
+    flex-direction: column;
 }
 
 .server-exception {
     position: fixed;
     z-index: 1000;
-    height: 28%;
+    height: 18%;
     width: 50%;
+    min-height: 163px;
     top: 35%;
     background-color: var(--color-background-contenido);
     margin: 0;
@@ -88,8 +91,21 @@ a{
     text-align: justify;
     opacity: 1;
     display: block;
+  
+  
 }
-
+@media (min-width: 10px) and (max-width: 900px) {
+    .server-exception {
+        width: 73%;
+        left: 15%;
+        height: 18%;
+        min-height: 205px !important;
+    }
+}
+.server-exception-body{
+    min-width: 150px;
+    display: flex;
+}
 .server-exception-opacity {
     opacity: 0;
     display: none;
@@ -1917,7 +1933,7 @@ h4 {
 
 .produc-destacado-title {
     border-radius: 15px 15px 0 0;
-    background-color: var(--color-background-red);
+    background-color: var(--color-background-Gray);
     padding: 0.5em;
 }
 
@@ -1985,10 +2001,17 @@ h4 {
 }
 
 .filter-marca-categoria {
-    margin-right: 3em;
-    margin-top: 5px;
+    margin-left: 3em;
+    margin-top: -15px;
 }
 
+.filter-marca-categoria {
+    span{
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        font-weight: bold;
+    }
+}
 .filter-marca-categoria a {
     text-decoration: none;
     color: var(--color-font);
@@ -2252,7 +2275,64 @@ h4 {
     border-radius: 10px;
     min-height: 360px;
 }
+.prod-img-search-row-reporte {
+    width: 97%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+    padding-bottom: 0.4em;
+    padding-left: 0.85em;
+    padding-right: 0.2em;
+    padding-top: 0.4em;
+    background: var(--color-background-white);
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    border-radius: 10px;
+    min-height: 360px;
+    hr{
+        
+        margin: 0em;
+        margin-bottom: 0.2em;
+    }
+    thead{
+        tr{
+            td{
+                border: solid 0.5px var(--color-font2);
+                color:var(--color-font3);
+                background-color: var(--color-font2);
+            }
+        }
+    }
 
+   td {
+        border: solid 0.5px var(--color-font2);
+        font-size: 12px;
+        .fa-check{
+            color: #36df36;
+        }
+        .fa-btn{            
+            cursor: pointer;         
+            padding: 2px;
+            margin-right: 3px;
+        }
+    }
+}
+.prod-img-search-row-reporte-filter{
+    display: flex;
+    flex-wrap: wrap;
+    .div-row-1{
+        width: 100%;
+        margin-left: 1em;
+    }
+    .prod-card-row{
+        margin-top: 0em;
+        margin-left: 1em;
+        .btn{
+            padding: .1rem .75rem;
+        }
+    }
+   
+}
 .prod-img-search-row2 {
     width: 45%;
 }

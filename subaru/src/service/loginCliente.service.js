@@ -3,8 +3,29 @@ import {
   METHOD,
   tokenFetchService,
 } from "../matchService/fetchService";
+import { HttpStatus } from "./ENUM";
 
 import { IP, URL } from "./IP";
+
+
+async function validacionToken(body) {
+  let _response = { status: 200 };
+  try {
+    const response = await fetchService(
+      IP(URL.VALIDATE_TOKEN),
+      body,
+      METHOD.POST
+    );
+    if (response.status === HttpStatus.HttpStatus_OK) {
+      _response = response;
+    } else {
+      _response.status = -999;
+    }
+    return _response;
+  } catch (error) {
+    _response.status = -999;
+  }
+}
 async function logeoCLiente(body) {
   const response = await fetchService(IP(URL.LOGIN_CLIENTE), body, METHOD.POST);
   return response;
@@ -47,7 +68,7 @@ async function registrarCliente(body) {
   return response;
 }
 async function obtenerCliente(body) {
-  const response = await fetchService(
+  const response = await tokenFetchService(
     IP(URL.OBTENER_CLIENTE),
     body,
     METHOD.POST
@@ -89,5 +110,6 @@ export {
   obtenerCliente,
   obtenerDirecciones,
   registrarDireccion,
-  eliminarDireccion 
+  eliminarDireccion,
+  validacionToken
 };

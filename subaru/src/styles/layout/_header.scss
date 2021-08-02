@@ -1,6 +1,6 @@
 .header-top{
-    padding-bottom: 0.2em;
-    margin-bottom: 0.2em;;
+    padding-bottom: 0.1em;
+    margin-bottom: 0.1em;;
     background-color:transparent;
     @media ($md) {
         background-color: #fff;
@@ -15,7 +15,7 @@
             height: auto;
             justify-content: space-between;
             background-color: #fff;
-            padding: 0.5rem 15px;
+            padding: 0.1em;
             margin-top:0;
             width: calc(100% + 30px);
             margin-left: -15px;
@@ -65,7 +65,7 @@
             font-size: 12px;
             width: 100%;
             align-items: center;
-            padding:4px 0;
+            padding:0;
             border-bottom: 1px solid #f1f1f1;
             padding-top: 0.3em;
             .header-phone{
@@ -126,7 +126,7 @@
                 max-height: inherit;
                 min-width: inherit;
                 img{
-                    max-width: 140px;
+                    max-width: 180px;
                     margin: 0;
                     object-fit: scale-down;
                 }
@@ -158,7 +158,7 @@
         }
         .filter-row-2{
             width:100%;
-            padding:4px 0;
+            padding:0;
         }
     }
 }

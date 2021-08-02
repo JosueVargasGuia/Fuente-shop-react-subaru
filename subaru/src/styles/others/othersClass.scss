@@ -2,7 +2,7 @@
     /*Josue 19/05/2021 cambios de la reunion Nroº1*/
     .header-nav-banner{
         padding: 0.5em;
-        background-color: var( --color-background-red);
+        background-color: #00a3e0;
         color: var(--color-font3);
         text-align: center;
     }
@@ -315,4 +315,281 @@
     color: var(--color-font-default);
     font-weight: bold;
     font-size: 1.1em;
+}
+
+.nav-span {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+    margin-bottom: 0em;
+    cursor: pointer;     
+    list-style: none;
+    display: flex;   
+    text-align: start;
+    font-weight: bold;
+   
+   li{
+    color: var(--color-font-default);   
+    &:hover{
+        color: var(--color-button-hover2);  
+    }
+    width: 120px;
+        ul{
+        display: none;
+        width: 250px;
+        box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+            li{
+                list-style: none;
+                text-align: start;
+                margin-left: 1em;
+                width: 230px;
+                a{
+                    color: var(--color-font-default);
+                    text-decoration: none;
+                    &:hover{
+                        color: var(--color-button-hover2);  
+                      }
+                }
+                
+            }  
+        }
+    }   
+}
+
+.nav-span li:hover > ul{
+    display: block;
+    position: absolute;   
+    background: white;
+    padding: 0px 0px 0px 0px;
+    z-index: 999;    
+}
+.filter-home-concecionario{
+    color: var(--color-font-default);    
+    font-size: 0.85em;
+    &:hover{
+        text-decoration: none;
+        color: var(--color-button-hover2);  
+    }
+  
+}
+.fa-peru {
+    content: url('peru.png');
+    height: 20px;
+    width: 25px;
+}
+
+.produc-destacado-links{
+    background-color: var( --color-background-white); 
+    hr{
+        margin-top: 0em !important;
+        margin-bottom: 0em !important;
+    }
+}
+
+.produc-destacado-links-title{
+    font-weight: bold;
+    margin-left: 0.5em;
+}   
+
+.produc-link{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;   
+  
+    div{
+        width: 15%;        
+        min-height: 15%;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+        padding-bottom: 0.4em;
+        text-align: center;
+       a{        
+        text-decoration: none;
+        color: var(--color-font-default);  
+        font-size: 0.8em;
+            &:hover{
+                color: var(--color-button-hover2);
+            }
+        } 
+        
+        img{
+            border: none;
+            width: 99%;
+        }
+    }
+}
+.produc-destacado-links-title{
+    font-family: "Lato",sans-serif;
+    font-size: 17pt;
+}
+.produc-link-accesorio{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; 
+    .produc-link-card{
+            width: 48%;                 
+            margin-top: 0.1em;
+            margin-bottom: 0.1em;
+            margin-right: 0.1em;
+            margin-left: 0.1em;   
+            height: 200px;
+            position: relative;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;    
+    }
+    .produc-link-accesorio-left{
+        position: relative;
+        width: 33.33%;
+        height: 100%;
+        padding-right: 10px;
+        padding-left: 10px;
+        background-color: rgba(255,255,255,.8);
+       
+        .title{         
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+            padding-top: 40px;
+            text-transform: uppercase;
+        }
+        .content{
+            font-size: 14px;
+        }
+    }
+ 
+}
+@media (min-width: 0px) and (max-width: 994px){
+    .produc-link-accesorio .produc-link-card {
+        width: 98%;  
+    }
+}
+.wspclass{
+    background-color: transparent;
+    display: inline-block;
+    top: 92%;    
+    right: 2%;
+    z-index: 100;
+    position: fixed;
+    border-radius: 2px;
+    text-align: center;
+    width: 57px;
+    height: 47px;
+    vertical-align: middle;
+    padding: 1px;
+    div{
+        color: white;        
+        height: 30px;      
+        i{
+            margin-right: 0em;
+            font-size: 26px;
+            background-color: #25d366;
+            height: 30px;
+            width: 36px;
+            border-radius: 100%;
+            padding: 2px;
+        }
+        p{
+            color: var(--color-font-default);
+            font-size: 12px;
+            font-weight: bold;
+        }
+    }
+    a{
+        text-decoration: none;
+    }
+    
+}
+.carousel .slide img{
+    height: inherit !important;
+}
+.prod-det-carrousel .carousel .slide img {
+    width: 80%;
+    object-fit: contain;
+}
+
+.tbl-rpt-display{
+    min-height: 360px;
+    overflow-x: auto;
+    max-height: 360px;
+}
+
+ 
+.outlet{
+    z-index: 2;
+    position: relative;
+    top: -290px;
+    float: right;
+    img{
+        width: 150px;
+        height: 131px;
+    }
+}
+
+
+/*-----*/
+.form-row-option{
+    display: flex;
+    flex-direction: row;
+    margin-left: 0.3em;
+    label{
+        width: auto !important;
+        margin-bottom: 0;
+        margin-right: 0.3em;
+        font-style: italic;
+    }
+    input[type=checkbox] {
+        font-size: 0.2em;
+        text-align: left;
+        margin-left: 0.2em;
+        width: 15px !important;
+        margin-right: 1em;
+    }
+}
+.span-opcion{
+    font-size: 12px;
+}
+
+
+
+.progres-container{
+    flex-direction: column;
+    width: 70%;
+    input{
+        width: 100% !important;
+    }
+    .progres-ui{
+        height: 2px;  
+        margin: 0;
+        margin-top: 2px;
+    } 
+    .progres-ui-level0{
+        background-color: #d00;
+        width: 20%;
+    }
+    .progres-ui-level1{
+        width: 40%;
+        background-color: #f50;
+    }
+    .progres-ui-level2{
+        width: 60%;
+        background-color: #ff0;
+    }
+    .progres-ui-level3{
+        width: 80%;
+        background-color: #05b105;
+    }
+    .progres-ui-level4{
+        width: 100%;
+        background-color: #0094f7;
+    }
+}
+@media (min-width: 200px) and (max-width: 800px){
+    .progres-container{
+        width: 100% !important;
+    }
 }
