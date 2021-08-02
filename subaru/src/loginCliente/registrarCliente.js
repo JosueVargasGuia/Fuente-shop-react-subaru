@@ -1729,7 +1729,7 @@ export default function RegistrarClienteV1(props) {
         <Modal.Body>
 
           <div className="form-row-direccion">
-            <label htmlFor="vchDireccion">Dirección Facturación</label>
+            <label htmlFor="vchDireccion">Dirección {state.direccion.flgDespacho ?'Despacho': 'Facturación'}</label>
             <input
               type="text"
               name="vchDireccion"
