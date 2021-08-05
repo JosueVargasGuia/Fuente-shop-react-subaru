@@ -56,6 +56,8 @@ import BannerHeader from "./utils/BannerHeader";
 import { Succespayment } from "./pago/succespayment";
 import LoginAdmin from "./loginAdmin/loginAdmin";
 import DashboardAdmin from "./loginAdmin/dashboardAdmin";
+import RegistrarUsuario from "./loginAdmin/usuario/registrarUsuario";
+import ListaUsuario from "./loginAdmin/usuario/listaUsuario";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -152,7 +154,7 @@ function App() {
       vchDocumento: usuarioLogin.usuario.cliente.vchDocumento,
       chrEmail: usuarioLogin.usuario.chrEmail,
       numCodigoClienteUsuario: usuarioLogin.usuario.numCodigoClienteUsuario,
-      chrRol:usuarioLogin.usuario.chrRol
+      chrRol: usuarioLogin.usuario.chrRol
     };
 
     localStorage.setItem(localStoreEnum.ISLOGIN, LOGGIN.LOGGIN);
@@ -287,7 +289,7 @@ function App() {
 
   return (
     <div className="App" style={{ height: height }}>
-       
+
       <BrowserRouter basename={homepage}>
         <BannerHeader></BannerHeader>
         <div className="header-top">
@@ -399,7 +401,12 @@ function App() {
             <Route path="/productoImagen">
               <ImagenProducto />
             </Route>
-
+            <Route path="/usuarioAdmin/:numCodigoCliente/:numCodigoClienteUsuario">
+              <RegistrarUsuario numCodigoCliente={state.usuario.numCodigoCliente}></RegistrarUsuario>
+            </Route>
+            <Route path="/listaUsuarioAdmin">
+              <ListaUsuario numCodigoCliente={state.usuario.numCodigoCliente}></ListaUsuario>
+            </Route>
             <Route path="/">
               <Carrucel
                 marca={lstMarcas[0]}

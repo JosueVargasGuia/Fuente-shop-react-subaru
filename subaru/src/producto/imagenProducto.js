@@ -12,11 +12,11 @@ import {
   listaProductoAtributo,
   crudProductoAtributo,
   crudProductoCategoria,
-  listaProductoReporte,
-   
+  listaProductoReporte
 } from "../service/producto.service";
 import ServerException from "../utils/serverException";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Link } from "react-router-dom";
 
 export default function ImagenProducto() {
   const [chrCodigoProducto, setChrCodigoProducto] = useState("");
@@ -548,10 +548,12 @@ export default function ImagenProducto() {
         for (let i = 0; i < json.lista.length; i++) {
           let obj = json.lista[i];
           _rowsAtributo.push(<tr>
-            <td><i
+            <td>
+            <i
             className="fa-btn fa fa-check"
             onClick={() => handleEventFindProducto(obj.chrCodigoProducto)}
-          ></i>{obj.chrCodigoProducto}</td>
+          ></i>{obj.chrCodigoProducto}
+            </td>
             <td>{obj.vchDescripcion}</td>
             <td>{obj.familia.vchDescripcion}</td>
             <td style={{ textAlign: "center", }}>{obj.chrDestacado === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
@@ -660,6 +662,12 @@ export default function ImagenProducto() {
 
   return (
     <>
+     <div className="link-href">
+     <Link to="/dashboardAdmin">
+          <i className="fa fa-home" aria-hidden="true"></i>
+          Panel de Control
+        </Link>
+     </div>
       <div className="prod-img-upload">
         <div className="prod-img-search">
           <label>Codigo Producto&nbsp;&nbsp;&nbsp;</label>
@@ -1252,6 +1260,12 @@ export default function ImagenProducto() {
       </div>
 
       <ServerException server={state.server}></ServerException>
+      <div className="link-href">
+     <Link to="/dashboardAdmin">
+          <i className="fa fa-home" aria-hidden="true"></i>
+          Panel de Control
+        </Link>
+     </div>
     </>
   );
 }

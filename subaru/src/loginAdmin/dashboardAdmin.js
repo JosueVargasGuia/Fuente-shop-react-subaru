@@ -8,6 +8,7 @@ import {
   SUCCESS_SERVER,
 } from "../service/ENUM";
 import { obtenerCliente } from "../service/loginCliente.service";
+import Loading from "../utils/loading";
 import ServerException from "../utils/serverException";
 
 let actionType = { ROL: "ROL" };
@@ -95,7 +96,7 @@ export default function DashboardAdmin(props) {
           </Link>
 
           <Link
-            to={"/productoimagen"}
+            to={"/listaUsuarioAdmin"}
             className="dashboard-card"
           >
             <div>
@@ -106,8 +107,25 @@ export default function DashboardAdmin(props) {
               <span>USUARIOS</span>
             </div>
           </Link>
+
+          <Link
+            to={"/dashboard"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-id-card dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>Usuario Dashboar</span>
+            </div>
+          </Link>
         </div>
-        : <></>}
+        : <>
+          <div className="dashboard-content"><div className="dashboard-content">
+            <Loading></Loading>
+          </div></div>
+        </>}
       <ServerException server={state.server}></ServerException>
     </div>
   );

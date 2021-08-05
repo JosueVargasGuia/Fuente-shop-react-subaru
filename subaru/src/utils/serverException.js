@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import {  HttpStatus, localStoreEnum, SUCCESS_SERVER } from "../service/ENUM";
+import {   HttpStatus, localStoreEnum, SUCCESS_SERVER } from "../service/ENUM";
 import { validacionToken } from "../service/loginCliente.service";
 import { useHistory } from "react-router-dom";
 const actionType = { LOAD: "LOAD" };
@@ -48,6 +48,7 @@ export default function ServerException(props) {
     });
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
+      console.log(json);
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_EXPIRE) {
         /*Redireccionando al login */
         _value = "REDIRECT";
@@ -58,39 +59,44 @@ export default function ServerException(props) {
     } else {
       _value = "SHOW_MESSAGE";
     }
+    console.log(_value);
     return _value;
   }
 
   if (state.isLoad === true) {
-    let _status = _validacionToken();
-    console.log(_status);
-    if (_status = "REDIRECT") {
-      localStorage.removeItem(localStoreEnum.ISLOGIN);
-      localStorage.removeItem(localStoreEnum.USUARIO);
-      localStorage.removeItem(localStoreEnum.TOKEN);
-      localStorage.removeItem(localStoreEnum.COTIZACION);
-      /*Redireccionando al login */
-      window.location.reload();
-      history.push("/loginCliente")
-      timeoutID = setTimeout(() => {
-        dispatch({
-          type: actionType.LOAD,
-          className: "server-exception server-exception-opacity",
-          isLoad: false,
-        });
-      }, 10000);
-    } else {
-      /*Caso de error que la back end no responda */
-      timeoutID = setTimeout(() => {
-        dispatch({
-          type: actionType.LOAD,
-          className: "server-exception server-exception-opacity",
-          isLoad: false,
-        });
-      }, 10000);
-    }
-
+   
+    handleEventValidaExcepcion()
   }
+async function handleEventValidaExcepcion(){
+  let _status =await _validacionToken();
+  console.log(_status);
+  if (_status === "REDIRECT") {
+    localStorage.removeItem(localStoreEnum.ISLOGIN);
+    localStorage.removeItem(localStoreEnum.USUARIO);
+    localStorage.removeItem(localStoreEnum.TOKEN);
+    localStorage.removeItem(localStoreEnum.COTIZACION);
+    /*Redireccionando al login */
+    window.location.reload();
+    history.push("/loginCliente")
+    timeoutID = setTimeout(() => {
+      dispatch({
+        type: actionType.LOAD,
+        className: "server-exception server-exception-opacity",
+        isLoad: false,
+      });
+    }, 10000);
+  } else {
+    /*Caso de error que la back end no responda */
+    timeoutID = setTimeout(() => {
+      dispatch({
+        type: actionType.LOAD,
+        className: "server-exception server-exception-opacity",
+        isLoad: false,
+      });
+    }, 10000);
+  }
+}
+
   function handleEventClose() {
     dispatch({
       type: actionType.LOAD,

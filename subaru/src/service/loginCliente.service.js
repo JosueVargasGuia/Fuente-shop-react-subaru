@@ -83,6 +83,14 @@ async function obtenerDirecciones(body) {
   );
   return response;
 }
+async function obtenerListaUsuario(body) {
+  const response = await tokenFetchService(
+    IP(URL.OBTENER_LISTA_USUARIO),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 async function registrarDireccion(body) {
   const response = await tokenFetchService(
     IP(URL.REGISTRAR_DIRECCIONES),
@@ -99,7 +107,14 @@ async function eliminarDireccion(body) {
   );
   return response;
 }
-
+async function quitarUsuarioAdministrador(body) {
+  const response = await tokenFetchService(
+    IP(URL.QUITAR_USUARIO_ADMIN),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 export {
   logeoCLiente,
   recuperarContraseña,
@@ -111,5 +126,7 @@ export {
   obtenerDirecciones,
   registrarDireccion,
   eliminarDireccion,
-  validacionToken
+  validacionToken,
+  obtenerListaUsuario,
+  quitarUsuarioAdministrador
 };

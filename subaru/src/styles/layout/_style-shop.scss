@@ -892,6 +892,7 @@ h4 {
 .dashboard-content {
     display: flex;
     flex-wrap: wrap;
+    min-height: 200px;
 }
 
 .dashboard a {
