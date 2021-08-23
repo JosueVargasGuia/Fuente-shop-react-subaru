@@ -70,6 +70,7 @@ export default function ImagenProducto() {
       isRemate: false,
       isDestacadoMarca: false
     })
+     //eslint-disable-next-line
   }, []);
   const [tabsIndex, setTabsIndex] = useState(_TabsIndex.TABS_IMAGEN);
 
@@ -547,7 +548,7 @@ export default function ImagenProducto() {
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let i = 0; i < json.lista.length; i++) {
           let obj = json.lista[i];
-          _rowsAtributo.push(<tr>
+          _rowsAtributo.push(<tr key={i}>
             <td>
             <i
             className="fa-btn fa fa-check"

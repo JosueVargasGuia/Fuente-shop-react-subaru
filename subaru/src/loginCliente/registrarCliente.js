@@ -1427,7 +1427,7 @@ export default function RegistrarClienteV1(props) {
           ""
         )}
 
-        <form action="javascript:void(0);" accept-charset="UTF-8">
+        <form  accept-charset="UTF-8">
           <div className="row-body">
             <div className="row-body-registro-row" >
               <label htmlFor="numTipoCliente" className="label-registro">Documento</label>

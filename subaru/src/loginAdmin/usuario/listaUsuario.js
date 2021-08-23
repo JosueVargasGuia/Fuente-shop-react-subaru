@@ -63,6 +63,7 @@ export default function ListaUsuario(props) {
         handleValidarCliente(props.numCodigoCliente);
         HandleEventobtenerListaUsuario(1);
         console.log("useEffect[ListaUsuario]");
+         //eslint-disable-next-line
     }, []);
     async function handleValidarCliente(_numCodigoCliente) {
         let _rol = chrRol.ROLE_ANONIMO;

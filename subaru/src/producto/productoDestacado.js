@@ -5,6 +5,7 @@ import { displayLista } from "../service/ENUM";
 import ProductosCard from "./productoCard";
 import { Link } from "react-router-dom";
 import ServerException from "../utils/serverException";
+import {LoadingClassic} from "../utils/loading"
 const LIMITE = 8;
 const listaRepuesto = [
   { discripcion: "Filtros de Aire", srcimg: "/marcas/subaru/repuestos/1.png" },
@@ -46,7 +47,7 @@ const listaCategoria = [
 const whatsAppLink="https://api.whatsapp.com/send?phone=51989174932&text=";
 export default function ProductoDestacado(props) {
   const [state, dispatch] = useReducer(reducer, {
-    rowProducto: [],
+    rowProducto: null,
     pagina: 1,
     activeIndex: 1,
     displayLista: displayLista.DETALLE,
@@ -185,7 +186,9 @@ export default function ProductoDestacado(props) {
           <h4>PRODUCTOS DESTACADOS</h4>
         </div>
         <div className="produc-destacado-wrapper">
-          <div className="produc-destacado-item">{state.rowProducto}</div>
+          <div className="produc-destacado-item">
+          {state.rowProducto===null?<LoadingClassic></LoadingClassic>:state.rowProducto}
+             </div>
           <div className="produc-destacado-item produc-destacado-item-right link-href">
             <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"}>Todos los productos &raquo;</Link>
           </div>

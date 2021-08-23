@@ -63,6 +63,11 @@ a{
     transform: translateY(-50%);
     transition: opacity .5s ease;
 }
+.loadingClassic{
+    margin-top: 0.5em;
+    display: flex;
+    justify-content: space-between;
+}
 
 .server-exception-action {
     position: fixed;

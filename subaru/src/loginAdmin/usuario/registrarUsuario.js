@@ -168,6 +168,7 @@ export default function RegistrarUsuario(props) {
     if (state.accion === CRUD.UPDATE) {
       HandleEventobtenerListaUsuario(state.numCodigoCliente, state.numCodigoClienteUsuario);
     }
+     //eslint-disable-next-line
   }, []);
 
   async function handleValidarCliente(_numCodigoCliente) {
