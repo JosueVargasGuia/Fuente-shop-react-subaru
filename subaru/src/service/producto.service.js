@@ -1,4 +1,4 @@
-import { fetchService, METHOD } from "../matchService/fetchService";
+import { fetchService,tokenFetchService, METHOD } from "../matchService/fetchService";
 
 import { IP, URL } from "./IP";
 async function findProductos(body) {
@@ -87,6 +87,23 @@ async function crudProductoCategoria(body) {
   );
   return response;
 }
+async function listaProductoStock(body) {
+  const response = await tokenFetchService(
+    IP(URL.LISTAR_PRODUCTO_IMAGEN_STOCK),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
+async function actualizarProductosStock(body) {
+  const response = await tokenFetchService(
+    IP(URL.ACTUALIZAR_PRODUCTO_STOCK),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
+
 export {
   findProductos,
   obtenerTipoCambio,
@@ -97,5 +114,8 @@ export {
   listaAtributo,
   listaProductoAtributo,
   crudProductoAtributo,
-  crudProductoCategoria,listaProductoReporte
+  crudProductoCategoria,
+  listaProductoReporte,
+  listaProductoStock,
+  actualizarProductosStock
 };

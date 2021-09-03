@@ -6,25 +6,25 @@ import { homepage, LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
 import BottonCarrito from "../utils/bottonCarrito";
 
 const listaRepuesto = [
-  { descripcion: "Tren de Transmisión" },
-  { descripcion: "Sistema Eléctrico" },
-  { descripcion: "Sistema de enfriamiento" },
-  { descripcion: "Repuestos de Mantenimiento" },
-  { descripcion: "Sistema de Dirección" },
-  { descripcion: "Estilo de Vida Subaru" },
-  { descripcion: "Interior" },
-  { descripcion: "Fluidos" },
-  { descripcion: "Sistemas de Frenos" },
-  { descripcion: "Puertas y Paneles" },
-  { descripcion: "Suspensión" },]
+  { descripcion: "Tren de Transmisión" ,codigo:1},
+  { descripcion: "Sistema Eléctrico",codigo:2 },
+  { descripcion: "Sistema de enfriamiento",codigo:3 },
+  { descripcion: "Repuestos de Mantenimiento",codigo:4 },
+  { descripcion: "Sistema de Dirección",codigo:5 },
+  { descripcion: "Estilo de Vida Subaru",codigo:6 },
+  { descripcion: "Interior" ,codigo:7},
+  { descripcion: "Fluidos",codigo:8 },
+  { descripcion: "Sistemas de Frenos" ,codigo:9},
+  { descripcion: "Puertas y Paneles",codigo:10 },
+  { descripcion: "Suspensión",codigo:11 },]
 
 const listaAcesorios = [
-  { descripcion: "Audio / Media" },
-  { descripcion: "Comodidad y Conveniencia" },
-  { descripcion: " Estilo de Vida" },
-  { descripcion: "Protección y Seguridad" },
-  { descripcion: "Estilo" },
-  { descripcion: " Productos STI" },]
+  { descripcion: "Audio / Media",codigo:1 },
+  { descripcion: "Comodidad y Conveniencia",codigo:2 },
+  { descripcion: " Estilo de Vida",codigo:3 },
+  { descripcion: "Protección y Seguridad",codigo:4 },
+  { descripcion: "Estilo",codigo:5 },
+  { descripcion: " Productos STI",codigo:6 },]
 export default function 
 FilterMarcas(props) {
   //let status = props.marcaSelect.codigoMarca === 0 ? 0 : 1;
@@ -33,11 +33,11 @@ FilterMarcas(props) {
 
   const [srcLogo] = useState(window.location.origin+(homepage==undefined?"":"/"+homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
-  let rowRepuesto = listaRepuesto.map((rowRepu) => <li>
-    <Link>{rowRepu.descripcion}</Link>
+  let rowRepuesto = listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
+    <Link to="/shop">{rowRepu.descripcion}</Link>
   </li>);
-  let rowAccesorio = listaAcesorios.map((rowAcce) => <li>
-    <Link>{rowAcce.descripcion}</Link>
+  let rowAccesorio = listaAcesorios.map((rowAcce) => <li key={rowAcce.codigo}>
+    <Link to="/shop">{rowAcce.descripcion}</Link>
   </li>);
 
 

@@ -35,8 +35,13 @@ const URL = {
   INIT_CREATE_PAYMENT: "/cotizacion/iniciarCreatePayment",/*Privado */
   LISTAR_TUS_COMPRAS: "/cotizacion/obtenerTusCompras",/*Privado */
   
+  
   OBTENER_LISTA_USUARIO:"/authorization/cliente/obtLstUsuarioAdmin",/*Privado Administrador */
-  QUITAR_USUARIO_ADMIN:"/authorization/cliente/quitarUsuarioAdmin"/*Privado Administrador */
+  QUITAR_USUARIO_ADMIN:"/authorization/cliente/quitarUsuarioAdmin",/*Privado Administrador */
+  //OBTENER_LISTA_STOCK:"/productoImagen/cliente/quitarUsuarioAdmin",/*Privado Administrador */
+  LISTAR_PRODUCTO_IMAGEN:"/productoImagen/listaImangen",/*Privado Administrador */
+  LISTAR_PRODUCTO_IMAGEN_STOCK:"/productoImagen/listaProductosStock",/*Privado Administrador */  
+  ACTUALIZAR_PRODUCTO_STOCK:"/productoImagen/actualizarProductosStock",/*Privado Administrador */
 };
 
 function IP(uri) {

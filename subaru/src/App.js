@@ -58,6 +58,7 @@ import LoginAdmin from "./loginAdmin/loginAdmin";
 import DashboardAdmin from "./loginAdmin/dashboardAdmin";
 import RegistrarUsuario from "./loginAdmin/usuario/registrarUsuario";
 import ListaUsuario from "./loginAdmin/usuario/listaUsuario";
+import StockProducto from "./loginAdmin/producto/stockProducto";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -401,6 +402,10 @@ function App() {
             <Route path="/productoImagen">
               <ImagenProducto />
             </Route>
+            <Route path="/stock">
+              <StockProducto numCodigoCliente={state.usuario.numCodigoCliente} />
+            </Route>
+
             <Route path="/usuarioAdmin/:numCodigoCliente/:numCodigoClienteUsuario">
               <RegistrarUsuario numCodigoCliente={state.usuario.numCodigoCliente}></RegistrarUsuario>
             </Route>

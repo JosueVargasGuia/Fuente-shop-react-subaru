@@ -594,6 +594,7 @@
         width: 100% !important;
     }
 }
+
 .form-body-usuario{
     display: flex;
     flex-wrap: wrap;
@@ -669,5 +670,66 @@
     }
     .prod-filter-page{
         margin-top: 4px;
+    }
+}
+
+.form-body-stock{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border-left: solid 1px var(--color-font3);
+    border-right: solid 1px var(--color-font3);
+    border-bottom: solid 1px var(--color-font3);
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-bottom: 1em;
+    background-color: var(--color-font3);
+    min-height: 320px;
+    border-radius: 5px 5px 5px 5px;
+    .form-accion{    
+        display: flex;
+        justify-content: flex-start;
+        input[type="file"]{
+            width: 50%;
+        }
+        
+        button{
+            margin-left: 1em;
+            width: 120px;
+        }
+    }
+    .div-table{
+        width: 98%;             
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+    
+        max-height: 300px;
+        max-width: 1200px;
+        min-width: 99%;
+        min-height: 300px;
+        overflow-x: auto;
+        table{
+            width: 100%;            
+            thead{
+                tr{
+                    td{
+                        text-align: center;
+                        font-size: 0.8em;    
+                        font-weight: bold;  
+                        border: solid 0.5px var(--color-font2);
+                        color: var(--color-font3);
+                        background-color: var(--color-font2);                  
+                    }
+                }
+            }
+            tbody{
+                font-size: 0.8em;  
+                tr{
+                    td{
+                        border: solid 0.5px var(--color-font2);
+                        font-size: 12px;}
+                    }
+                }
+        }
     }
 }

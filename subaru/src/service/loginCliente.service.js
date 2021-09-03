@@ -68,6 +68,7 @@ async function registrarCliente(body) {
   return response;
 }
 async function obtenerCliente(body) {
+  console.log(body);
   const response = await tokenFetchService(
     IP(URL.OBTENER_CLIENTE),
     body,

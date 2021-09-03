@@ -38,6 +38,7 @@ export default function DashboardAdmin(props) {
   useEffect(() => {
     handleObtenerCliente(props.numCodigoCliente);
     console.log("useEffect[DashboardAdmin]");
+    //eslint-disable-next-line 
   }, []);
 
   async function handleObtenerCliente(_numCodigoCliente) {
@@ -118,6 +119,19 @@ export default function DashboardAdmin(props) {
                 aria-hidden="true"
               ></i>
               <span>Usuario Dashboar</span>
+            </div>
+          </Link>
+
+          <Link
+            to={"/stock"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-cloud-upload dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>Producto Excel</span>
             </div>
           </Link>
         </div>
