@@ -34,6 +34,7 @@ const URL = {
   CRUD_PRODUCTO_CATEGORIA: "/productoImagen/productoCategoria",/*Privado */
   INIT_CREATE_PAYMENT: "/cotizacion/iniciarCreatePayment",/*Privado */
   LISTAR_TUS_COMPRAS: "/cotizacion/obtenerTusCompras",/*Privado */
+  LISTAR_TUS_COMPRAS_DETALLE: "/cotizacion/obtenerTusComprasDetalle",/*Privado */
   
   
   OBTENER_LISTA_USUARIO:"/authorization/cliente/obtLstUsuarioAdmin",/*Privado Administrador */

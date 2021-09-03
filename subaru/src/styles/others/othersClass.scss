@@ -75,20 +75,76 @@
         font-size: 12px;
     }
   
-    .tuscompras-row-detalle{
-        min-height:25px; 
-        background-color: var(--color-background-white);
-        margin: 0.5em;
-    }
-    .tuscompras-row{
+ 
+    .tuscompras-row-content{
         border: solid 1px var(--color-background-contenido);
-        margin: 0.5em;
-        
-        border-radius: 5px 5px 5px 5px;
-        display: flex;
-        flex-wrap: wrap;        
-        background-color: #f1f0f0;
-    }
+        margin: 0.5em; 
+        background-color: #f1f0f0; 
+        .tuscompras-row{                
+            border-radius: 5px 5px 5px 5px;
+            display: flex;
+            flex-wrap: wrap;        
+            
+        } 
+        .tuscompras-row-detalle{
+            min-height:25px;                 
+            margin: 0.5em;
+            .form-body-detalle{
+                margin-top: -10px;
+                .form-body-detalle-header{                    
+                    text-align: right;
+                    margin-right: 2em; 
+                    .btn{
+                        padding:2px;
+                    }
+                }
+                .form-body-detalle-body{
+                    .div-table{
+                        width: 98%;             
+                        margin-left: 0.5em;
+                        margin-right: 0.5em;
+                        margin-top: 0.5em;
+                        table{
+                            width: 100%;            
+                            thead{
+                                tr{
+                                    td{
+                                        text-align: center;
+                                        font-size: 0.8em;    
+                                        font-weight: bold;  
+                                        border: solid 0.5px var(--color-font2);
+                                        color: var(--color-font3);
+                                        background-color: var(--color-font2);                  
+                                    }
+                                }
+                            }
+                            tbody{
+                                font-size: 0.8em;  
+                                tr{
+                                    td{
+                                        border: solid 0.5px var(--color-font2);
+                                        font-size: 12px;
+                                        a{
+                                            color: var(--color-font-default);
+                                        }
+                                        i{
+                                            cursor: pointer;
+                                            font-size: 15px;
+                                            color: var(--color-font-default);
+                                        }
+                                        i:hover{
+                                            color: var(--color-font2);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+         }
+    }   
     .row-confirmado div{
         background-color:#727273;
         color: var( --color-font3);

@@ -1,7 +1,8 @@
 import React, { useEffect, useReducer } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { HttpStatus, localStoreEnum, LOGGIN,  Moneda, SUCCESS_SERVER } from '../../service/ENUM';
+import { HttpStatus, localStoreEnum, LOGGIN, Moneda, SUCCESS_SERVER } from '../../service/ENUM';
+import ComprasDetalle from "./ComprasDetalle";
 import {
   obtenerTusCompras
 } from "../../service/cotizacion.service";
@@ -82,7 +83,7 @@ export default function TusCompras() {
             moneda: (compras.moneda === 'SOLES' ? Moneda.SOLES : Moneda.DOLARES)
           }
           */
-          _rowTusCompras.push(<><div className="tuscompras-row">
+          _rowTusCompras.push(<div  className="tuscompras-row-content" key={compras.numCodigoCotizacionOnline}><div className="tuscompras-row">
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Fecha de Pedido</label>
               <label className="tuscompras-row-value">{compras.dteCreacion}</label>
@@ -113,11 +114,10 @@ export default function TusCompras() {
             </div>
 
           </div>
-            <div className="tuscompras-row-detalle">
-              Detalle
-
-          </div>
-          </>);
+            <div className="tuscompras-row-detalle" key={compras.numCodigoCotizacionOnline}>
+              <ComprasDetalle cotizacion={compras}  ></ComprasDetalle>
+            </div>
+          </div>);
         }
         dispatch({ type: actionType.LOAD, isloading: false, rowTusCompras: _rowTusCompras });
       }
@@ -146,18 +146,18 @@ export default function TusCompras() {
     <div className="link-href">
       <Link to="/shop">
         <i className="fa fa-home" aria-hidden="true"></i>
-          Inicio
-        </Link>
+        Inicio
+      </Link>
       <span>/</span>
       <Link to="/dashboard">
         <i className="fa fa-user"></i>Su cuenta
-        </Link>
+      </Link>
       {params.linkNavegacion === "CarritoPayment" ? (
         <>
           <span>/</span>
           <Link to="/pedidoCarrito">
             <i className="fa fa-arrow-left"></i>Volver
-            </Link>
+          </Link>
         </>
       ) : (
         ""
@@ -171,12 +171,12 @@ export default function TusCompras() {
     <div className="link-href">
       <Link to="/shop">
         <i className="fa fa-home" aria-hidden="true"></i>
-          Inicio
-        </Link>
+        Inicio
+      </Link>
       <span>/</span>
       <Link to="/dashboard">
         <i className="fa fa-user"></i>Su cuenta
-        </Link>
+      </Link>
     </div>
   </div>)
 }

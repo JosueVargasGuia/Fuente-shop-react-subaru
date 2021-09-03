@@ -84,7 +84,14 @@ async function obtenerTusCompras(body) {
   );
   return response;
 }
-
+async function obtenerTusComprasDetalle(body) { 
+  const response = await fetchService(
+    IP(URL.LISTAR_TUS_COMPRAS_DETALLE),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 export {
   registrarCotizacion,
   obtenerCotizacionActiva,
@@ -95,5 +102,6 @@ export {
   
   registrarMetodoEnvioCotizacion,
   initCreatePayment,
-  obtenerTusCompras
+  obtenerTusCompras,
+  obtenerTusComprasDetalle
 };
