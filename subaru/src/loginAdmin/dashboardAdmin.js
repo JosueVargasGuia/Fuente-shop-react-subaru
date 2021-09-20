@@ -122,16 +122,18 @@ export default function DashboardAdmin(props) {
             </div>
           </Link>
 
+         
+
           <Link
-            to={"/stock"}
+            to={"/listaCorreoJobs"}
             className="dashboard-card"
           >
             <div>
               <i
-                className="fa fa-cloud-upload dashboard-info"
+                className="fa fa-share-alt dashboard-info"
                 aria-hidden="true"
               ></i>
-              <span>Producto Excel</span>
+              <span>Administrador Correos</span>
             </div>
           </Link>
         </div>

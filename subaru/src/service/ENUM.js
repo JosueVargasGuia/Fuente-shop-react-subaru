@@ -227,6 +227,10 @@ const chrRol = {
   ROLE_ADMIN: 'ROLE_ADMIN',
   ROLE_ANONIMO: "ROLE_ANONIMO"
 };
+const FilterCorreo = {
+  FILTER_ALL:'FILTER_ALL', 
+  FILTER_DESTINO_OC:'FILTER_DESTINO_OC',
+};
 export {
   SUCCESS_SERVER,
   HttpStatus,
@@ -250,6 +254,7 @@ export {
   filterOrder, nav_banner,
   tipoDireccion,
   homepage,
-  chrRol
+  chrRol,
+  FilterCorreo
 };
 

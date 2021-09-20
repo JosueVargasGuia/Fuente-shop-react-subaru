@@ -43,6 +43,8 @@ const URL = {
   LISTAR_PRODUCTO_IMAGEN:"/productoImagen/listaImangen",/*Privado Administrador */
   LISTAR_PRODUCTO_IMAGEN_STOCK:"/productoImagen/listaProductosStock",/*Privado Administrador */  
   ACTUALIZAR_PRODUCTO_STOCK:"/productoImagen/actualizarProductosStock",/*Privado Administrador */
+  OBTENER_CORREO_JOBS:"/correo/obtenerCorreoJobs",/*Privado Administrador */
+  REGISTRAR_CORREO_JOBS:"/correo/registrarCorreoJobs",/*Privado Administrador */
 };
 
 function IP(uri) {

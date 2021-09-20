@@ -789,3 +789,98 @@
         }
     }
 }
+
+.form-body-correo{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border-left: solid 1px var(--color-font3);
+    border-right: solid 1px var(--color-font3);
+    border-bottom: solid 1px var(--color-font3);
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-bottom: 1em;
+    background-color: var(--color-font3);
+    min-height: 320px;
+    border-radius: 5px 5px 5px 5px;
+    .div-table-head{        
+        margin: 0;
+        margin-top: 5px;
+        display: flex;
+        justify-content: flex-end;
+        width: 98%;
+        padding: 0;
+        height: 25px;
+        a{
+            color: var(--color-font-default);
+        }
+        i{
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--color-font-default);
+        }
+        i:hover{
+            color: var(--color-font2);
+        }
+    }
+    .div-table{
+        width: 98%;             
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        table{
+            width: 100%;            
+            thead{
+                tr{
+                    td{
+                        text-align: center;
+                        font-size: 0.8em;    
+                        font-weight: bold;  
+                        border: solid 0.5px var(--color-font2);
+                        color: var(--color-font3);
+                        background-color: var(--color-font2);                  
+                    }
+                }
+            }
+            tbody{
+                font-size: 0.8em;  
+                tr{
+                    td{
+                        border: solid 0.5px var(--color-font2);
+                        font-size: 12px;
+                        a{
+                            color: var(--color-font-default);
+                        }
+                        i{
+                            cursor: pointer;
+                            font-size: 15px;
+                            color: var(--color-font-default);
+                        }
+                        i:hover{
+                            color: var(--color-font2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+   
+}
+
+.div-form-correo{
+    .div-form-correo-row{
+        display: flex;
+        flex-wrap: wrap;
+        .label-vchCorreo{
+            width: 15%;
+            margin-right: 0.5em;
+        }
+        input[type=checkbox] {
+            font-size: 0.2em;
+            text-align: left;
+            margin-left: 1em;
+            margin-top: 4px;
+            width: 15px !important;
+            margin-right: 1em;
+        }
+    }
+}
