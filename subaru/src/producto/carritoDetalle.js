@@ -35,6 +35,7 @@ export function CarritoDetalle(props) {
   const [state, dispatch] = useReducer(reducer, {
     cotizacionResumen: cotizacionResumen,
     listaCotizacionDetalle: [],
+    mensajeStock: '',
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
@@ -114,6 +115,7 @@ export function CarritoDetalle(props) {
               producto: {
                 chrCodigoProducto: obj.producto.chrCodigoProducto,
                 vchDescripcion: obj.producto.vchDescripcion,
+                numStock: obj.producto.numStock
               },
             });
           }
@@ -122,6 +124,7 @@ export function CarritoDetalle(props) {
             type: actionType.LOAD,
             cotizacionResumen: _cotizacionResumen,
             listaCotizacionDetalle: _listaCotizacionDetalle,
+            mensajeStock:''
           });
         }
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
@@ -188,39 +191,46 @@ export function CarritoDetalle(props) {
     }
   }
   async function handleEventChangeCantidad(e, data) {
-    /*Registro de cotizacion detalle */
-    let cotizacionDetalleRequest = {
-      numCodigoCotizacionOnline: data.numCodigoCotizacionOnline,
-      producto: { chrCodigoProducto: data.producto.chrCodigoProducto },
-      numCantidad: e.target.value,
-      tipoActualizacionCotizacionDetalle:
-        tipoActualizacionCotizacionDetalle.ACTUALIZAR,
-    };
-    const rptDetalle = await registrarCotizacionDetalle(
-      cotizacionDetalleRequest
-    );
-    if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
-      const json = await rptDetalle.json();
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-        handleEventLoad();
-      }
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+    if (e.target.value <= data.producto.numStock) {
+      /*Registro de cotizacion detalle */
+      let cotizacionDetalleRequest = {
+        numCodigoCotizacionOnline: data.numCodigoCotizacionOnline,
+        producto: { chrCodigoProducto: data.producto.chrCodigoProducto },
+        numCantidad: e.target.value,
+        tipoActualizacionCotizacionDetalle:
+          tipoActualizacionCotizacionDetalle.ACTUALIZAR,
+      };
+      const rptDetalle = await registrarCotizacionDetalle(
+        cotizacionDetalleRequest
+      );
+      if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
+        const json = await rptDetalle.json();
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+          handleEventLoad();
+        }
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+          dispatch({
+            type: actionType.ERROR,
+            server: {
+              error: json.response.error,
+              success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
+            },
+          });
+        }
+      } else {
         dispatch({
           type: actionType.ERROR,
           server: {
-            error: json.response.error,
-            success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
+            error: "",
+            success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
           },
         });
       }
     } else {
       dispatch({
-        type: actionType.ERROR,
-        server: {
-          error: "",
-          success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
-        },
-      });
+        type: actionType.CANTIDAD_STOCK,       
+        mensajeStock: "Disculpe las molestias, el stock disponible para este producto es de " +  data.producto.numStock + " unidades."
+      })
     }
   }
   function handleEventGoPagar() {
@@ -234,6 +244,7 @@ export function CarritoDetalle(props) {
             <h3>Carrito</h3>
             <hr />
             {state.listaCotizacionDetalle.length === 0 ? "No hay más artículos en su carrito" : ""}
+            {state.mensajeStock === '' ? '' : <span className='producto-mensaje-stock'>{state.mensajeStock}</span>}
             {state.listaCotizacionDetalle.map((obj) => (
               <div
                 className="producto-det-carrito-row"
@@ -307,7 +318,7 @@ export function CarritoDetalle(props) {
           </div>
           <hr />
           <div className="carrito-detalle-msg">
-           
+
             {state.cotizacionResumen.flgnumCodigoDireccion === 1 ? <>
               El costo de envio ha sido calculado según la dirección de facturación guarda en base de datos del cliente
             </> : <>
@@ -447,6 +458,8 @@ let actionType = {
   LOAD: "LOAD",
   ERROR: "ERROR",
   CANTIDAD: "CANTIDAD",
+  CANTIDAD_STOCK: "CANTIDAD_STOCK",
+
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -454,12 +467,18 @@ const reducer = (state, action) => {
       return {
         ...state,
         cotizacionResumen: action.cotizacionResumen,
-        listaCotizacionDetalle: action.listaCotizacionDetalle
+        listaCotizacionDetalle: action.listaCotizacionDetalle,
+        mensajeStock: action.mensajeStock
       };
     case actionType.CANTIDAD:
       return {
         ...state,
         listaCotizacionDetalle: action.listaCotizacionDetalle,
+      };
+    case actionType.CANTIDAD_STOCK:
+      return {
+        ...state,        
+        mensajeStock: action.mensajeStock
       };
     case actionType.ERROR:
       return {

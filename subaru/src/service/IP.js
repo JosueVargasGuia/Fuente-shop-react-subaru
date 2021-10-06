@@ -48,27 +48,11 @@ const URL = {
 };
 
 function IP(uri) {
-  let _CONTEXT = 'DESARROLLO_LOCAL';
-  let _IP = '';
-  let _PORT = '';
-  let _API = '';
-  if (_CONTEXT === 'DESARROLLO') {
-    _IP = '190.81.61.102';
-    _PORT = '8085';
-    _API = '/ShopAutoPartsServices/service';
-  }
-  if (_CONTEXT === 'DESARROLLO_LOCAL') {
-    _IP = 'localhost';
-    _PORT = '8084';
-    _API = '/service';
-  }
-  if (_CONTEXT === 'BETA') {
-    _IP = '190.81.61.102';
-    _PORT = '8087';
-    _API = '/ShopAutoPartsServices/service';
-  }
-  //let _API='service'; //locla host
-  return `http://${_IP}:${_PORT}${_API}${uri}`;
+  let _PROTOCOLO='http';
+  let _URL_API = 'localhost';//localhost ,bk.eanetautoparts.pe
+  let _PORT = '8084';//undefined --> sin puerto,'8084'--> con puerto
+  let _SERVICE = 'service';//'ShopAutoPartsServices/service' ,'service'-->localhost
+  return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri 
 }
 function IziPay() {
   return `https://api.micuentaweb.pe/api-payment/V4/Charge/SDKTest`;

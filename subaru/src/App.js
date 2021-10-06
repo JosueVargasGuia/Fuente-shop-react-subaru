@@ -53,7 +53,8 @@ import ProductoDestacado from "./producto/productoDestacado";
 import ImagenProducto from "./producto/imagenProducto";
 import ProductoFilter from "./producto/productoFilter";
 import BannerHeader from "./utils/BannerHeader";
-import { Succespayment } from "./pago/succespayment";
+import SuccesPayment from "./pago/succespayment";
+import SuccesNoPayment from "./pago/succesnopayment";
 import LoginAdmin from "./loginAdmin/loginAdmin";
 import DashboardAdmin from "./loginAdmin/dashboardAdmin";
 import RegistrarUsuario from "./loginAdmin/usuario/registrarUsuario";
@@ -336,9 +337,15 @@ function App() {
                 handleSelectMarcaChange={handleSelectMarcaChange}
               ></ProductoFilter>
             </Route>
-            <Route path={"/succespayment"} exact={true}>
-              <Succespayment></Succespayment>
+            
+            <Route path={"/succesPayment"} exact={true}>
+              <SuccesPayment></SuccesPayment>
             </Route>
+            <Route path={"/succesNopayment"} exact={true}>
+              <SuccesNoPayment></SuccesNoPayment>
+            </Route>
+
+
             <Route path="/tusCompras/:numCodigoCliente">
               <TusCompras />
             </Route>

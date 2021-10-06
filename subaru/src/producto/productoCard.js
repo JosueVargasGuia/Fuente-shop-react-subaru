@@ -60,6 +60,7 @@ export default function ProductosCard(props) {
     cotizacionResumen: cotizacionResumen,
     showModal: false,
     showModalResumen: false,
+    mensajeStock: '',
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
@@ -106,7 +107,7 @@ export default function ProductosCard(props) {
     dispatch({ type: actionType.SET_IMAGEN, showModal: _status, listaProductoImagen: _listaProductoImagen });
   }
   async function handleEventClieckregistrarCotizacion() {
-    
+   if(state.cantidad <= state.producto.numStock){ 
     let cotizacion = handleSyncDatosCotizacion();
     console.log(cotizacion);
     const rpt = await registrarCotizacion(cotizacion);
@@ -193,6 +194,13 @@ export default function ProductosCard(props) {
         },
       });
     }
+
+   } else {
+    dispatch({
+      type: actionType.CANTIDAD_STOCK,       
+      mensajeStock: "Disculpe las molestias, el stock disponible para este producto es de " +  state.producto.numStock + " unidades."
+    })
+  }
   };
   function handleEventGoCaja() {
     history.push("/carrito");
@@ -308,7 +316,8 @@ export default function ProductosCard(props) {
                 Añadir al Carrito
               </button>
               </div>
-
+             
+              {state.mensajeStock === '' ? '' : <span className='producto-mensaje-stock'>{state.mensajeStock}</span>}
 
             </div>
           </div>
@@ -462,11 +471,16 @@ let actionType = {
   SET_IMAGEN: "SET_IMAGEN",
   SHOW_RESUMEN:"SHOW_RESUMEN",
   SET_SHOW_RESUMEN:"SET_SHOW_RESUMEN",
-  PRODUCTO:"PRODUCTO"
+  PRODUCTO:"PRODUCTO",
+  CANTIDAD_STOCK:'CANTIDAD_STOCK'
 };
 const reducer = (state, action) => {
   switch (action.type) {
-
+    case actionType.CANTIDAD_STOCK:
+      return {
+        ...state,        
+        mensajeStock: action.mensajeStock
+      };
     case actionType.ERROR:
       return {
         ...state,

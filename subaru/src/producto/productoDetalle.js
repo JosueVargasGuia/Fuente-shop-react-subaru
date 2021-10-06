@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../filterMarcas/filterMarcas.css";
 import { useParams, Link, useHistory } from "react-router-dom";
- 
+
 
 
 import {
@@ -32,7 +32,7 @@ export default function ProductoDetalle(props) {
     numCodigoMoneda: props.moneda.numCodigoMoneda,
     vchDescripcion: "",
     vchDescripcionSmall: "",
-    numStock: "",
+    numStock: 0,
     familia: {
       chrCodigoFamilia: "",
       vchDescripcion: "",
@@ -66,6 +66,7 @@ export default function ProductoDetalle(props) {
     producto: producto,
     cotizacionResumen: cotizacionResumen,
     showModal: false,
+    mensajeStock: '',
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
@@ -97,7 +98,7 @@ export default function ProductoDetalle(props) {
               chrType: obj.chrType,
             }*/
             _listaProductoImagen.push(
-              <img className="detalle-img"
+              <img className="detalle-img" key={i}
                 src={"data:image/png;base64," + obj.chrSrcImagen}
                 alt={obj.chrNombre}
               ></img>
@@ -210,91 +211,103 @@ export default function ProductoDetalle(props) {
     //eslint-disable-next-line
   }, [props.moneda.numCodigoMoneda]);
 
-  const handleEventClieckregistrarCotizacion = async () => {
-    
-    let cotizacion = handleSyncDatosCotizacion();
-    const rpt = await registrarCotizacion(cotizacion);
-    if (rpt.status === HttpStatus.HttpStatus_OK) {
-      const json = await rpt.json();
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-        cotizacion.numCodigoCotizacionOnline = json.numCodigoCotizacionOnline;
-        cotizacion.numCodigoCliente = json.numCodigoCliente;
-        cotizacion.numCodigoClienteUsuario = json.numCodigoClienteUsuario;
-        localStorage.setItem(
-          localStoreEnum.COTIZACION,
-          JSON.stringify(cotizacion)
-        );
-        /*Registro de cotizacion detalle */
-        let cotizacionDetalleRequest = {
-          numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
-          producto: { chrCodigoProducto: state.producto.chrCodigoProducto },
-          numCantidad: state.cantidad,
-          tipoActualizacionCotizacionDetalle:
-            tipoActualizacionCotizacionDetalle.ADICIONAR,
-        };
-        const rptDetalle = await registrarCotizacionDetalle(
-          cotizacionDetalleRequest
-        );
-        if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
-          const jsonDetalle = await rptDetalle.json();
-          if (jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-            console.log(jsonDetalle);
-            cotizacionResumen.numSubTotalDol = jsonDetalle.numSubTotalDol;
-            cotizacionResumen.numIgvDol = jsonDetalle.numIgvDol;
-            cotizacionResumen.numEnvioDol = jsonDetalle.numEnvioDol;
-            cotizacionResumen.numTotalDol = jsonDetalle.numTotalDol;
-            cotizacionResumen.numSubTotalSol = jsonDetalle.numSubTotalSol;
-            cotizacionResumen.numIgvSol = jsonDetalle.numIgvSol;
-            cotizacionResumen.numEnvioSol = jsonDetalle.numEnvioSol;
-            cotizacionResumen.numTotalSol = jsonDetalle.numTotalSol;
-            cotizacionResumen.totalRegistros = jsonDetalle.totalRegistros;
-            cotizacionResumen.cantidadDetalleSeleccionado =
-              jsonDetalle.cantidadDetalleSeleccionado;
-            dispatch({
-              type: actionType.SHOW,
-              showModal: true,
-              cotizacionResumen: cotizacionResumen,
-            });
-          }
-          if (
-            jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO
-          ) {
+  const handleEventClickregistrarCotizacion = async () => {
+
+    if (state.cantidad <= state.producto.numStock) {
+
+
+
+      let cotizacion = handleSyncDatosCotizacion();
+      const rpt = await registrarCotizacion(cotizacion);
+      if (rpt.status === HttpStatus.HttpStatus_OK) {
+        const json = await rpt.json();
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+          cotizacion.numCodigoCotizacionOnline = json.numCodigoCotizacionOnline;
+          cotizacion.numCodigoCliente = json.numCodigoCliente;
+          cotizacion.numCodigoClienteUsuario = json.numCodigoClienteUsuario;
+          localStorage.setItem(
+            localStoreEnum.COTIZACION,
+            JSON.stringify(cotizacion)
+          );
+          /*Registro de cotizacion detalle */
+          let cotizacionDetalleRequest = {
+            numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
+            producto: { chrCodigoProducto: state.producto.chrCodigoProducto },
+            numCantidad: state.cantidad,
+            tipoActualizacionCotizacionDetalle:
+              tipoActualizacionCotizacionDetalle.ADICIONAR,
+          };
+          const rptDetalle = await registrarCotizacionDetalle(
+            cotizacionDetalleRequest
+          );
+          if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
+            const jsonDetalle = await rptDetalle.json();
+            if (jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+              console.log(jsonDetalle);
+              cotizacionResumen.numSubTotalDol = jsonDetalle.numSubTotalDol;
+              cotizacionResumen.numIgvDol = jsonDetalle.numIgvDol;
+              cotizacionResumen.numEnvioDol = jsonDetalle.numEnvioDol;
+              cotizacionResumen.numTotalDol = jsonDetalle.numTotalDol;
+              cotizacionResumen.numSubTotalSol = jsonDetalle.numSubTotalSol;
+              cotizacionResumen.numIgvSol = jsonDetalle.numIgvSol;
+              cotizacionResumen.numEnvioSol = jsonDetalle.numEnvioSol;
+              cotizacionResumen.numTotalSol = jsonDetalle.numTotalSol;
+              cotizacionResumen.totalRegistros = jsonDetalle.totalRegistros;
+              cotizacionResumen.cantidadDetalleSeleccionado =
+                jsonDetalle.cantidadDetalleSeleccionado;
+              dispatch({
+                type: actionType.SHOW,
+                showModal: true,
+                cotizacionResumen: cotizacionResumen,
+              });
+            }
+            if (
+              jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO
+            ) {
+              dispatch({
+                type: actionType.ERROR,
+                server: {
+                  error: jsonDetalle.response.error,
+                  success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
+                },
+              });
+            }
+          } else {
             dispatch({
               type: actionType.ERROR,
               server: {
-                error: jsonDetalle.response.error,
-                success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
+                error: "",
+                success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
               },
             });
           }
-        } else {
+          /*Registro de cotizacion detalle */
+        }
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
           dispatch({
             type: actionType.ERROR,
             server: {
-              error: "",
-              success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
+              error: json.response.error,
+              success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
             },
           });
         }
-        /*Registro de cotizacion detalle */
-      }
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+      } else {
         dispatch({
           type: actionType.ERROR,
           server: {
-            error: json.response.error,
-            success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
+            error: "",
+            success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
           },
         });
       }
     } else {
       dispatch({
-        type: actionType.ERROR,
-        server: {
-          error: "",
-          success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
-        },
-      });
+        type: actionType.SET_CANTIDAD_STOCK,
+        cantidad: state.producto.numStock,
+        mensajeStock: "Disculpe las molestias, el stock disponible para este producto es de " + state.producto.numStock + " unidades."
+      })
+
     }
   };
   function handleEventCloseModal() {
@@ -310,7 +323,7 @@ export default function ProductoDetalle(props) {
   }
   //const tooglesGroupId = 'Toggles';
   //const valuesGroupId = 'Values';
- 
+
   return (
     <div className="producto-det">
       <div className="producto-det-link">
@@ -321,25 +334,23 @@ export default function ProductoDetalle(props) {
         </span>
       </div>
       <div className="producto-det-row">
-        <div className="producto-det-row1 ">        
+        <div className="producto-det-row1 ">
           <div className="prod-det-carrousel">
-            
+
             <Carousel
-            showArrows={false}
-            showStatus={false}
-            showIndicators={false}             
-            showThumbs={true}            
-            autoPlay={false}
-            infiniteLoop={false}
-            stopOnHover={true}
-            swipeable={true}
-            dynamicHeight={false}
-            emulateTouch={true}
-            autoFocus={true}
-            thumbWidth={75}
-            selectedItem={0}            
-         
-            
+              showArrows={false}
+              showStatus={false}
+              showIndicators={false}
+              showThumbs={true}
+              autoPlay={false}
+              infiniteLoop={false}
+              stopOnHover={true}
+              swipeable={true}
+              dynamicHeight={false}
+              emulateTouch={true}
+              autoFocus={true}
+              thumbWidth={75}
+              selectedItem={0}
             >
               {
                 state.producto.listaProductoImagen
@@ -365,13 +376,14 @@ export default function ProductoDetalle(props) {
             </span>
           </div>
           <div className="producto-det-row2-shop">
-            <span>Cantidad</span>
+            <span>Cantidad {state.producto.numStock}</span>
             <div className="producto-det-row2-shop-div">
               <input
                 type="number"
                 className="form-control"
                 value={state.cantidad}
                 min={1}
+                max={state.producto.numStock}
                 onChange={(e) =>
                   dispatch({
                     type: actionType.SET_CANTIDAD,
@@ -381,12 +393,13 @@ export default function ProductoDetalle(props) {
               ></input>
               <button
                 className="btn btn-primary"
-                onClick={handleEventClieckregistrarCotizacion}
+                onClick={handleEventClickregistrarCotizacion}
               >
                 <i className="fa fa-shopping-cart"></i>
                 Añadir al Carrito
               </button>
             </div>
+            {state.mensajeStock===''?'':<span className='producto-mensaje-stock'>{state.mensajeStock}</span>}             
           </div>
           <div className="producto-det-row2-social">Compartir</div>
           <div className="producto-det-row2-info">
@@ -492,7 +505,7 @@ export default function ProductoDetalle(props) {
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
-                
+
                   {state.producto.numCodigoMoneda ===
                     Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numSubTotalDol
@@ -507,7 +520,7 @@ export default function ProductoDetalle(props) {
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
-                <label  className="label-moneda">
+                <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
                     Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numIgvDol
@@ -561,6 +574,7 @@ export default function ProductoDetalle(props) {
 let actionType = {
   LOAD_PRODUCTOS: "LOAD_PRODUCTOS",
   SET_CANTIDAD: "SET_CANTIDAD",
+  SET_CANTIDAD_STOCK: "SET_CANTIDAD_STOCK",
   ERROR: "ERROR",
   SHOW: "SHOW",
 };
@@ -581,6 +595,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         cantidad: action.cantidad,
+      };
+    case actionType.SET_CANTIDAD_STOCK:
+      return {
+        ...state,
+        cantidad: action.cantidad,
+        mensajeStock: action.mensajeStock
       };
     case actionType.SHOW:
       return {

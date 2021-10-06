@@ -419,7 +419,7 @@ const reducerModal = (state, action) => {
   }
 };
 
-export default function RegistrarClienteV1(props) {
+export default function RegistrarCliente(props) {
   let params = useParams();
   let history = useHistory();
   let isloadingDepartamento = true;
@@ -1427,7 +1427,7 @@ export default function RegistrarClienteV1(props) {
           ""
         )}
 
-        <form  accept-charset="UTF-8">
+     
           <div className="row-body">
             <div className="row-body-registro-row" >
               <label htmlFor="numTipoCliente" className="label-registro">Documento</label>
@@ -1680,7 +1680,7 @@ export default function RegistrarClienteV1(props) {
           <div className="row-body-lista">
             {state.lstDireccion}
           </div>
-        </form>
+      
       </div>
 
 
@@ -2138,7 +2138,7 @@ function handleValidarForm(state) {
     _error.chrEmail.isValidado = true;
     isValido = false;
   } else if (
-    emailRegex.test(state.chrEmail.toUpperCase() === false)
+    emailRegex.test(state.chrEmail.toUpperCase()) === false
   ) {
     _error.chrEmail.mensaje = "El formato el correo no es valido";
     _error.chrEmail.isValidado = true;

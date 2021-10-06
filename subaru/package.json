@@ -1,6 +1,6 @@
 {
   "name": "shop",
-  "homepage": "http://localhost/subaruparts/desarrollo",
+  "homepage": "http://localhost/subaruparts",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,7 +11,9 @@
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
+    "chokidar": "^3.5.2",
     "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
     "file-saver": "^2.0.5",
     "infinite-react-carousel": "^1.2.11",
     "jquery": "^3.5.1",
@@ -28,7 +30,7 @@
     "react-scripts": "^4.0.3",
     "styled-components": "^5.2.1",
     "web-vitals": "^1.1.0",
-    "xlsx": "^0.17.0",
+    "xlsx": "^0.15.4",
     "zxcvbn": "^4.4.2"
   },
   "scripts": {

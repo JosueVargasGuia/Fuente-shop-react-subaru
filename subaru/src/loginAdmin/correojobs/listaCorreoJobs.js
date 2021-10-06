@@ -272,7 +272,8 @@ export default function ListaCorreoJobs(props) {
                     type: actionType.SHOW_MODAL_CONFIRMAR,
                     modalConfirmarShow: false,
                     numCodigoCorreoJobsOnline: 0
-                })
+                });
+                HandleEventobtenerListaCorreo(FilterCorreo.FILTER_ALL);
             }
             if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
                 dispatch({

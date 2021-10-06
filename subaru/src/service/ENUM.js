@@ -221,7 +221,7 @@ const tipoDireccion = {
   DESPACHO: "Dirección de Despacho",
   FACTURACION: "Dirección de Facturación"
 };
-const homepage="subaruparts/desarrollo";
+const homepage="subaruparts";
 const chrRol = {
   ROLE_USER: 'ROLE_USER',
   ROLE_ADMIN: 'ROLE_ADMIN',
@@ -230,6 +230,8 @@ const chrRol = {
 const FilterCorreo = {
   FILTER_ALL:'FILTER_ALL', 
   FILTER_DESTINO_OC:'FILTER_DESTINO_OC',
+  FILTER_TIPO_CAMBIO_REGISTRO:'FILTER_TIPO_CAMBIO_REGISTRO',
+  FILTER_TIPO_CAMBIO_TOMADO:'FILTER_TIPO_CAMBIO_TOMADO',
 };
 export {
   SUCCESS_SERVER,

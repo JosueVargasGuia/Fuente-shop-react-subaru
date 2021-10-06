@@ -1,16 +1,6 @@
-import { useLocation } from "react-router";
-import queryString from 'query-string'
-import { localStoreEnum } from "../service/ENUM";
-export function Succespayment() {
-    const { search } = useLocation()
-    const values = queryString.parse(search)
-    var kranswer = JSON.parse(values['kr-answer']);
-    console.log(kranswer)
-    console.log(kranswer.orderStatus)
-    console.log(kranswer.orderDetails.orderId)
-    if (kranswer.orderStatus === 'PAID') {
-        localStorage.removeItem(localStoreEnum.COTIZACION);
-    }
+import React from "react";
+export default   function SuccesPayment() {     
+  
     return (<>
         <div>
             <div className="shop-success">
