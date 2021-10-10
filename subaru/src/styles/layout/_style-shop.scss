@@ -1384,19 +1384,22 @@ h4 {
 }
 
 .div-carrito {
-    padding: 0.2em;
-    padding-left: 0.4em;
-    padding-right: 0.4em;
+    padding: 0.1em;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
     background-color: var(--btn-primary);
     color: var(--color-font3);
-    min-width: 100px;
+    min-width: 70px;
 }
-
+.filter-row-mobile .header-link{
+    .fa{
+        margin-right: 0.1em;
+    }
+}
 .div-carrito:hover {
     background-color: var(--color-background-white);
     color: var(--color-font2);
 }
-
 .fa-producto-detalle {
     font-size: 1em;
     color: var(--color-font4);

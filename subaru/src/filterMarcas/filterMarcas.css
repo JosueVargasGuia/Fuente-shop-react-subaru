@@ -136,7 +136,8 @@
 
 .filter-row-mobile .nav-marcas .header-link-tipcambio {
     width: 100%;
-    margin-left: 1em;
+    margin-left: 0.1em;
+    
 }
 
 .filter-marcas {
@@ -184,15 +185,9 @@
     margin-right: 1em;
     padding-left: 15px;
     padding-right: 15px;
-    min-width: 180px;
+    min-width: 170px;
 }
-
-.filter-marcas img {
-    width: 180px;
-    height: 40px;
-    
-    object-fit: contain;
-}
+ 
 
 .filter-home img {
     max-width: 150px;
