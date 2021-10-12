@@ -149,7 +149,7 @@ FilterMarcas(props) {
         </div>
         <div className="inner-header">
           <div className="filter-home">
-            <Link className="filter-home-concecionario"> EA Corp - Concesionario Autorizado
+            <Link className="filter-home-concecionario" to={'/shop'}> EA Corp - Concesionario Autorizado
             </Link>
            
           </div>

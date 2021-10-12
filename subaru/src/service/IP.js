@@ -49,7 +49,7 @@ const URL = {
 
 function IP(uri) {
   let _PROTOCOLO='http';
-  let _URL_API = '192.168.1.12';//localhost ,bk.eanetautoparts.pe
+  let _URL_API = 'localhost';//localhost ,bk.eanetautoparts.pe
   let _PORT = '8084';//undefined --> sin puerto,'8084'--> con puerto
   let _SERVICE = 'service';//'ShopAutoPartsServices/service' ,'service'-->localhost
   return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri 

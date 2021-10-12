@@ -118,11 +118,11 @@ const reducer = (state, action) => {
 
 function App() {
   const parsed = querystring.parse(window.location.search);
-  let _marca = lstMarcas.find(
+ /* let _marca = lstMarcas.find(
     (marca) => marca.decripcion === parsed.descripcion
   );
-  console.log(_marca)
-
+  console.log(_marca)*/
+  let _marca=lstMarcas[0] ;
   /**/
   // console.log(params.decripcion)
   let height = window.innerHeight - 25;
