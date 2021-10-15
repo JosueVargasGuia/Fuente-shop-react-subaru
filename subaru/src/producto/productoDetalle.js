@@ -376,7 +376,7 @@ export default function ProductoDetalle(props) {
             </span>
           </div>
           <div className="producto-det-row2-shop">
-            <span>Cantidad {state.producto.numStock}</span>
+            <span>Cantidad  </span>
             <div className="producto-det-row2-shop-div">
               <input
                 type="number"
