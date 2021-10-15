@@ -95,6 +95,7 @@ export default function ProductoDestacado(props) {
     chrCodigoFamilia,
     vchDescripcion
   ) {
+   
     let rowProducto = [];
     //let rowProductoRecomendado = [];
     //let rowProductoOferta = [];
@@ -109,6 +110,7 @@ export default function ProductoDestacado(props) {
       limit: _limit,
       filterProducto: _FilterProducto,
     });
+    console.log(rpt);
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
 

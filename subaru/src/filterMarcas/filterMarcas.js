@@ -181,23 +181,11 @@ FilterMarcas(props) {
       <div className="filter-row-mobile">
 
 
-        <>
+      
           <div className="filter-image">
             <img src={srcLogo} alt="" onClick={onClickImage}></img>
           </div>
-          <ul className="nav-span">
-              <li>REPUESTOS
-                <ul>
-                  {rowRepuesto}
-                </ul>
-              </li>
-              <li >ACCESORIOS
-                <ul>
-                  {rowAccesorio}
-                </ul>
-              </li>
-            </ul>
-          </>
+       
 
         <div className="header-link">
           {props.islogin !== LOGGIN.LOGGIN ? (
@@ -226,8 +214,25 @@ FilterMarcas(props) {
           )}
           <BottonCarrito islogin={props.islogin}></BottonCarrito>
         </div>
+        <br/>
+        
       </div>
+     
       <div className="filter-row-mobile-input">
+      <div className="filter-row-mobile-menu">
+      <ul className="nav-span">
+              <li>REPUESTOS
+                <ul>
+                  {rowRepuesto}
+                </ul>
+              </li>
+              <li >ACCESORIOS
+                <ul>
+                  {rowAccesorio}
+                </ul>
+              </li>
+            </ul>
+      </div>
         <div className="filter-input-search">
           <input
             placeholder="Búsqueda en Catálogo"

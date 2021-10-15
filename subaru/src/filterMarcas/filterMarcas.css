@@ -8,7 +8,8 @@
         margin-right: 0.5em
     }
     .filter-row-mobile,
-    .filter-row-mobile-input {
+    .filter-row-mobile-input,
+    .filter-row-mobile-menu {
         display: flex !important;
     }
     .nav-marcas span {
@@ -87,12 +88,15 @@
 }
 
 .filter-row-mobile,
-.filter-row-mobile-input {
+.filter-row-mobile-input,
+.filter-row-mobile-menu {
     display: none;
-    width: 100%;
-    margin-top: 0.5em;
+    width: 100%;    
 }
-
+.filter-row-mobile-menu {    
+    justify-content: center;
+    margin-top: 0.5em !important;
+}
 .filter-row-mobile-input input {
     border: solid 1px #e5e5ec;
     height: 25px;
@@ -104,7 +108,9 @@
 .filter-row-mobile-input .filter-input-search {
     width: 100%;
 }
-
+.filter-input-search {
+    margin-top: 0.5em;
+}
 .filter-row-mobile .header-link {
     width: 26%;
     display: flex;

@@ -55,8 +55,8 @@
             margin-top: 5px;
         }
         .filter-row-mobile-input{
-            position: relative;
-            margin-top: 0.8rem;;
+            position: relative;            
+            flex-wrap: wrap;
             input{
                 width: 100%;
                 height: auto;
@@ -70,8 +70,7 @@
             }
             .search-link{
                 position: absolute;
-                right: 10px;
-                top:6px;
+                right: 10px;                 
             }
         }
         .header-nav{
