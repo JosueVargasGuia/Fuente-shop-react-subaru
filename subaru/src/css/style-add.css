@@ -93,12 +93,12 @@
 
 .producto-card-carrousel .carousel .thumb.selected,
 .carousel .thumb:hover {
-    border: 3px solid var( --color-font7);
+    border: 3px solid var( --color-font2);
 }
 
 .producto-card-carrousel .carousel .thumb.selected,
 .carousel .thumb:hover {
-    border: 3px solid var( --color-font7) !important;
+    border: 3px solid var( --color-font2) !important;
 }
 
 .prod-det-carrousel .carousel .thumb.selected,
