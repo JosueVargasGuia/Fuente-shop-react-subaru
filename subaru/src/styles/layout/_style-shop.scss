@@ -4,7 +4,7 @@
     --color-background-contenido: #dbdbdb;
     --color-background-white: #ffffff;
     --color-background-red: #ff0000;
-    --color-background-Gray:#787878;
+    --color-background-Gray: #787878;
     --color-background-blue: #0225C7;
     /*--color-4:#4B908E;
 --color-5:#316064;  */
@@ -18,7 +18,7 @@
     --color-font5: #8b8b98;
     --color-font6: #FBA0AD;
     --color-font7: #ff0000;
-    --color-font-disable:#d0cdcd;
+    --color-font-disable: #d0cdcd;
     /*--color-font-hover:#4992ff;*/
     --color-font-hover: #4992ff;
     --header: var(--color-header);
@@ -47,7 +47,7 @@ body {
     width: 99%;
 }
 
-a{
+a {
     color: #2fb5d2;
 }
 
@@ -64,7 +64,8 @@ a{
     transform: translateY(-50%);
     transition: opacity .5s ease;
 }
-.loadingClassic{
+
+.loadingClassic {
     margin-top: 0.5em;
     display: flex;
     justify-content: space-between;
@@ -97,9 +98,8 @@ a{
     text-align: justify;
     opacity: 1;
     display: block;
-  
-  
 }
+
 @media (min-width: 10px) and (max-width: 900px) {
     .server-exception {
         width: 73%;
@@ -108,10 +108,12 @@ a{
         min-height: 205px !important;
     }
 }
-.server-exception-body{
+
+.server-exception-body {
     min-width: 150px;
     display: flex;
 }
+
 .server-exception-opacity {
     opacity: 0;
     display: none;
@@ -424,7 +426,7 @@ a{
         width: 100%;
     }
 }
- 
+
 @media (min-width: 200px) and (max-width: 800px) {
     /* For desktop:not */
     .header {
@@ -484,7 +486,6 @@ a{
         width: 5% !important;
         text-align: center !important;
     }
-    
 }
 
 
@@ -533,7 +534,7 @@ a{
         min-height: 375px !important;
     }
     .producto-card {
-        width: 60% !important;
+        width: 90% !important;
         margin: auto !important;
         margin-top: 0.5em !important;
         margin-bottom: 0.5em !important;
@@ -702,7 +703,8 @@ a{
     margin: auto;
     background: var(--color-background-white);
     padding-bottom: 1em;
-    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    ;
     padding: 1rem;
     font-size: .875rem;
 }
@@ -714,21 +716,21 @@ h4 {
     padding-left: 0.5em;
 }
 
-.form-body-cliente div {    
+.form-body-cliente div {
     margin-left: 0.75em;
-    
     display: flex;
 }
 
-.row-body-title{
+.row-body-title {
     display: flex;
     justify-content: center;
     color: var(--color-font2);
     font-style: italic;
 }
-.row-direccion-card{
+
+.row-direccion-card {
     display: flex;
-    flex-direction: row;    
+    flex-direction: row;
 }
 
 .form-body-cliente .row-body label {
@@ -799,11 +801,13 @@ h4 {
     display: flex;
     padding-top: 0.3em;
 }
-.form-row-direccion-center{
+
+.form-row-direccion-center {
     display: flex;
     justify-content: center;
 }
-.form-row-direccion-title{
+
+.form-row-direccion-title {
     font-weight: bold;
 }
 
@@ -811,14 +815,12 @@ h4 {
     width: 48%;
 }
 
-
 .form-control {
     display: block;
     width: 100%;
     height: calc(1.5em + .75rem + 2px);
     padding: .175rem .35rem;
     font-size: 12px;
-  
 }
 
 .form-row-direccion .form-control {
@@ -831,7 +833,6 @@ h4 {
     margin-left: 0.2em;
     width: 15px !important;
     margin-right: 1em;
-    
 }
 
 .form-row-direccion select {
@@ -918,7 +919,8 @@ h4 {
     padding-right: 0.2em;
     padding-top: 0.4em;
     background: var(--color-background-white);
-    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    ;
     cursor: pointer;
 }
 
@@ -972,7 +974,8 @@ h4 {
     padding-right: 0.2em;
     padding-top: 0.4em;
     background: var(--color-background-white);
-    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+    ;
 }
 
 .direccion-card-active {
@@ -1059,7 +1062,7 @@ h4 {
     padding-right: 0;
     padding-top: 0.4em;
     background: var(--color-background-white);
-    box-shadow: 2px 2px 8px 0 rgba(0,0,0,0.2%);
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2%);
     border-radius: 10px;
 }
 
@@ -1072,7 +1075,7 @@ h4 {
 .producto-card-nombre {
     cursor: pointer;
     /*font-size: 16px; Hace que el texto sobrepace el contenedor josue 13/05/2021*/
-       font-size: 14px;
+    font-size: 14px;
     text-align: center;
 }
 
@@ -1123,7 +1126,8 @@ h4 {
     padding: 0.3em;
     z-index: 99;
     background: var(--color-background-white);
-    border-top: 2px solid rgba(70, 67, 67, 20%);;
+    border-top: 2px solid rgba(70, 67, 67, 20%);
+    ;
     display: none;
 }
 
@@ -1176,7 +1180,8 @@ h4 {
 
 .producto-det-row1 img {
     width: 80%;
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
     min-width: 435px;
     min-height: 225px;
 }
@@ -1227,7 +1232,8 @@ h4 {
     background: var(--color-background-white);
     padding: 0.8em;
     margin-bottom: 0.05em;
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
 }
 
 .producto-det-row2-info i {
@@ -1239,7 +1245,8 @@ h4 {
     margin-top: 1em;
     background: var(--color-background-white);
     margin-bottom: 0.05em;
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
 }
 
 .producto-det-row2-det .titulo {
@@ -1301,7 +1308,8 @@ h4 {
     margin-top: 1em;
     background: var(--color-background-white);
     margin-bottom: 0.05em;
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
     display: flex;
     flex-wrap: wrap;
 }
@@ -1349,7 +1357,8 @@ h4 {
     margin-top: 1em;
     background: var(--color-background-white);
     margin-bottom: 0.05em;
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
     display: block;
     flex-wrap: wrap;
 }
@@ -1391,15 +1400,18 @@ h4 {
     color: var(--color-font3);
     min-width: 70px;
 }
-.filter-row-mobile .header-link{
-    .fa{
+
+.filter-row-mobile .header-link {
+    .fa {
         margin-right: 0.1em;
     }
 }
+
 .div-carrito:hover {
     background-color: var(--color-background-white);
     color: var(--color-font2);
 }
+
 .fa-producto-detalle {
     font-size: 1em;
     color: var(--color-font4);
@@ -1433,7 +1445,8 @@ h4 {
 
 .producto-det-col1-data img {
     width: 20%;
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
     min-width: 250px;
     min-height: 155px;
 }
@@ -1471,10 +1484,11 @@ h4 {
     margin-right: 2em;
     margin-left: 2em;
     padding: 0.5em;
-     width: 80%; 
+    width: 80%;
     margin-bottom: 0.05em;
     background: var(--color-background-white);
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
 }
 
 .carrito-detalle-info {
@@ -1488,7 +1502,8 @@ h4 {
     padding: 1em;
     margin-bottom: 1em;
     background: var(--color-background-white);
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
     font-weight: bold;
     color: var(--color-font-default);
 }
@@ -1548,7 +1563,6 @@ h4 {
     padding-top: 2em;
     margin-left: 0.1em;
     min-width: 210px;
-   
 }
 
 .producto-det-row-cantidad {
@@ -1556,14 +1570,15 @@ h4 {
     width: 20%;
     margin-right: 0.2em;
 }
-.producto-det-row-cantidad input{
-    width: 80px;    
-}
-.producto-det-row-subtotal {
-   padding-top: 2.5em;
-     width: 30%;
-     min-width: 100px;
 
+.producto-det-row-cantidad input {
+    width: 80px;
+}
+
+.producto-det-row-subtotal {
+    padding-top: 2.5em;
+    width: 30%;
+    min-width: 100px;
     /*margin-left: 0.5em;*/
 }
 
@@ -1656,7 +1671,8 @@ h4 {
     padding: 0.5em;
     min-height: 50px;
     background: var(--color-background-white);
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
     display: none;
     height: auto;
 }
@@ -2016,12 +2032,13 @@ h4 {
 }
 
 .filter-marca-categoria {
-    span{
+    span {
         margin-left: 0.5em;
         margin-right: 0.5em;
         font-weight: bold;
     }
 }
+
 .filter-marca-categoria a {
     text-decoration: none;
     color: var(--color-font);
@@ -2092,7 +2109,8 @@ h4 {
     background-color: var(--color-background-white);
     padding-top: 1em;
     padding-bottom: 1em;
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
 }
 
 .prod-filter-menu input[type="checkbox"] {
@@ -2281,10 +2299,12 @@ h4 {
     padding-right: 0.2em;
     padding-top: 0.4em;
     background: var(--color-background-white);
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
     border-radius: 10px;
     min-height: 360px;
 }
+
 .prod-img-search-row-reporte {
     width: 97%;
     margin-top: 0.5em;
@@ -2296,53 +2316,53 @@ h4 {
     padding-right: 0.2em;
     padding-top: 0.4em;
     background: var(--color-background-white);
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);;
+    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    ;
     border-radius: 10px;
     min-height: 360px;
-    hr{
-        
+    hr {
         margin: 0em;
         margin-bottom: 0.2em;
     }
-    thead{
-        tr{
-            td{
+    thead {
+        tr {
+            td {
                 border: solid 0.5px var(--color-font2);
-                color:var(--color-font3);
+                color: var(--color-font3);
                 background-color: var(--color-font2);
             }
         }
     }
-
-   td {
+    td {
         border: solid 0.5px var(--color-font2);
         font-size: 12px;
-        .fa-check{
+        .fa-check {
             color: #36df36;
         }
-        .fa-btn{            
-            cursor: pointer;         
+        .fa-btn {
+            cursor: pointer;
             padding: 2px;
             margin-right: 3px;
         }
     }
 }
-.prod-img-search-row-reporte-filter{
+
+.prod-img-search-row-reporte-filter {
     display: flex;
     flex-wrap: wrap;
-    .div-row-1{
+    .div-row-1 {
         width: 100%;
         margin-left: 1em;
     }
-    .prod-card-row{
+    .prod-card-row {
         margin-top: 0em;
         margin-left: 1em;
-        .btn{
+        .btn {
             padding: .1rem .75rem;
         }
     }
-   
 }
+
 .prod-img-search-row2 {
     width: 45%;
 }

@@ -179,7 +179,33 @@ FilterMarcas(props) {
       </div>
 
       <div className="filter-row-mobile">
-
+      <ul className="nav-marcas">
+          <li>
+            <span>
+              <i className="fa fa-bars menu-bar" aria-hidden="true"></i>
+            </span>
+            <ul>              
+              <li>
+                <div className="header-link-tipcambio">
+                  Moneda
+                  <select
+                    className="tip-cambio-select "
+                    name="numTipoMoneda"
+                    value={props.moneda.numCodigoMoneda}
+                    onChange={props.handleChangeTipoMoneda}
+                  >
+                    <option value={Moneda.DOLARES.numCodigoMoneda}>
+                      {Moneda.DOLARES.codigoIso4217  }
+                    </option>
+                    <option value={Moneda.SOLES.numCodigoMoneda}>
+                      {Moneda.SOLES.codigoIso4217 }
+                    </option>
+                  </select>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
 
       
           <div className="filter-image">
