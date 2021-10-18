@@ -117,7 +117,7 @@ const reducer = (state, action) => {
 };
 
 function App() {
-  const parsed = querystring.parse(window.location.search);
+ // const parsed = querystring.parse(window.location.search);
  /* let _marca = lstMarcas.find(
     (marca) => marca.decripcion === parsed.descripcion
   );

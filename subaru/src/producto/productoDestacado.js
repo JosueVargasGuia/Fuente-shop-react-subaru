@@ -56,19 +56,19 @@ export default function ProductoDestacado(props) {
 
   let rowRepuesto = listaRepuesto.map((rowRep) => <div key={rowRep.key}>
     <Link to={rowRep.url} key={rowRep.key} >
-      <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg}></img>
+      <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg} loading='lazy'></img>
       {rowRep.discripcion}-to={rowRep.url} 
     </Link>
   </div>);
   let rowAccesorios = listaAccesorios.map((rowAcce) => <div key={rowAcce.key}>
     <Link to={rowAcce.url} key={rowAcce.key} >
-      <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg}></img>
+      <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
       {rowAcce.discripcion}-to={rowAcce.url}
     </Link>
   </div>);
 
   let rowCategoria = listaCategoria.map((rowCate) =>
-    <div key={rowCate.key}  className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage == undefined ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
+    <div key={rowCate.key}  className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
       <div className="produc-link-accesorio-left">
         <div className="title">{rowCate.title}</div>
         <div className="content">{rowCate.content}</div>
@@ -220,7 +220,7 @@ export default function ProductoDestacado(props) {
 
       <ServerException server={state.server}></ServerException>
       <div className="wspclass">
-        <a href={whatsAppLink} target="_blank">
+        <a href={whatsAppLink} target="noreferrer">
           <div>
             <i className="fa fa-whatsapp" aria-hidden="true"></i>
             <p>Consulta</p>

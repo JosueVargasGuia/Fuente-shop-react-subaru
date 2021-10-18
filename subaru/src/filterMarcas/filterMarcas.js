@@ -48,9 +48,9 @@ FilterMarcas(props) {
     props.handleSelectMarcaChange(lstMarcas[0].codigoMarca, 'FilterMarcas');
     history.push("/shop");
   };
-  const onClickImageShop = () => {
+ /* const onClickImageShop = () => {
     props.handleSelectMarcaChange(0, 'FilterMarcas');
-  };
+  };*/
   async function handleClickBuscarProductos() {
     console.log(descripcion);
     history.push("/shop/search/filter/" + descripcion);
