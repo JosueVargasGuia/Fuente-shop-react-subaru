@@ -1626,6 +1626,20 @@ h4 {
     padding-right: 1em;
 }
 
+@media (min-width: 200px) and (max-width: 830px) {
+    .producto-det-row-data {
+        flex-wrap: wrap;
+    }
+    .producto-det-row-desc,
+    .producto-det-row-subtotal {
+        width: 70%;
+    }
+    .producto-det-row-accion,
+    .producto-det-row-cantidad {
+        width: 25%;
+    }
+}
+
 @media (min-width: 100px) and (max-width: 1005px) {
     .producto-det-carrito-row {
         display: block !important;
