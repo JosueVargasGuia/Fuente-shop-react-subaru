@@ -25,7 +25,7 @@ const URL = {
   REGISTRAR_DIRECCIONES: "/direccion/registro",/*Privado */
   ELIMINAR_DIRECCIONES: "/direccion/delete",/*Privado */
   REISTRAR_COTIZACION_METODO_ENVIO: "/cotizacion/registrarCotizacionMetodoEnvio",   /*Privado */
-  LISTAR_PRODUCTO_IMAGEN: "/productoImagen/listaImangen",/*Privado */
+  //LISTAR_PRODUCTO_IMAGEN: "/productoImagen/listaImangen",/*Privado */
   CRUD_PRODUCTO_IMAGEN: "/productoImagen/subirImagen",/*Privado */
   LISTAR_ATRIBUTO: "/productoImagen/listaAtributo",/*Privado */
   LISTAR_PRODUCTO_REPORTE: "/productoImagen/listaProductoReporte",/*Privado */
@@ -49,7 +49,7 @@ const URL = {
 
 function IP(uri) {
   let _PROTOCOLO='https';
-  let _URL_API = 'bk.subaruparts.eanet.pe';//localhost ,bk.eanetautoparts.pe
+  let _URL_API = 'bk.subaruparts.eanet.pe';//localhost ,bk.subaruparts.eanet.pe
   let _PORT = undefined;//undefined --> sin puerto,'8084'--> con puerto
   let _SERVICE = 'ShopAutoPartsServices/service';//'ShopAutoPartsServices/service' ,'service'-->localhost
   return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri 
