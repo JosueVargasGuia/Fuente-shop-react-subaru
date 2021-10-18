@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import { useHistory } from "react-router-dom";
 import { FilterProducto, HttpStatus, localStoreEnum, Moneda, SUCCESS_SERVER, tipoActualizacionCotizacionDetalle } from "../service/ENUM";
 import { Modal } from "react-bootstrap";
@@ -39,6 +40,9 @@ export default function ProductosCard(props) {
     },
     listaProductoImagen: props.producto.listaProductoImagen,
   };
+  let shareFacebook='https://www.facebook.com/sharer/sharer.php?u=https://subaruparts.eanet.pe/subaruparts/detalle/'+producto.familia.chrCodigoFamilia+'/'+producto.familia.vchDescripcion+'/'+producto.chrCodigoProducto+'&quote='+producto.vchDescripcion;
+  let shareTwitter='https://twitter.com/intent/tweet?url=https://subaruparts.eanet.pe/subaruparts/detalle/'+producto.familia.chrCodigoFamilia+'/'+producto.familia.vchDescripcion+'/'+producto.chrCodigoProducto+'&text='+producto.vchDescripcion;
+
   const cotizacionResumen = {
     totalRegistros: 0,
     numSubTotalDol: 0,
@@ -326,8 +330,12 @@ export default function ProductosCard(props) {
           <hr></hr>
           <div>
             <span>Compartir</span>
-            <button className='btn btn-social fa fa-facebook'></button>
-            <button className='btn btn-social fa fa-twitter'></button>
+            <a className='btn btn-social fa fa-facebook'  
+            href={shareFacebook} 
+            target='noreferrer' ></a>
+            <a className='btn btn-social fa fa-twitter'
+            href={shareTwitter} 
+            target='noreferrer' ></a>
           </div>
         </Modal.Footer>
       </Modal>

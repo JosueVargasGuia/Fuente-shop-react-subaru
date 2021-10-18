@@ -1,10 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import { useEffect, useReducer } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../filterMarcas/filterMarcas.css";
 import { useParams, Link, useHistory } from "react-router-dom";
-
-
 
 import {
   HttpStatus,
@@ -66,7 +65,9 @@ export default function ProductoDetalle(props) {
     producto: producto,
     cotizacionResumen: cotizacionResumen,
     showModal: false,
-    mensajeStock: '',
+    mensajeStock: "",
+    shareFacebook: "",
+    shareTwitter: "",
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
@@ -79,7 +80,8 @@ export default function ProductoDetalle(props) {
       pagina: 1,
       limit: 1,
     });
-
+    let shareFacebook = "";
+    let shareTwitter = "";
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
 
@@ -98,11 +100,12 @@ export default function ProductoDetalle(props) {
               chrType: obj.chrType,
             }*/
             _listaProductoImagen.push(
-              <img className="detalle-img" key={i}
+              <img
+                className="detalle-img"
+                key={i}
                 src={"data:image/png;base64," + obj.chrSrcImagen}
                 alt={obj.chrNombre}
               ></img>
-
             );
           }
           /*Lista de detalles del producto */
@@ -117,16 +120,16 @@ export default function ProductoDetalle(props) {
                   <div className="desc-value">{objDet.descripcion}</div>
                 </div>
               );
-            };
+            }
           }
           /*Ficha Tecnica */
           _listaProductoDetalle.push(
-            <div className="detalle" key={'-1'}>
+            <div className="detalle" key={"-1"}>
               &nbsp;
             </div>
           );
           _listaProductoDetalle.push(
-            <div className="detalle" key={'-2'}>
+            <div className="detalle" key={"-2"}>
               <div className="desc-label">Ficha técnica</div>
               <div className="desc-value"> </div>
             </div>
@@ -137,10 +140,12 @@ export default function ProductoDetalle(props) {
               _listaProductoDetalle.push(
                 <div className="detalle" key={i}>
                   <div className="desc-label desc-row-ref">{objDet.titulo}</div>
-                  <div className="desc-value desc-row-ref">{objDet.descripcion}</div>
+                  <div className="desc-value desc-row-ref">
+                    {objDet.descripcion}
+                  </div>
                 </div>
               );
-            };
+            }
           }
           producto.chrCodigoProducto = e.chrCodigoProducto;
           producto.numValorVentaDolar = e.numValorVentaDolar;
@@ -162,11 +167,31 @@ export default function ProductoDetalle(props) {
           producto.imagenDefault.chrType = e.imagenDefault.chrType;
           producto.listaProductoImagen = _listaProductoImagen;
           producto.listaProductoDetalle = _listaProductoDetalle;
+          shareFacebook =
+            "https://www.facebook.com/sharer/sharer.php?u=https://subaruparts.eanet.pe/subaruparts/detalle/" +
+            producto.familia.chrCodigoFamilia +
+            "/" +
+            producto.familia.vchDescripcion +
+            "/" +
+            producto.chrCodigoProducto +
+            "&quote=" +
+            producto.vchDescripcion;
+          shareTwitter =
+            "https://twitter.com/intent/tweet?url=https://subaruparts.eanet.pe/subaruparts/detalle/" +
+            producto.familia.chrCodigoFamilia +
+            "/" +
+            producto.familia.vchDescripcion +
+            "/" +
+            producto.chrCodigoProducto +
+            "&text=" +
+            producto.vchDescripcion;
         }
         console.log(producto);
         dispatch({
           type: actionType.LOAD_PRODUCTOS,
           producto: producto,
+          shareFacebook: shareFacebook,
+          shareTwitter: shareTwitter,
           server: {
             error: "",
             success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT,
@@ -177,6 +202,8 @@ export default function ProductoDetalle(props) {
         dispatch({
           type: actionType.LOAD_PRODUCTOS,
           producto: producto,
+          shareFacebook: shareFacebook,
+          shareTwitter: shareTwitter,
           server: {
             error: json.response.error,
             success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
@@ -187,6 +214,8 @@ export default function ProductoDetalle(props) {
       dispatch({
         type: actionType.LOAD_PRODUCTOS,
         producto: producto,
+        shareFacebook: shareFacebook,
+        shareTwitter: shareTwitter,
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
       });
     }
@@ -212,11 +241,7 @@ export default function ProductoDetalle(props) {
   }, [props.moneda.numCodigoMoneda]);
 
   const handleEventClickregistrarCotizacion = async () => {
-
     if (state.cantidad <= state.producto.numStock) {
-
-
-
       let cotizacion = handleSyncDatosCotizacion();
       const rpt = await registrarCotizacion(cotizacion);
       if (rpt.status === HttpStatus.HttpStatus_OK) {
@@ -242,7 +267,9 @@ export default function ProductoDetalle(props) {
           );
           if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
             const jsonDetalle = await rptDetalle.json();
-            if (jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+            if (
+              jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK
+            ) {
               console.log(jsonDetalle);
               cotizacionResumen.numSubTotalDol = jsonDetalle.numSubTotalDol;
               cotizacionResumen.numIgvDol = jsonDetalle.numIgvDol;
@@ -305,9 +332,11 @@ export default function ProductoDetalle(props) {
       dispatch({
         type: actionType.SET_CANTIDAD_STOCK,
         cantidad: state.producto.numStock,
-        mensajeStock: "Disculpe las molestias, el stock disponible para este producto es de " + state.producto.numStock + " unidades."
-      })
-
+        mensajeStock:
+          "Disculpe las molestias, el stock disponible para este producto es de " +
+          state.producto.numStock +
+          " unidades.",
+      });
     }
   };
   function handleEventCloseModal() {
@@ -327,7 +356,9 @@ export default function ProductoDetalle(props) {
   return (
     <div className="producto-det">
       <div className="producto-det-link">
-        <Link to={"/shop?descripcion=" + state.producto.familia.vchDescripcion}>Inicio</Link>
+        <Link to={"/shop?descripcion=" + state.producto.familia.vchDescripcion}>
+          Inicio
+        </Link>
         <span className="producto-det-link-span">/</span>
         <span className="producto-det-link-nombre">
           {state.producto.vchDescripcion}
@@ -336,7 +367,6 @@ export default function ProductoDetalle(props) {
       <div className="producto-det-row">
         <div className="producto-det-row1 ">
           <div className="prod-det-carrousel">
-
             <Carousel
               showArrows={false}
               showStatus={false}
@@ -352,10 +382,7 @@ export default function ProductoDetalle(props) {
               thumbWidth={75}
               selectedItem={0}
             >
-              {
-                state.producto.listaProductoImagen
-              }
-
+              {state.producto.listaProductoImagen}
             </Carousel>
           </div>
         </div>
@@ -376,7 +403,7 @@ export default function ProductoDetalle(props) {
             </span>
           </div>
           <div className="producto-det-row2-shop">
-            <span>Cantidad  </span>
+            <span>Cantidad </span>
             <div className="producto-det-row2-shop-div">
               <input
                 type="number"
@@ -399,9 +426,23 @@ export default function ProductoDetalle(props) {
                 Añadir al Carrito
               </button>
             </div>
-            {state.mensajeStock===''?'':<span className='producto-mensaje-stock'>{state.mensajeStock}</span>}             
+            {state.mensajeStock === "" ? (
+              ""
+            ) : (
+              <span className="producto-mensaje-stock">
+                {state.mensajeStock}
+              </span>
+            )}
           </div>
-          <div className="producto-det-row2-social">Compartir</div>
+          <div className="producto-det-row2-social">Compartir</div>          
+          <div className="producto-det-row2-social"> 
+          <a className='btn btn-social fa fa-facebook'  
+            href={state.shareFacebook} 
+            target='noreferrer' ></a>
+            <a className='btn btn-social fa fa-twitter'
+            href={state.shareTwitter} 
+            target='noreferrer' ></a>
+          </div>
           <div className="producto-det-row2-info">
             <i className="fa fa-shield-p"></i>
             {InfoCondicionCompra.EMISION}
@@ -415,7 +456,10 @@ export default function ProductoDetalle(props) {
             {InfoCondicionCompra.DEVOLUCIONES}
           </div>
           <div className="producto-det-row2-det">
-            <div className="titulo"><span>Detalles del producto</span><div></div></div>
+            <div className="titulo">
+              <span>Detalles del producto</span>
+              <div></div>
+            </div>
             {state.producto.listaProductoDetalle}
           </div>
         </div>
@@ -473,13 +517,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Precio:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.producto.numValorVentaDolar
                     : state.producto.numValorVentaSoles}
                 </label>
@@ -500,14 +544,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Subtotal:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
-
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numSubTotalDol
                     : state.cotizacionResumen.numSubTotalSol}
                 </label>
@@ -516,13 +559,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Igv:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numIgvDol
                     : state.cotizacionResumen.numIgvSol}
                 </label>
@@ -531,7 +574,7 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Envío:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
@@ -541,13 +584,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Total:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
-                <label className="label-moneda" >
+                <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numTotalDol
                     : state.cotizacionResumen.numTotalSol}
                 </label>
@@ -564,7 +607,6 @@ export default function ProductoDetalle(props) {
             <i className="fa fa-check"></i>
             PASAR POR CAJA
           </button>
-
         </Modal.Footer>
       </Modal>
     </div>
@@ -585,6 +627,8 @@ const reducer = (state, action) => {
         ...state,
         producto: action.producto,
         server: action.server,
+        shareFacebook: action.shareFacebook,
+        shareTwitter: action.shareTwitter,
       };
     case actionType.ERROR:
       return {
@@ -600,7 +644,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         cantidad: action.cantidad,
-        mensajeStock: action.mensajeStock
+        mensajeStock: action.mensajeStock,
       };
     case actionType.SHOW:
       return {

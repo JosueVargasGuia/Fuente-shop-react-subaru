@@ -24,6 +24,7 @@ function ProductoResumenMarcaCard(props) {
       <img key={props.promocion.codigoBanner}
         src={(homepage===undefined?"":"/"+homepage) +props.promocion.srcImage}
         alt={props.promocion.descripcion}
+        loading='lazy'
       ></img>
     </div>
   );
