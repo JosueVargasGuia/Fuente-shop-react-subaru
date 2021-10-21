@@ -103,7 +103,14 @@ async function actualizarProductosStock(body) {
   );
   return response;
 }
-
+async function listaReporteCotizacion(body) {
+  const response = await tokenFetchService(
+    IP(URL.REPORTE_COTIZACION),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 export {
   findProductos,
   obtenerTipoCambio,
@@ -117,5 +124,6 @@ export {
   crudProductoCategoria,
   listaProductoReporte,
   listaProductoStock,
-  actualizarProductosStock
+  actualizarProductosStock,
+  listaReporteCotizacion
 };

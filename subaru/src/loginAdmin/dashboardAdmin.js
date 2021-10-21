@@ -92,7 +92,7 @@ export default function DashboardAdmin(props) {
                 className="fa fa-opencart dashboard-info"
                 aria-hidden="true"
               ></i>
-              <span>PRODUCTOS</span>
+              <span>Productos</span>
             </div>
           </Link>
 
@@ -105,7 +105,7 @@ export default function DashboardAdmin(props) {
                 className="fa fa-users dashboard-info"
                 aria-hidden="true"
               ></i>
-              <span>USUARIOS</span>
+              <span>Usuarios</span>
             </div>
           </Link>
 
@@ -120,9 +120,7 @@ export default function DashboardAdmin(props) {
               ></i>
               <span>Usuario Dashboar</span>
             </div>
-          </Link>
-
-         
+          </Link>        
 
           <Link
             to={"/listaCorreoJobs"}
@@ -134,6 +132,18 @@ export default function DashboardAdmin(props) {
                 aria-hidden="true"
               ></i>
               <span>Administrador Correos</span>
+            </div>
+          </Link>
+          <Link
+            to={"/reporteCotizacion"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-bar-chart dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>Reporte de Cotizacion</span>
             </div>
           </Link>
         </div>
