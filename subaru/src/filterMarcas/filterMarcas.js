@@ -31,7 +31,7 @@ FilterMarcas(props) {
 
 
 
-  const [srcLogo] = useState(window.location.origin+(homepage==undefined?"":"/"+homepage) + "/marcas/logo.png");
+  const [srcLogo] = useState(window.location.origin+(homepage===undefined?"":"/"+homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
   let rowRepuesto = listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
     <Link to="/shop">{rowRepu.descripcion}</Link>

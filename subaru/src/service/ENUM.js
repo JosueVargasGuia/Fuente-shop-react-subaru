@@ -233,6 +233,15 @@ const FilterCorreo = {
   FILTER_TIPO_CAMBIO_REGISTRO:'FILTER_TIPO_CAMBIO_REGISTRO',
   FILTER_TIPO_CAMBIO_TOMADO:'FILTER_TIPO_CAMBIO_TOMADO',
 };
+const Empresa={
+  ruc:'20601356024',
+  razonSocial:'CORPORACION DE EMPRESAS AUTOMOTRICES SOCIEDAD ANONIMA CERRADA - EA CORP S.A.C',
+  nombreComercial:'Ea Corp. Sac',
+  urlTienda:'https://subaruparts.eanet.pe/subaruparts/shop',
+  direccion:'Av. Republica de Panama Nro. 4259',
+  correo:'consultas@eanetautoparts.pe'
+}
+
 export {
   SUCCESS_SERVER,
   HttpStatus,
@@ -257,6 +266,7 @@ export {
   tipoDireccion,
   homepage,
   chrRol,
-  FilterCorreo
+  FilterCorreo,
+  Empresa
 };
 

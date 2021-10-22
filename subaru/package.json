@@ -31,7 +31,7 @@
     "react-scripts": "^4.0.3",
     "styled-components": "^5.2.1",
     "web-vitals": "^1.1.0",
-    "xlsx": "^0.15.4",
+    "xlsx": "^0.15.6",
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
