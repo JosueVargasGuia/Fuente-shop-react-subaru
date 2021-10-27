@@ -7,7 +7,6 @@ import { HttpStatus } from "./ENUM";
 
 import { IP, URL } from "./IP";
 
-
 async function validacionToken(body) {
   let _response = { status: 200 };
   try {
@@ -68,7 +67,6 @@ async function registrarCliente(body) {
   return response;
 }
 async function obtenerCliente(body) {
-  console.log(body);
   const response = await tokenFetchService(
     IP(URL.OBTENER_CLIENTE),
     body,
@@ -92,6 +90,7 @@ async function obtenerListaUsuario(body) {
   );
   return response;
 }
+
 async function registrarDireccion(body) {
   const response = await tokenFetchService(
     IP(URL.REGISTRAR_DIRECCIONES),

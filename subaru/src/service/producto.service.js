@@ -1,4 +1,4 @@
-import { fetchService,tokenFetchService, METHOD } from "../matchService/fetchService";
+import { fetchService, tokenFetchService, METHOD } from "../matchService/fetchService";
 
 import { IP, URL } from "./IP";
 async function findProductos(body) {
@@ -26,7 +26,7 @@ async function obtenerSubFamilia(body) {
   return response;
 }
 async function listaProductoImagen(body) {
-  const response = await fetchService(
+  const response = await tokenFetchService(
     IP(URL.LISTAR_PRODUCTO_IMAGEN),
     body,
     METHOD.POST
@@ -34,8 +34,8 @@ async function listaProductoImagen(body) {
   return response;
 }
 async function crudProductoImagen(body) {
-  
-  const response = await fetchService(
+
+  const response = await tokenFetchService(
     IP(URL.CRUD_PRODUCTO_IMAGEN),
     body,
     METHOD.POST
@@ -43,26 +43,26 @@ async function crudProductoImagen(body) {
   return response;
 }
 async function listaAtributo(body) {
-  
-  const response = await fetchService(
+  const response = await tokenFetchService(
     IP(URL.LISTAR_ATRIBUTO),
     body,
     METHOD.POST
   );
   return response;
 }
-async function listaProductoReporte(body) {  
-  console.log(body)
-  const response = await fetchService(
+
+async function listaProductoReporte(body) {   
+  const response = await tokenFetchService(
     IP(URL.LISTAR_PRODUCTO_REPORTE),
     body,
     METHOD.POST
   );
   return response;
 }
+
 async function listaProductoAtributo(body) {
-  
-  const response = await fetchService(
+
+  const response = await tokenFetchService(
     IP(URL.LISTAR_PRODUCTO_ATRIBUTO),
     body,
     METHOD.POST
@@ -71,7 +71,7 @@ async function listaProductoAtributo(body) {
 }
 async function crudProductoAtributo(body) {
   console.log(body)
-  const response = await fetchService(
+  const response = await tokenFetchService(
     IP(URL.CRUD_PRODUCTO_ATRIBUTO),
     body,
     METHOD.POST
@@ -79,8 +79,7 @@ async function crudProductoAtributo(body) {
   return response;
 }
 async function crudProductoCategoria(body) {
-  console.log(body)
-  const response = await fetchService(
+  const response = await tokenFetchService(
     IP(URL.CRUD_PRODUCTO_CATEGORIA),
     body,
     METHOD.POST
@@ -111,6 +110,8 @@ async function listaReporteCotizacion(body) {
   );
   return response;
 }
+
+
 export {
   findProductos,
   obtenerTipoCambio,
