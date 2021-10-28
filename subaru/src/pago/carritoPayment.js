@@ -289,6 +289,7 @@ export function CarritoPayment(props) {
             localStorage.removeItem(localStoreEnum.COTIZACION);
             if (answer.orderStatus === 'PAID') {
               history.push("/succesPayment");
+              window.location.reload();
               console.log('Pago Valido');
             } else {
               history.push("/succesNopayment");
