@@ -539,7 +539,7 @@ function App() {
                     <br />
                     Peru
                     <br />
-                    Llámenos:{" "}
+                    Central de Repuestos:{" "}
                     <a className="class-telf" href="tel:">
                       01 630 7600
                     </a>
