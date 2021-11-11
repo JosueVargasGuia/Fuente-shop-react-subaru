@@ -85,7 +85,7 @@ async function obtenerTusCompras(body) {
   return response;
 }
 async function obtenerTusComprasDetalle(body) { 
-  const response = await fetchService(
+  const response = await tokenFetchService(
     IP(URL.LISTAR_TUS_COMPRAS_DETALLE),
     body,
     METHOD.POST
