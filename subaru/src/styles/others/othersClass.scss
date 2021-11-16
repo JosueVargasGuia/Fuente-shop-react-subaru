@@ -553,7 +553,11 @@
         width: 98%;
     }
 }
-
+@media (min-width: 0px) and (max-width: 994px) {
+    .produc-link-accesorio .produc-link-accesorio-left{
+        width: 48%;
+    }
+}
 .wspclass {
     background-color: transparent;
     display: inline-block;
