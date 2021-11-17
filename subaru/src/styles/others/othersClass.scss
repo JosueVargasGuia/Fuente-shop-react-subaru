@@ -154,8 +154,8 @@
 }
 
 .row-confirmado div {
-    background-color: #727273;
-    color: var( --color-font3);
+    background-color: #4fe157;
+    color: var( --color-font1);
     width: 90px;
     text-align: center;
     border-radius: 5px 5px 5px 5px;
@@ -163,7 +163,7 @@
 
 .row-cancelado div {
     background-color: #ed3d68;
-    color: var( --color-font3);
+    color: var( --color-font1);
     width: 90px;
     text-align: center;
     border-radius: 5px 5px 5px 5px;
@@ -171,7 +171,15 @@
 
 .row-pendiente div {
     background-color: #ffb100;
-    color: var( --color-font3);
+    color: var( --color-font1);
+    width: 90px;
+    text-align: center;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.row-procesando div {
+    background-color: #4d8bff;
+    color: var( --color-font1);
     width: 90px;
     text-align: center;
     border-radius: 5px 5px 5px 5px;
@@ -553,11 +561,13 @@
         width: 98%;
     }
 }
+
 @media (min-width: 0px) and (max-width: 994px) {
-    .produc-link-accesorio .produc-link-accesorio-left{
+    .produc-link-accesorio .produc-link-accesorio-left {
         width: 48%;
     }
 }
+
 .wspclass {
     background-color: transparent;
     display: inline-block;

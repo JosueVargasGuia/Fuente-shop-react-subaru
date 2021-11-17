@@ -345,6 +345,7 @@ export default function ProductoDetalle(props) {
       cotizacionResumen: cotizacionResumen,
       showModal: false,
     });
+    history.push("/shop");
     window.location.reload();
   }
   function handleEventGoCaja() {
