@@ -47,7 +47,7 @@ import {
 import { CarritoDetalle } from "./producto/carritoDetalle";
 import { CarritoPayment } from "./pago/carritoPayment";
 
-import querystring from "query-string";
+//import querystring from "query-string";
 import ProductoMarcaResumen from "./producto/productoMarcaResumen";
 import ProductoDestacado from "./producto/productoDestacado";
 import ImagenProducto from "./producto/imagenProducto";

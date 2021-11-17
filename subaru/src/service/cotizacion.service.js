@@ -61,8 +61,8 @@ async function requetsIziPayAutentificacion(body) {
 
 async function registrarMetodoEnvioCotizacion(body) {
   console.log(body)
-  const response = await tokenFetchService(
-    IP(URL.REISTRAR_COTIZACION_METODO_ENVIO),
+  const response = await fetchService(
+    IP(URL.REGISTRAR_COTIZACION_METODO_ENVIO),
     body,
     METHOD.POST
   );

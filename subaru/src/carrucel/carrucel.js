@@ -13,14 +13,14 @@ export default function Carrucel(props) {
       className="container-Carousel-img"
       key={objImagen.codigoCarrucel}
       alt={ objImagen.srcImage}
-      src={window.location.origin +(homepage==undefined?"":"/"+homepage) + objImagen.srcImage}
+      src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
     ></img>
   ));
 
   return (
     <div className="container-Carousel-list">    
     <div className="outlet">
-    <img alt="outlet"  src={window.location.origin +(homepage==undefined?"":"/"+homepage) +"/marcas/outlet.png"}></img> 
+    <img alt="outlet"  src={window.location.origin +(homepage===undefined?"":"/"+homepage) +"/marcas/outlet.png"}></img> 
       </div>
       <Carousel
         autoPlay={true}

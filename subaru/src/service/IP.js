@@ -20,10 +20,10 @@ const URL = {
   OBTENER_DIRECCIONES: "/direccion/lstdireccion",/*Privado */
   REGISTRAR_DIRECCIONES: "/direccion/registro",/*Privado */
   ELIMINAR_DIRECCIONES: "/direccion/delete",/*Privado */
-
+  REGISTRAR_COTIZACION_METODO_ENVIO:"/cotizacion/registrarCotizacionMetodoEnvio",   /*Privado */
 
   OBTENER_CLIENTE: "/authorization/cliente/obtenerUsuario",/*Privado */  
-  REISTRAR_COTIZACION_METODO_ENVIO:"/cotizacion/registrarCotizacionMetodoEnvio",   /*Privado */
+
   INIT_CREATE_PAYMENT:"/cotizacion/iniciarCreatePayment",/*Privado */
   LISTAR_TUS_COMPRAS:"/cotizacion/obtenerTusCompras",/*Privado */
   LISTAR_TUS_COMPRAS_DETALLE: "/cotizacion/obtenerTusComprasDetalle",/*Privado */
@@ -50,7 +50,7 @@ function IP(uri) {
   let _PROTOCOLO='http';
   let _URL_API = 'localhost';//localhost ,bk.subaruparts.eanet.pe
   let _PORT = '8084';//undefined --> sin puerto,'8084'--> con puerto
-  let _SERVICE = 'service';//'ShopAutoPartsServices/service' ,'service'-->localhost
+  let _SERVICE = 'sssservice';//'ShopAutoPartsServices/service' ,'service'-->localhost
   return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri 
 }
 function IziPay() {
