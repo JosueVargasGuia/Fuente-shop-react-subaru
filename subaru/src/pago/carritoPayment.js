@@ -30,6 +30,7 @@ import izipay from "../css/izipay.png";
 import ServerException from "../utils/serverException";
 import Hex from 'crypto-js/enc-hex';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
+import { validacionToken } from "../service/loginCliente.service";
 export function CarritoPayment(props) {
   let history = useHistory();
   const [focusMenu, setFocusMenu] = useState(1);
@@ -62,16 +63,56 @@ export function CarritoPayment(props) {
   });
 
   useEffect(() => {
+
     //eslint-disable-next-line
     handleLoad();
     console.log("useEffect CarritoPayment");
+    _validarToken();
     //eslint-disable-next-line
   }, []);
+
+
+
+
   if (localStorage.getItem(localStoreEnum.ISLOGIN) !== LOGGIN.LOGGIN) {
     /*Verificando que el cliente este logeado  */
     history.push("/loginCliente");
     return <div className="form-pago"></div>;
   }
+  async function _validarToken() {
+    let _status = await _validacionToken();
+    console.log(_status);
+    if (_status === "REDIRECT") {
+      /*Redireccionando al login */
+      localStorage.removeItem(localStoreEnum.ISLOGIN);
+      localStorage.removeItem(localStoreEnum.USUARIO);
+      localStorage.removeItem(localStoreEnum.TOKEN);
+      window.location.reload();
+      history.push("/loginCliente");
+    }
+  }
+  async function _validacionToken() {
+    let _value = "SHOW_MESSAGE";
+    const rpt = await validacionToken({
+      token: localStorage.getItem(localStoreEnum.TOKEN),
+    });
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+      const json = await rpt.json();
+      console.log(json);
+      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_EXPIRE) {
+        /*Redireccionando al login */
+        _value = "REDIRECT";
+      } else {
+        /*Visualizando el */
+        _value = "SHOW_MESSAGE";
+      }
+    } else {
+      _value = "SHOW_MESSAGE";
+    }
+    console.log(_value);
+    return _value;
+  }
+
 
   let usuarioLogeado = JSON.parse(localStorage.getItem(localStoreEnum.USUARIO));
 
@@ -306,7 +347,8 @@ export function CarritoPayment(props) {
         .then(({ KR, result }) => {
           console.log(result);
           console.log("show the payment form");
-          KR.showForm(result.formId);})
+          KR.showForm(result.formId);
+        })
         .catch(error =>
           console.log(error + " (see console for more details)")
         );
@@ -318,7 +360,7 @@ export function CarritoPayment(props) {
     }
   }
 
- 
+
 
   function handleEnventControlMenuNext() {
     let tmp = focusMenu + 1;
@@ -701,9 +743,9 @@ export function CarritoPayment(props) {
             }
           ></input>
           Estoy de acuerdo con los{" "}
-          <Link onClick={() => handleActionCerrar(true)}>
+          <a onClick={() => handleActionCerrar(true)} className="form-pago-link-tc">
             términos del servicio
-          </Link>{" "}
+          </a>{" "}
           y los acepto sin reservas.
           <div className="form-pago-botonera">
             <button
