@@ -743,9 +743,9 @@ export function CarritoPayment(props) {
             }
           ></input>
           Estoy de acuerdo con los{" "}
-          <a onClick={() => handleActionCerrar(true)} className="form-pago-link-tc">
+          <span  onClick={() => handleActionCerrar(true)} className="form-pago-link-tc">
             términos del servicio
-          </a>{" "}
+          </span>{" "}
           y los acepto sin reservas.
           <div className="form-pago-botonera">
             <button

@@ -18,7 +18,7 @@ const reducer = (state, action) => {
 };
 let timeoutID;
 export default function ServerException(props) {
-  console.log(props.server);
+  //console.log(props.server);
 
   let { error, success } = props.server;
   const [state, dispatch] = useReducer(reducer, {
@@ -59,7 +59,7 @@ export default function ServerException(props) {
     } else {
       _value = "SHOW_MESSAGE";
     }
-    console.log(_value);
+    
     return _value;
   }
 
