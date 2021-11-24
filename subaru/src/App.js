@@ -6,6 +6,7 @@ import FilterMarcas from "./filterMarcas/filterMarcas";
 import Carrucel from "./carrucel/carrucel";
 import {
   displayLista,
+  Empresa,
   homepage,
   HttpStatus,
   localStoreEnum,
@@ -370,7 +371,7 @@ function App() {
             <Route path="/loginCliente">
               <LoginCliente islogin={handleIsLoggin} />
             </Route>
-            <Route path="/Admin">
+            <Route path={"/Admin/"+Empresa.ruc+"/"+Empresa.abreviaturaSucursal}>
               <LoginAdmin islogin={handleIsLoggin} />
             </Route>
             <Route path="/registrarCliente">

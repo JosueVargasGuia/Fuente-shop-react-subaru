@@ -200,7 +200,7 @@ export default function ReporteCotizacion(props) {
             Panel de Control
           </Link>
         </div>
-        <h3>Reporte de Cotizaciones Online</h3>
+        <h3>Reporte de Venta Online</h3>
 
         <div className="form-body-reporte">
           <div className="form-accion">

@@ -143,7 +143,7 @@ export default function DashboardAdmin(props) {
                 className="fa fa-bar-chart dashboard-info"
                 aria-hidden="true"
               ></i>
-              <span>Reporte de Cotizacion</span>
+              <span>Reporte de Ventas</span>
             </div>
           </Link>
         </div>

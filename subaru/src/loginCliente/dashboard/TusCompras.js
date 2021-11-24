@@ -101,7 +101,7 @@ export default function TusCompras() {
             </div>
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Estado</label>
-              <label className={`tuscompras-row-value ${compras.estado === 'Confirmado' ? "row-confirmado" : compras.estado === 'Cancelado' ? "row-cancelado" : compras.estado === 'Procesando' ? "row-procesando" : "row-pendiente"}`}><div>{compras.estado}</div></label>
+              <label className={`tuscompras-row-value ${compras.estado === 'Confirmado' ? "row-confirmado" : compras.estado === 'Cancelado' ? "row-cancelado" : compras.estado === 'Procesando' ? "row-procesando" : "row-pendiente"}`}><div>{compras.estado === 'Confirmado' ?'Compra Realizada':compras.estado}</div></label>
             </div>
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Condicion</label>

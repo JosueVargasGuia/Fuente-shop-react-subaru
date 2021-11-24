@@ -899,7 +899,7 @@ h4 {
 .dashboard-content {
     display: flex;
     flex-wrap: wrap;
-    min-height: 200px;
+    min-height: 170px;
 }
 
 .dashboard a {
@@ -1474,8 +1474,9 @@ h4 {
     margin-right: 1em;
     width: 180px;
 }
-.form-body-modal{
-    .producto-det-data-item{
+
+.form-body-modal {
+    .producto-det-data-item {
         .label-item {
             width: 105px;
         }
@@ -2467,10 +2468,11 @@ h4 {
 .producto-card .row-img {
     min-height: 180px;
 }
-.form-pago-link-tc{
+
+.form-pago-link-tc {
     color: #2fb5d2;
     cursor: pointer;
-    :hover{
+     :hover {
         text-decoration: underline;
     }
 }

@@ -239,7 +239,8 @@ const Empresa={
   nombreComercial:'Ea Corp. Sac',
   urlTienda:'https://subaruparts.eanet.pe/subaruparts/shop',
   direccion:'Av. Republica de Panama Nro. 4259',
-  correo:'consultas@eanetautoparts.pe'
+  correo:'consultas@eanetautoparts.pe',
+  abreviaturaSucursal:'RP4259'
 }
 
 export {
