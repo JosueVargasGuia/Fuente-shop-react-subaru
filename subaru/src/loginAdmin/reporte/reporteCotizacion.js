@@ -13,10 +13,12 @@ import {
 import { obtenerCliente } from "../../service/loginCliente.service";
 import { LoadingClassic } from "../../utils/loading";
 import ServerException from "../../utils/serverException";
-import { listaReporteCotizacion } from "../../service/producto.service";
+import { listaReporteCotizacion, obtenerReporteToPdf } from "../../service/producto.service";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
+//import { Document, Page, pdfjs } from "react-pdf";
+//pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 registerLocale("es", es);
 let actionType = {
   LISTDATA: "LISTDATA",
@@ -100,7 +102,7 @@ export default function ReporteCotizacion(props) {
       if (
         !(
           JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)).chrRol ===
-            chrRol.ROLE_ADMIN &&
+          chrRol.ROLE_ADMIN &&
           _rol === chrRol.ROLE_ADMIN &&
           localStorage.getItem(localStoreEnum.ISLOGIN) === LOGGIN.LOGGIN
         )
@@ -120,28 +122,72 @@ export default function ReporteCotizacion(props) {
     });
     let _listData = [];
     const server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO };
-    const rpt = await listaReporteCotizacion({dteInicio:state.dteInicio,dteFinal:state.dteFinal});
+    const rpt = await listaReporteCotizacion({
+      dteInicio: state.dteInicio,
+      dteFinal: state.dteFinal,
+    });
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         const lista = json.lista;
-        console.log(lista);;
+        console.log(lista);
         console.log(lista.length);
         for (let i = 0; i < lista.length; i++) {
           const rpt = lista[i];
           _listData.push(
             <tr key={i}>
               <td>{rpt.numCodigoCotizacionOnline}</td>
-              <td style={{ minWidth: "380px" }}>{rpt.descripcion}</td>
-              <td   
-                style={{ width: "12%", minWidth: "120px", textAlign: "center" ,color:"#4992ff"}}
+              <td style={{ minWidth: "300px" }}>{rpt.descripcion}</td>
+
+              <td
+                style={{
+                  width: "12%",
+                  minWidth: "120px",
+                  textAlign: "center",
+                }}
               >
-                {rpt.numFacturas}
+                <span className="span-link-pdf" onClick={() =>
+                  handleEventBlankPdf({ numCodigoCotizacion: rpt.numCodigoCotizacion, typeReporte: "ReporteCotizacion" })}>
+                  {rpt.chrCodigoCotizacion}</span>
               </td>
               <td
-                style={{ width: "12%", minWidth: "120px", textAlign: "center", color:"#4992ff" }}
+                style={{
+                  width: "12%",
+                  minWidth: "120px",
+                  textAlign: "center",
+
+                }}
               >
-                {rpt.chrCodigoCotizacion}
+                <span className="span-link-pdf" onClick={() =>
+                  handleEventBlankPdf({ numFacturas: rpt.numFacturas, typeReporte: "ReporteFacturaBoleta" })}>
+                  {rpt.numFacturas}
+                </span>
+              </td>
+              <td
+                style={{
+                  width: "12%",
+                  minWidth: "120px",
+                  textAlign: "center",
+
+                }}
+              >
+                <span className="span-link-pdf" onClick={() =>
+                  handleEventBlankPdf({ chrCodigoOc: rpt.chrCodigoOc, typeReporte: "ReporteOrdenCompra" })}>
+                  {rpt.chrCodigoOc}
+                </span>
+              </td>   
+              <td
+                style={{
+                  width: "12%",
+                  minWidth: "120px",
+                  textAlign: "center",
+
+                }}
+              >
+                <span className="span-link-pdf" onClick={() =>
+                  handleEventBlankPdf({ chrCodigoGuia: rpt.chrCodigoGuia, typeReporte: "ReporteGuiaSalida" })}>
+                  {rpt.chrCodigoGuia}
+                </span>
               </td>
               <td
                 style={{ width: "12%", minWidth: "120px", textAlign: "center" }}
@@ -154,7 +200,12 @@ export default function ReporteCotizacion(props) {
                 {rpt.chrEmail}
               </td>
               <td
-                style={{ width: "8%", minWidth: "120px", textAlign: "center" , color:"#4992ff" }}
+                style={{
+                  width: "8%",
+                  minWidth: "120px",
+                  textAlign: "center",
+                  color: "#4992ff",
+                }}
               >
                 {rpt.chrReflegacyTransid}
               </td>
@@ -179,7 +230,6 @@ export default function ReporteCotizacion(props) {
         server.success = SUCCESS_SERVER.SUCCES_SERVER_INFO;
       }
     } else {
-     
       server.error = "";
       server.success = SUCCESS_SERVER.SUCCES_SERVER_ERROR;
     }
@@ -191,6 +241,63 @@ export default function ReporteCotizacion(props) {
       server: server,
     });
   }
+
+  async function handleEventBlankPdf(_reporteRequets) {
+
+
+    /*Service */
+    const server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO };
+    const rpt = await obtenerReporteToPdf({
+      numCodigoCotizacion: _reporteRequets.numCodigoCotizacion,
+      numFacturas:_reporteRequets.numFacturas,
+      chrCodigoOc:_reporteRequets.chrCodigoOc,
+      chrCodigoGuia:_reporteRequets.chrCodigoGuia,
+      typeReporte: _reporteRequets.typeReporte,
+    });
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+      const json = await rpt.json();
+      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+        const base64str = json.byteEnconderBase64;
+        // decode base64 string, remove space for IE compatibility
+        var binary = atob(base64str.replace(/\s/g, ""));
+        var len = binary.length;
+        var buffer = new ArrayBuffer(len);
+        var view = new Uint8Array(buffer);
+        for (var i = 0; i < len; i++) {
+          view[i] = binary.charCodeAt(i);
+        }
+        // create the blob object with content-type "application/pdf"
+        var blob = new Blob([view], { type: "application/pdf" });
+        var url = URL.createObjectURL(blob);
+        var w = 1000;
+        var h = 600;
+        var left = Number(window.screen.width / 2 - w / 2);
+        var tops = Number(window.screen.height / 2 - h / 2);
+        window.open(
+          url,
+          "MsgWindow",
+          "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no,copyhistory=no, width=" + w + ",height=" + h + ", top=" + tops + ", left=" + left);
+
+        server.error = "";
+        server.success = SUCCESS_SERVER.SUCCES_SERVER_OK;
+      }
+      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+        server.error = json.response.error;
+        server.success = SUCCESS_SERVER.SUCCES_SERVER_INFO;
+      }
+    } else {
+      server.error = "";
+      server.success = SUCCESS_SERVER.SUCCES_SERVER_ERROR;
+    }
+    dispatch({
+      type: actionType.ERROR,
+      server: server,
+    });
+
+    /*Service fin */
+
+
+  }
   return (
     <>
       <div className="registrar-stock">
@@ -200,7 +307,7 @@ export default function ReporteCotizacion(props) {
             Panel de Control
           </Link>
         </div>
-        <h3>Reporte de Venta Online</h3>
+        <h3>Reporte de Ventas Online</h3>
 
         <div className="form-body-reporte">
           <div className="form-accion">
@@ -242,7 +349,17 @@ export default function ReporteCotizacion(props) {
               <thead>
                 <tr>
                   <td style={{ width: "10%" }}>Código</td>
-                  <td style={{ minWidth: "380px" }}>Descripción</td>
+                  <td style={{ minWidth: "300px" }}>Descripción</td>
+                  <td
+                    style={{
+                      width: "12%",
+                      minWidth: "120px",
+                      textAlign: "center",
+                    }}
+                    title="Ref.Cotizacion"
+                  >
+                    Ref.Cotización
+                  </td>
                   <td
                     style={{
                       width: "12%",
@@ -254,15 +371,24 @@ export default function ReporteCotizacion(props) {
                     Ref.Documento
                   </td>
                   <td
-                 
                     style={{
                       width: "12%",
                       minWidth: "120px",
-                      textAlign: "center",                     
+                      textAlign: "center",
                     }}
-                    title="Ref.Cotizacion"
+                    title="Orden Compra"
                   >
-                    Ref.Cotización
+                    Ord.Compra
+                  </td>
+                  <td
+                    style={{
+                      width: "12%",
+                      minWidth: "120px",
+                      textAlign: "center",
+                    }}
+                    title="Guía Salida"
+                  >
+                    Guía Salida
                   </td>
                   <td
                     style={{
@@ -313,7 +439,7 @@ export default function ReporteCotizacion(props) {
                     title="F.Actualización"
                   >
                     F.Actualización
-                  </td>    
+                  </td>
                   <td
                     style={{
                       width: "12%",
@@ -334,13 +460,18 @@ export default function ReporteCotizacion(props) {
                     </td>
                   </tr>
                 ) : (
-                  ""
+                  <tr style={{ display: "none" }}>
+                    <td colSpan="8"></td>
+                  </tr>
                 )}
                 {state.listData}
               </tbody>
             </table>
           </div>
         </div>
+
+
+
         <ServerException server={state.server}></ServerException>
 
         <div className="link-href">

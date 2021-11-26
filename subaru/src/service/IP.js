@@ -44,13 +44,14 @@ const URL = {
   OBTENER_CORREO_JOBS:"/correo/obtenerCorreoJobs",/*Privado Administrador */
   REGISTRAR_CORREO_JOBS:"/correo/registrarCorreoJobs",/*Privado Administrador */
   REPORTE_COTIZACION:"/cotizacion/reporteCotizacion",/*Privado Administrador */
+  OBTENER_REPORTE_TO_PDF:"/cotizacion/obtenerReporteToPdf",/*Privado Administrador */
   };
 
 function IP(uri) {
-  let _PROTOCOLO='https';
-  let _URL_API = 'bk.subaruparts.eanet.pe';//localhost ,bk.subaruparts.eanet.pe
-  let _PORT = undefined;//undefined --> sin puerto,'8084'--> con puerto
-  let _SERVICE = 'ShopAutoPartsServices/service';//'ShopAutoPartsServices/service' ,'service'-->localhost
+  let _PROTOCOLO='http';
+  let _URL_API = 'localhost';//localhost ,bk.subaruparts.eanet.pe
+  let _PORT = '8084';//undefined --> sin puerto,'8084'--> con puerto
+  let _SERVICE = 'service';//'ShopAutoPartsServices/service' ,'service'-->localhost
   return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri 
 }
 function IziPay() {

@@ -110,7 +110,14 @@ async function listaReporteCotizacion(body) {
   );
   return response;
 }
-
+async function obtenerReporteToPdf(body) {
+  const response = await tokenFetchService(
+    IP(URL.OBTENER_REPORTE_TO_PDF),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 
 export {
   findProductos,
@@ -126,5 +133,6 @@ export {
   listaProductoReporte,
   listaProductoStock,
   actualizarProductosStock,
-  listaReporteCotizacion
+  listaReporteCotizacion,
+  obtenerReporteToPdf
 };

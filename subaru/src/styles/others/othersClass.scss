@@ -1030,6 +1030,11 @@
                     td {
                         border: solid 0.5px var(--color-font2);
                         font-size: 12px;
+                        .span-link-pdf{
+                            color: var(--color-font2);
+                            font-size: 12px;
+                            cursor: pointer;
+                        }
                     }
                 }
             }
