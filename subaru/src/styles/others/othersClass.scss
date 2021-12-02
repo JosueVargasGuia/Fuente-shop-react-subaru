@@ -1044,6 +1044,8 @@
 }
 
 .producto-outlet {
+    min-height: 250px;
+    background-color: var(--color-background-white);
     .table-outlet {
         font-size: 13px;
         width: 100%;
@@ -1054,6 +1056,7 @@
                 text-align: center;
                 .td-codigo {
                     width: 12%;
+                    border-right: solid 1px var(--color-font3);
                     .td-codigo-div {
                         display: flex;
                         flex-direction: column;
@@ -1066,6 +1069,7 @@
                 }
                 .td-producto {
                     margin-left: 3px;
+                    border-right: solid 1px var(--color-font3);
                     .td-producto-div {
                         text-align: center;
                         display: flex;
@@ -1079,6 +1083,13 @@
                 }
                 .td-precio {
                     width: 12%;
+                    .td-producto-div {
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        align-content: space-around;
+                    }
                 }
                 td {
                     font-weight: bold;
@@ -1098,6 +1109,7 @@
                 }
             }
             .td-producto {
+                width: 100px;
                 span {
                     margin-left: 5px;
                 }

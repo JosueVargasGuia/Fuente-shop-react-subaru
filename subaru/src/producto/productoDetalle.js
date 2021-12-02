@@ -249,6 +249,8 @@ export default function ProductoDetalle(props) {
   }, [props.moneda.numCodigoMoneda]);
 
   const handleEventClickregistrarCotizacion = async () => {
+    alert(state.cantidad  )
+    alert(  state.producto.numStock)
     if (state.cantidad <= state.producto.numStock) {
       let cotizacion = handleSyncDatosCotizacion();
       const rpt = await registrarCotizacion(cotizacion);
@@ -339,7 +341,7 @@ export default function ProductoDetalle(props) {
     } else {
       dispatch({
         type: actionType.SET_CANTIDAD_STOCK,
-        cantidad: state.producto.numStock,
+        cantidad: state.producto.cantidad,
         mensajeStock:
           "Disculpe las molestias, el stock disponible para este producto es de " +
           state.producto.numStock +
@@ -412,7 +414,7 @@ export default function ProductoDetalle(props) {
             </span>
           </div>
           <div className="producto-det-row2-shop">
-            <span>Cantidad </span>
+            <span>Cantidad {state.producto.numStock}</span>
             <div className="producto-det-row2-shop-div">
               <input
                 type="number"

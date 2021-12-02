@@ -167,7 +167,7 @@ export default function TusCompras() {
         ""
       )}
     </div>
-    <h4>Sus Compras</h4>
+    <h4>Tus Movimientos</h4>
     <div className="form-body-compras">
       {state.rowTusCompras}
     </div>
