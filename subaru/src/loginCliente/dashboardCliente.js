@@ -113,21 +113,10 @@ export default function DashboardCliente(props) {
         >
           <div>
             <i className="fa fa-history dashboard-info" aria-hidden="true"></i>
-            <span>TUS COMPRAS</span>
+            <span>TUS MOVIMIENTOS</span>
           </div>
         </Link>
-        <Link
-          to={"/facturaAbono/" + state.numCodigoCliente}
-          className="dashboard-card"
-        >
-          <div>
-            <i
-              className="fa fa-sticky-note dashboard-info"
-              aria-hidden="true"
-            ></i>
-            <span>FACTURAS POR ABONO</span>
-          </div>
-        </Link>
+      
         {state.rol === chrRol.ROLE_ADMIN ? (
           <Link
             to={"/dashboardAdmin"}

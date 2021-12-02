@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import { useHistory } from "react-router-dom";
 import { FilterProducto, HttpStatus, localStoreEnum, Moneda, SUCCESS_SERVER, tipoActualizacionCotizacionDetalle } from "../service/ENUM";
 import { Modal } from "react-bootstrap";
@@ -39,6 +40,9 @@ export default function ProductosCard(props) {
     },
     listaProductoImagen: props.producto.listaProductoImagen,
   };
+  let shareFacebook='https://www.facebook.com/sharer/sharer.php?u=https://subaruparts.eanet.pe/subaruparts/detalle/'+producto.familia.chrCodigoFamilia+'/'+producto.familia.vchDescripcion+'/'+producto.chrCodigoProducto+'&quote='+producto.vchDescripcion;
+  let shareTwitter='https://twitter.com/intent/tweet?url=https://subaruparts.eanet.pe/subaruparts/detalle/'+producto.familia.chrCodigoFamilia+'/'+producto.familia.vchDescripcion+'/'+producto.chrCodigoProducto+'&text='+producto.vchDescripcion;
+
   const cotizacionResumen = {
     totalRegistros: 0,
     numSubTotalDol: 0,
@@ -60,6 +64,7 @@ export default function ProductosCard(props) {
     cotizacionResumen: cotizacionResumen,
     showModal: false,
     showModalResumen: false,
+    mensajeStock: '',
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
@@ -106,7 +111,7 @@ export default function ProductosCard(props) {
     dispatch({ type: actionType.SET_IMAGEN, showModal: _status, listaProductoImagen: _listaProductoImagen });
   }
   async function handleEventClieckregistrarCotizacion() {
-    
+   if(state.cantidad <= state.producto.numStock){ 
     let cotizacion = handleSyncDatosCotizacion();
     console.log(cotizacion);
     const rpt = await registrarCotizacion(cotizacion);
@@ -193,6 +198,13 @@ export default function ProductosCard(props) {
         },
       });
     }
+
+   } else {
+    dispatch({
+      type: actionType.CANTIDAD_STOCK,       
+      mensajeStock: "Disculpe las molestias, el stock disponible para este producto es de " +  state.producto.numStock + " unidades."
+    })
+  }
   };
   function handleEventGoCaja() {
     history.push("/carrito");
@@ -308,7 +320,8 @@ export default function ProductosCard(props) {
                 Añadir al Carrito
               </button>
               </div>
-
+             
+              {state.mensajeStock === '' ? '' : <span className='producto-mensaje-stock'>{state.mensajeStock}</span>}
 
             </div>
           </div>
@@ -317,8 +330,12 @@ export default function ProductosCard(props) {
           <hr></hr>
           <div>
             <span>Compartir</span>
-            <button className='btn btn-social fa fa-facebook'></button>
-            <button className='btn btn-social fa fa-twitter'></button>
+            <a className='btn btn-social fa fa-facebook'  
+            href={shareFacebook} 
+            target='noreferrer' ></a>
+            <a className='btn btn-social fa fa-twitter'
+            href={shareTwitter} 
+            target='noreferrer' ></a>
           </div>
         </Modal.Footer>
       </Modal>
@@ -462,11 +479,16 @@ let actionType = {
   SET_IMAGEN: "SET_IMAGEN",
   SHOW_RESUMEN:"SHOW_RESUMEN",
   SET_SHOW_RESUMEN:"SET_SHOW_RESUMEN",
-  PRODUCTO:"PRODUCTO"
+  PRODUCTO:"PRODUCTO",
+  CANTIDAD_STOCK:'CANTIDAD_STOCK'
 };
 const reducer = (state, action) => {
   switch (action.type) {
-
+    case actionType.CANTIDAD_STOCK:
+      return {
+        ...state,        
+        mensajeStock: action.mensajeStock
+      };
     case actionType.ERROR:
       return {
         ...state,

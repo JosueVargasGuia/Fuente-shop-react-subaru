@@ -8,6 +8,7 @@ import {
   SUCCESS_SERVER,
 } from "../service/ENUM";
 import { obtenerCliente } from "../service/loginCliente.service";
+import Loading from "../utils/loading";
 import ServerException from "../utils/serverException";
 
 let actionType = { ROL: "ROL" };
@@ -37,6 +38,7 @@ export default function DashboardAdmin(props) {
   useEffect(() => {
     handleObtenerCliente(props.numCodigoCliente);
     console.log("useEffect[DashboardAdmin]");
+    //eslint-disable-next-line 
   }, []);
 
   async function handleObtenerCliente(_numCodigoCliente) {
@@ -90,12 +92,12 @@ export default function DashboardAdmin(props) {
                 className="fa fa-opencart dashboard-info"
                 aria-hidden="true"
               ></i>
-              <span>PRODUCTOS</span>
+              <span>Productos</span>
             </div>
           </Link>
 
           <Link
-            to={"/productoimagen"}
+            to={"/listaUsuarioAdmin"}
             className="dashboard-card"
           >
             <div>
@@ -103,11 +105,53 @@ export default function DashboardAdmin(props) {
                 className="fa fa-users dashboard-info"
                 aria-hidden="true"
               ></i>
-              <span>USUARIOS</span>
+              <span>Usuarios</span>
+            </div>
+          </Link>
+
+          <Link
+            to={"/dashboard"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-id-card dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>Usuario Dashboar</span>
+            </div>
+          </Link>        
+
+          <Link
+            to={"/listaCorreoJobs"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-share-alt dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>Administrador Correos</span>
+            </div>
+          </Link>
+          <Link
+            to={"/reporteCotizacion"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-bar-chart dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>Reporte de Ventas</span>
             </div>
           </Link>
         </div>
-        : <></>}
+        : <>
+          <div className="dashboard-content"><div className="dashboard-content">
+            <Loading></Loading>
+          </div></div>
+        </>}
       <ServerException server={state.server}></ServerException>
     </div>
   );

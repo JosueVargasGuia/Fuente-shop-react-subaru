@@ -1,10 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
 import { useEffect, useReducer } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../filterMarcas/filterMarcas.css";
 import { useParams, Link, useHistory } from "react-router-dom";
- 
-
 
 import {
   HttpStatus,
@@ -14,6 +13,7 @@ import {
   tipoActualizacionCotizacionDetalle,
   InfoCondicionCompra,
   FilterProducto,
+  filterOrder,
 } from "../service/ENUM";
 import { findProductos } from "../service/producto.service";
 import {
@@ -32,7 +32,7 @@ export default function ProductoDetalle(props) {
     numCodigoMoneda: props.moneda.numCodigoMoneda,
     vchDescripcion: "",
     vchDescripcionSmall: "",
-    numStock: "",
+    numStock: 0,
     familia: {
       chrCodigoFamilia: "",
       vchDescripcion: "",
@@ -66,19 +66,25 @@ export default function ProductoDetalle(props) {
     producto: producto,
     cotizacionResumen: cotizacionResumen,
     showModal: false,
+    mensajeStock: "",
+    shareFacebook: "",
+    shareTwitter: "",
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
-  async function handleServicioBuscarProductos(chrCodigoProducto) {
+  async function handleServicioBuscarProductos(chrCodigoProducto,_filterOrder) {
+  
     const rpt = await findProductos({
       chrCodigoFamilia: null,
       vchDescripcion: null,
       chrCodigoProducto: chrCodigoProducto,
       filterProducto: FilterProducto.FILTER_CODIGO,
+      filterOrder:_filterOrder,
       pagina: 1,
       limit: 1,
     });
-
+    let shareFacebook = "";
+    let shareTwitter = "";
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
 
@@ -97,11 +103,12 @@ export default function ProductoDetalle(props) {
               chrType: obj.chrType,
             }*/
             _listaProductoImagen.push(
-              <img className="detalle-img"
+              <img
+                className="detalle-img"
+                key={i}
                 src={"data:image/png;base64," + obj.chrSrcImagen}
                 alt={obj.chrNombre}
               ></img>
-
             );
           }
           /*Lista de detalles del producto */
@@ -116,16 +123,16 @@ export default function ProductoDetalle(props) {
                   <div className="desc-value">{objDet.descripcion}</div>
                 </div>
               );
-            };
+            }
           }
           /*Ficha Tecnica */
           _listaProductoDetalle.push(
-            <div className="detalle" key={'-1'}>
+            <div className="detalle" key={"-1"}>
               &nbsp;
             </div>
           );
           _listaProductoDetalle.push(
-            <div className="detalle" key={'-2'}>
+            <div className="detalle" key={"-2"}>
               <div className="desc-label">Ficha técnica</div>
               <div className="desc-value"> </div>
             </div>
@@ -136,10 +143,12 @@ export default function ProductoDetalle(props) {
               _listaProductoDetalle.push(
                 <div className="detalle" key={i}>
                   <div className="desc-label desc-row-ref">{objDet.titulo}</div>
-                  <div className="desc-value desc-row-ref">{objDet.descripcion}</div>
+                  <div className="desc-value desc-row-ref">
+                    {objDet.descripcion}
+                  </div>
                 </div>
               );
-            };
+            }
           }
           producto.chrCodigoProducto = e.chrCodigoProducto;
           producto.numValorVentaDolar = e.numValorVentaDolar;
@@ -161,11 +170,31 @@ export default function ProductoDetalle(props) {
           producto.imagenDefault.chrType = e.imagenDefault.chrType;
           producto.listaProductoImagen = _listaProductoImagen;
           producto.listaProductoDetalle = _listaProductoDetalle;
+          shareFacebook =
+            "https://www.facebook.com/sharer/sharer.php?u=https://subaruparts.eanet.pe/subaruparts/detalle/" +
+            producto.familia.chrCodigoFamilia +
+            "/" +
+            producto.familia.vchDescripcion +
+            "/" +
+            producto.chrCodigoProducto +
+            "&quote=" +
+            producto.vchDescripcion;
+          shareTwitter =
+            "https://twitter.com/intent/tweet?url=https://subaruparts.eanet.pe/subaruparts/detalle/" +
+            producto.familia.chrCodigoFamilia +
+            "/" +
+            producto.familia.vchDescripcion +
+            "/" +
+            producto.chrCodigoProducto +
+            "&text=" +
+            producto.vchDescripcion;
         }
         console.log(producto);
         dispatch({
           type: actionType.LOAD_PRODUCTOS,
           producto: producto,
+          shareFacebook: shareFacebook,
+          shareTwitter: shareTwitter,
           server: {
             error: "",
             success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT,
@@ -176,6 +205,8 @@ export default function ProductoDetalle(props) {
         dispatch({
           type: actionType.LOAD_PRODUCTOS,
           producto: producto,
+          shareFacebook: shareFacebook,
+          shareTwitter: shareTwitter,
           server: {
             error: json.response.error,
             success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
@@ -186,6 +217,8 @@ export default function ProductoDetalle(props) {
       dispatch({
         type: actionType.LOAD_PRODUCTOS,
         producto: producto,
+        shareFacebook: shareFacebook,
+        shareTwitter: shareTwitter,
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
       });
     }
@@ -194,6 +227,11 @@ export default function ProductoDetalle(props) {
   let params = useParams();
   let _chrCodigoFamilia = params.chrCodigoFamilia;
   let _chrCodigoProducto = params.chrCodigoProducto;
+  let _filterOrder= filterOrder.FilterAscDescripcion;
+  if(_chrCodigoFamilia==='outl'){
+    _filterOrder= filterOrder.FilterOutlet;
+    _chrCodigoFamilia='110A';
+  }
   //eslint-disable-next-line
   useEffect(() => {
     //eslint-disable-next-line
@@ -204,96 +242,108 @@ export default function ProductoDetalle(props) {
   }, []);
   useEffect(() => {
     //eslint-disable-next-line
-    handleServicioBuscarProductos(_chrCodigoProducto);
+    handleServicioBuscarProductos(_chrCodigoProducto,_filterOrder);
     //eslint-disable-next-line
     console.log("useEffect[ProductoDetalle] handleServicioBuscarProductos");
     //eslint-disable-next-line
   }, [props.moneda.numCodigoMoneda]);
 
-  const handleEventClieckregistrarCotizacion = async () => {
-    
-    let cotizacion = handleSyncDatosCotizacion();
-    const rpt = await registrarCotizacion(cotizacion);
-    if (rpt.status === HttpStatus.HttpStatus_OK) {
-      const json = await rpt.json();
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-        cotizacion.numCodigoCotizacionOnline = json.numCodigoCotizacionOnline;
-        cotizacion.numCodigoCliente = json.numCodigoCliente;
-        cotizacion.numCodigoClienteUsuario = json.numCodigoClienteUsuario;
-        localStorage.setItem(
-          localStoreEnum.COTIZACION,
-          JSON.stringify(cotizacion)
-        );
-        /*Registro de cotizacion detalle */
-        let cotizacionDetalleRequest = {
-          numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
-          producto: { chrCodigoProducto: state.producto.chrCodigoProducto },
-          numCantidad: state.cantidad,
-          tipoActualizacionCotizacionDetalle:
-            tipoActualizacionCotizacionDetalle.ADICIONAR,
-        };
-        const rptDetalle = await registrarCotizacionDetalle(
-          cotizacionDetalleRequest
-        );
-        if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
-          const jsonDetalle = await rptDetalle.json();
-          if (jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-            console.log(jsonDetalle);
-            cotizacionResumen.numSubTotalDol = jsonDetalle.numSubTotalDol;
-            cotizacionResumen.numIgvDol = jsonDetalle.numIgvDol;
-            cotizacionResumen.numEnvioDol = jsonDetalle.numEnvioDol;
-            cotizacionResumen.numTotalDol = jsonDetalle.numTotalDol;
-            cotizacionResumen.numSubTotalSol = jsonDetalle.numSubTotalSol;
-            cotizacionResumen.numIgvSol = jsonDetalle.numIgvSol;
-            cotizacionResumen.numEnvioSol = jsonDetalle.numEnvioSol;
-            cotizacionResumen.numTotalSol = jsonDetalle.numTotalSol;
-            cotizacionResumen.totalRegistros = jsonDetalle.totalRegistros;
-            cotizacionResumen.cantidadDetalleSeleccionado =
-              jsonDetalle.cantidadDetalleSeleccionado;
-            dispatch({
-              type: actionType.SHOW,
-              showModal: true,
-              cotizacionResumen: cotizacionResumen,
-            });
-          }
-          if (
-            jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO
-          ) {
+  const handleEventClickregistrarCotizacion = async () => {
+    if (state.cantidad <= state.producto.numStock) {
+      let cotizacion = handleSyncDatosCotizacion();
+      const rpt = await registrarCotizacion(cotizacion);
+      if (rpt.status === HttpStatus.HttpStatus_OK) {
+        const json = await rpt.json();
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+          cotizacion.numCodigoCotizacionOnline = json.numCodigoCotizacionOnline;
+          cotizacion.numCodigoCliente = json.numCodigoCliente;
+          cotizacion.numCodigoClienteUsuario = json.numCodigoClienteUsuario;
+          localStorage.setItem(
+            localStoreEnum.COTIZACION,
+            JSON.stringify(cotizacion)
+          );
+          /*Registro de cotizacion detalle */
+          let cotizacionDetalleRequest = {
+            numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
+            producto: { chrCodigoProducto: state.producto.chrCodigoProducto },
+            numCantidad: state.cantidad,
+            tipoActualizacionCotizacionDetalle:
+              tipoActualizacionCotizacionDetalle.ADICIONAR,
+          };
+          const rptDetalle = await registrarCotizacionDetalle(
+            cotizacionDetalleRequest
+          );
+          if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
+            const jsonDetalle = await rptDetalle.json();
+            if (
+              jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK
+            ) {
+              console.log(jsonDetalle);
+              cotizacionResumen.numSubTotalDol = jsonDetalle.numSubTotalDol;
+              cotizacionResumen.numIgvDol = jsonDetalle.numIgvDol;
+              cotizacionResumen.numEnvioDol = jsonDetalle.numEnvioDol;
+              cotizacionResumen.numTotalDol = jsonDetalle.numTotalDol;
+              cotizacionResumen.numSubTotalSol = jsonDetalle.numSubTotalSol;
+              cotizacionResumen.numIgvSol = jsonDetalle.numIgvSol;
+              cotizacionResumen.numEnvioSol = jsonDetalle.numEnvioSol;
+              cotizacionResumen.numTotalSol = jsonDetalle.numTotalSol;
+              cotizacionResumen.totalRegistros = jsonDetalle.totalRegistros;
+              cotizacionResumen.cantidadDetalleSeleccionado =
+                jsonDetalle.cantidadDetalleSeleccionado;
+              dispatch({
+                type: actionType.SHOW,
+                showModal: true,
+                cotizacionResumen: cotizacionResumen,
+              });
+            }
+            if (
+              jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO
+            ) {
+              dispatch({
+                type: actionType.ERROR,
+                server: {
+                  error: jsonDetalle.response.error,
+                  success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
+                },
+              });
+            }
+          } else {
             dispatch({
               type: actionType.ERROR,
               server: {
-                error: jsonDetalle.response.error,
-                success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
+                error: "",
+                success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
               },
             });
           }
-        } else {
+          /*Registro de cotizacion detalle */
+        }
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
           dispatch({
             type: actionType.ERROR,
             server: {
-              error: "",
-              success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
+              error: json.response.error,
+              success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
             },
           });
         }
-        /*Registro de cotizacion detalle */
-      }
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+      } else {
         dispatch({
           type: actionType.ERROR,
           server: {
-            error: json.response.error,
-            success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
+            error: "",
+            success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
           },
         });
       }
     } else {
       dispatch({
-        type: actionType.ERROR,
-        server: {
-          error: "",
-          success: SUCCESS_SERVER.SUCCES_SERVER_ERROR,
-        },
+        type: actionType.SET_CANTIDAD_STOCK,
+        cantidad: state.producto.numStock,
+        mensajeStock:
+          "Disculpe las molestias, el stock disponible para este producto es de " +
+          state.producto.numStock +
+          " unidades.",
       });
     }
   };
@@ -303,6 +353,7 @@ export default function ProductoDetalle(props) {
       cotizacionResumen: cotizacionResumen,
       showModal: false,
     });
+    history.push("/shop");
     window.location.reload();
   }
   function handleEventGoCaja() {
@@ -310,41 +361,37 @@ export default function ProductoDetalle(props) {
   }
   //const tooglesGroupId = 'Toggles';
   //const valuesGroupId = 'Values';
- 
+
   return (
     <div className="producto-det">
       <div className="producto-det-link">
-        <Link to={"/shop?descripcion=" + state.producto.familia.vchDescripcion}>Inicio</Link>
+        <Link to={"/shop?descripcion=" + state.producto.familia.vchDescripcion}>
+          Inicio
+        </Link>
         <span className="producto-det-link-span">/</span>
         <span className="producto-det-link-nombre">
           {state.producto.vchDescripcion}
         </span>
       </div>
       <div className="producto-det-row">
-        <div className="producto-det-row1 ">        
+        <div className="producto-det-row1 ">
           <div className="prod-det-carrousel">
-            
             <Carousel
-            showArrows={false}
-            showStatus={false}
-            showIndicators={false}             
-            showThumbs={true}            
-            autoPlay={false}
-            infiniteLoop={false}
-            stopOnHover={true}
-            swipeable={true}
-            dynamicHeight={false}
-            emulateTouch={true}
-            autoFocus={true}
-            thumbWidth={75}
-            selectedItem={0}            
-         
-            
+              showArrows={false}
+              showStatus={false}
+              showIndicators={false}
+              showThumbs={true}
+              autoPlay={false}
+              infiniteLoop={false}
+              stopOnHover={true}
+              swipeable={true}
+              dynamicHeight={false}
+              emulateTouch={true}
+              autoFocus={true}
+              thumbWidth={75}
+              selectedItem={0}
             >
-              {
-                state.producto.listaProductoImagen
-              }
-
+              {state.producto.listaProductoImagen}
             </Carousel>
           </div>
         </div>
@@ -365,13 +412,14 @@ export default function ProductoDetalle(props) {
             </span>
           </div>
           <div className="producto-det-row2-shop">
-            <span>Cantidad</span>
+            <span>Cantidad </span>
             <div className="producto-det-row2-shop-div">
               <input
                 type="number"
                 className="form-control"
                 value={state.cantidad}
                 min={1}
+                max={state.producto.numStock}
                 onChange={(e) =>
                   dispatch({
                     type: actionType.SET_CANTIDAD,
@@ -381,14 +429,29 @@ export default function ProductoDetalle(props) {
               ></input>
               <button
                 className="btn btn-primary"
-                onClick={handleEventClieckregistrarCotizacion}
+                onClick={handleEventClickregistrarCotizacion}
               >
                 <i className="fa fa-shopping-cart"></i>
                 Añadir al Carrito
               </button>
             </div>
+            {state.mensajeStock === "" ? (
+              ""
+            ) : (
+              <span className="producto-mensaje-stock">
+                {state.mensajeStock}
+              </span>
+            )}
           </div>
-          <div className="producto-det-row2-social">Compartir</div>
+          <div className="producto-det-row2-social">Compartir</div>          
+          <div className="producto-det-row2-social"> 
+          <a className='btn btn-social fa fa-facebook'  
+            href={state.shareFacebook} 
+            target='noreferrer' ></a>
+            <a className='btn btn-social fa fa-twitter'
+            href={state.shareTwitter} 
+            target='noreferrer' ></a>
+          </div>
           <div className="producto-det-row2-info">
             <i className="fa fa-shield-p"></i>
             {InfoCondicionCompra.EMISION}
@@ -402,7 +465,10 @@ export default function ProductoDetalle(props) {
             {InfoCondicionCompra.DEVOLUCIONES}
           </div>
           <div className="producto-det-row2-det">
-            <div className="titulo"><span>Detalles del producto</span><div></div></div>
+            <div className="titulo">
+              <span>Detalles del producto</span>
+              <div></div>
+            </div>
             {state.producto.listaProductoDetalle}
           </div>
         </div>
@@ -460,13 +526,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Precio:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.producto.numValorVentaDolar
                     : state.producto.numValorVentaSoles}
                 </label>
@@ -487,14 +553,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Subtotal:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
-                
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numSubTotalDol
                     : state.cotizacionResumen.numSubTotalSol}
                 </label>
@@ -503,13 +568,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Igv:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
-                <label  className="label-moneda">
+                <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numIgvDol
                     : state.cotizacionResumen.numIgvSol}
                 </label>
@@ -518,7 +583,7 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Envío:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
@@ -528,13 +593,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Total:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
-                <label className="label-moneda" >
+                <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numTotalDol
                     : state.cotizacionResumen.numTotalSol}
                 </label>
@@ -551,7 +616,6 @@ export default function ProductoDetalle(props) {
             <i className="fa fa-check"></i>
             PASAR POR CAJA
           </button>
-
         </Modal.Footer>
       </Modal>
     </div>
@@ -561,6 +625,7 @@ export default function ProductoDetalle(props) {
 let actionType = {
   LOAD_PRODUCTOS: "LOAD_PRODUCTOS",
   SET_CANTIDAD: "SET_CANTIDAD",
+  SET_CANTIDAD_STOCK: "SET_CANTIDAD_STOCK",
   ERROR: "ERROR",
   SHOW: "SHOW",
 };
@@ -571,6 +636,8 @@ const reducer = (state, action) => {
         ...state,
         producto: action.producto,
         server: action.server,
+        shareFacebook: action.shareFacebook,
+        shareTwitter: action.shareTwitter,
       };
     case actionType.ERROR:
       return {
@@ -581,6 +648,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         cantidad: action.cantidad,
+      };
+    case actionType.SET_CANTIDAD_STOCK:
+      return {
+        ...state,
+        cantidad: action.cantidad,
+        mensajeStock: action.mensajeStock,
       };
     case actionType.SHOW:
       return {

@@ -211,6 +211,7 @@ const filterOrder = {
   FilterDescPrecio: "FilterDescPrecio",
   FilterAscPrecio: 'FilterAscPrecio',
   FilterConImagen: 'FilterConImagen',
+  FilterOutlet: 'FilterOutlet',
 };
 const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */
@@ -221,12 +222,28 @@ const tipoDireccion = {
   DESPACHO: "Dirección de Despacho",
   FACTURACION: "Dirección de Facturación"
 };
-const homepage="subaruparts/desarrollo";
+const homepage="subaruparts";
 const chrRol = {
   ROLE_USER: 'ROLE_USER',
   ROLE_ADMIN: 'ROLE_ADMIN',
   ROLE_ANONIMO: "ROLE_ANONIMO"
 };
+const FilterCorreo = {
+  FILTER_ALL:'FILTER_ALL', 
+  FILTER_DESTINO_OC:'FILTER_DESTINO_OC',
+  FILTER_TIPO_CAMBIO_REGISTRO:'FILTER_TIPO_CAMBIO_REGISTRO',
+  FILTER_TIPO_CAMBIO_TOMADO:'FILTER_TIPO_CAMBIO_TOMADO',
+};
+const Empresa={
+  ruc:'20601356024',
+  razonSocial:'CORPORACION DE EMPRESAS AUTOMOTRICES SOCIEDAD ANONIMA CERRADA - EA CORP S.A.C',
+  nombreComercial:'Ea Corp. Sac',
+  urlTienda:'https://subaruparts.eanet.pe/subaruparts/shop',
+  direccion:'Av. Republica de Panama Nro. 4259',
+  correo:'consultas@eanetautoparts.pe',
+  abreviaturaSucursal:'RP4259'
+}
+
 export {
   SUCCESS_SERVER,
   HttpStatus,
@@ -250,6 +267,8 @@ export {
   filterOrder, nav_banner,
   tipoDireccion,
   homepage,
-  chrRol
+  chrRol,
+  FilterCorreo,
+  Empresa
 };
 

@@ -5,7 +5,7 @@ import { HttpStatus, localStoreEnum, LOGGIN,  Moneda, SUCCESS_SERVER } from '../
 import {
   obtenerTusCompras
 } from "../../service/cotizacion.service";
-
+import ComprasDetalle from "./ComprasDetalle";
 
 let actionType = {
   LOAD: "LOAD",
@@ -82,7 +82,7 @@ export default function TusCompras() {
             moneda: (compras.moneda === 'SOLES' ? Moneda.SOLES : Moneda.DOLARES)
           }
           */
-          _rowTusCompras.push(<><div className="tuscompras-row">
+          _rowTusCompras.push(<div  className="tuscompras-row-content" key={compras.numCodigoCotizacionOnline}><div className="tuscompras-row">
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Fecha de Pedido</label>
               <label className="tuscompras-row-value">{compras.dteCreacion}</label>
@@ -101,23 +101,27 @@ export default function TusCompras() {
             </div>
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Estado</label>
-              <label className={`tuscompras-row-value ${compras.estado === 'Confirmado' ? "row-confirmado" : compras.estado === 'Cancelado' ? "row-cancelado" : "row-pendiente"}`}><div>{compras.estado}</div></label>
+              <label className={`tuscompras-row-value ${compras.estado === 'Confirmado' ? "row-confirmado" : compras.estado === 'Cancelado' ? "row-cancelado" : compras.estado === 'Procesando' ? "row-procesando" : "row-pendiente"}`}><div>{compras.estado === 'Confirmado' ?'Compra Realizada':compras.estado}</div></label>
             </div>
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Condicion</label>
               <label className="tuscompras-row-value">{compras.condicion}</label>
             </div>
             <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title">Referencia Pago</label>
+              <label className="tuscompras-row-title" title="Referencia Documento">Ref. Documento</label>
+              <label className="tuscompras-row-value">{compras.numFacturas}</label>
+            </div>
+            <div className="tuscompras-row-g">
+              <label className="tuscompras-row-title" title="Referencia Pago">Ref. Pago</label>
               <label className="tuscompras-row-value">{compras.chrRegLegacyTransId}</label>
             </div>
+           
 
           </div>
-            <div className="tuscompras-row-detalle">
-              Detalle
-
-          </div>
-          </>);
+            <div className="tuscompras-row-detalle" key={compras.numCodigoCotizacionOnline}>
+              <ComprasDetalle cotizacion={compras}  ></ComprasDetalle>
+            </div>
+          </div>);
         }
         dispatch({ type: actionType.LOAD, isloading: false, rowTusCompras: _rowTusCompras });
       }
