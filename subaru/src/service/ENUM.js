@@ -211,6 +211,7 @@ const filterOrder = {
   FilterDescPrecio: "FilterDescPrecio",
   FilterAscPrecio: 'FilterAscPrecio',
   FilterConImagen: 'FilterConImagen',
+  FilterOutlet: 'FilterOutlet',
 };
 const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */

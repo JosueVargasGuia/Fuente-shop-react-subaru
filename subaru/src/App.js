@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 
-import './App.scss';
+import "./App.scss";
 import FilterMarcas from "./filterMarcas/filterMarcas";
 import Carrucel from "./carrucel/carrucel";
 import {
@@ -14,7 +14,7 @@ import {
   lstMarcas,
   Moneda,
   statusSyncCotizacion,
-  SUCCESS_SERVER
+  SUCCESS_SERVER,
 } from "./service/ENUM";
 
 /*Nuestra Empresa */
@@ -63,6 +63,7 @@ import ListaUsuario from "./loginAdmin/usuario/listaUsuario";
 import StockProducto from "./loginAdmin/producto/stockProducto";
 import ListaCorreoJobs from "./loginAdmin/correojobs/listaCorreoJobs";
 import ReporteCotizacion from "./loginAdmin/reporte/reporteCotizacion";
+import { ProductoOutlet } from "./producto/productoOutlet";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -119,12 +120,12 @@ const reducer = (state, action) => {
 };
 
 function App() {
- // const parsed = querystring.parse(window.location.search);
- /* let _marca = lstMarcas.find(
+  // const parsed = querystring.parse(window.location.search);
+  /* let _marca = lstMarcas.find(
     (marca) => marca.decripcion === parsed.descripcion
   );
   console.log(_marca)*/
-  let _marca=lstMarcas[0] ;
+  let _marca = lstMarcas[0];
   /**/
   // console.log(params.decripcion)
   let height = window.innerHeight - 25;
@@ -145,7 +146,7 @@ function App() {
     findProducto: false,
     islogin: localStorage.getItem(localStoreEnum.ISLOGIN),
     usuario: usuario,
-    numTipoCambio: 0.00,
+    numTipoCambio: 0.0,
     moneda: Moneda.DOLARES,
     indexCarrucel: 0,
     displayLista: displayLista.RESUMEN,
@@ -159,7 +160,7 @@ function App() {
       vchDocumento: usuarioLogin.usuario.cliente.vchDocumento,
       chrEmail: usuarioLogin.usuario.chrEmail,
       numCodigoClienteUsuario: usuarioLogin.usuario.numCodigoClienteUsuario,
-      chrRol: usuarioLogin.usuario.chrRol
+      chrRol: usuarioLogin.usuario.chrRol,
     };
 
     localStorage.setItem(localStoreEnum.ISLOGIN, LOGGIN.LOGGIN);
@@ -245,8 +246,6 @@ function App() {
       type: actionType.INPUT_DESCRIPCION,
       descripcion: e.target.value,
     });
-
-
   }
 
   /*Al seleccionar la marca del producto */
@@ -258,8 +257,6 @@ function App() {
       findProducto: true,
       displayLista: displayLista.DETALLE,
     });
-
-
   }
 
   /*Al darle click en el boton buscar 
@@ -294,7 +291,6 @@ function App() {
 
   return (
     <div className="App" style={{ height: height }}>
-
       <BrowserRouter basename={homepage}>
         <BannerHeader></BannerHeader>
         <div className="header-top">
@@ -332,21 +328,26 @@ function App() {
                 ></ProductoDestacado>
               </div>
             </Route>
+            <Route path={"/outlet"} exact={true}>
+              <ProductoOutlet
+                marcaSelect={state.marca}
+                displayLista={state.displayLista}
+                moneda={state.moneda}
+              ></ProductoOutlet>
+            </Route>
             <Route path={"/shop/:descripcion/filter/:query"} exact={true}>
-
               <ProductoFilter
                 moneda={state.moneda}
                 handleSelectMarcaChange={handleSelectMarcaChange}
               ></ProductoFilter>
             </Route>
-            
+
             <Route path={"/succesPayment"} exact={true}>
               <SuccesPayment></SuccesPayment>
             </Route>
             <Route path={"/succesNopayment"} exact={true}>
               <SuccesNoPayment></SuccesNoPayment>
             </Route>
-
 
             <Route path="/tusCompras/:numCodigoCliente">
               <TusCompras />
@@ -371,7 +372,9 @@ function App() {
             <Route path="/loginCliente">
               <LoginCliente islogin={handleIsLoggin} />
             </Route>
-            <Route path={"/Admin/"+Empresa.ruc+"/"+Empresa.abreviaturaSucursal}>
+            <Route
+              path={"/Admin/" + Empresa.ruc + "/" + Empresa.abreviaturaSucursal}
+            >
               <LoginAdmin islogin={handleIsLoggin} />
             </Route>
             <Route path="/registrarCliente">
@@ -413,20 +416,30 @@ function App() {
               <ImagenProducto />
             </Route>
             <Route path="/stock">
-              <StockProducto numCodigoCliente={state.usuario.numCodigoCliente} />
+              <StockProducto
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              />
             </Route>
 
             <Route path="/usuarioAdmin/:numCodigoCliente/:numCodigoClienteUsuario">
-              <RegistrarUsuario numCodigoCliente={state.usuario.numCodigoCliente}></RegistrarUsuario>
+              <RegistrarUsuario
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              ></RegistrarUsuario>
             </Route>
             <Route path="/listaCorreoJobs">
-              <ListaCorreoJobs numCodigoCliente={state.usuario.numCodigoCliente}></ListaCorreoJobs>
+              <ListaCorreoJobs
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              ></ListaCorreoJobs>
             </Route>
             <Route path="/reporteCotizacion">
-              <ReporteCotizacion numCodigoCliente={state.usuario.numCodigoCliente}></ReporteCotizacion>
+              <ReporteCotizacion
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              ></ReporteCotizacion>
             </Route>
             <Route path="/listaUsuarioAdmin">
-              <ListaUsuario numCodigoCliente={state.usuario.numCodigoCliente}></ListaUsuario>
+              <ListaUsuario
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              ></ListaUsuario>
             </Route>
             <Route path="/">
               <Carrucel
@@ -444,9 +457,6 @@ function App() {
                 moneda={state.moneda}
               ></ProductoDestacado>
             </Route>
-
-
-
           </Switch>
           <br />
         </div>
@@ -460,8 +470,9 @@ function App() {
                 <span>
                   PRODUCTOS
                   <ul>
-                    <li><Link to="/shop/oferta/filter/all">Ofertas</Link></li>
-
+                    <li>
+                      <Link to="/shop/oferta/filter/all">Ofertas</Link>
+                    </li>
                   </ul>
                 </span>
               </li>

@@ -545,10 +545,11 @@ function Paginacion(props) {
     props.currentPage,
     props.pageNeighbours
   );
-
+    
   return (
     <>
       <nav aria-label="Pagination">
+     
         <ul className="pagination">
           {pages.map((page, index) => {
             if (page === LEFT_PAGE) {
@@ -574,6 +575,7 @@ function Paginacion(props) {
               );
             }
             return (
+              
               <li
                 className={`${props.currentPage === page
                   ? "paginacion-item-active "

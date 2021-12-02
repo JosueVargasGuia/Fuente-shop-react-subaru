@@ -13,6 +13,7 @@ import {
   tipoActualizacionCotizacionDetalle,
   InfoCondicionCompra,
   FilterProducto,
+  filterOrder,
 } from "../service/ENUM";
 import { findProductos } from "../service/producto.service";
 import {
@@ -71,12 +72,14 @@ export default function ProductoDetalle(props) {
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
-  async function handleServicioBuscarProductos(chrCodigoProducto) {
+  async function handleServicioBuscarProductos(chrCodigoProducto,_filterOrder) {
+  
     const rpt = await findProductos({
       chrCodigoFamilia: null,
       vchDescripcion: null,
       chrCodigoProducto: chrCodigoProducto,
       filterProducto: FilterProducto.FILTER_CODIGO,
+      filterOrder:_filterOrder,
       pagina: 1,
       limit: 1,
     });
@@ -224,6 +227,11 @@ export default function ProductoDetalle(props) {
   let params = useParams();
   let _chrCodigoFamilia = params.chrCodigoFamilia;
   let _chrCodigoProducto = params.chrCodigoProducto;
+  let _filterOrder= filterOrder.FilterAscDescripcion;
+  if(_chrCodigoFamilia==='outl'){
+    _filterOrder= filterOrder.FilterOutlet;
+    _chrCodigoFamilia='110A';
+  }
   //eslint-disable-next-line
   useEffect(() => {
     //eslint-disable-next-line
@@ -234,7 +242,7 @@ export default function ProductoDetalle(props) {
   }, []);
   useEffect(() => {
     //eslint-disable-next-line
-    handleServicioBuscarProductos(_chrCodigoProducto);
+    handleServicioBuscarProductos(_chrCodigoProducto,_filterOrder);
     //eslint-disable-next-line
     console.log("useEffect[ProductoDetalle] handleServicioBuscarProductos");
     //eslint-disable-next-line

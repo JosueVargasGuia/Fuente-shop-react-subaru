@@ -2,6 +2,7 @@ import React from "react";
 //import Carousel from "react-elastic-carousel";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Link } from "react-router-dom";
 
 import "../filterMarcas/filterMarcas.css";
 import { homepage } from "../service/ENUM";
@@ -20,8 +21,10 @@ export default function Carrucel(props) {
   return (
     <div className="container-Carousel-list">    
     <div className="outlet">
-    <img alt="outlet"  src={window.location.origin +(homepage===undefined?"":"/"+homepage) +"/marcas/outlet.png"}></img> 
-      </div>
+      <Link to="/outlet"> 
+        <img alt="outlet"   src={window.location.origin +(homepage===undefined?"":"/"+homepage) +"/marcas/outlet.png"} ></img> 
+      </Link> 
+    </div>
       <Carousel
         autoPlay={true}
         infiniteLoop={true}

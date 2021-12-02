@@ -629,6 +629,7 @@
     flex-wrap: wrap;
     img {
         width: 100%;
+        cursor: pointer;
     }
 }
 
@@ -1030,7 +1031,7 @@
                     td {
                         border: solid 0.5px var(--color-font2);
                         font-size: 12px;
-                        .span-link-pdf{
+                        .span-link-pdf {
                             color: var(--color-font2);
                             font-size: 12px;
                             cursor: pointer;
@@ -1039,5 +1040,86 @@
                 }
             }
         }
+    }
+}
+
+.producto-outlet {
+    .table-outlet {
+        font-size: 13px;
+        width: 100%;
+        thead {
+            tr {
+                border: solid 1px var(--color-font2);
+                background-color: var(--color-font2);
+                text-align: center;
+                .td-codigo {
+                    width: 12%;
+                    .td-codigo-div {
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        align-content: space-around;
+                        input {
+                            width: 90%;
+                        }
+                    }
+                }
+                .td-producto {
+                    margin-left: 3px;
+                    .td-producto-div {
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        align-content: space-around;
+                        input {
+                            width: 80%;
+                        }
+                    }
+                }
+                .td-precio {
+                    width: 12%;
+                }
+                td {
+                    font-weight: bold;
+                    color: var(--color-font3);
+                }
+            }
+        }
+        tbody {
+            .td-codigo {
+                width: 12%;
+                span {
+                    margin-left: 5px;
+                    a:hover {
+                        text-decoration: none;
+                        color: var(--color-font2);
+                    }
+                }
+            }
+            .td-producto {
+                span {
+                    margin-left: 5px;
+                }
+            }
+            .td-precio {
+                width: 12%;
+                color: #c85055;
+                font-weight: bold;
+                .td-precio-simbolo {
+                    margin-left: 5px;
+                }
+                .td-precio-valor {
+                    margin-right: 5px;
+                    float: right;
+                }
+            }
+            td {
+                border: solid 1px var(--color-font2);
+            }
+        }
+    }
+    .prod-filter-page {
+        margin-top: 6px;
     }
 }
