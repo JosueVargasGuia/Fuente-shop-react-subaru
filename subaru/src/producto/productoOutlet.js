@@ -155,7 +155,7 @@ export function ProductoOutlet(props) {
             </td>
             <td className="td-producto">
             <div className="td-producto-div">
-                <span>Producto</span>
+                <span>Producto1</span>
                 <input></input>
               </div>
             </td>
