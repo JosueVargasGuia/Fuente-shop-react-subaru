@@ -12,11 +12,11 @@ import {
   listaProductoAtributo,
   crudProductoAtributo,
   crudProductoCategoria,
-  listaProductoReporte,
-   
+  listaProductoReporte
 } from "../service/producto.service";
 import ServerException from "../utils/serverException";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Link } from "react-router-dom";
 
 export default function ImagenProducto() {
   const [chrCodigoProducto, setChrCodigoProducto] = useState("");
@@ -70,74 +70,84 @@ export default function ImagenProducto() {
       isRemate: false,
       isDestacadoMarca: false
     })
+    //eslint-disable-next-line 
   }, []);
   const [tabsIndex, setTabsIndex] = useState(_TabsIndex.TABS_IMAGEN);
 
   async function handleEventFindProducto(_chrCodigoProducto) {
-    let _rowsProductoImage = [];
-    let _producto = {
-      chrCodigoProducto: "", vchDescripcion: "",
-      familia: { chrCodigoFamilia: "", vchDescripcion: "" },
-      productoOnlineCategoria: {
-        numCodigoProductoCategoria: 0, chrCodigoProducto: "", chrRecomendado: "",
-        chrDestacadoMarca: "", chrOferta: "", chrRemate: "", chrDestacado: ""
-      }
-    };
-    const rpt = await listaProductoImagen({
-      chrCodigoProducto: _chrCodigoProducto,
-    });
+    
+    if (_chrCodigoProducto.trim().length>=1) {
 
-    if (rpt.status === HttpStatus.HttpStatus_OK) {
-      const json = await rpt.json();
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-        for (let i = 0; i < json.lista.length; i++) {
-          let obj = json.lista[i];
-          _rowsProductoImage.push({
-            numCodigoProductoImagen: obj.numCodigoProductoImagen,
-            chrCodigoProducto: obj.chrCodigoProducto,
-            chrSrcImagen: obj.chrSrcImagen,
-            chrNombre: obj.chrNombre,
-            chrType: obj.chrType,
-            chrPredeterminado: obj.chrPredeterminado,
-            crud: CRUD.UPDATE,
-          });
+
+      let _rowsProductoImage = [];
+      let _producto = {
+        chrCodigoProducto: "", vchDescripcion: "",
+        familia: { chrCodigoFamilia: "", vchDescripcion: "" },
+        productoOnlineCategoria: {
+          numCodigoProductoCategoria: 0, chrCodigoProducto: "", chrRecomendado: "",
+          chrDestacadoMarca: "", chrOferta: "", chrRemate: "", chrDestacado: ""
         }
+      };
+      const rpt = await listaProductoImagen({
+        chrCodigoProducto: _chrCodigoProducto,
+      });
 
-        if (json.producto !== null) {
-          _producto.chrCodigoProducto = json.producto.chrCodigoProducto;
-          _producto.vchDescripcion = json.producto.vchDescripcion;
-          if (json.producto.familia !== null) {
-            _producto.familia.chrCodigoFamilia = json.producto.familia.chrCodigoFamilia;
-            _producto.familia.vchDescripcion = json.producto.familia.vchDescripcion;
+      if (rpt.status === HttpStatus.HttpStatus_OK) {
+        const json = await rpt.json();
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+          for (let i = 0; i < json.lista.length; i++) {
+            let obj = json.lista[i];
+            _rowsProductoImage.push({
+              numCodigoProductoImagen: obj.numCodigoProductoImagen,
+              chrCodigoProducto: obj.chrCodigoProducto,
+              chrSrcImagen: obj.chrSrcImagen,
+              chrNombre: obj.chrNombre,
+              chrType: obj.chrType,
+              chrPredeterminado: obj.chrPredeterminado,
+              crud: CRUD.UPDATE,
+            });
+          }
+
+          if (json.producto !== null) {
+            _producto.chrCodigoProducto = json.producto.chrCodigoProducto;
+            _producto.vchDescripcion = json.producto.vchDescripcion;
+            if (json.producto.familia !== null) {
+              _producto.familia.chrCodigoFamilia = json.producto.familia.chrCodigoFamilia;
+              _producto.familia.vchDescripcion = json.producto.familia.vchDescripcion;
+            }
+          }
+
+          if (json.producto.productoOnlineCategoria !== null) {
+            _producto.productoOnlineCategoria.numCodigoProductoCategoria = json.productoOnlineCategoria.numCodigoProductoCategoria;
+            _producto.productoOnlineCategoria.chrCodigoProducto = json.productoOnlineCategoria.chrCodigoProducto;
+            _producto.productoOnlineCategoria.chrRecomendado = json.productoOnlineCategoria.chrRecomendado;
+            _producto.productoOnlineCategoria.chrDestacadoMarca = json.productoOnlineCategoria.chrDestacadoMarca;
+            _producto.productoOnlineCategoria.chrOferta = json.productoOnlineCategoria.chrOferta;
+            _producto.productoOnlineCategoria.chrRemate = json.productoOnlineCategoria.chrRemate;
+            _producto.productoOnlineCategoria.chrDestacado = json.productoOnlineCategoria.chrDestacado;
           }
         }
-
-        if (json.producto.productoOnlineCategoria !== null) {
-          _producto.productoOnlineCategoria.numCodigoProductoCategoria = json.productoOnlineCategoria.numCodigoProductoCategoria;
-          _producto.productoOnlineCategoria.chrCodigoProducto = json.productoOnlineCategoria.chrCodigoProducto;
-          _producto.productoOnlineCategoria.chrRecomendado = json.productoOnlineCategoria.chrRecomendado;
-          _producto.productoOnlineCategoria.chrDestacadoMarca = json.productoOnlineCategoria.chrDestacadoMarca;
-          _producto.productoOnlineCategoria.chrOferta = json.productoOnlineCategoria.chrOferta;
-          _producto.productoOnlineCategoria.chrRemate = json.productoOnlineCategoria.chrRemate;
-          _producto.productoOnlineCategoria.chrDestacado = json.productoOnlineCategoria.chrDestacado;
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+          dispatch({
+            type: actionType.ERROR,
+            server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO },
+          });
         }
-      }
-      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+      } else {
         dispatch({
           type: actionType.ERROR,
-          server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO },
+          server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
         });
       }
+      setChrCodigoProducto(_chrCodigoProducto);
+      handleEventBuiltList(_rowsProductoImage, _producto);
+      handleLoadAtributoProducto(_chrCodigoProducto)
     } else {
       dispatch({
         type: actionType.ERROR,
-        server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
+        server: { error: "Ingrese el codigo de producto", success: SUCCESS_SERVER.SUCCES_SERVER_WARRING },
       });
     }
-
-    setChrCodigoProducto(_chrCodigoProducto);
-    handleEventBuiltList(_rowsProductoImage, _producto);
-    handleLoadAtributoProducto(_chrCodigoProducto)
   }
   function handleEventBuiltList(_rowsProductoImage, _producto) {
     let _rowsProductoImageHtml = [];
@@ -547,11 +557,13 @@ export default function ImagenProducto() {
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let i = 0; i < json.lista.length; i++) {
           let obj = json.lista[i];
-          _rowsAtributo.push(<tr>
-            <td><i
-            className="fa-btn fa fa-check"
-            onClick={() => handleEventFindProducto(obj.chrCodigoProducto)}
-          ></i>{obj.chrCodigoProducto}</td>
+          _rowsAtributo.push(<tr key={i}>
+            <td>
+              <i
+                className="fa-btn fa fa-check"
+                onClick={() => handleEventFindProducto(obj.chrCodigoProducto)}
+              ></i>{obj.chrCodigoProducto}
+            </td>
             <td>{obj.vchDescripcion}</td>
             <td>{obj.familia.vchDescripcion}</td>
             <td style={{ textAlign: "center", }}>{obj.chrDestacado === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
@@ -660,6 +672,12 @@ export default function ImagenProducto() {
 
   return (
     <>
+      <div className="link-href">
+        <Link to="/dashboardAdmin">
+          <i className="fa fa-home" aria-hidden="true"></i>
+          Panel de Control
+        </Link>
+      </div>
       <div className="prod-img-upload">
         <div className="prod-img-search">
           <label>Codigo Producto&nbsp;&nbsp;&nbsp;</label>
@@ -1148,23 +1166,23 @@ export default function ImagenProducto() {
                 </div>
               </div>
               <div className="prod-card-row">
-                <div className="div-row-1">             
-                <ReactHTMLTableToExcel
+                <div className="div-row-1">
+                  <ReactHTMLTableToExcel
                     id="table-xls1"
                     className="btn btn-primary"
                     table="table-xls"
                     filename="Reporte"
                     sheet="Reporte"
                     buttonText="Exportar">
-              
-                      </ReactHTMLTableToExcel>
+
+                  </ReactHTMLTableToExcel>
                 </div>
               </div>
             </div>
             <hr />
             <div className="tbl-rpt-display">
-              
-              <table  id="table-xls">
+
+              <table id="table-xls">
                 <thead>
                   <tr>
                     <td
@@ -1252,6 +1270,12 @@ export default function ImagenProducto() {
       </div>
 
       <ServerException server={state.server}></ServerException>
+      <div className="link-href">
+        <Link to="/dashboardAdmin">
+          <i className="fa fa-home" aria-hidden="true"></i>
+          Panel de Control
+        </Link>
+      </div>
     </>
   );
 }

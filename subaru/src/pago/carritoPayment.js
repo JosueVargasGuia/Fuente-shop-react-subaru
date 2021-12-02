@@ -28,7 +28,9 @@ import {
 } from "../service/cotizacion.service";
 import izipay from "../css/izipay.png";
 import ServerException from "../utils/serverException";
-
+import Hex from 'crypto-js/enc-hex';
+import hmacSHA256 from 'crypto-js/hmac-sha256';
+import { validacionToken } from "../service/loginCliente.service";
 export function CarritoPayment(props) {
   let history = useHistory();
   const [focusMenu, setFocusMenu] = useState(1);
@@ -61,16 +63,56 @@ export function CarritoPayment(props) {
   });
 
   useEffect(() => {
+
     //eslint-disable-next-line
     handleLoad();
     console.log("useEffect CarritoPayment");
+    _validarToken();
     //eslint-disable-next-line
   }, []);
+
+
+
+
   if (localStorage.getItem(localStoreEnum.ISLOGIN) !== LOGGIN.LOGGIN) {
     /*Verificando que el cliente este logeado  */
     history.push("/loginCliente");
     return <div className="form-pago"></div>;
   }
+  async function _validarToken() {
+    let _status = await _validacionToken();
+    console.log(_status);
+    if (_status === "REDIRECT") {
+      /*Redireccionando al login */
+      localStorage.removeItem(localStoreEnum.ISLOGIN);
+      localStorage.removeItem(localStoreEnum.USUARIO);
+      localStorage.removeItem(localStoreEnum.TOKEN);
+      window.location.reload();
+      history.push("/loginCliente");
+    }
+  }
+  async function _validacionToken() {
+    let _value = "SHOW_MESSAGE";
+    const rpt = await validacionToken({
+      token: localStorage.getItem(localStoreEnum.TOKEN),
+    });
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+      const json = await rpt.json();
+      console.log(json);
+      if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_EXPIRE) {
+        /*Redireccionando al login */
+        _value = "REDIRECT";
+      } else {
+        /*Visualizando el */
+        _value = "SHOW_MESSAGE";
+      }
+    } else {
+      _value = "SHOW_MESSAGE";
+    }
+    console.log(_value);
+    return _value;
+  }
+
 
   let usuarioLogeado = JSON.parse(localStorage.getItem(localStoreEnum.USUARIO));
 
@@ -196,7 +238,7 @@ export function CarritoPayment(props) {
     let _metodoEnvio = MetodoEnvio.EnvioRegular;
     if (_cotizacionResumen.numEnvioDol > 0) {
       _metodoEnvio = MetodoEnvio.EnvioRegular;
-    }  
+    }
 
     handleEventChangeDirecciones(tmpDireccion);
     dispatch({
@@ -214,6 +256,7 @@ export function CarritoPayment(props) {
       endPoint: "",
       publicKey: "",
       formToken: "",
+      hmacSha256Key: ""
     }
     let objectPayment = {
       type: actionType.INIT_PAYMENT, payment: _payment,
@@ -234,6 +277,7 @@ export function CarritoPayment(props) {
         _payment.endPoint = json.endPoint;
         _payment.publicKey = json.publicKey;
         _payment.formToken = json.formToken;
+        _payment.hmacSha256Key = json.hmacSha256Key;
         objectPayment.server.error = "";
         objectPayment.server.success = SUCCESS_SERVER.SUCCES_SERVER_OK;
       }
@@ -262,30 +306,50 @@ export function CarritoPayment(props) {
       (props.moneda.numCodigoMoneda === Moneda.DOLARES.numCodigoMoneda ? 'DOLARES' : 'SOLES'));
     console.log(builtPayment);
     if (builtPayment.server.success === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-
       const endpoint = builtPayment.payment.endPoint;
       const publicKey = builtPayment.payment.publicKey;
       const formToken = builtPayment.payment.formToken;
-
+      const hmacSha256Key = builtPayment.payment.hmacSha256Key;
       KRGlue.loadLibrary(endpoint, publicKey) /* Load the remote library */
         .then(({ KR }) =>
           KR.setFormConfig({
             /* set the minimal configuration */
             formToken: formToken,
             "kr-language": "es-pe" /* to update initialization parameter */,
-            "kr-get-url-success": "/succespayment",
+            //"kr-get-url-success": "https://eanetautoparts.pe/succespayment",
           })
         )
+        .then(({ KR }) => KR.onSubmit(resp => {
+          /*https://github.com/lyra/embedded-form-glue/tree/master/examples/react/minimal-example */
+          console.log(resp);
+          const answer = resp.clientAnswer;
+          const hash = resp.hash;
+          const answerHash = Hex.stringify(hmacSHA256(JSON.stringify(answer), hmacSha256Key));
+          if (hash === answerHash) {
+            console.log('hash Valido');
+            localStorage.removeItem(localStoreEnum.COTIZACION);
+            if (answer.orderStatus === 'PAID') {
+              history.push("/succesPayment");
+              window.location.reload();
+              console.log('Pago Valido');
+            } else {
+              history.push("/succesNopayment");
+              console.log('Pago NO PAID');
+            }
+          } else {
+            console.log('hash no Valido');
+          }
+          return false
+        }))
         .then(({ KR }) =>
           KR.addForm("#myPaymentForm")
         ) /* add a payment form  to myPaymentForm div*/
-
         .then(({ KR, result }) => {
           console.log(result);
           console.log("show the payment form");
           KR.showForm(result.formId);
-        }
-        ).catch(error =>
+        })
+        .catch(error =>
           console.log(error + " (see console for more details)")
         );
       ; /* show the payment form */
@@ -295,6 +359,7 @@ export function CarritoPayment(props) {
       dispatch({ type: actionType.ERROR, server: builtPayment.server });
     }
   }
+
 
 
   function handleEnventControlMenuNext() {
@@ -321,14 +386,7 @@ export function CarritoPayment(props) {
     setFocusMenu(temp);
   }
 
-  function handleLogout() {
-    localStorage.removeItem(localStoreEnum.ISLOGIN);
-    localStorage.removeItem(localStoreEnum.USUARIO);
-    localStorage.removeItem(localStoreEnum.TOKEN);
-    localStorage.removeItem(localStoreEnum.COTIZACION);
-    history.push("/home");
-    window.location.reload();
-  }
+
   function handleActionCerrar(value) {
     console.log("closeButton");
     setShowModal(value);
@@ -433,7 +491,7 @@ export function CarritoPayment(props) {
                   : "arrow_box-inactive"
               }
             ></div>
-          </div>         
+          </div>
           <div
             className={
               focusMenu === PagoMenu.ENVIO.index
@@ -472,7 +530,7 @@ export function CarritoPayment(props) {
               : "form-pago-card-persona"
           }
         >
-          
+
           <p>
             Conectado como:{" "}
             <Link
@@ -485,8 +543,8 @@ export function CarritoPayment(props) {
               {usuarioLogeado.NombreCompleto}
             </Link>
           </p>
-         
-          
+
+
           <span className="form-pago-item-direccion">Dirección de envío</span>
           <div className="direccion-content">
             {state.lstDireccion.map((direccion) => (
@@ -572,7 +630,7 @@ export function CarritoPayment(props) {
             </button>
           </div>
         </div>
-       
+
         <div
           className={
             focusMenu === PagoMenu.ENVIO.index
@@ -685,14 +743,14 @@ export function CarritoPayment(props) {
             }
           ></input>
           Estoy de acuerdo con los{" "}
-          <Link onClick={() => handleActionCerrar(true)}>
+          <span  onClick={() => handleActionCerrar(true)} className="form-pago-link-tc">
             términos del servicio
-          </Link>{" "}
-          y los acepto sin reservas. 
+          </span>{" "}
+          y los acepto sin reservas.
           <div className="form-pago-botonera">
             <button
               className="btn btn-primary"
-              disabled={!(state.enableButton && (state.statusMetodoEnvio.status===statusMetodoEnvio.DEFAULT || state.statusMetodoEnvio.status===statusMetodoEnvio.ACTUALIZADO)  )}
+              disabled={!(state.enableButton && (state.statusMetodoEnvio.status === statusMetodoEnvio.DEFAULT || state.statusMetodoEnvio.status === statusMetodoEnvio.ACTUALIZADO))}
               onClick={() => handleEnventControlMenuNext()}
             >
               Continuar

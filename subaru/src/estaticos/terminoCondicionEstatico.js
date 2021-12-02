@@ -1,36 +1,37 @@
 import React, { useState } from 'react';
 import './statico.css'
 import { Link } from 'react-router-dom';
+import { homepage,Empresa } from "../service/ENUM";
 export default function TerminoCondicionEstatico(props) {
-    const [srcLogo] = useState(window.location.origin + '/marcas/logo.jpg');
+    const [srcLogo] = useState(window.location.origin+(homepage===undefined?"":"/"+homepage) +    '/marcas/logo.png');
     return (<div className="titulo-div">
         {props.linkNavegacion==="CarritoPayment"?'':<><Link to="/shop">Inicio</Link>{'  '}/{'  '}Términos y condiciones</>}
         {props.linkNavegacion==="CarritoPayment"?'':<h3>Términos y condiciones</h3>}
         <div className="titulo-div-contenido">
             <br />
             {props.linkNavegacion==="CarritoPayment"?'': <p className="titulo">Términos y condiciones de uso</p>}
-            <p className="contenido">Lea detenidamente estas condiciones de entrega antes de realizar pedidos de productos en la tienda online de eanet auto parts.</p>
+            <p className="contenido">Lea detenidamente estas condiciones de entrega antes de realizar pedidos de productos en la tienda online de {Empresa.nombreComercial}.</p>
             <img src={srcLogo} alt=""></img>
-            <p className="contenido">El proveedor en EANET GLOBAL SAC, (en adelante eanet auto parts) sociedad legalmente constituida bajo las leyes de la República del Perú, RUC N°  20604770476, AV. república de Panamá Nro. 4275 Urb. Cercado Lima - Lima - Surquillo, Departamento de Lima, Provincia y Distrito,  República del Perú.</p>
+            <p className="contenido">El proveedor en {Empresa.razonSocial}, (en adelante {Empresa.nombreComercial}) sociedad legalmente constituida bajo las leyes de la República del Perú, RUC N°  {Empresa.ruc}, {Empresa.direccion} Urb. Cercado Lima - Lima - Surquillo, Departamento de Lima, Provincia y Distrito,  República del Perú.</p>
             <br />
             <p className="titulo">¿CUÁNDO SE APLICAN ESTAS CONDICIONES DE ENTREGA?</p>
 
-            <p className="contenido">Estas Condiciones de Entrega se aplican a todas las ofertas y contratos relacionados con la venta y suministro de productos por parte de eanet auto parts. Cuando usted encargue cualquier producto en nuestro sitio web eanet auto parts(https://eanetautoparts.pe/shop) o en cualquier página web directamente conectada con nuestro sitio web (Sitio Web), o acepte una oferta de eanet auto parts, su aceptación de las Condiciones de Entrega durante el proceso de pedido constituye su aceptación de estas Condiciones de Entrega. Sólo será posible desviarse de estas Condiciones de Entrega si eanet auto parts muestra su conformidad por escrito.</p>
+            <p className="contenido">Estas Condiciones de Entrega se aplican a todas las ofertas y contratos relacionados con la venta y suministro de productos por parte de {Empresa.nombreComercial}. Cuando usted encargue cualquier producto en nuestro sitio web {Empresa.nombreComercial}({Empresa.urlTienda}) o en cualquier página web directamente conectada con nuestro sitio web (Sitio Web), o acepte una oferta de {Empresa.nombreComercial}, su aceptación de las Condiciones de Entrega durante el proceso de pedido constituye su aceptación de estas Condiciones de Entrega. Sólo será posible desviarse de estas Condiciones de Entrega si {Empresa.nombreComercial} muestra su conformidad por escrito.</p>
 
 
             <p className="titulo">NUESTRAS OFERTAS Y PRECIOS</p>
 
-            <p className="contenido">Las ofertas publicadas por eanet auto parts en nuestro Sitio Web serán cumplidas por eanet auto parts. Sin Embargo,eanet auto parts no quedará obligada por errores manifiestos de transcripción. Se advierte que es posible que se produzcan variaciones pequeñas de color u otro tipo de variaciones menores en productos, como consecuencia de las diferentes tecnologías de adquisición de imagen y exhibición, o por otras razones técnicas.</p>
-            <p className="contenido">Los precios consignados incluyen IGV. Los precios se expresan en nuevos soles y dólares estadounidenses. eanet auto parts se reserva el derecho de hacer cambios en los precios y el producto con anterioridad a un pedido realizado por usted. eanet auto parts se reserva el derecho a cambiar, limitar o dar por terminadas ofertas especiales o promociones en cualquier momento, siempre que así haya sido previamente informado a los consumidores desde su inicio.</p>
+            <p className="contenido">Las ofertas publicadas por {Empresa.nombreComercial} en nuestro Sitio Web serán cumplidas por {Empresa.nombreComercial}. Sin Embargo,{Empresa.nombreComercial} no quedará obligada por errores manifiestos de transcripción. Se advierte que es posible que se produzcan variaciones pequeñas de color u otro tipo de variaciones menores en productos, como consecuencia de las diferentes tecnologías de adquisición de imagen y exhibición, o por otras razones técnicas.</p>
+            <p className="contenido">Los precios consignados incluyen IGV. Los precios se expresan en nuevos soles y dólares estadounidenses. {Empresa.nombreComercial} se reserva el derecho de hacer cambios en los precios y el producto con anterioridad a un pedido realizado por usted. {Empresa.nombreComercial} se reserva el derecho a cambiar, limitar o dar por terminadas ofertas especiales o promociones en cualquier momento, siempre que así haya sido previamente informado a los consumidores desde su inicio.</p>
             <p className="contenido">Ten en cuenta que tu compra se confirma automáticamente en nuestra página web.</p>
 
             <p className="titulo">FACTURACIÓN</p>
 
             <p className="contenido">A partir del 01 de diciembre del 2019, las boletas y facturas se enviarán al cliente de manera electrónica al email que ingresaron en los datos del pedido durante el proceso de la compra . Recibirán un email con un link para poder visualizar y descargar los documentos en mención.</p>
 
-            <p className="contenido">eanet auto parts  solo emite comprobantes de pago en dólares, en caso de realizar pedidos y pagos en soles este se convertirá a dólares con el tipo de cambio (referencial).</p>
+            <p className="contenido">{Empresa.nombreComercial}  solo emite comprobantes de pago en dólares, en caso de realizar pedidos y pagos en soles este se convertirá a dólares con el tipo de cambio (referencial).</p>
 
-            <p className="contenido resaltar">*eanet auto parts se reserva el derecho a modificar el tipo de cambio en cualquier momento.</p>
+            <p className="contenido resaltar">*{Empresa.nombreComercial} se reserva el derecho a modificar el tipo de cambio en cualquier momento.</p>
 
             <p className="contenido">En caso se quiera validar que la boleta / factura ha sido aceptada por la SUNAT, te recomendamos ingresar aquí <a className="link" href="https://consulta.ose.pe/" target="_blanck">https://consulta.ose.pe/</a>.</p>
 
@@ -45,10 +46,10 @@ export default function TerminoCondicionEstatico(props) {
 
 
             <p className="titulo">ENTREGA</p>
-            <p className="contenido">eanet auto parts realizará la entrega en la dirección provista por usted dentro del territorio Peruano. eanet auto parts sólo puede realizar la entrega en un domicilio residencial o de oficina en que haya ocupantes que puedan recibir la mercadería. Las entregas se realizarán en días hábiles, excepto los días festivos. Todas las entregas irán acompañadas de un acuse de recibo.</p>
-            <p className="contenido">Los periodos de entrega son indicativos y, por consiguiente, no se consideran fechas límite estrictas. El mero hecho de haber excedido un periodo de entrega no le dará ningún derecho de compensación. Para ello, deberá enviarse a eanet auto parts su notificación de incumplimiento. </p>
+            <p className="contenido">{Empresa.nombreComercial} realizará la entrega en la dirección provista por usted dentro del territorio Peruano. {Empresa.nombreComercial} sólo puede realizar la entrega en un domicilio residencial o de oficina en que haya ocupantes que puedan recibir la mercadería. Las entregas se realizarán en días hábiles, excepto los días festivos. Todas las entregas irán acompañadas de un acuse de recibo.</p>
+            <p className="contenido">Los periodos de entrega son indicativos y, por consiguiente, no se consideran fechas límite estrictas. El mero hecho de haber excedido un periodo de entrega no le dará ningún derecho de compensación. Para ello, deberá enviarse a {Empresa.nombreComercial} su notificación de incumplimiento. </p>
             <p className="contenido">A partir del 1 de febrero del 2019 todos los pedidos cuyo valor monetario sea menor al mínimo establecido por zona (después de descuentos) pagarán un adicional referido al Costo por Envío. Este monto adicional depende de la zona de envío. Los pedidos que superen el monto mínimo, no pagarán este adicional y el envío será gratis. Es caso de generarse una devolución, este cobro no es reembolsable.</p>
-            <p className="contenido">eanet auto parts entrega únicamente a las ciudades listadas a continuación. Estamos trabajando para añadir más ciudades a nuestra red.</p>
+            <p className="contenido">{Empresa.nombreComercial} entrega únicamente a las ciudades listadas a continuación. Estamos trabajando para añadir más ciudades a nuestra red.</p>
             <table>
                 <tbody>
                     <tr>
