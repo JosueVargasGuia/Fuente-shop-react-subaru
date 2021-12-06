@@ -75,7 +75,7 @@ export function ProductoOutlet(props) {
             listaProductoImagen: [],
           };
           rowProducto.push(
-            <tr>
+            <tr key={index}>
               <td className="td-codigo">
                 <span>
                   <Link
