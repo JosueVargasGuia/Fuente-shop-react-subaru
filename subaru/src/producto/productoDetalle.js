@@ -248,9 +248,7 @@ export default function ProductoDetalle(props) {
     //eslint-disable-next-line
   }, [props.moneda.numCodigoMoneda]);
 
-  const handleEventClickregistrarCotizacion = async () => {
-    alert(state.cantidad  )
-    alert(  state.producto.numStock)
+  const handleEventClickregistrarCotizacion = async () => {    
     if (state.cantidad <= state.producto.numStock) {
       let cotizacion = handleSyncDatosCotizacion();
       const rpt = await registrarCotizacion(cotizacion);
@@ -360,6 +358,7 @@ export default function ProductoDetalle(props) {
   }
   function handleEventGoCaja() {
     history.push("/carrito");
+    window.location.reload();
   }
   //const tooglesGroupId = 'Toggles';
   //const valuesGroupId = 'Values';
