@@ -9,9 +9,7 @@ const SUCCESS_SERVER = {
     "SUCCES_SERVER_ERROR" /*indica que se tiene un error interno, la cual se debe hacer el seguimiento para corregir el error */,
   SUCCES_SERVER_WARRING:
     "SUCCES_SERVER_WARRING" /*indica que se tiene un error interno, la cual se debe hacer el seguimiento para corregir el error */,
-  SUCCES_SERVER_EXPIRE:
-    "SUCCES_SERVER_EXPIRE" /*Validacion de token */,
-
+  SUCCES_SERVER_EXPIRE: "SUCCES_SERVER_EXPIRE" /*Validacion de token */,
 };
 
 /*Constante que nos indica que el endpoints   */
@@ -108,6 +106,41 @@ const InfoCondicionCompra = {
     "Envíos en los siguientes 10 días; verifica que tu calle no se encuentre en las zonas peligrosas.",
   DEVOLUCIONES:
     "No se aceptan devoluciones a menos que el producto tenga falla de fábrica.",
+  STOCK: (
+    <p>
+      <i>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="box-open"
+          class="svg-inline--fa fa-box-open fa-w-20"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 640 512"
+        >
+          <path
+            fill="currentColor"
+            d="M425.7 256c-16.9 0-32.8-9-41.4-23.4L320 126l-64.2 106.6c-8.7 14.5-24.6 23.5-41.5 23.5-4.5 0-9-.6-13.3-1.9L64 215v178c0 14.7 10 27.5 24.2 31l216.2 54.1c10.2 2.5 20.9 2.5 31 0L551.8 424c14.2-3.6 24.2-16.4 24.2-31V215l-137 39.1c-4.3 1.3-8.8 1.9-13.3 1.9zm212.6-112.2L586.8 41c-3.1-6.2-9.8-9.8-16.7-8.9L320 64l91.7 152.1c3.8 6.3 11.4 9.3 18.5 7.3l197.9-56.5c9.9-2.9 14.7-13.9 10.2-23.1zM53.2 41L1.7 143.8c-4.6 9.2.3 20.2 10.1 23l197.9 56.5c7.1 2 14.7-1 18.5-7.3L320 64 69.8 32.1c-6.9-.8-13.5 2.7-16.6 8.9z"
+          ></path>
+        </svg>
+      </i>
+      Mientras procesamos su pedido y/o compra, es posible que el stock
+      publicado en nuestra página se puede agotar, de ser asi la operación será
+      cancelada. De ocurrir esto y la transacción se efectuó, nos comprometemos
+      a realizar el extorno del dinero a su Tarjeta del Banco o emitir una Nota
+      de crédito para que Ud. pueda utilizarlo en compras futuras.
+      <br />
+      Si alguno de los productos seleccionados por Ud. está en promoción
+      (outlet) tenga presente que esta Campaña tiene un número muy limitado de
+      productos en stock y un tiempo determinado de vigencia.
+      <br />
+      Se dá por entendido que reconoce y acepta estar debidamente informado de
+      los alcances y limitaciones de las transacciones que realice por nuestro
+      portal de comercio electrónico, no existiendo lugar a reclamo si las
+      condiciones descritas se presentan durante el procesamiento de su compra.
+    </p>
+  ),
 };
 /* Secuencia de pago */
 const PagoMenu = {
@@ -182,12 +215,10 @@ const lstMarcas = [
       { codigoCarrucel: 1, srcImage: "/marcas/subaru/1.png" },
       { codigoCarrucel: 2, srcImage: "/marcas/subaru/2.png" },
       { codigoCarrucel: 3, srcImage: "/marcas/subaru/3.png" },
-      { codigoCarrucel: 4, srcImage: "/marcas/subaru/4.png" },    
+      { codigoCarrucel: 4, srcImage: "/marcas/subaru/4.png" },
     ],
-    lstBannerPromocion: [
-    ],
+    lstBannerPromocion: [],
   },
-
 ];
 
 const FilterProducto = {
@@ -209,40 +240,41 @@ const filterOrder = {
   FilterDescDescripcion: "FilterDescDescripcion",
   FilterAscDescripcion: "FilterAscDescripcion",
   FilterDescPrecio: "FilterDescPrecio",
-  FilterAscPrecio: 'FilterAscPrecio',
-  FilterConImagen: 'FilterConImagen',
-  FilterOutlet: 'FilterOutlet',
+  FilterAscPrecio: "FilterAscPrecio",
+  FilterConImagen: "FilterConImagen",
+  FilterOutlet: "FilterOutlet",
 };
 const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */
   status: 1,
-  text: "Página en Modo de Prueba. Próximamente estará habilitada al 100%"
-}
+  text: "Página en Modo de Prueba. Próximamente estará habilitada al 100%",
+};
 const tipoDireccion = {
   DESPACHO: "Dirección de Despacho",
-  FACTURACION: "Dirección de Facturación"
+  FACTURACION: "Dirección de Facturación",
 };
-const homepage="subaruparts";
+const homepage = "subaruparts";
 const chrRol = {
-  ROLE_USER: 'ROLE_USER',
-  ROLE_ADMIN: 'ROLE_ADMIN',
-  ROLE_ANONIMO: "ROLE_ANONIMO"
+  ROLE_USER: "ROLE_USER",
+  ROLE_ADMIN: "ROLE_ADMIN",
+  ROLE_ANONIMO: "ROLE_ANONIMO",
 };
 const FilterCorreo = {
-  FILTER_ALL:'FILTER_ALL', 
-  FILTER_DESTINO_OC:'FILTER_DESTINO_OC',
-  FILTER_TIPO_CAMBIO_REGISTRO:'FILTER_TIPO_CAMBIO_REGISTRO',
-  FILTER_TIPO_CAMBIO_TOMADO:'FILTER_TIPO_CAMBIO_TOMADO',
+  FILTER_ALL: "FILTER_ALL",
+  FILTER_DESTINO_OC: "FILTER_DESTINO_OC",
+  FILTER_TIPO_CAMBIO_REGISTRO: "FILTER_TIPO_CAMBIO_REGISTRO",
+  FILTER_TIPO_CAMBIO_TOMADO: "FILTER_TIPO_CAMBIO_TOMADO",
 };
-const Empresa={
-  ruc:'20601356024',
-  razonSocial:'CORPORACION DE EMPRESAS AUTOMOTRICES SOCIEDAD ANONIMA CERRADA - EA CORP S.A.C',
-  nombreComercial:'Ea Corp. Sac',
-  urlTienda:'https://subaruparts.eanet.pe/subaruparts/shop',
-  direccion:'Av. Republica de Panama Nro. 4259',
-  correo:'consultas@eanetautoparts.pe',
-  abreviaturaSucursal:'RP4259'
-}
+const Empresa = {
+  ruc: "20601356024",
+  razonSocial:
+    "CORPORACION DE EMPRESAS AUTOMOTRICES SOCIEDAD ANONIMA CERRADA - EA CORP S.A.C",
+  nombreComercial: "Ea Corp. Sac",
+  urlTienda: "https://subaruparts.eanet.pe/subaruparts/shop",
+  direccion: "Av. Republica de Panama Nro. 4259",
+  correo: "consultas@eanetautoparts.pe",
+  abreviaturaSucursal: "RP4259",
+};
 
 export {
   SUCCESS_SERVER,
@@ -264,11 +296,11 @@ export {
   displayLista,
   FilterProducto,
   FilterSubFamilia,
-  filterOrder, nav_banner,
+  filterOrder,
+  nav_banner,
   tipoDireccion,
   homepage,
   chrRol,
   FilterCorreo,
-  Empresa
+  Empresa,
 };
-

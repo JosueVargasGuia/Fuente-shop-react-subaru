@@ -72,14 +72,16 @@ export default function ProductoDetalle(props) {
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
-  async function handleServicioBuscarProductos(chrCodigoProducto,_filterOrder) {
-  
+  async function handleServicioBuscarProductos(
+    chrCodigoProducto,
+    _filterOrder
+  ) {
     const rpt = await findProductos({
       chrCodigoFamilia: null,
       vchDescripcion: null,
       chrCodigoProducto: chrCodigoProducto,
       filterProducto: FilterProducto.FILTER_CODIGO,
-      filterOrder:_filterOrder,
+      filterOrder: _filterOrder,
       pagina: 1,
       limit: 1,
     });
@@ -227,10 +229,10 @@ export default function ProductoDetalle(props) {
   let params = useParams();
   let _chrCodigoFamilia = params.chrCodigoFamilia;
   let _chrCodigoProducto = params.chrCodigoProducto;
-  let _filterOrder= filterOrder.FilterAscDescripcion;
-  if(_chrCodigoFamilia==='outl'){
-    _filterOrder= filterOrder.FilterOutlet;
-    _chrCodigoFamilia='110A';
+  let _filterOrder = filterOrder.FilterAscDescripcion;
+  if (_chrCodigoFamilia === "outl") {
+    _filterOrder = filterOrder.FilterOutlet;
+    _chrCodigoFamilia = "110A";
   }
   //eslint-disable-next-line
   useEffect(() => {
@@ -242,13 +244,13 @@ export default function ProductoDetalle(props) {
   }, []);
   useEffect(() => {
     //eslint-disable-next-line
-    handleServicioBuscarProductos(_chrCodigoProducto,_filterOrder);
+    handleServicioBuscarProductos(_chrCodigoProducto, _filterOrder);
     //eslint-disable-next-line
     console.log("useEffect[ProductoDetalle] handleServicioBuscarProductos");
     //eslint-disable-next-line
   }, [props.moneda.numCodigoMoneda]);
 
-  const handleEventClickregistrarCotizacion = async () => {    
+  const handleEventClickregistrarCotizacion = async () => {
     if (state.cantidad <= state.producto.numStock) {
       let cotizacion = handleSyncDatosCotizacion();
       const rpt = await registrarCotizacion(cotizacion);
@@ -395,6 +397,13 @@ export default function ProductoDetalle(props) {
               {state.producto.listaProductoImagen}
             </Carousel>
           </div>
+          <div className="producto-det-row2-det">
+            <div className="titulo">
+              <span>Detalles del producto</span>
+              <div></div>
+            </div>
+            {state.producto.listaProductoDetalle}
+          </div>
         </div>
         <div className="producto-det-row2">
           <div className="producto-det-row2-nombre">
@@ -444,18 +453,26 @@ export default function ProductoDetalle(props) {
               </span>
             )}
           </div>
-          <div className="producto-det-row2-social">Compartir</div>          
-          <div className="producto-det-row2-social"> 
-          <a className='btn btn-social fa fa-facebook'  
-            href={state.shareFacebook} 
-            target='noreferrer' ></a>
-            <a className='btn btn-social fa fa-twitter'
-            href={state.shareTwitter} 
-            target='noreferrer' ></a>
+          <div className="producto-det-row2-social">Compartir</div>
+          <div className="producto-det-row2-social">
+            <a
+              className="btn btn-social fa fa-facebook"
+              href={state.shareFacebook}
+              target="noreferrer"
+            ></a>
+            <a
+              className="btn btn-social fa fa-twitter"
+              href={state.shareTwitter}
+              target="noreferrer"
+            ></a>
           </div>
           <div className="producto-det-row2-info">
             <i className="fa fa-shield-p"></i>
             {InfoCondicionCompra.EMISION}
+          </div>
+          <div className="producto-det-row2-info">
+            
+            {InfoCondicionCompra.STOCK}
           </div>
           <div className="producto-det-row2-info">
             <i className="fa fa-truck" aria-hidden="true"></i>
@@ -465,13 +482,7 @@ export default function ProductoDetalle(props) {
             <i className="fa fa-exchange" aria-hidden="true"></i>
             {InfoCondicionCompra.DEVOLUCIONES}
           </div>
-          <div className="producto-det-row2-det">
-            <div className="titulo">
-              <span>Detalles del producto</span>
-              <div></div>
-            </div>
-            {state.producto.listaProductoDetalle}
-          </div>
+         
         </div>
       </div>
       {state.server.success === SUCCESS_SERVER.SUCCES_SERVER_INFO ? (
