@@ -1144,6 +1144,9 @@ h4 {
 .producto-det-link {
     font-size: 1em;
     padding-bottom: 0.5em;
+    font-size: 1em;
+    padding-bottom: 0.5em;
+    padding-top: 1em;
 }
 
 .producto-det-link a {
@@ -1202,7 +1205,7 @@ h4 {
     padding-bottom: 0.3em;
     padding-right: 0.3em;
     color: var(--color-font2);
-    font-size: 1.2em;
+    font-size: 1.5em;
 }
 
 .producto-det-row2-shop {
@@ -1223,7 +1226,7 @@ h4 {
 }
 
 .producto-det-row2-social {
-    margin-bottom: 2em;
+    margin-bottom: 0em;
 }
 
 .producto-det-row2-info {
@@ -1232,12 +1235,14 @@ h4 {
     background: var(--color-background-white);
     padding: 0.8em;
     margin-bottom: 0.05em;
-    box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
-    ;
+    box-shadow: 4px 4px 8px 2px rgb(0 0 0 / 20%);
+    display: flex;
+    flex-flow: row;
 }
 
 .producto-det-row2-info i {
     font-size: 1.5em;
+    height: 30px;
 }
 
 .producto-det-row2-info {
