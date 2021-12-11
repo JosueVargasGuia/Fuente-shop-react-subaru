@@ -1240,6 +1240,26 @@ h4 {
     font-size: 1.5em;
 }
 
+.producto-det-row2-info {
+    svg {
+        width: 25px;
+        margin-right: 0.3em;
+    }
+    p {
+        text-align: justify;
+        margin-right: 1.5em;
+    }
+}
+.carrito-detalle-item {
+    svg {
+        width: 25px;
+        margin-right: 0.3em;
+    }
+    p {
+        text-align: justify;
+       
+    }
+}
 .producto-det-row2-det {
     padding: 1em;
     margin-top: 1em;
@@ -2477,5 +2497,54 @@ h4 {
     cursor: pointer;
      :hover {
         text-decoration: underline;
+    }
+}
+
+.producto-det-row-content{
+     width: 100%;
+     display: flex;
+     .producto-det-row2-content{
+         width: 50%;
+         background: var(--color-background-white);
+         margin-right: 0.2em;
+         
+         .titulo{
+            font-size: 15px;
+            color: #2fb5d2;
+            margin-left: 0.8em;
+         }
+         .titulo-border{
+            text-decoration: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 0.5em;
+            margin-left: 0.8em;
+            border-bottom: solid 3px #2fb5d2 ;
+            max-width: 160px;
+        }
+        .detalle{
+            display: flex;
+            .desc-label{
+                width: 30%;
+                margin-left: 0.8em;
+            }
+        }
+     }
+}
+@media (min-width: 0px) and (max-width: 950px) {
+    .producto-det-row-content{
+        flex-wrap: wrap;
+        .producto-det-row2-content{
+            width: 100%;
+            margin-bottom: 0.5em;
+            .detalle{
+                display: flex;
+                .desc-label{
+                    width:100% !important;
+                    margin-left: 0.8em;
+                }
+            }
+        }
+        
     }
 }

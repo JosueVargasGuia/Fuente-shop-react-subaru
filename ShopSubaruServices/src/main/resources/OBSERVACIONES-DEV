@@ -1,0 +1,3 @@
+
+Producto Bolsa
+Se observa que cada cotizacion se le agrega el producto bolsa codigo [SELECT *FROM PRODUCTO WHERE chrcodigoproducto='BOLBI001';]

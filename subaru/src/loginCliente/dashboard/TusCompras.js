@@ -167,8 +167,11 @@ export default function TusCompras() {
         ""
       )}
     </div>
-    <h4>Sus Compras</h4>
+    <h4>Tus Movimientos</h4>
     <div className="form-body-compras">
+      <div className="form-body-accion">
+        <button type="button" onClick={(e)=>loadTusCompras()} className=" btn btn-primary fa fa-refresh" > Actualizar</button>
+      </div>
       {state.rowTusCompras}
     </div>
 

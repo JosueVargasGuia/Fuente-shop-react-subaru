@@ -48,11 +48,14 @@ const URL = {
   };
 
 function IP(uri) {
-  let _PROTOCOLO='http';
-  let _URL_API = 'localhost';//localhost ,bk.subaruparts.eanet.pe
-  let _PORT = '8084';//undefined --> sin puerto,'8084'--> con puerto
-  let _SERVICE = 'service';//'ShopAutoPartsServices/service' ,'service'-->localhost
-  return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri 
+
+  let _CONTEXT    ="DESARROLLO";//PRODUCCION -- DESARROLLO
+  let _PROTOCOLO  = (_CONTEXT==="PRODUCCION"?'https':'http');
+  let _URL_API    = (_CONTEXT==="PRODUCCION"?'bk.subaruparts.eanet.pe':'localhost'); 
+  let _PORT       = (_CONTEXT==="PRODUCCION"?undefined:'8086'); 
+  let _SERVICE    = (_CONTEXT==="PRODUCCION"?'ShopSubaruServices/service':'service');
+
+  return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri;
 }
 function IziPay() {
   return `https://api.micuentaweb.pe/api-payment/V4/Charge/SDKTest`;

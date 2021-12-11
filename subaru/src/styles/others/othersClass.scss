@@ -69,6 +69,12 @@
     font-size: .875rem;
     min-height: 180px;
     padding-top: 0.2em;
+    .form-body-accion {
+        width: 100%;
+        padding-top: 0.2em;
+        padding-right: 0.5em;
+        text-align: right;
+    }
 }
 
 .tuscompras-row-title {
@@ -107,6 +113,9 @@
                 }
             }
             .form-body-detalle-body {
+                overflow-x: auto;
+                min-width: 180px;
+                min-height: 70px;
                 .div-table {
                     width: 98%;
                     margin-left: 0.5em;
@@ -1044,6 +1053,8 @@
 }
 
 .producto-outlet {
+    min-height: 250px;
+    background-color: var(--color-background-white);
     .table-outlet {
         font-size: 13px;
         width: 100%;
@@ -1054,6 +1065,7 @@
                 text-align: center;
                 .td-codigo {
                     width: 12%;
+                    border-right: solid 1px var(--color-font3);
                     .td-codigo-div {
                         display: flex;
                         flex-direction: column;
@@ -1066,6 +1078,7 @@
                 }
                 .td-producto {
                     margin-left: 3px;
+                    border-right: solid 1px var(--color-font3);
                     .td-producto-div {
                         text-align: center;
                         display: flex;
@@ -1079,6 +1092,13 @@
                 }
                 .td-precio {
                     width: 12%;
+                    .td-producto-div {
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        align-content: space-around;
+                    }
                 }
                 td {
                     font-weight: bold;
@@ -1098,6 +1118,7 @@
                 }
             }
             .td-producto {
+                width: 100px;
                 span {
                     margin-left: 5px;
                 }

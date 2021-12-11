@@ -417,6 +417,9 @@ export function CarritoDetalle(props) {
             <hr />
           </div>
           <div className="carrito-detalle-item">
+            {InfoCondicionCompra.STOCK}
+          </div>
+          <div className="carrito-detalle-item">
             <i className="fa fa-exchange" aria-hidden="true"></i>
             {InfoCondicionCompra.DEVOLUCIONES}
             <hr />
