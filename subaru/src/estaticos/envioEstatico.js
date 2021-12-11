@@ -1,7 +1,7 @@
 import React from 'react';
 import './statico.css'
 import { Link } from 'react-router-dom';
-
+import { Empresa } from "../service/ENUM";
 export default function EnvioEstatico() {
     return (<div className="titulo-div">
         <Link to="/shop">Inicio</Link>{'  '}/{'  '} Envío
@@ -10,19 +10,19 @@ export default function EnvioEstatico() {
         <div className="titulo-div-contenido">
             <br />
             <p className="titulo">¿CUÁNDO SE APLICAN ESTAS CONDICIONES DE ENTREGA?</p>
-            <p className="contenido">Estas Condiciones de Entrega se aplican a todas las ofertas y contratos relacionados con la venta y suministro de productos por parte de eanet auto parts. Cuando usted encargue cualquier producto en nuestro sitio web eanet auto parts (www.eanetautoparts.pe/shop) o en cualquier página web directamente conectada con nuestro sitio web (Sitio Web), o acepte una oferta de eanet auto parts, su aceptación de las Condiciones de Entrega durante el proceso de pedido constituye su aceptación de estas Condiciones de Entrega. Sólo será posible desviarse de estas Condiciones de Entrega si eanet auto parts muestra su conformidad por escrito.</p>
+            <p className="contenido">Estas Condiciones de Entrega se aplican a todas las ofertas y contratos relacionados con la venta y suministro de productos por parte de {Empresa.nombreComercial}. Cuando usted encargue cualquier producto en nuestro sitio web {Empresa.nombreComercial} ({Empresa.urlTienda}) o en cualquier página web directamente conectada con nuestro sitio web (Sitio Web), o acepte una oferta de {Empresa.nombreComercial}, su aceptación de las Condiciones de Entrega durante el proceso de pedido constituye su aceptación de estas Condiciones de Entrega. Sólo será posible desviarse de estas Condiciones de Entrega si {Empresa.nombreComercial} muestra su conformidad por escrito.</p>
             <p className="titulo">ENTREGA</p>
             <p className="contenido">
-                EANET auto parts realizará la entrega en la dirección provista por usted dentro del territorio Peruano. eanet auto parts sólo puede realizar la entrega en un domicilio residencial o de oficina en que haya ocupantes que puedan recibir la mercadería. Las entregas se realizarán en días hábiles, excepto los días festivos. Todas las entregas irán acompañadas de un acuse de recibo.
+                {Empresa.nombreComercial} realizará la entrega en la dirección provista por usted dentro del territorio Peruano. {Empresa.nombreComercial} sólo puede realizar la entrega en un domicilio residencial o de oficina en que haya ocupantes que puedan recibir la mercadería. Las entregas se realizarán en días hábiles, excepto los días festivos. Todas las entregas irán acompañadas de un acuse de recibo.
         </p> 
             <p className="contenido">
-                Los periodos de entrega son indicativos y, por consiguiente, no se consideran fechas límite estrictas. El mero hecho de haber excedido un periodo de entrega no le dará ningún derecho de compensación. Para ello, deberá enviarse a eanet auto parts una notificación de incumplimiento.
+                Los periodos de entrega son indicativos y, por consiguiente, no se consideran fechas límite estrictas. El mero hecho de haber excedido un periodo de entrega no le dará ningún derecho de compensación. Para ello, deberá enviarse a {Empresa.nombreComercial} una notificación de incumplimiento.
         </p> 
             <p className="contenido">
                 A partir del 1 de febrero del 2019 todos los pedidos cuyo valor monetario sea menor al mínimo establecido por zona (después de descuentos) pagarán un adicional referido al Costo por Envío. Este monto adicional depende de la zona de envío. Los pedidos que superen el monto mínimo, no pagarán este adicional y el envío será gratis. Es caso de generarse una devolución, este cobro no es reembolsable.
         </p> 
             <p className="contenido">
-                EANET auto parts entrega únicamente a las ciudades listadas a continuación. Estamos trabajando para añadir más ciudades a nuestra red.
+                {Empresa.nombreComercial} entrega únicamente a las ciudades listadas a continuación. Estamos trabajando para añadir más ciudades a nuestra red.
         </p>
             <table>
                 <tbody>

@@ -5,74 +5,74 @@ import { displayLista } from "../service/ENUM";
 import ProductosCard from "./productoCard";
 import { Link } from "react-router-dom";
 import ServerException from "../utils/serverException";
+import { LoadingClassic } from "../utils/loading"
 const LIMITE = 8;
 const listaRepuesto = [
-  { discripcion: "Filtros de Aire", srcimg: "/marcas/subaru/repuestos/1.png" },
-  { discripcion: "Filtros de Aceite", srcimg: "/marcas/subaru/repuestos/2.png" },
-  { discripcion: "Pastillas de Freno", srcimg: "/marcas/subaru/repuestos/3.png" },
-  { discripcion: "Discos de Freno", srcimg: "/marcas/subaru/repuestos/4.png" },
-  { discripcion: "Alternadores", srcimg: "/marcas/subaru/repuestos/5.png" },
-  { discripcion: "Bujías", srcimg: "/marcas/subaru/repuestos/6.png" },
-  { discripcion: "Arrancadores", srcimg: "/marcas/subaru/repuestos/7.png" },
-  { discripcion: "Fajas, correas y templadores", srcimg: "/marcas/subaru/repuestos/8.png" },
-  { discripcion: "Radiadores", srcimg: "/marcas/subaru/repuestos/9.png" },
-  { discripcion: "Suspensión", srcimg: "/marcas/subaru/repuestos/10.png" },
-  { discripcion: "Limpiaparabrisas", srcimg: "/marcas/subaru/repuestos/11.png" },
-  { discripcion: "Todas las categorías", srcimg: "/marcas/subaru/repuestos/12.png" },
+  { key: 1, discripcion: "Filtros de Aire", srcimg: "/marcas/subaru/repuestos/1.png", url: "/shop" },
+  { key: 2, discripcion: "Filtros de Aceite", srcimg: "/marcas/subaru/repuestos/2.png", url: "/shop" },
+  { key: 3, discripcion: "Pastillas de Freno", srcimg: "/marcas/subaru/repuestos/3.png", url: "/shop" },
+  { key: 4, discripcion: "Discos de Freno", srcimg: "/marcas/subaru/repuestos/4.png", url: "/shop" },
+  { key: 5, discripcion: "Alternadores", srcimg: "/marcas/subaru/repuestos/5.png", url: "/shop" },
+  { key: 6, discripcion: "Bujías", srcimg: "/marcas/subaru/repuestos/6.png", url: "/shop" },
+  { key: 7, discripcion: "Arrancadores", srcimg: "/marcas/subaru/repuestos/7.png", url: "/shop" },
+  { key: 8, discripcion: "Fajas, correas y templadores", srcimg: "/marcas/subaru/repuestos/8.png", url: "/shop" },
+  { key: 9, discripcion: "Radiadores", srcimg: "/marcas/subaru/repuestos/9.png", url: "/shop" },
+  { key: 10, discripcion: "Suspensión", srcimg: "/marcas/subaru/repuestos/10.png",url: "/shop" },
+  { key: 11, discripcion: "Limpiaparabrisas", srcimg: "/marcas/subaru/repuestos/11.png", url: "/shop" },
+  { key: 12, discripcion: "Todas las categorías", srcimg: "/marcas/subaru/repuestos/12.png", url: "/shop" },
 ];
 const listaAccesorios = [
-  { discripcion: "Interior", srcimg: "/marcas/subaru/accesorios/1.png" },
-  { discripcion: "Carga", srcimg: "/marcas/subaru/accesorios/2.png" },
-  { discripcion: "Travesaños de la puerta", srcimg: "/marcas/subaru/accesorios/3.png" },
-  { discripcion: "Alfombras de Piso", srcimg: "/marcas/subaru/accesorios/4.png" },
-  { discripcion: "Electronics", srcimg: "/marcas/subaru/accesorios/5.png" },
-  { discripcion: "Perillas de cambio", srcimg: "/marcas/subaru/accesorios/6.png" },
-  { discripcion: "Sombrillas", srcimg: "/marcas/subaru/accesorios/7.png" },
-  { discripcion: "Exterior", srcimg: "/marcas/subaru/accesorios/8.png" },
-  { discripcion: "Cubiertas de carro", srcimg: "/marcas/subaru/accesorios/9.png" },
-  { discripcion: "Bastidores de techo", srcimg: "/marcas/subaru/accesorios/10.png" },
-  { discripcion: "Spoilers", srcimg: "/marcas/subaru/accesorios/11.png" },
-  { discripcion: "Todos los Accesorios", srcimg: "/marcas/subaru/accesorios/12.png" },
+  { key: 1, discripcion: "Interior", srcimg: "/marcas/subaru/accesorios/1.png", url: "/shop" },
+  { key: 2, discripcion: "Carga", srcimg: "/marcas/subaru/accesorios/2.png", url: "/shop" },
+  { key: 3, discripcion: "Travesaños de la puerta", srcimg: "/marcas/subaru/accesorios/3.png", url: "/shop" },
+  { key: 4, discripcion: "Alfombras de Piso", srcimg: "/marcas/subaru/accesorios/4.png", url: "/shop" },
+  { key: 5, discripcion: "Electronics", srcimg: "/marcas/subaru/accesorios/5.png", url: "/shop" },
+  { key: 6, discripcion: "Perillas de cambio", srcimg: "/marcas/subaru/accesorios/6.png", url: "/shop" },
+  { key: 7, discripcion: "Sombrillas", srcimg: "/marcas/subaru/accesorios/7.png", url: "/shop" },
+  { key: 8, discripcion: "Exterior", srcimg: "/marcas/subaru/accesorios/8.png", url: "/shop" },
+  { key: 9, discripcion: "Cubiertas de carro", srcimg: "/marcas/subaru/accesorios/9.png", url: "/shop" },
+  { key: 10, discripcion: "Bastidores de techo", srcimg: "/marcas/subaru/accesorios/10.png", url: "/shop" },
+  { key: 11, discripcion: "Spoilers", srcimg: "/marcas/subaru/accesorios/11.png", url: "/shop" },
+  { key: 12, discripcion: "Todos los Accesorios", srcimg: "/marcas/subaru/accesorios/12.png", url: "/shop" },
 ];
 const listaCategoria = [
-  { title: "Audio/Media", content: "Donde quiera que la te aventura conduzca, mantente conectado en tu Subaru.", srcimg: "/marcas/subaru/categoria/1.png" },
-  { title: "Comodidad y conveniencia", content: "Menos dificultad Más disfrute. Todo personalizado para ti y tu Subaru.", srcimg: "/marcas/subaru/categoria/2.png" },
-  { title: "Estilo de Vida", content: "Estilo Subaru sintonizado precisamente para usted y su Subaru.", srcimg: "/marcas/subaru/categoria/3.png" },
-  { title: "Protección y seguridad", content: "Ayuda a prevenir lo peor y a disminuir el impacto de lo inevitable en tu Subaru.", srcimg: "/marcas/subaru/categoria/4.png" },
-  { title: "Marca de STI", content: "Las modificaciones de Subaru que deseas para el poder que anhelas.", srcimg: "/marcas/subaru/categoria/5.png" },
-  { title: "Estilo", content: "Cuando lo que está afuera de tu Subaru es lo que cuenta.", srcimg: "/marcas/subaru/categoria/6.png" },
+  { key: 1, title: "Audio/Media", content: "Donde quiera que la te aventura conduzca, mantente conectado en tu Subaru.", srcimg: "/marcas/subaru/categoria/1.png" },
+  { key: 2, title: "Comodidad y conveniencia", content: "Menos dificultad Más disfrute. Todo personalizado para ti y tu Subaru.", srcimg: "/marcas/subaru/categoria/2.png" },
+  { key: 3, title: "Estilo de Vida", content: "Estilo Subaru sintonizado precisamente para usted y su Subaru.", srcimg: "/marcas/subaru/categoria/3.png" },
+  { key: 4, title: "Protección y seguridad", content: "Ayuda a prevenir lo peor y a disminuir el impacto de lo inevitable en tu Subaru.", srcimg: "/marcas/subaru/categoria/4.png" },
+  { key: 5, title: "Marca de STI", content: "Las modificaciones de Subaru que deseas para el poder que anhelas.", srcimg: "/marcas/subaru/categoria/5.png" },
+  { key: 6, title: "Estilo", content: "Cuando lo que está afuera de tu Subaru es lo que cuenta.", srcimg: "/marcas/subaru/categoria/6.png" },
 
 ];
-const whatsAppLink="https://api.whatsapp.com/send?phone=51989174932&text=";
+const whatsAppLink = "https://api.whatsapp.com/send?phone=51989174932&text=";
 export default function ProductoDestacado(props) {
   const [state, dispatch] = useReducer(reducer, {
-    rowProducto: [],
+    rowProducto: null,
     pagina: 1,
     activeIndex: 1,
     displayLista: displayLista.DETALLE,
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
-  let rowRepuesto = listaRepuesto.map((rowRep) => <div>
-    <Link>
-      <img src={window.location.origin + (homepage == undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg}></img>
-      {rowRep.discripcion}
+  let rowRepuesto = listaRepuesto.map((rowRep) => <div key={rowRep.key}>
+    <Link to={rowRep.url} key={rowRep.key} >
+      <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg} loading='lazy'></img>
+      {rowRep.discripcion}-to={rowRep.url} 
     </Link>
   </div>);
-  let rowAccesorios = listaAccesorios.map((rowAcce) => <div>
-    <Link>
-      <img src={window.location.origin + (homepage == undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg}></img>
-      {rowAcce.discripcion}
+  let rowAccesorios = listaAccesorios.map((rowAcce) => <div key={rowAcce.key}>
+    <Link to={rowAcce.url} key={rowAcce.key} >
+      <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
+      {rowAcce.discripcion}-to={rowAcce.url}
     </Link>
   </div>);
 
   let rowCategoria = listaCategoria.map((rowCate) =>
-    <div className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage == undefined ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
+    <div key={rowCate.key}  className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
       <div className="produc-link-accesorio-left">
         <div className="title">{rowCate.title}</div>
         <div className="content">{rowCate.content}</div>
       </div>
-
     </div>);
 
 
@@ -95,6 +95,7 @@ export default function ProductoDestacado(props) {
     chrCodigoFamilia,
     vchDescripcion
   ) {
+   
     let rowProducto = [];
     //let rowProductoRecomendado = [];
     //let rowProductoOferta = [];
@@ -109,6 +110,7 @@ export default function ProductoDestacado(props) {
       limit: _limit,
       filterProducto: _FilterProducto,
     });
+    console.log(rpt);
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
 
@@ -179,13 +181,16 @@ export default function ProductoDestacado(props) {
   }
 
   return (
-    <>
+    <div key={props.marcaSelect.chrCodigoFamilia} >
+
       <div className="produc-destacado">
         <div className="produc-destacado-title">
           <h4>PRODUCTOS DESTACADOS</h4>
         </div>
         <div className="produc-destacado-wrapper">
-          <div className="produc-destacado-item">{state.rowProducto}</div>
+          <div className="produc-destacado-item">
+            {state.rowProducto === null ? <LoadingClassic></LoadingClassic> : state.rowProducto}
+          </div>
           <div className="produc-destacado-item produc-destacado-item-right link-href">
             <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"}>Todos los productos &raquo;</Link>
           </div>
@@ -215,14 +220,15 @@ export default function ProductoDestacado(props) {
 
       <ServerException server={state.server}></ServerException>
       <div className="wspclass">
-        <a href={whatsAppLink} target="_blank">
+        <a href={whatsAppLink} target="noreferrer">
           <div>
             <i className="fa fa-whatsapp" aria-hidden="true"></i>
             <p>Consulta</p>
           </div>
         </a>
       </div>
-    </>
+    </div>
+
   );
 }
 

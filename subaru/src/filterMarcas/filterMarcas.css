@@ -8,7 +8,8 @@
         margin-right: 0.5em
     }
     .filter-row-mobile,
-    .filter-row-mobile-input {
+    .filter-row-mobile-input,
+    .filter-row-mobile-menu {
         display: flex !important;
     }
     .nav-marcas span {
@@ -68,29 +69,34 @@
     .lista-marca .nav-marcas ul li img {
         width: 95px !important;
     }
-  
-   
 }
-@media (min-width: 975px) and (max-width: 1100px) {  
-    
+
+@media (min-width: 975px) and (max-width: 1100px) {
     .nav-marcas-li-ul-li {
         width: 110px !important;
     }
 }
+
 @media (min-width: 830px) and (max-width: 974px) {
     .nav-marcas-li-ul-li {
-      width: 100px !important;
+        width: 100px !important;
     }
 }
+
 .filter-row-mobile {
     height: 60px;
 }
 
 .filter-row-mobile,
-.filter-row-mobile-input {
+.filter-row-mobile-input,
+.filter-row-mobile-menu {
     display: none;
     width: 100%;
-    margin-top: 0.5em;
+}
+
+.filter-row-mobile-menu {
+    justify-content: center;
+    margin-top: 0.5em !important;
 }
 
 .filter-row-mobile-input input {
@@ -103,6 +109,10 @@
 
 .filter-row-mobile-input .filter-input-search {
     width: 100%;
+}
+
+.filter-input-search {
+    margin-top: 0.5em;
 }
 
 .filter-row-mobile .header-link {
@@ -136,7 +146,7 @@
 
 .filter-row-mobile .nav-marcas .header-link-tipcambio {
     width: 100%;
-    margin-left: 1em;
+    margin-left: 0.1em;
 }
 
 .filter-marcas {
@@ -160,23 +170,26 @@
     width: 90%;
     margin: auto;
     display: flex;
-
 }
-.filter-row-2-goto{
+
+.filter-row-2-goto {
     margin-top: 0px;
     font-weight: bold;
     font-size: 12px;
 }
 
-.filter-row-2-start{
+.filter-row-2-start {
     justify-content: flex-start;
 }
-.filter-row-2-right{
+
+.filter-row-2-right {
     justify-content: flex-end;
 }
-.filter-row-2-center{
+
+.filter-row-2-center {
     justify-content: center;
 }
+
 .filter-image {
     width: 180px;
     max-height: 60px;
@@ -184,14 +197,7 @@
     margin-right: 1em;
     padding-left: 15px;
     padding-right: 15px;
-    min-width: 180px;
-}
-
-.filter-marcas img {
-    width: 180px;
-    height: 40px;
-    
-    object-fit: contain;
+    min-width: 170px;
 }
 
 .filter-home img {
@@ -199,6 +205,8 @@
     max-height: 80px;
     object-fit: contain;
 }
+
+
 /*
 .lista-marca .nav-marcas ul li img {
     width: 110px;
@@ -207,15 +215,17 @@
     object-fit: scale-down;
 }
 */
-.class-marca-bosch img{
+
+.class-marca-bosch img {
     width: 100px;
     max-width: 100%;
-    max-height: 26px;   
+    max-height: 26px;
     object-fit: fill;
-    vertical-align: middle;    
+    vertical-align: middle;
     border-style: none;
 }
-.class-marca-tokico img{
+
+.class-marca-tokico img {
     width: 97px;
     max-height: 34px;
     object-fit: scale-down;
@@ -223,46 +233,49 @@
     border-style: none;
 }
 
-.class-marca-hyundai img{
+.class-marca-hyundai img {
     width: 107px;
-    max-height: 26px;   
+    max-height: 26px;
     object-fit: scale-down;
     vertical-align: middle;
     border-style: none;
 }
 
-.class-marca-sonax img{
+.class-marca-sonax img {
     width: 91px;
-    max-height: 39px;   
+    max-height: 39px;
     object-fit: scale-down;
     vertical-align: middle;
     border-style: none;
 }
-.class-marca-sportrack img{
+
+.class-marca-sportrack img {
     width: 110px;
-    max-height: 36px;   
+    max-height: 36px;
     object-fit: scale-down;
     vertical-align: middle;
     border-style: none;
 }
-.class-marca-sparco img{
+
+.class-marca-sparco img {
     width: 84px;
-    max-height: 36px;   
+    max-height: 36px;
     object-fit: scale-down;
     vertical-align: middle;
     border-style: none;
 }
-.class-marca-ecco img{
-    width: 115px;     
+
+.class-marca-ecco img {
+    width: 115px;
     object-fit: scale-down;
     vertical-align: middle;
-    border-style: none;    
+    border-style: none;
     height: 31px;
-    
 }
-.class-marca-all img{
+
+.class-marca-all img {
     width: 100px;
-    max-height: 36px;   
+    max-height: 36px;
     object-fit: scale-down;
     vertical-align: middle;
     border: solid 1px blue;
@@ -283,7 +296,7 @@
 .nav-marcas {
     display: flex;
     list-style: none;
-    margin: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 8px;
     padding: 0px;
 }
 
@@ -297,22 +310,22 @@
     cursor: pointer;
     font-size: 0.85em;
     font-weight: bold;
-    text-align: left;     
+    text-align: left;
     height: 40px;
     display: flex;
     align-items: flex-end;
     margin-left: 0.5em;
     width: 115px;
 }
-.nav-marcas-lista{   
+
+.nav-marcas-lista {
     height: inherit !important;
     width: inherit !important;
     margin-left: 1em !important;
-     
     font-size: 0.75em !important;
     font-weight: bold !important;
- 
 }
+
 .nav-marcas-lista a {
     text-decoration: none;
     color: var( --color-font);

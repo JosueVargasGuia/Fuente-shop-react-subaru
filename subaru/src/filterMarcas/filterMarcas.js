@@ -6,38 +6,38 @@ import { homepage, LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
 import BottonCarrito from "../utils/bottonCarrito";
 
 const listaRepuesto = [
-  { descripcion: "Tren de Transmisión" },
-  { descripcion: "Sistema Eléctrico" },
-  { descripcion: "Sistema de enfriamiento" },
-  { descripcion: "Repuestos de Mantenimiento" },
-  { descripcion: "Sistema de Dirección" },
-  { descripcion: "Estilo de Vida Subaru" },
-  { descripcion: "Interior" },
-  { descripcion: "Fluidos" },
-  { descripcion: "Sistemas de Frenos" },
-  { descripcion: "Puertas y Paneles" },
-  { descripcion: "Suspensión" },]
+  { descripcion: "Tren de Transmisión" ,codigo:1},
+  { descripcion: "Sistema Eléctrico",codigo:2 },
+  { descripcion: "Sistema de enfriamiento",codigo:3 },
+  { descripcion: "Repuestos de Mantenimiento",codigo:4 },
+  { descripcion: "Sistema de Dirección",codigo:5 },
+  { descripcion: "Estilo de Vida Subaru",codigo:6 },
+  { descripcion: "Interior" ,codigo:7},
+  { descripcion: "Fluidos",codigo:8 },
+  { descripcion: "Sistemas de Frenos" ,codigo:9},
+  { descripcion: "Puertas y Paneles",codigo:10 },
+  { descripcion: "Suspensión",codigo:11 },]
 
 const listaAcesorios = [
-  { descripcion: "Audio / Media" },
-  { descripcion: "Comodidad y Conveniencia" },
-  { descripcion: " Estilo de Vida" },
-  { descripcion: "Protección y Seguridad" },
-  { descripcion: "Estilo" },
-  { descripcion: " Productos STI" },]
+  { descripcion: "Audio / Media",codigo:1 },
+  { descripcion: "Comodidad y Conveniencia",codigo:2 },
+  { descripcion: " Estilo de Vida",codigo:3 },
+  { descripcion: "Protección y Seguridad",codigo:4 },
+  { descripcion: "Estilo",codigo:5 },
+  { descripcion: " Productos STI",codigo:6 },]
 export default function 
 FilterMarcas(props) {
   //let status = props.marcaSelect.codigoMarca === 0 ? 0 : 1;
 
 
 
-  const [srcLogo] = useState(window.location.origin+(homepage==undefined?"":"/"+homepage) + "/marcas/logo.png");
+  const [srcLogo] = useState(window.location.origin+(homepage===undefined?"":"/"+homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
-  let rowRepuesto = listaRepuesto.map((rowRepu) => <li>
-    <Link>{rowRepu.descripcion}</Link>
+  let rowRepuesto = listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
+    <Link to="/shop">{rowRepu.descripcion}</Link>
   </li>);
-  let rowAccesorio = listaAcesorios.map((rowAcce) => <li>
-    <Link>{rowAcce.descripcion}</Link>
+  let rowAccesorio = listaAcesorios.map((rowAcce) => <li key={rowAcce.codigo}>
+    <Link to="/shop">{rowAcce.descripcion}</Link>
   </li>);
 
 
@@ -48,9 +48,9 @@ FilterMarcas(props) {
     props.handleSelectMarcaChange(lstMarcas[0].codigoMarca, 'FilterMarcas');
     history.push("/shop");
   };
-  const onClickImageShop = () => {
+ /* const onClickImageShop = () => {
     props.handleSelectMarcaChange(0, 'FilterMarcas');
-  };
+  };*/
   async function handleClickBuscarProductos() {
     console.log(descripcion);
     history.push("/shop/search/filter/" + descripcion);
@@ -149,7 +149,7 @@ FilterMarcas(props) {
         </div>
         <div className="inner-header">
           <div className="filter-home">
-            <Link className="filter-home-concecionario"> EA Corp - Concesionario Autorizado
+            <Link className="filter-home-concecionario" to={'/shop'}> EA Corp - Concesionario Autorizado
             </Link>
            
           </div>
@@ -179,25 +179,39 @@ FilterMarcas(props) {
       </div>
 
       <div className="filter-row-mobile">
+      <ul className="nav-marcas">
+          <li>
+            <span>
+              <i className="fa fa-bars menu-bar" aria-hidden="true"></i>
+            </span>
+            <ul>              
+              <li>
+                <div className="header-link-tipcambio">
+                  Moneda
+                  <select
+                    className="tip-cambio-select "
+                    name="numTipoMoneda"
+                    value={props.moneda.numCodigoMoneda}
+                    onChange={props.handleChangeTipoMoneda}
+                  >
+                    <option value={Moneda.DOLARES.numCodigoMoneda}>
+                      {Moneda.DOLARES.codigoIso4217  }
+                    </option>
+                    <option value={Moneda.SOLES.numCodigoMoneda}>
+                      {Moneda.SOLES.codigoIso4217 }
+                    </option>
+                  </select>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
 
-
-        <>
+      
           <div className="filter-image">
             <img src={srcLogo} alt="" onClick={onClickImage}></img>
           </div>
-          <ul className="nav-span">
-              <li>REPUESTOS
-                <ul>
-                  {rowRepuesto}
-                </ul>
-              </li>
-              <li >ACCESORIOS
-                <ul>
-                  {rowAccesorio}
-                </ul>
-              </li>
-            </ul>
-          </>
+       
 
         <div className="header-link">
           {props.islogin !== LOGGIN.LOGGIN ? (
@@ -226,8 +240,25 @@ FilterMarcas(props) {
           )}
           <BottonCarrito islogin={props.islogin}></BottonCarrito>
         </div>
+        <br/>
+        
       </div>
+     
       <div className="filter-row-mobile-input">
+      <div className="filter-row-mobile-menu">
+      <ul className="nav-span">
+              <li>REPUESTOS
+                <ul>
+                  {rowRepuesto}
+                </ul>
+              </li>
+              <li >ACCESORIOS
+                <ul>
+                  {rowAccesorio}
+                </ul>
+              </li>
+            </ul>
+      </div>
         <div className="filter-input-search">
           <input
             placeholder="Búsqueda en Catálogo"
