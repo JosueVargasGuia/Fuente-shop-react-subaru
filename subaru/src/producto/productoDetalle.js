@@ -397,13 +397,7 @@ export default function ProductoDetalle(props) {
               {state.producto.listaProductoImagen}
             </Carousel>
           </div>
-          <div className="producto-det-row2-det">
-            <div className="titulo">
-              <span>Detalles del producto</span>
-              <div></div>
-            </div>
-            {state.producto.listaProductoDetalle}
-          </div>
+
         </div>
         <div className="producto-det-row2">
           <div className="producto-det-row2-nombre">
@@ -466,12 +460,22 @@ export default function ProductoDetalle(props) {
               target="noreferrer"
             ></a>
           </div>
+        </div>
+      </div>
+      <div className="producto-det-row-content">
+        <div className="producto-det-row2-content">
+          <div className="titulo">
+            <span>Detalles del producto</span>              
+          </div>
+          <div className="titulo-border"></div>          
+          {state.producto.listaProductoDetalle}
+        </div>
+        <div className="producto-det-row2-content">
           <div className="producto-det-row2-info">
             <i className="fa fa-shield-p"></i>
             {InfoCondicionCompra.EMISION}
           </div>
           <div className="producto-det-row2-info">
-            
             {InfoCondicionCompra.STOCK}
           </div>
           <div className="producto-det-row2-info">
@@ -482,7 +486,6 @@ export default function ProductoDetalle(props) {
             <i className="fa fa-exchange" aria-hidden="true"></i>
             {InfoCondicionCompra.DEVOLUCIONES}
           </div>
-         
         </div>
       </div>
       {state.server.success === SUCCESS_SERVER.SUCCES_SERVER_INFO ? (
@@ -538,13 +541,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Precio:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? state.producto.numValorVentaDolar
                     : state.producto.numValorVentaSoles}
                 </label>
@@ -565,13 +568,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Subtotal:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numSubTotalDol
                     : state.cotizacionResumen.numSubTotalSol}
                 </label>
@@ -580,13 +583,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Igv:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numIgvDol
                     : state.cotizacionResumen.numIgvSol}
                 </label>
@@ -595,7 +598,7 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Envío:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
@@ -605,13 +608,13 @@ export default function ProductoDetalle(props) {
                 <label className="label-item">Total:</label>
                 <span>
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}{" "}
                 </span>
                 <label className="label-moneda">
                   {state.producto.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numTotalDol
                     : state.cotizacionResumen.numTotalSol}
                 </label>
