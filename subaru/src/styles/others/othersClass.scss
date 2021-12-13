@@ -69,6 +69,12 @@
     font-size: .875rem;
     min-height: 180px;
     padding-top: 0.2em;
+    .form-body-accion {
+        width: 100%;
+        padding-top: 0.2em;
+        padding-right: 0.5em;
+        text-align: right;
+    }
 }
 
 .tuscompras-row-title {
@@ -107,6 +113,9 @@
                 }
             }
             .form-body-detalle-body {
+                overflow-x: auto;
+                min-width: 180px;
+                min-height: 70px;
                 .div-table {
                     width: 98%;
                     margin-left: 0.5em;
@@ -585,13 +594,17 @@
         color: white;
         height: 30px;
         i {
-            margin-right: 0em;
+             
             font-size: 26px;
             background-color: #25d366;
-            height: 30px;
+            height: 36px;
             width: 36px;
             border-radius: 100%;
             padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
         }
         p {
             color: var(--color-font-default);
@@ -622,9 +635,10 @@
 .outlet {
     z-index: 2;
     position: absolute;
-    right: 55px;
-    width: 11%;
-    height: 12%;
+    right: 22px;
+    top: 10%;
+    width: 10%;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     img {
@@ -648,11 +662,11 @@
     .outlet img {
         width: 97%;
         height: 65%;
+        object-fit: contain;
     }
 }
 
-
-/*-----*/
+ 
 
 .form-row-option {
     display: flex;
@@ -1044,6 +1058,8 @@
 }
 
 .producto-outlet {
+    min-height: 250px;
+    background-color: var(--color-background-white);
     .table-outlet {
         font-size: 13px;
         width: 100%;
@@ -1054,6 +1070,7 @@
                 text-align: center;
                 .td-codigo {
                     width: 12%;
+                    border-right: solid 1px var(--color-font3);
                     .td-codigo-div {
                         display: flex;
                         flex-direction: column;
@@ -1066,6 +1083,7 @@
                 }
                 .td-producto {
                     margin-left: 3px;
+                    border-right: solid 1px var(--color-font3);
                     .td-producto-div {
                         text-align: center;
                         display: flex;
@@ -1079,6 +1097,13 @@
                 }
                 .td-precio {
                     width: 12%;
+                    .td-producto-div {
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        align-content: space-around;
+                    }
                 }
                 td {
                     font-weight: bold;
@@ -1098,6 +1123,7 @@
                 }
             }
             .td-producto {
+                width: 100px;
                 span {
                     margin-left: 5px;
                 }
@@ -1121,5 +1147,17 @@
     }
     .prod-filter-page {
         margin-top: 6px;
+    }
+}
+
+.container-Carousel-list{
+    position: relative;
+}
+.suscripcion-message{
+    text-align: center;
+}
+.producto-det-row2 .producto-det-row2-social{
+    &:nth-child(2){
+        margin-bottom: 1em;
     }
 }

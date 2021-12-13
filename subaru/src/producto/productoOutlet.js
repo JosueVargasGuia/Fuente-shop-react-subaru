@@ -19,24 +19,27 @@ export function ProductoOutlet(props) {
     currentPage: 1,
     totalRegistros: 0,
     displayLista: displayLista.DETALLE,
+    chrCodigoProductoSearch: "",
+    vchDescripcionSearch: "",
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
   useEffect(() => {
-    handleServicioBuscarProductos(1, LIMITE, "");
+    handleServicioBuscarProductos(1, LIMITE, "", "");
     console.log("useEffect[ProductoDestacado]");
     //eslint-disable-next-line
   }, [props.marcaSelect, props.moneda]);
   async function handleServicioBuscarProductos(
     _pagina,
     _limit,
-
-    vchDescripcion
+    _chrCodigoProducto,
+    _vchDescripcion
   ) {
     let rowProducto = [];
     let _FilterProducto = FilterProducto.FILTER_ALL;
     let _totalRegistros = 0;
     const rpt = await findProductos({
-      vchDescripcion: vchDescripcion,
+      chrCodigoProducto: _chrCodigoProducto,
+      vchDescripcion: _vchDescripcion,
       pagina: _pagina,
       limit: _limit,
       filterProducto: _FilterProducto,
@@ -75,7 +78,7 @@ export function ProductoOutlet(props) {
             listaProductoImagen: [],
           };
           rowProducto.push(
-            <tr>
+            <tr key={index}>
               <td className="td-codigo">
                 <span>
                   <Link
@@ -89,9 +92,6 @@ export function ProductoOutlet(props) {
                 <span>{producto.vchDescripcion}</span>
               </td>
               <td className="td-precio">
-                <span className="td-precio-simbolo">
-                  {props.moneda.codigoIso4217}{" "}
-                </span>
                 <span className="td-precio-valor">
                   {props.moneda.numCodigoMoneda ===
                   Moneda.DOLARES.numCodigoMoneda
@@ -102,12 +102,21 @@ export function ProductoOutlet(props) {
             </tr>
           );
         }
+        if (json.listaProductos.length === 0) {
+          rowProducto.push(
+            <tr key={0}>
+              <td colSpan="3">Sin registros.</td>
+            </tr>
+          );
+        }
         dispatch({
           type: actionType.FIND_PRODUCTOS,
           rowProducto: rowProducto,
           displayLista: displayLista.DETALLE,
           totalRegistros: _totalRegistros,
           currentPage: _pagina,
+          chrCodigoProductoSearch: _chrCodigoProducto,
+          vchDescripcionSearch: _vchDescripcion,
           server: {
             error: "",
             success: SUCCESS_SERVER.SUCCES_SERVER_OK,
@@ -121,6 +130,8 @@ export function ProductoOutlet(props) {
           displayLista: displayLista.DETALLE,
           totalRegistros: _totalRegistros,
           currentPage: _pagina,
+          chrCodigoProductoSearch: _chrCodigoProducto,
+          vchDescripcionSearch: _vchDescripcion,
           server: {
             error: json.response.error,
             success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
@@ -134,6 +145,8 @@ export function ProductoOutlet(props) {
         displayLista: displayLista.DETALLE,
         currentPage: _pagina,
         totalRegistros: _totalRegistros,
+        chrCodigoProductoSearch: _chrCodigoProducto,
+        vchDescripcionSearch: _vchDescripcion,
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
       });
     }
@@ -150,19 +163,56 @@ export function ProductoOutlet(props) {
             <td className="td-codigo">
               <div className="td-codigo-div">
                 <span>Codigo</span>
-                <input></input>
+                <input
+                  type="text"
+                  name="chrCodigoProductoSearch"
+                  className={"form-control"}
+                  autoComplete="false"
+                  autoSave="false"
+                  value={state.chrCodigoProductoSearch}
+                  onChange={(e) =>
+                    handleServicioBuscarProductos(
+                      1,
+                      LIMITE,
+                      e.target.value,
+                      state.vchDescripcionSearch
+                    )
+                  }
+                ></input>
               </div>
             </td>
             <td className="td-producto">
-            <div className="td-producto-div">
+              <div className="td-producto-div">
                 <span>Producto</span>
-                <input></input>
+                <input
+                  type="text"
+                  name="vchDescripcionSearch"
+                  className={"form-control"}
+                  autoComplete="false"
+                  autoSave="false"
+                  value={state.vchDescripcionSearch}
+                  onChange={(e) =>
+                    handleServicioBuscarProductos(
+                      1,
+                      LIMITE,
+                      state.chrCodigoProductoSearch,
+                      e.target.value
+                    )
+                  }
+                ></input>
               </div>
             </td>
-            <td className="td-precio">Precio</td>
+            <td className="td-precio">
+              <div className="td-producto-div">
+                <span>Precio</span>
+                <span className="td-precio-simbolo">
+                  {props.moneda.codigoIso4217}{" "}
+                </span>
+              </div>
+            </td>
           </tr>
         </thead>
-        <tbody>{state.rowProducto}</tbody>
+        <tbody> {state.rowProducto}</tbody>
       </table>
 
       <div className="prod-filter-page">
@@ -183,6 +233,8 @@ let actionType = {
   CANTIDAD: "CANTIDAD",
   CANTIDAD_STOCK: "CANTIDAD_STOCK",
   FIND_PRODUCTOS: "FIND_PRODUCTOS",
+  chrCodigoProductoSearch: "chrCodigoProductoSearch",
+  vchDescripcionSearch: "vchDescripcionSearch",
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -193,12 +245,24 @@ const reducer = (state, action) => {
         displayLista: action.displayLista,
         totalRegistros: action.totalRegistros,
         currentPage: action.currentPage,
+        chrCodigoProductoSearch: action.chrCodigoProductoSearch,
+        vchDescripcionSearch: action.vchDescripcionSearch,
         server: action.server,
       };
     case actionType.ERROR:
       return {
         ...state,
         server: action.server,
+      };
+    case actionType.chrCodigoProductoSearch:
+      return {
+        ...state,
+        chrCodigoProductoSearch: action.chrCodigoProductoSearch,
+      };
+    case actionType.vchDescripcionSearch:
+      return {
+        ...state,
+        vchDescripcionSearch: action.vchDescripcionSearch,
       };
     default:
       return state;
