@@ -471,19 +471,16 @@ export default function ProductoDetalle(props) {
           {state.producto.listaProductoDetalle}
         </div>
         <div className="producto-det-row2-content">
-          <div className="producto-det-row2-info">
-            <i className="fa fa-shield-p"></i>
+          <div className="producto-det-row2-info">            
             {InfoCondicionCompra.EMISION}
           </div>
           <div className="producto-det-row2-info">
             {InfoCondicionCompra.STOCK}
           </div>
-          <div className="producto-det-row2-info">
-            <i className="fa fa-truck" aria-hidden="true"></i>
+          <div className="producto-det-row2-info">            
             {InfoCondicionCompra.TRANSPORTE}
           </div>
-          <div className="producto-det-row2-info">
-            <i className="fa fa-exchange" aria-hidden="true"></i>
+          <div className="producto-det-row2-info">            
             {InfoCondicionCompra.DEVOLUCIONES}
           </div>
         </div>

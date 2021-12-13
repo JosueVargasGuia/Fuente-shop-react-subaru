@@ -406,21 +406,18 @@ export function CarritoDetalle(props) {
               </div>
             </div>
           </div>
-          <div className="carrito-detalle-item">
-            <i className="fa fa-shield-p"></i>
+          <div className="carrito-detalle-item">            
             {InfoCondicionCompra.EMISION}
             <hr />
           </div>
-          <div className="carrito-detalle-item">
-            <i className="fa fa-truck" aria-hidden="true"></i>
+          <div className="carrito-detalle-item">            
             {InfoCondicionCompra.TRANSPORTE}
             <hr />
           </div>
           <div className="carrito-detalle-item">
             {InfoCondicionCompra.STOCK}
           </div>
-          <div className="carrito-detalle-item">
-            <i className="fa fa-exchange" aria-hidden="true"></i>
+          <div className="carrito-detalle-item">            
             {InfoCondicionCompra.DEVOLUCIONES}
             <hr />
           </div>

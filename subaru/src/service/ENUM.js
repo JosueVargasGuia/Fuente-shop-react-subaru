@@ -101,11 +101,11 @@ const tipoActualizacionCotizacionDetalle = {
 };
 const InfoCondicionCompra = {
   EMISION:
-    "Emitimos facturas en dólares. Si paga en una moneda diferente se realizará la conversión a USD,según al tipo de cambio indicado en la parte superior de la página.",
+    <p><i className="fa fa-shield-p"></i>Emitimos facturas en dólares. Si paga en una moneda diferente se realizará la conversión a USD,según al tipo de cambio indicado en la parte superior de la página.</p>,
   TRANSPORTE:
-    "Envíos en los siguientes 10 días; verifica que tu calle no se encuentre en las zonas peligrosas.",
+    <p><i className="fa fa-truck" aria-hidden="true"></i>Envíos en los siguientes 10 días; verifica que tu calle no se encuentre en las zonas peligrosas.</p>,
   DEVOLUCIONES:
-    "No se aceptan devoluciones a menos que el producto tenga falla de fábrica.",
+    <p><i className="fa fa-exchange" aria-hidden="true"></i>No se aceptan devoluciones a menos que el producto tenga falla de fábrica.</p>,
   STOCK: (
     <p>
       <i>
