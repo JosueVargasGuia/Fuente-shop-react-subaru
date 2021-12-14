@@ -416,6 +416,7 @@ export function CarritoDetalle(props) {
           </div>
           <div className="carrito-detalle-item">
             {InfoCondicionCompra.STOCK}
+            <hr />
           </div>
           <div className="carrito-detalle-item">            
             {InfoCondicionCompra.DEVOLUCIONES}
