@@ -168,10 +168,10 @@ public class CotizacionController {
 		ResponseEntity<MetodoEnvioRequets> responseEntity = null;
 		try {
 			MetodoEnvioRequets metodoEnvioResponse = cotizacionOnlineService.registrarModoEnvio(metodoEnvioRequets);
-			metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.EnvioRegular);
+			//metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.EnvioRegular);
+			
 			if (metodoEnvioResponse.getStatus() == Status.ERROR_ZONA_INCONRRECTA) {
 				// metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.RecojoAlmacen);
-
 				metodoEnvioResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO);
 				responseEntity = new ResponseEntity<MetodoEnvioRequets>(metodoEnvioResponse, HttpStatus.OK);
 			} else {

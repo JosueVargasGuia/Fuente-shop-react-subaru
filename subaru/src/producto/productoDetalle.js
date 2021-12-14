@@ -33,6 +33,7 @@ export default function ProductoDetalle(props) {
     vchDescripcion: "",
     vchDescripcionSmall: "",
     numStock: 0,
+    numOutlet:0,
     familia: {
       chrCodigoFamilia: "",
       vchDescripcion: "",
@@ -161,6 +162,7 @@ export default function ProductoDetalle(props) {
           producto.numStock = e.numStock;
           producto.familia.chrCodigoFamilia = e.familia.chrCodigoFamilia;
           producto.familia.vchDescripcion = e.familia.vchDescripcion;
+          producto.numOutlet=e.numOutlet;
           /*Url de la imagen a mostrar en la lista de productos */
           producto.imagenDefault.numCodigoProductoIimagen =
             e.imagenDefault.numCodigoProductoIimagen;
@@ -191,7 +193,7 @@ export default function ProductoDetalle(props) {
             "&text=" +
             producto.vchDescripcion;
         }
-        console.log(producto);
+         
         dispatch({
           type: actionType.LOAD_PRODUCTOS,
           producto: producto,
@@ -267,7 +269,7 @@ export default function ProductoDetalle(props) {
           /*Registro de cotizacion detalle */
           let cotizacionDetalleRequest = {
             numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
-            producto: { chrCodigoProducto: state.producto.chrCodigoProducto },
+            producto: { chrCodigoProducto: state.producto.chrCodigoProducto,numOutlet:state.producto.numOutlet },
             numCantidad: state.cantidad,
             tipoActualizacionCotizacionDetalle:
               tipoActualizacionCotizacionDetalle.ADICIONAR,

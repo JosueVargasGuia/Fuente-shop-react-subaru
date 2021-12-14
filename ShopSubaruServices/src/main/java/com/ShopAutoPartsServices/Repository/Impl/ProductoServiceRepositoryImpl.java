@@ -111,7 +111,11 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						producto.setFamilia(new Familia()).getFamilia()
 								.setChrCodigoFamilia(rs.getString("CHRCODIGOFAMILIA"))
 								.setVchDescripcion(rs.getString("VCHDESCRIPCIONFAMILIA"));
-
+						producto.setNumOutlet(rs.getInt("NUMOUTLET"));
+						producto.setNumValorVentaRefDolar(rs.getString("NUMVALORVENTAREFDOLAR"));
+						producto.setNumValorVentaRefSoles(rs.getString("NUMVALORVENTAREFSOLES"));
+						producto.setNumValorDesc(rs.getString("NUMVALORDESC"));
+						
 						imagenDefault.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));
 						imagenDefault.setChrNombre(rs.getString("CHRNOMBRE"));
 

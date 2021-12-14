@@ -19,6 +19,11 @@ public class Producto {
 	ProductoImagen imagenDefault;
 	/*Total de registros de la BD*/
 	int totalRegistros;
+	int numOutlet;
+	/*Valores de solo vizualizacion*/
+	String numValorVentaRefDolar;// NUMBER,
+	String numValorVentaRefSoles;// NUMBER,
+	String numValorDesc;// NUMBER,
 	/*
 	 * TPRODUCTO.CHRCODIGOPRODUCTO,TPRODUCTO.NUMVALORVENTA AS
 	 * NUMVALORVENTADOLAR,TPRODUCTO.NUMVALORVENTA AS NUMVALORVENTASOLES,
@@ -140,6 +145,38 @@ public class Producto {
 	public Producto setTotalRegistros(int totalRegistros) {
 		this.totalRegistros = totalRegistros;
 		return this;
+	}
+
+	public int getNumOutlet() {
+		return numOutlet;
+	}
+
+	public void setNumOutlet(int numOutlet) {
+		this.numOutlet = numOutlet;
+	}
+
+	public String getNumValorVentaRefDolar() {
+		return numValorVentaRefDolar;
+	}
+
+	public void setNumValorVentaRefDolar(String numValorVentaRefDolar) {
+		this.numValorVentaRefDolar = numValorVentaRefDolar;
+	}
+
+	public String getNumValorVentaRefSoles() {
+		return numValorVentaRefSoles;
+	}
+
+	public void setNumValorVentaRefSoles(String numValorVentaRefSoles) {
+		this.numValorVentaRefSoles = numValorVentaRefSoles;
+	}
+
+	public String getNumValorDesc() {
+		return numValorDesc;
+	}
+
+	public void setNumValorDesc(String numValorDesc) {
+		this.numValorDesc = numValorDesc;
 	}
 
 	@Override
