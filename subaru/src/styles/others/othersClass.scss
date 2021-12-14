@@ -581,7 +581,7 @@
     background-color: transparent;
     display: inline-block;
     top: 92%;
-    right: 2%;
+    right: 9.2%;
     z-index: 100;
     position: fixed;
     border-radius: 2px;
@@ -590,6 +590,18 @@
     height: 47px;
     vertical-align: middle;
     padding: 1px;
+    @media (min-width: 576px){
+        right: calc(((100% - 540px) / 2) + 43px);
+    }
+    @media (min-width: 999px){
+        right: calc(((100% - 720px) / 2) + 43px);
+    }
+    @media (min-width: 1199px){
+        right: calc(((100% - 930px) / 2) + 34px);
+    }
+    @media (min-width: 1200px){
+        right: calc(((100% - 1140px) / 2) + 64px);
+    }
     div {
         color: white;
         height: 30px;
