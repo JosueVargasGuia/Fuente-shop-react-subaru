@@ -1549,7 +1549,16 @@ h4 {
     color: var(--color-font-default);
     text-align: justify;
 }
-
+.carrito-detalle-info{
+    p{
+        i{
+            height: 18px;
+        }
+        svg{
+            height: 18px;
+        }
+    }
+}
 @media (min-width: 100px) and (max-width: 1100px) {
     .carrito-detalle {
         display: block !important;
