@@ -13,6 +13,7 @@ import com.ShopAutoPartsServices.Domain.ProductoRequets;
 import com.ShopAutoPartsServices.Domain.ProductoStock;
 import com.ShopAutoPartsServices.Domain.SubFamilia;
 import com.ShopAutoPartsServices.Domain.SubirImagen;
+import com.ShopAutoPartsServices.Domain.Vigencia;
 
  
 public interface ProductoService  {
@@ -42,6 +43,8 @@ public interface ProductoService  {
 	List<ProductoStock> listarProductoStock(List<ProductoStock> listaStock)throws Exception;
 
 	void actualizarProductoStock(List<ProductoStock> listaStock)throws Exception;
+
+	Vigencia obtenerVigencia()throws Exception;
 
 	 
 }

@@ -21,6 +21,7 @@ export function ProductoOutlet(props) {
     displayLista: displayLista.DETALLE,
     chrCodigoProductoSearch: "",
     vchDescripcionSearch: "",
+    titulo:"Productos del outlet",
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
   useEffect(() => {
@@ -45,10 +46,14 @@ export function ProductoOutlet(props) {
       filterProducto: _FilterProducto,
       filterOrder: filterOrder.FilterOutlet,
     });
-
+    let _titulo="Productos del outlet";
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
       console.log(json);
+      _titulo=(json.vigencia.dteDesde===null 
+        && json.vigencia.dteHasta===null?
+        "Productos del outlet":"Productos del outlet del "+ json.vigencia.dteDesde +" hasta "+json.vigencia.dteHasta);
+       
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let index = 0; index < json.listaProductos.length; index++) {
           let e = json.listaProductos[index];
@@ -105,7 +110,7 @@ export function ProductoOutlet(props) {
         if (json.listaProductos.length === 0) {
           rowProducto.push(
             <tr key={0}>
-              <td colSpan="3">Sin registros.</td>
+              <td colSpan="5">Sin registros.</td>
             </tr>
           );
         }
@@ -117,6 +122,7 @@ export function ProductoOutlet(props) {
           currentPage: _pagina,
           chrCodigoProductoSearch: _chrCodigoProducto,
           vchDescripcionSearch: _vchDescripcion,
+          titulo:_titulo,
           server: {
             error: "",
             success: SUCCESS_SERVER.SUCCES_SERVER_OK,
@@ -132,6 +138,7 @@ export function ProductoOutlet(props) {
           currentPage: _pagina,
           chrCodigoProductoSearch: _chrCodigoProducto,
           vchDescripcionSearch: _vchDescripcion,
+          titulo:_titulo,
           server: {
             error: json.response.error,
             success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
@@ -147,6 +154,7 @@ export function ProductoOutlet(props) {
         totalRegistros: _totalRegistros,
         chrCodigoProductoSearch: _chrCodigoProducto,
         vchDescripcionSearch: _vchDescripcion,
+        titulo:_titulo,
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
       });
     }
@@ -156,7 +164,7 @@ export function ProductoOutlet(props) {
   }
   return (
     <div className="producto-outlet">
-      <h4>Productos Outlet</h4>
+      <h4>{state.titulo}</h4>
       <table className="table-outlet">
         <thead>
           <tr>
@@ -248,6 +256,7 @@ const reducer = (state, action) => {
         chrCodigoProductoSearch: action.chrCodigoProductoSearch,
         vchDescripcionSearch: action.vchDescripcionSearch,
         server: action.server,
+        titulo:action.titulo,
       };
     case actionType.ERROR:
       return {

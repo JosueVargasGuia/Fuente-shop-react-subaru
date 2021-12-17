@@ -57,6 +57,9 @@ public class ProductoController {
 					}
 				}
 			}
+			if (productoRequets.getFilterOrder() == FilterOrderBy.FilterOutlet) {
+				productoResponse.setVigencia(productoService.obtenerVigencia());
+			}
 			if (boolvalida) {
 				productoResponse.setListaProductos(productoService.listarProductos(productoRequets));
 				productoResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);

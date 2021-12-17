@@ -17,6 +17,7 @@ import com.ShopAutoPartsServices.Domain.ProductoRequets;
 import com.ShopAutoPartsServices.Domain.ProductoStock;
 import com.ShopAutoPartsServices.Domain.SubFamilia;
 import com.ShopAutoPartsServices.Domain.SubirImagen;
+import com.ShopAutoPartsServices.Domain.Vigencia;
 import com.ShopAutoPartsServices.Repository.ProductoServiceRepository;
 import com.ShopAutoPartsServices.Service.ProductoService;
 @Service
@@ -88,6 +89,11 @@ public class ProductoServiceImpl implements ProductoService {
 	public void actualizarProductoStock(List<ProductoStock> listaStock) throws Exception {
 		productoServiceRepository.actualizarProductoStock(listaStock);
 		
+	}
+	@Override
+	public Vigencia obtenerVigencia() throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.obtenerVigencia();
 	}
 	 
 

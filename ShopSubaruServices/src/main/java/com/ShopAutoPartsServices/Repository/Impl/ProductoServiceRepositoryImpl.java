@@ -34,6 +34,7 @@ import com.ShopAutoPartsServices.Domain.ProductoRequets;
 import com.ShopAutoPartsServices.Domain.ProductoStock;
 import com.ShopAutoPartsServices.Domain.SubFamilia;
 import com.ShopAutoPartsServices.Domain.SubirImagen;
+import com.ShopAutoPartsServices.Domain.Vigencia;
 import com.ShopAutoPartsServices.Enums.FilterProducto;
 import com.ShopAutoPartsServices.Repository.ProductoServiceRepository;
 import com.ShopAutoPartsServices.WsServices.ProductoController;
@@ -634,6 +635,35 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 			throw new Exception(e);
 		}
 		String sql = "{call " + PKG_TIENDA + ".UPDATE_STOCK_PRODUCTO(?,?)}";
+		return jdbcTemplate.execute(sql, callback);
+
+	}
+
+	@Override
+	public Vigencia obtenerVigencia() throws Exception {
+		CallableStatementCallback<Vigencia> callback = null;
+		SimpleDateFormat dmy=new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			callback = new CallableStatementCallback<Vigencia>() {
+				@Override
+				public Vigencia doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					cs.registerOutParameter(1, OracleTypes.CURSOR);				
+					cs.executeQuery();
+					ResultSet rs = (ResultSet) cs.getObject(1);
+					Vigencia vigencia = new Vigencia();
+					while (rs.next()) {
+						vigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
+						vigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
+					}
+					return vigencia;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{?=call " + PKG_TIENDA + ".OBT_VIGENCIA()}";
 		return jdbcTemplate.execute(sql, callback);
 
 	}
