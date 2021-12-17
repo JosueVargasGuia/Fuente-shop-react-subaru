@@ -135,9 +135,10 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 					cs.registerOutParameter(1, OracleTypes.NUMERIC);
 					cs.setInt(1, cotizacionOnlineDetalle.getNumcodCotizacionOnlinedet());
 					cs.setInt(2, cotizacionOnlineDetalle.getNumCodigoCotizacionOnline());
-					cs.setString(3, cotizacionOnlineDetalle.getProducto().getChrCodigoProducto());
+					cs.setString(3, cotizacionOnlineDetalle.getProducto().getChrCodigoProducto());					
 					cs.setInt(4, cotizacionOnlineDetalle.getNumCantidad());
 					cs.setString(5, cotizacionOnlineDetalle.getTipoActualizacionCotizacionDetalle().toString());
+					cs.setInt(6, cotizacionOnlineDetalle.getProducto().getNumOutlet());
 					cs.execute();
 					cotizacionOnlineDetalle.setNumcodCotizacionOnlinedet(cs.getInt(1));
 					return cotizacionOnlineDetalle;
@@ -147,7 +148,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_COTIZACION_DET(?,?,?,?,?)";
+		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_COTIZACION_DET(?,?,?,?,?,?)";
 		return jdbcTemplate.execute(sql, callback);
 
 	}
@@ -173,6 +174,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 						p.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));
 						p.setVchDescripcion(rs.getString("VCHDESCRIPCION"));
 						p.setNumStock(rs.getInt("NUMSTOCK"));
+						p.setNumOutlet(rs.getInt("NUMOUTLET"));
 						Familia f = new Familia();
 						f.setChrCodigoFamilia(rs.getString("CHRCODIGOFAMILIA"));
 						f.setVchDescripcion(rs.getString("FVCHDESCRIPCION"));
@@ -310,12 +312,14 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 
 					cs.setInt(1, metodoEnvioRequets.getNumCodigoCotizacionOnline());
 					cs.setInt(2, metodoEnvioRequets.getNumCodigoDireccion());
-					cs.setString(3, metodoEnvioRequets.getMetodoEnvio().toString());
+					//cs.setString(3, metodoEnvioRequets.getMetodoEnvio().toString());
+					cs.registerOutParameter(3, OracleTypes.VARCHAR);
 					cs.registerOutParameter(4, OracleTypes.VARCHAR);
 					cs.registerOutParameter(5, OracleTypes.VARCHAR);
 					cs.execute();
-					metodoEnvioRequets.setMensaje(cs.getString(4));
-					metodoEnvioRequets.setStatus(Status.valueOf(cs.getString(5)));
+					metodoEnvioRequets.setMensaje(cs.getString(3));
+					metodoEnvioRequets.setStatus(Status.valueOf(cs.getString(4)));
+					metodoEnvioRequets.setMetodoEnvio(MetodoEnvio.valueOf(cs.getString(5)));
 					return metodoEnvioRequets;
 				}
 			};

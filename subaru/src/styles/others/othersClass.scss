@@ -581,7 +581,7 @@
     background-color: transparent;
     display: inline-block;
     top: 92%;
-    right: 2%;
+    right: 9.2%;
     z-index: 100;
     position: fixed;
     border-radius: 2px;
@@ -590,11 +590,22 @@
     height: 47px;
     vertical-align: middle;
     padding: 1px;
+    @media (min-width: 576px) {
+        right: calc(((100% - 540px) / 2) + 43px);
+    }
+    @media (min-width: 999px) {
+        right: calc(((100% - 720px) / 2) + 43px);
+    }
+    @media (min-width: 1199px) {
+        right: calc(((100% - 930px) / 2) + 34px);
+    }
+    @media (min-width: 1200px) {
+        right: calc(((100% - 1140px) / 2) + 64px);
+    }
     div {
         color: white;
         height: 30px;
         i {
-             
             font-size: 26px;
             background-color: #25d366;
             height: 36px;
@@ -665,8 +676,6 @@
         object-fit: contain;
     }
 }
-
- 
 
 .form-row-option {
     display: flex;
@@ -1083,7 +1092,7 @@
                 }
                 .td-producto {
                     margin-left: 3px;
-                    border-right: solid 1px var(--color-font3);
+                    border-left: solid 1px var(--color-font3);
                     .td-producto-div {
                         text-align: center;
                         display: flex;
@@ -1097,6 +1106,7 @@
                 }
                 .td-precio {
                     width: 12%;
+                    border-left: solid 1px var(--color-font3);
                     .td-producto-div {
                         text-align: center;
                         display: flex;
@@ -1127,6 +1137,19 @@
                 span {
                     margin-left: 5px;
                 }
+                .td-producto-div-desc {
+                    background-color: #ffffff;
+                    width: 98%;
+                    height: 90%;
+                    margin: auto;
+                    .td-producto-div-desc-porc {
+                        background-color: var(--color-font2);
+                        text-align: left;
+                        background-image: linear-gradient(to right, rgba(202, 219, 237, 0), rgba(169, 196, 237, 1));
+                        color: var(--color-font3);
+                        min-width: 30px !important;
+                    }
+                }
             }
             .td-precio {
                 width: 12%;
@@ -1150,14 +1173,16 @@
     }
 }
 
-.container-Carousel-list{
+.container-Carousel-list {
     position: relative;
 }
-.suscripcion-message{
+
+.suscripcion-message {
     text-align: center;
 }
-.producto-det-row2 .producto-det-row2-social{
-    &:nth-child(2){
+
+.producto-det-row2 .producto-det-row2-social {
+    &:nth-child(2) {
         margin-bottom: 1em;
     }
 }

@@ -400,31 +400,34 @@ export function CarritoPayment(props) {
       statusMetodoEnvio: { status: statusMetodoEnvio.DEFAULT, mensaje: "" },
     });
     //handleEventChangeModoEnvio(MetodoEnvio.RecojoAlmacen); Reunion Nro1
-    handleEventChangeModoEnvio(MetodoEnvio.EnvioRegular, _direccion.numCodigoDireccion, false);
+    handleEventChangeModoEnvio( _direccion.numCodigoDireccion, false);
   }
-  async function handleEventChangeModoEnvio(_metodoEnvio, _numCodigoDireccion, _flgChange) {
+  async function handleEventChangeModoEnvio( _numCodigoDireccion, _flgChange) {
+    let _metodoEnvio= MetodoEnvio.EnvioRegular;
     /*Resumen de cotizacion*/
     let _statusMetodoEnvio = { status: statusMetodoEnvio.DEFAULT, mensaje: "" };
     let cotizacion = handleSyncDatosCotizacion();
     const rptM = await registrarMetodoEnvioCotizacion({
       numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
-      metodoEnvio: _metodoEnvio.codigo,
+      //metodoEnvio: _metodoEnvio.codigo,
       numCodigoDireccion: (_flgChange === false ? _numCodigoDireccion : state.numCodigoDireccion),
     });
     const jsonR = await rptM.json();
     console.log(jsonR);
     if (rptM.status === HttpStatus.HttpStatus_OK) {
+      _metodoEnvio = jsonR.metodoEnvio===MetodoEnvio.EnvioRegular.codigo?MetodoEnvio.EnvioRegular:MetodoEnvio.RecojoAlmacen;
       if (jsonR.status === statusMetodoEnvio.ERROR_ZONA_INCONRRECTA) {
-        _metodoEnvio = MetodoEnvio.RecojoAlmacen;
+        
         _statusMetodoEnvio.status = statusMetodoEnvio.ERROR_ZONA_INCONRRECTA;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
       if (jsonR.status === statusMetodoEnvio.ERROR_SUPERA_CARGA) {
-        _metodoEnvio = MetodoEnvio.RecojoAlmacen;
+         
         _statusMetodoEnvio.status = statusMetodoEnvio.ERROR_SUPERA_CARGA;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
       if (jsonR.status === statusMetodoEnvio.ACTUALIZADO) {
+        
         _statusMetodoEnvio.status = statusMetodoEnvio.ACTUALIZADO;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
@@ -460,7 +463,7 @@ export function CarritoPayment(props) {
       _cotizacionResumen.numCodigoCotizacionOnline = cotizacion.numCodigoCotizacionOnline;
       console.log(_cotizacionResumen);
     }
-
+    console.log(_metodoEnvio);
     dispatch({
       type: actionType.SET_MODOENVIO,
       MetodoEnvio: _metodoEnvio,
@@ -645,7 +648,8 @@ export function CarritoPayment(props) {
                 <input
                   type="radio"
                   name="MetodoEnvio"
-                  disabled={true}
+                   className="label-disable"
+                    
                   checked={
                     state.MetodoEnvio.codigo ===
                       MetodoEnvio.RecojoAlmacen.codigo
@@ -661,10 +665,10 @@ export function CarritoPayment(props) {
                   alt={MetodoEnvio.RecojoAlmacen.descripcion}
                 ></img>
               </div>
-              <div className="descrip label-disable">
+              <div className="descrip">
                 {MetodoEnvio.RecojoAlmacen.descripcion}
               </div>
-              <div className="direcc label-disable">
+              <div className="direcc">
                 {MetodoEnvio.RecojoAlmacen.direccion}
               </div>
               <div className="precio">{MetodoEnvio.RecojoAlmacen.precio}</div>
@@ -673,7 +677,8 @@ export function CarritoPayment(props) {
               <div className="inputs">
                 <input
                   type="radio"
-                  name="MetodoEnvio"
+                  name="MetodoEnvio"   
+                   
                   checked={
                     state.MetodoEnvio.codigo === MetodoEnvio.EnvioRegular.codigo
                       ? true
@@ -851,17 +856,22 @@ export function CarritoPayment(props) {
         </div>
         <div className="form-pago-resumen-info">
           <div className="carrito-detalle-item">
-            <i className="fa fa-shield-p"></i>
+             
             {InfoCondicionCompra.EMISION}
             <hr />
           </div>
           <div className="carrito-detalle-item">
-            <i className="fa fa-truck" aria-hidden="true"></i>
+           
+           {InfoCondicionCompra.STOCK}
+           <hr />
+         </div>
+          <div className="carrito-detalle-item">
+           
             {InfoCondicionCompra.TRANSPORTE}
             <hr />
           </div>
           <div className="carrito-detalle-item">
-            <i className="fa fa-exchange" aria-hidden="true"></i>
+         
             {InfoCondicionCompra.DEVOLUCIONES}
             <hr />
           </div>

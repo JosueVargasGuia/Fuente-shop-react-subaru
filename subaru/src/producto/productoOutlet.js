@@ -66,6 +66,9 @@ export function ProductoOutlet(props) {
             vchDescripcion: e.vchDescripcion,
             vchDescripcionSmall: e.vchDescripcionSmall,
             numStock: e.numStock,
+            numValorDesc: e.numValorDesc,
+            numValorVentaRefSoles: e.numValorVentaRefSoles,
+            numValorVentaRefDolar: e.numValorVentaRefDolar,
             totalRegistros: e.totalRegistros,
             familia: {
               chrCodigoFamilia: e.familia.chrCodigoFamilia,
@@ -96,6 +99,23 @@ export function ProductoOutlet(props) {
               <td className="td-producto">
                 <span>{producto.vchDescripcion}</span>
               </td>
+              <td className="td-precio">
+                <span className="td-precio-valor">
+                  {props.moneda.numCodigoMoneda ===
+                  Moneda.DOLARES.numCodigoMoneda
+                    ? producto.numValorVentaRefDolar
+                    : producto.numValorVentaRefSoles}
+                </span>
+              </td>
+              <td className="td-producto">
+                <div className="td-producto-div-desc">
+                  <div className="td-producto-div-desc-porc" style={{width:producto.numValorDesc+"%"}}>
+                    {producto.numValorDesc}
+                    {" %"}
+                  </div>
+                </div>
+              </td>
+
               <td className="td-precio">
                 <span className="td-precio-valor">
                   {props.moneda.numCodigoMoneda ===
@@ -208,6 +228,20 @@ export function ProductoOutlet(props) {
                     )
                   }
                 ></input>
+              </div>
+            </td>
+            <td className="td-precio">
+              <div className="td-producto-div">
+                <span>Precio Normal</span>
+                <span className="td-precio-simbolo">
+                  {props.moneda.codigoIso4217}{" "}
+                </span>
+              </div>
+            </td>
+            <td className="td-precio">
+              <div className="td-producto-div">
+                <span>Descuento </span>
+                <span>%</span>
               </div>
             </td>
             <td className="td-precio">
