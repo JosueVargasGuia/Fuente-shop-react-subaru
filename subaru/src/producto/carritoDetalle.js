@@ -197,11 +197,17 @@ export function CarritoDetalle(props) {
       /*Registro de cotizacion detalle */
       let cotizacionDetalleRequest = {
         numCodigoCotizacionOnline: data.numCodigoCotizacionOnline,
-        producto: { chrCodigoProducto: data.producto.chrCodigoProducto },
+        numcodCotizacionOnlinedet: data.numcodCotizacionOnlinedet,
+        producto: {
+          chrCodigoProducto: data.producto.chrCodigoProducto,
+          numOutlet: data.producto.numOutlet,
+        },
         numCantidad: e.target.value,
+
         tipoActualizacionCotizacionDetalle:
           tipoActualizacionCotizacionDetalle.ACTUALIZAR,
       };
+      console.log(cotizacionDetalleRequest);
       const rptDetalle = await registrarCotizacionDetalle(
         cotizacionDetalleRequest
       );
@@ -266,7 +272,7 @@ export function CarritoDetalle(props) {
                 className="producto-det-carrito-row"
                 key={obj.numcodCotizacionOnlinedet}
               >
-                <div className="producto-det-row-img">
+                <div className="producto-det-row-img">{obj.numcodCotizacionOnlinedet}
                   <Link to={obj.redirect}>
                     <img
                       src={"data:image/png;base64," + obj.chrSrcImagen}
@@ -284,13 +290,13 @@ export function CarritoDetalle(props) {
                     <br />
                     <span className="item-row-simbolo">
                       {props.moneda.numCodigoMoneda ===
-                      Moneda.DOLARES.numCodigoMoneda
+                        Moneda.DOLARES.numCodigoMoneda
                         ? Moneda.DOLARES.codigoIso4217
                         : Moneda.SOLES.codigoIso4217}
                     </span>
                     <label className="item-row-precio">
                       {props.moneda.numCodigoMoneda ===
-                      Moneda.DOLARES.numCodigoMoneda
+                        Moneda.DOLARES.numCodigoMoneda
                         ? obj.numPrecioUnitarioDol
                         : obj.numPrecioUnitarioSol}
                     </label>
@@ -309,13 +315,13 @@ export function CarritoDetalle(props) {
                   <div className="producto-det-row-subtotal">
                     <span className="item-row-simbolo">
                       {props.moneda.numCodigoMoneda ===
-                      Moneda.DOLARES.numCodigoMoneda
+                        Moneda.DOLARES.numCodigoMoneda
                         ? Moneda.DOLARES.codigoIso4217
                         : Moneda.SOLES.codigoIso4217}
                     </span>
                     <span className="item-row-precio">
                       {props.moneda.numCodigoMoneda ===
-                      Moneda.DOLARES.numCodigoMoneda
+                        Moneda.DOLARES.numCodigoMoneda
                         ? obj.numSubTotalDol
                         : obj.numSubTotalSol}
                     </span>
@@ -329,10 +335,11 @@ export function CarritoDetalle(props) {
                     </button>
                   </div>
                 </div>
+                <hr />
               </div>
             ))}
           </div>
-          <hr />
+
           <div className="carrito-detalle-msg">
             {state.cotizacionResumen.flgnumCodigoDireccion === 1 ? (
               <>
@@ -356,7 +363,7 @@ export function CarritoDetalle(props) {
                 , para calcular el costo de envio.
               </>
             )}
-            <hr/>
+            <hr />
             <div className="producto-det-row-data">{outlet} Productos de nuestro Outlet</div>
           </div>
         </div>
@@ -373,13 +380,13 @@ export function CarritoDetalle(props) {
                 <label className="label-item">Subtotal:</label>
                 <span className="item-row-simbolo simbolo-color-deft">
                   {props.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}
                 </span>
                 <label className="label-moneda">
                   {props.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numSubTotalDol
                     : state.cotizacionResumen.numSubTotalSol}
                 </label>
@@ -388,13 +395,13 @@ export function CarritoDetalle(props) {
                 <label className="label-item">Envío:</label>
                 <span className="item-row-simbolo simbolo-color-deft">
                   {props.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}
                 </span>
                 <label className="label-moneda">
                   {props.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numEnvioDol
                     : state.cotizacionResumen.numEnvioSol}
                 </label>
@@ -403,13 +410,13 @@ export function CarritoDetalle(props) {
                 <label className="label-item">Igv:</label>
                 <span className="item-row-simbolo simbolo-color-deft">
                   {props.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}
                 </span>
                 <label className="label-moneda">
                   {props.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numIgvDol
                     : state.cotizacionResumen.numIgvSol}
                 </label>
@@ -419,13 +426,13 @@ export function CarritoDetalle(props) {
                 <label className="label-item">Total(impuestos inc.):</label>
                 <span className="item-row-simbolo simbolo-color-deft">
                   {props.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.codigoIso4217
                     : Moneda.SOLES.codigoIso4217}
                 </span>
                 <label className="label-moneda">
                   {props.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                    Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numTotalDol
                     : state.cotizacionResumen.numTotalSol}
                 </label>
@@ -452,7 +459,7 @@ export function CarritoDetalle(props) {
           <div className="carrito-detalle-item">
             {InfoCondicionCompra.EMISION}
             <hr />
-          </div>         
+          </div>
           <div className="carrito-detalle-item">
             {InfoCondicionCompra.STOCK}
             <hr />
@@ -532,9 +539,9 @@ const reducer = (state, action) => {
       return state;
   }
 };
- 
 
-const outlet = 
+
+const outlet =
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
@@ -611,4 +618,4 @@ l45 41 143 -141 c154 -153 169 -161 220 -121 18 14 26 30 26 52 0 27 -19 51
       />
     </g>
   </svg>
- 
+

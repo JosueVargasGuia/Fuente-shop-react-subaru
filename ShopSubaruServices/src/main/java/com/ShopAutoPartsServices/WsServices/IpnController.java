@@ -204,7 +204,7 @@ public class IpnController {
 		}
 	}
 
-	@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+	//@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
 	public void scheduledConfirmaCotizacion() {
 	
 		boolean correoStatusTipoCambioTomado = false;
@@ -242,6 +242,8 @@ public class IpnController {
 				 * clienteFactura.setStatusAction(StatusAction.FACTURAR.toString());
 				 * scheduledProceso.setStatus(StatusIziPay.PAID.toString());
 				 */
+				
+				
 				try {
 					scheduledProceso.setProceso("SCHEDULED");
 					if (clienteFactura.getStatusIziPay() == StatusIziPay.PAID
