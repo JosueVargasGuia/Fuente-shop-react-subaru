@@ -597,4 +597,41 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 		}
 	}
 
+	public File obtenerFileReporteOcOnline(ScheduledProceso scheduledProceso)throws Exception {
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		try {
+
+			String fileName = "OrdenCompra_" + scheduledProceso.getChrCodigoOc();
+			String fileNameRoot = System.getProperty("java.io.tmpdir") + "/" + fileName + ".xls";
+			String rptFileName = "reporteOCOnline.jasper";
+
+			@SuppressWarnings("rawtypes")
+			HashMap parametros = new HashMap();
+			parametros.put("p_nrooc", scheduledProceso.getChrCodigoOc().trim());
+			parametros.put("REPORT_LOCALE", new Locale("en", "US"));
+			logger.info(fileNameRoot);
+			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/" + rptFileName);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, connection);
+			JRXlsExporter exporter = new JRXlsExporter();
+			exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+			exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+			exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+			exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, fileNameRoot);
+			// exportar Excel
+			exporter.exportReport();
+
+			// -- Se crea el archivo en esta ruta
+			File file = new File(fileNameRoot);
+			connection.close();
+			return file;
+		} catch (Exception e) {
+			// TODO: handle exception
+			connection.close();
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

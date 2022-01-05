@@ -204,7 +204,7 @@ public class IpnController {
 		}
 	}
 
-	//@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+	@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
 	public void scheduledConfirmaCotizacion() {
 	
 		boolean correoStatusTipoCambioTomado = false;
@@ -314,7 +314,8 @@ public class IpnController {
 								listaCorreo.add(new CorreoJobsOnline(empresa.getToOrdenCompra()));
 								correoFERequest.setListaCorreo(listaCorreo);
 								// correoFERequest.setCorreoCliente(empresa.getToOrdenCompra());
-								File file = facturacionService.obtenerFileReporteOc(scheduledProceso);
+								/*OC Originl File file = facturacionService.obtenerFileReporteOc(scheduledProceso);*/
+								File file = facturacionService.obtenerFileReporteOcOnline(scheduledProceso);
 								if (file != null) {
 									asuntoOc = "Orden de Compra " + scheduledProcesoStatus.getChrCodigoOc()
 											+ " generada por Venta On-line(" + empresa.getAlias() + ")";

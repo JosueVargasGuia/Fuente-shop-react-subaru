@@ -137,12 +137,12 @@ export default function ReporteCotizacion(props) {
           _listData.push(
             <tr key={i}>
               <td>{rpt.numCodigoCotizacionOnline}</td>
-              <td style={{ minWidth: "300px" }}>{rpt.descripcion}</td>
+              <td style={{ minWidth: "280px" }}>{rpt.descripcion}</td>
 
               <td
                 style={{
-                  width: "12%",
-                  minWidth: "120px",
+                  width: "11%",
+                  minWidth: "110px",
                   textAlign: "center",
                 }}
               >
@@ -152,8 +152,8 @@ export default function ReporteCotizacion(props) {
               </td>
               <td
                 style={{
-                  width: "12%",
-                  minWidth: "120px",
+                  width: "11%",
+                  minWidth: "110px",
                   textAlign: "center",
 
                 }}
@@ -165,8 +165,8 @@ export default function ReporteCotizacion(props) {
               </td>
               <td
                 style={{
-                  width: "12%",
-                  minWidth: "120px",
+                  width: "11%",
+                  minWidth: "110px",
                   textAlign: "center",
 
                 }}
@@ -178,8 +178,8 @@ export default function ReporteCotizacion(props) {
               </td>   
               <td
                 style={{
-                  width: "12%",
-                  minWidth: "120px",
+                  width: "11%",
+                  minWidth: "110px",
                   textAlign: "center",
 
                 }}
@@ -189,6 +189,19 @@ export default function ReporteCotizacion(props) {
                   {rpt.chrCodigoGuia}
                 </span>
               </td>
+              <td
+                style={{
+                  width: "11%",
+                  minWidth: "110px",
+                  textAlign: "center",
+
+                }}
+              >
+                <span className="span-link-pdf"  >
+                  {rpt.chrCodigoOcOnline}
+                </span>
+              </td>
+
               <td
                 style={{ width: "12%", minWidth: "120px", textAlign: "center" }}
               >
@@ -349,11 +362,11 @@ export default function ReporteCotizacion(props) {
               <thead>
                 <tr>
                   <td style={{ width: "10%" }}>Código</td>
-                  <td style={{ minWidth: "300px" }}>Descripción</td>
+                  <td style={{ minWidth: "280px" }}>Descripción</td>
                   <td
                     style={{
-                      width: "12%",
-                      minWidth: "120px",
+                      width: "11%",
+                      minWidth: "110px",
                       textAlign: "center",
                     }}
                     title="Ref.Cotizacion"
@@ -362,8 +375,8 @@ export default function ReporteCotizacion(props) {
                   </td>
                   <td
                     style={{
-                      width: "12%",
-                      minWidth: "120px",
+                      width: "11%",
+                      minWidth: "110px",
                       textAlign: "center",
                     }}
                     title="Ref.Documento"
@@ -372,8 +385,8 @@ export default function ReporteCotizacion(props) {
                   </td>
                   <td
                     style={{
-                      width: "12%",
-                      minWidth: "120px",
+                      width: "11%",
+                      minWidth: "110px",
                       textAlign: "center",
                     }}
                     title="Orden Compra"
@@ -382,13 +395,23 @@ export default function ReporteCotizacion(props) {
                   </td>
                   <td
                     style={{
-                      width: "12%",
-                      minWidth: "120px",
+                      width: "11%",
+                      minWidth: "110px",
                       textAlign: "center",
                     }}
                     title="Guía Salida"
                   >
                     Guía Salida
+                  </td>
+                  <td
+                    style={{
+                      width: "11%",
+                      minWidth: "110px",
+                      textAlign: "center",
+                    }}
+                    title="OC.Online"
+                  >
+                  OC.Online
                   </td>
                   <td
                     style={{

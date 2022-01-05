@@ -49,7 +49,7 @@ const URL = {
 
 function IP(uri) {
 
-  let _CONTEXT    ="PRODUCCION";//PRODUCCION -- DESARROLLO
+  let _CONTEXT    ="DESARROLLO";//PRODUCCION -- DESARROLLO
   let _PROTOCOLO  = (_CONTEXT==="PRODUCCION"?'https':'http');
   let _URL_API    = (_CONTEXT==="PRODUCCION"?'bk.subaruparts.eanet.pe':'localhost'); 
   let _PORT       = (_CONTEXT==="PRODUCCION"?undefined:'8086'); 

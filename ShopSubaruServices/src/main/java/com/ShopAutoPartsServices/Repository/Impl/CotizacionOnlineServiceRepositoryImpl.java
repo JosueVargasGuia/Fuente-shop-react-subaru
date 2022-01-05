@@ -539,7 +539,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 					scheduledProceso.setChrCodigoOc(cs.getString(10).trim());
 					scheduledProceso.setNumTipoCambio(cs.getBigDecimal(11));
 					scheduledProceso.setDteTomado((cs.getString(12)==null?"":cs.getString(12)));
-					scheduledProceso.setIcbFec(cs.getBigDecimal(13));
+					scheduledProceso.setIcbFec((cs.getBigDecimal(13)==null?new BigDecimal("0.00"):cs.getBigDecimal(13)));
 					return scheduledProceso;
 				}
 			};
@@ -664,6 +664,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 						reporteCotizacion.setChrCodigoGuia(rs.getString("CHRCODIGOGUIA"));
 						reporteCotizacion.setChrCodigoOc(rs.getString("CHRCODIGOOC"));
 						reporteCotizacion.setNumCodigoGuia(rs.getString("NUMCODIGOGUIA"));
+						reporteCotizacion.setChrCodigoOcOnline(rs.getString("CHRCODIGOOC_ONLINE"));
 						lista.add(reporteCotizacion);
 					}
 					return lista;

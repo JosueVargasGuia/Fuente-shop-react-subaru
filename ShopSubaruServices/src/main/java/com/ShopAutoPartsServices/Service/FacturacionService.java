@@ -28,4 +28,6 @@ public interface FacturacionService {
 
 	String obtenerReporteGuiaSalida(ReportePdfRequets reportePdfRequets)throws Exception;
 
+	File obtenerFileReporteOcOnline(ScheduledProceso scheduledProceso)throws Exception;
+
 }

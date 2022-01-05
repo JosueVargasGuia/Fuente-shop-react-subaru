@@ -7,8 +7,8 @@ import java.text.DecimalFormatSymbols;
 public class Constantes {
 
  
-	//public static final String TIPE_PAGE_APLICATIVO ="3"/*EA CORP S.A.C*/;
-	 public static final String TIPE_PAGE_APLICATIVO = "4"/* EANET GLOBAL S.A.C */;
+	public static final String TIPE_PAGE_APLICATIVO ="3"/*EA CORP S.A.C*/;
+	// public static final String TIPE_PAGE_APLICATIVO = "4"/* EANET GLOBAL S.A.C */;
 	public static final String PATH_DOCKER = System.getProperty("os.name").toUpperCase().startsWith("WINDOWS")?"": "/usr/local/tomcat/webapps";
 	// public static final String RUTA_FILE_LINUX_FEEA =
 	// "/eanetwork/facturacionelectronica/";
