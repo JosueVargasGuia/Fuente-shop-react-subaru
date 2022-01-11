@@ -19,10 +19,9 @@ import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
-
-import com.ShopAutoPartsServices.Domain.Cliente;
+ 
 import com.ShopAutoPartsServices.Domain.ClienteFactura;
-import com.ShopAutoPartsServices.Domain.ClienteUsuario;
+ 
 import com.ShopAutoPartsServices.Domain.CotizacionOnline;
 import com.ShopAutoPartsServices.Domain.CotizacionOnlineActiva;
 import com.ShopAutoPartsServices.Domain.CotizacionOnlineDetalle;
@@ -32,9 +31,9 @@ import com.ShopAutoPartsServices.Domain.MetodoEnvioRequets;
 import com.ShopAutoPartsServices.Domain.Producto;
 import com.ShopAutoPartsServices.Domain.ReporteCotizacion;
 import com.ShopAutoPartsServices.Domain.ReporteRequest;
-import com.ShopAutoPartsServices.Domain.TipoCambio;
+ 
 import com.ShopAutoPartsServices.Domain.TusCompras;
-import com.ShopAutoPartsServices.Domain.Ubigeo;
+ 
 import com.ShopAutoPartsServices.Domain.IziPay.BillingDetails;
 import com.ShopAutoPartsServices.Domain.IziPay.CreatePayment;
 import com.ShopAutoPartsServices.Domain.IziPay.CreatePaymentRequest;
@@ -48,10 +47,10 @@ import com.ShopAutoPartsServices.Enums.Moneda;
 import com.ShopAutoPartsServices.Enums.Status;
 import com.ShopAutoPartsServices.Enums.StatusSyncCotizacion;
 import com.ShopAutoPartsServices.Repository.CotizacionOnlineServiceRepository;
-import com.ShopAutoPartsServices.WsServices.IpnController;
+ 
 
 import oracle.jdbc.OracleTypes;
-import oracle.sql.CLOB;
+ 
 
 @Repository
 public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineServiceRepository {
@@ -665,6 +664,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 						reporteCotizacion.setChrCodigoOc(rs.getString("CHRCODIGOOC"));
 						reporteCotizacion.setNumCodigoGuia(rs.getString("NUMCODIGOGUIA"));
 						reporteCotizacion.setChrCodigoOcOnline(rs.getString("CHRCODIGOOC_ONLINE"));
+						reporteCotizacion.setOcPendiente(rs.getInt("OCPENDIENTE"));
 						lista.add(reporteCotizacion);
 					}
 					return lista;

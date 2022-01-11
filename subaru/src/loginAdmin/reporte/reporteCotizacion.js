@@ -13,10 +13,15 @@ import {
 import { obtenerCliente } from "../../service/loginCliente.service";
 import { LoadingClassic } from "../../utils/loading";
 import ServerException from "../../utils/serverException";
-import { listaReporteCotizacion, obtenerReporteToPdf } from "../../service/producto.service";
+import {
+  listaReporteCotizacion,
+  obtenerReporteToPdf,
+  asociarOcToCotizacion,
+} from "../../service/producto.service";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
+import { Modal } from "react-bootstrap";
 //import { Document, Page, pdfjs } from "react-pdf";
 //pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 registerLocale("es", es);
@@ -24,6 +29,9 @@ let actionType = {
   LISTDATA: "LISTDATA",
   SET_DTEINICIO: "SET_DTEINICIO",
   SET_DTEFINAL: "SET_DTEFINAL",
+  SHOW_MODAL: "SHOW_MODAL",
+  SET_OC_TO_COTIZACION:"SET_OC_TO_COTIZACION",
+  SET_chrCodigoOc:"SET_chrCodigoOc",
   ERROR: "ERROR",
 };
 const reducer = (state, action) => {
@@ -51,6 +59,24 @@ const reducer = (state, action) => {
         ...state,
         dteFinal: action.dteFinal,
       };
+    case actionType.SHOW_MODAL:
+      return {
+        ...state,
+        modalShow: action.modalShow,
+      };
+    case actionType.SET_OC_TO_COTIZACION:
+      return {
+        ...state,
+        modalShow: action.modalShow,
+        chrCodigoCotizacion: action.chrCodigoCotizacion,
+        numCodigoCotizacion: action.numCodigoCotizacion,
+        chrCodigoOc: action.chrCodigoOc,
+      };
+    case actionType.SET_chrCodigoOc:
+      return {
+        ...state,
+        chrCodigoOc: action.chrCodigoOc,
+      };
     default:
       return state;
   }
@@ -59,9 +85,12 @@ export default function ReporteCotizacion(props) {
   const [state, dispatch] = useReducer(reducer, {
     listData: [],
     loading: false,
-
+    modalShow: false,
     dteInicio: new Date(),
     dteFinal: new Date(),
+    chrCodigoOc:"",
+    chrCodigoCotizacion:"",
+    numCodigoCotizacion:0,
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
@@ -102,7 +131,7 @@ export default function ReporteCotizacion(props) {
       if (
         !(
           JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)).chrRol ===
-          chrRol.ROLE_ADMIN &&
+            chrRol.ROLE_ADMIN &&
           _rol === chrRol.ROLE_ADMIN &&
           localStorage.getItem(localStoreEnum.ISLOGIN) === LOGGIN.LOGGIN
         )
@@ -137,7 +166,6 @@ export default function ReporteCotizacion(props) {
           _listData.push(
             <tr key={i}>
               <td>{rpt.numCodigoCotizacionOnline}</td>
-              <td style={{ minWidth: "280px" }}>{rpt.descripcion}</td>
 
               <td
                 style={{
@@ -146,20 +174,34 @@ export default function ReporteCotizacion(props) {
                   textAlign: "center",
                 }}
               >
-                <span className="span-link-pdf" onClick={() =>
-                  handleEventBlankPdf({ numCodigoCotizacion: rpt.numCodigoCotizacion, typeReporte: "ReporteCotizacion" })}>
-                  {rpt.chrCodigoCotizacion}</span>
+                <span
+                  className="span-link-pdf"
+                  onClick={() =>
+                    handleEventBlankPdf({
+                      numCodigoCotizacion: rpt.numCodigoCotizacion,
+                      typeReporte: "ReporteCotizacion",
+                    })
+                  }
+                >
+                  {rpt.chrCodigoCotizacion}
+                </span>
               </td>
               <td
                 style={{
                   width: "11%",
                   minWidth: "110px",
                   textAlign: "center",
-
                 }}
               >
-                <span className="span-link-pdf" onClick={() =>
-                  handleEventBlankPdf({ numFacturas: rpt.numFacturas, typeReporte: "ReporteFacturaBoleta" })}>
+                <span
+                  className="span-link-pdf"
+                  onClick={() =>
+                    handleEventBlankPdf({
+                      numFacturas: rpt.numFacturas,
+                      typeReporte: "ReporteFacturaBoleta",
+                    })
+                  }
+                >
                   {rpt.numFacturas}
                 </span>
               </td>
@@ -168,42 +210,98 @@ export default function ReporteCotizacion(props) {
                   width: "11%",
                   minWidth: "110px",
                   textAlign: "center",
-
                 }}
               >
-                <span className="span-link-pdf" onClick={() =>
-                  handleEventBlankPdf({ chrCodigoOc: rpt.chrCodigoOc, typeReporte: "ReporteOrdenCompra" })}>
-                  {rpt.chrCodigoOc}
-                </span>
+                <div style={{ width: "100%", display: "flex" }}>
+                  <div style={{ width: "70%" }}>
+                 
+                    <span
+                      className="span-link-pdf"
+                      onClick={() =>
+                        handleEventBlankPdf({
+                          chrCodigoOc: rpt.chrCodigoOc,
+                          typeReporte: "ReporteOrdenCompra",
+                        })
+                      }
+                    >
+                       
+                      {rpt.chrCodigoOc}
+                    </span>
+                  </div>
+                  <div style={{ width: "20%" }}>
+                    {rpt.chrCodigoOcOnline !== null ? (
+                      <button
+                        type="button"
+                        title="Asociar Orden de compra a la Cotización"
+                        className="btn-primary fa fa-sitemap"
+                        onClick={(e)=>handleEventShowAsociar(rpt)}
+                      ></button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
               </td>
               <td
                 style={{
                   width: "11%",
                   minWidth: "110px",
                   textAlign: "center",
-
                 }}
               >
-                <span className="span-link-pdf" onClick={() =>
-                  handleEventBlankPdf({ chrCodigoGuia: rpt.chrCodigoGuia, typeReporte: "ReporteGuiaSalida" })}>
+                <span
+                  className="span-link-pdf"
+                  onClick={() =>
+                    handleEventBlankPdf({
+                      chrCodigoGuia: rpt.chrCodigoGuia,
+                      typeReporte: "ReporteGuiaSalida",
+                    })
+                  }
+                >
                   {rpt.chrCodigoGuia}
                 </span>
               </td>
+
               <td
                 style={{
                   width: "11%",
                   minWidth: "110px",
                   textAlign: "center",
-
                 }}
               >
-                <span className="span-link-pdf" onClick={() =>
-                  handleEventBlankPdf({ chrCodigoOcOnline: rpt.chrCodigoOcOnline, typeReporte: "ReporteOrdenCompraOnline" })}>
+                {rpt.ocPendiente === 1 ? (
+                  <i
+                    title="Orden de compra pendiente"
+                    className="fa fa-close"
+                    style={{ color: "red" }}
+                    aria-hidden="true"
+                  >
+                    Si
+                  </i>
+                ) : (
+                  ""
+                )}
+              </td>
+              <td
+                style={{
+                  width: "11%",
+                  minWidth: "110px",
+                  textAlign: "center",
+                }}
+              >
+                <span
+                  className="span-link-pdf"
+                  onClick={() =>
+                    handleEventBlankPdf({
+                      chrCodigoOcOnline: rpt.chrCodigoOcOnline,
+                      typeReporte: "ReporteOrdenCompraOnline",
+                    })
+                  }
+                >
                   {rpt.chrCodigoOcOnline}
                 </span>
-
               </td>
-
+              <td style={{ minWidth: "280px" }}>{rpt.descripcion}</td>
               <td
                 style={{ width: "12%", minWidth: "120px", textAlign: "center" }}
               >
@@ -258,8 +356,6 @@ export default function ReporteCotizacion(props) {
   }
 
   async function handleEventBlankPdf(_reporteRequets) {
-
-
     /*Service */
     const server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO };
     const rpt = await obtenerReporteToPdf({
@@ -292,7 +388,15 @@ export default function ReporteCotizacion(props) {
         window.open(
           url,
           "MsgWindow",
-          "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no,copyhistory=no, width=" + w + ",height=" + h + ", top=" + tops + ", left=" + left);
+          "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no,copyhistory=no, width=" +
+            w +
+            ",height=" +
+            h +
+            ", top=" +
+            tops +
+            ", left=" +
+            left
+        );
 
         server.error = "";
         server.success = SUCCESS_SERVER.SUCCES_SERVER_OK;
@@ -311,9 +415,48 @@ export default function ReporteCotizacion(props) {
     });
 
     /*Service fin */
-
-
   }
+
+  function handleEventShowAsociar(_object){   
+    dispatch({ type: actionType.SET_OC_TO_COTIZACION, 
+      modalShow:true,
+      chrCodigoOc:"",
+      chrCodigoCotizacion:_object.chrCodigoCotizacion,
+      numCodigoCotizacion:_object.numCodigoCotizacion});
+  }
+async function handleEventAsociarOcToCotizacion() {
+  const server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO };
+  const rpt = await asociarOcToCotizacion({
+    chrCodigoOc: state.chrCodigoOc,
+    chrCodigoCotizacion: state.chrCodigoCotizacion,
+    numCodigoCotizacion: state.numCodigoCotizacion,
+  });
+  if (rpt.status === HttpStatus.HttpStatus_OK) {
+    const json = await rpt.json();
+    console.log(json);
+    if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) { 
+      handleEventBuscarReporte();     
+      server.error = "";
+      server.success = SUCCESS_SERVER.SUCCES_SERVER_OK;
+    }
+    if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+      server.error = json.response.error;
+      server.success = SUCCESS_SERVER.SUCCES_SERVER_INFO;
+    }
+  } else {
+    server.error = "";
+    server.success = SUCCESS_SERVER.SUCCES_SERVER_ERROR;
+  }
+  dispatch({
+    type: actionType.ERROR,
+    server: server,
+  });
+  dispatch({
+    type: actionType.SHOW_MODAL,
+    modalShow: false,
+  });
+ 
+}
   return (
     <>
       <div className="registrar-stock">
@@ -333,6 +476,7 @@ export default function ReporteCotizacion(props) {
                 selected={state.dteInicio}
                 maxDate={new Date()}
                 dateFormat="dd/MM/yyyy"
+                className="form-control"
                 locale="es"
                 onChange={(date) =>
                   dispatch({ type: actionType.SET_DTEINICIO, dteInicio: date })
@@ -346,6 +490,7 @@ export default function ReporteCotizacion(props) {
                 minDate={state.dteInicio}
                 maxDate={new Date()}
                 dateFormat="dd/MM/yyyy"
+                className="form-control"
                 locale="es"
                 onChange={(date) =>
                   dispatch({ type: actionType.SET_DTEFINAL, dteFinal: date })
@@ -365,7 +510,7 @@ export default function ReporteCotizacion(props) {
               <thead>
                 <tr>
                   <td style={{ width: "10%" }}>Código</td>
-                  <td style={{ minWidth: "280px" }}>Descripción</td>
+
                   <td
                     style={{
                       width: "11%",
@@ -412,10 +557,22 @@ export default function ReporteCotizacion(props) {
                       minWidth: "110px",
                       textAlign: "center",
                     }}
+                    title="Guía Salida"
+                  >
+                    OC. Pendiente?
+                  </td>
+
+                  <td
+                    style={{
+                      width: "11%",
+                      minWidth: "110px",
+                      textAlign: "center",
+                    }}
                     title="OC.Online"
                   >
                     OC.Online
                   </td>
+                  <td style={{ minWidth: "280px" }}>Descripción</td>
                   <td
                     style={{
                       width: "12%",
@@ -490,19 +647,17 @@ export default function ReporteCotizacion(props) {
                     <td colSpan="13"></td>
                   </tr>
                 )}
-                {state.listData.length === 0 ?
+                {state.listData.length === 0 ? (
                   <tr>
-                    <td colSpan="13">
-                      Sin registros.
-                    </td>
-                  </tr> : state.listData}
+                    <td colSpan="13">Sin registros.</td>
+                  </tr>
+                ) : (
+                  state.listData
+                )}
               </tbody>
             </table>
-
           </div>
         </div>
-
-
 
         <ServerException server={state.server}></ServerException>
 
@@ -513,6 +668,52 @@ export default function ReporteCotizacion(props) {
           </Link>
         </div>
       </div>
+      <Modal
+        className="modal-direccion"
+        show={state.modalShow}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header
+          closeButton
+          onHide={(e) =>
+            dispatch({ type: actionType.SHOW_MODAL, modalShow: false })
+          }
+        >
+          <Modal.Title id="contained-modal-title-vcenter">
+            Asociar Orden de Compra con la Cotización
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ display: "flex" }}>
+            <span style={{ marginRight: "0.5em" }}> Nro. Orden de Compra</span>
+            <input
+              type="text"
+              className="form-control"
+              name="chrCodigoOc"
+              value={state.chrCodigoOc}
+              autoComplete="false"
+              autoSave="false"
+              onChange={(e)=> dispatch({ type: actionType.SET_chrCodigoOc,chrCodigoOc:e.target.value,})}
+              style={{ width: "20%" }}
+            ></input>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={  handleEventAsociarOcToCotizacion} className="btn btn-primary">
+            Asociar OC
+          </button>
+          <button
+            onClick={(e) =>
+              dispatch({ type: actionType.SHOW_MODAL, modalShow: false })
+            }
+            className="btn btn-primary"
+          >
+            Cerrar
+          </button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

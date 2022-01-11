@@ -45,6 +45,7 @@ const URL = {
   REGISTRAR_CORREO_JOBS:"/correo/registrarCorreoJobs",/*Privado Administrador */
   REPORTE_COTIZACION:"/cotizacion/reporteCotizacion",/*Privado Administrador */
   OBTENER_REPORTE_TO_PDF:"/cotizacion/obtenerReporteToPdf",/*Privado Administrador */
+  ASOCIAR_OC_TO_COTIZACION:"/cotizacion/asignarOcToCotizacion",/*Privado Administrador */
   };
 
 function IP(uri) {

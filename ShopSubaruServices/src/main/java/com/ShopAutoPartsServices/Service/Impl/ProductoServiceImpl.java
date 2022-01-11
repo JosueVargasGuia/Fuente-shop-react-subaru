@@ -10,7 +10,7 @@ import com.ShopAutoPartsServices.Domain.Familia;
 import com.ShopAutoPartsServices.Domain.ImagenProductoReporte;
 import com.ShopAutoPartsServices.Domain.Producto;
 import com.ShopAutoPartsServices.Domain.ProductoCaracteristica;
-import com.ShopAutoPartsServices.Domain.ProductoDetalle;
+ 
 import com.ShopAutoPartsServices.Domain.ProductoImagen;
 import com.ShopAutoPartsServices.Domain.ProductoOnlineCategoria;
 import com.ShopAutoPartsServices.Domain.ProductoRequets;

@@ -11,15 +11,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import com.ShopAutoPartsServices.Domain.Cliente;
+ 
 import com.ShopAutoPartsServices.Domain.ClienteDireccion;
 import com.ShopAutoPartsServices.Domain.ClienteUsuario;
 import com.ShopAutoPartsServices.Domain.Departamento;
 import com.ShopAutoPartsServices.Domain.Direccion;
 import com.ShopAutoPartsServices.Domain.Distrito;
 import com.ShopAutoPartsServices.Domain.Provincia;
-import com.ShopAutoPartsServices.Domain.Ubigeo;
+ 
 import com.ShopAutoPartsServices.Repository.DireccionServiceRepository;
 
 import oracle.jdbc.OracleTypes;

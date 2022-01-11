@@ -3,7 +3,7 @@ package com.ShopAutoPartsServices.Domain;
 public class ReporteCotizacion {
 	String chrEstadoCotizacion, vchStatus, vchStatusAction, descripcion, dteCreacion, dteEnvio, dteActualizacion,
 			chrEmail, chrCodigoCotizacion, numFacturas, chrReflegacyTransid,nombreCliente;
-	int numCodigoCotizacionOnline;
+	int numCodigoCotizacionOnline,ocPendiente;
 	String numCodigoCotizacion,chrCodigoGuia,chrCodigoOc,numCodigoGuia,chrCodigoOcOnline;
 
 	public String getChrEstadoCotizacion() {
@@ -166,6 +166,14 @@ public class ReporteCotizacion {
 	public ReporteCotizacion setChrCodigoOcOnline(String chrCodigoOcOnline) {
 		this.chrCodigoOcOnline = chrCodigoOcOnline;
 		return this;
+	}
+
+	public int getOcPendiente() {
+		return ocPendiente;
+	}
+
+	public void setOcPendiente(int ocPendiente) {
+		this.ocPendiente = ocPendiente;
 	}
 
 }

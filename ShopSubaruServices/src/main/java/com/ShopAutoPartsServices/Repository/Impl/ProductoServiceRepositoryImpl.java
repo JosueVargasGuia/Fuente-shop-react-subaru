@@ -1,7 +1,7 @@
 package com.ShopAutoPartsServices.Repository.Impl;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
+ 
 import java.sql.Blob;
 import java.sql.CallableStatement;
 
@@ -9,8 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
+ 
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+ 
 import org.springframework.stereotype.Repository;
 
 import com.ShopAutoPartsServices.Domain.Caracteristica;
@@ -37,13 +36,10 @@ import com.ShopAutoPartsServices.Domain.SubirImagen;
 import com.ShopAutoPartsServices.Domain.Vigencia;
 import com.ShopAutoPartsServices.Enums.FilterProducto;
 import com.ShopAutoPartsServices.Repository.ProductoServiceRepository;
-import com.ShopAutoPartsServices.WsServices.ProductoController;
-
+ 
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import oracle.jdbc.OracleTypes;
-import oracle.jdbc.oracore.OracleTypeBLOB;
-import oracle.jdbc.rowset.OracleSerialBlob;
-import oracle.sql.BLOB;
+ 
 
 @Repository
 public class ProductoServiceRepositoryImpl implements ProductoServiceRepository {

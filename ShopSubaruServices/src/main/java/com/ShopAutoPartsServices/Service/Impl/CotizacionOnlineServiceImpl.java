@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ShopAutoPartsServices.Domain.ClienteFactura;
-import com.ShopAutoPartsServices.Domain.ClienteUsuario;
+ 
 import com.ShopAutoPartsServices.Domain.CotizacionOnline;
 import com.ShopAutoPartsServices.Domain.CotizacionOnlineActiva;
 import com.ShopAutoPartsServices.Domain.CotizacionOnlineDetalle;

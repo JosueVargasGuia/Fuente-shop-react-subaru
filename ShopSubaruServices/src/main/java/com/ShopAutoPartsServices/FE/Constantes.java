@@ -75,7 +75,8 @@ public class Constantes {
 		df = new DecimalFormat(formato, misimbolo);
 		return df.format(number);
 	}
-    public static String formatNumberString(double number, int numDecimal){
+    @SuppressWarnings("deprecation")
+	public static String formatNumberString(double number, int numDecimal){
 	     //-------------------------------------------------------------
    	 BigDecimal new_number = BigDecimal.ZERO;
    	 new_number = new BigDecimal(""+number); 

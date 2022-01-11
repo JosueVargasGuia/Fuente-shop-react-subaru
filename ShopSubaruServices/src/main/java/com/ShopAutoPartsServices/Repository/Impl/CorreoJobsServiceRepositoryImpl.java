@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ShopAutoPartsServices.Domain.CorreoJobsOnline;
-import com.ShopAutoPartsServices.Domain.Direccion;
+ 
 import com.ShopAutoPartsServices.Enums.FilterValidacionGenerico;
 import com.ShopAutoPartsServices.Repository.CorreoJobsServiceRepository;
 

@@ -2,26 +2,24 @@ package com.ShopAutoPartsServices.WsServices;
 
 import java.io.File;
 import java.math.BigDecimal;
-import java.security.NoSuchAlgorithmException;
+ 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Calendar;
+ 
+ 
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
+ 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.binary.Hex;
+ 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+ 
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -363,10 +361,11 @@ public class IpnController {
 	public String HTML_(ClienteFactura clienteFactura) throws Exception {
 		SimpleDateFormat dmy = new SimpleDateFormat("dd-MM-yyyy");
 		// Tu pedido fue confirmado
-		String titulo = "", nombre = "", urlDocumentoFE = "";
+		String titulo = "", nombre = "";
+		//String urlDocumentoFE = "";
 		if (clienteFactura.getStatusIziPay() == StatusIziPay.PAID) {
 			titulo = "Tu pedido fue confirmado";
-			urlDocumentoFE = "";
+			//urlDocumentoFE = "";
 		}
 		if (clienteFactura.getStatusIziPay() == StatusIziPay.UNPAID) {
 			titulo = "Tu pedido ha sido cancelado!";

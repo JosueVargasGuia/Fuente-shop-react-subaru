@@ -118,6 +118,15 @@ async function obtenerReporteToPdf(body) {
   );
   return response;
 }
+async function asociarOcToCotizacion(body) {
+  console.log(body);
+  const response = await tokenFetchService(
+    IP(URL.ASOCIAR_OC_TO_COTIZACION),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 
 export {
   findProductos,
@@ -134,5 +143,6 @@ export {
   listaProductoStock,
   actualizarProductosStock,
   listaReporteCotizacion,
-  obtenerReporteToPdf
+  obtenerReporteToPdf,
+  asociarOcToCotizacion
 };

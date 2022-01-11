@@ -26,9 +26,7 @@ import com.ShopAutoPartsServices.Domain.ProductoImagenResponse;
 import com.ShopAutoPartsServices.Domain.ProductoOnlineCategoria;
 import com.ShopAutoPartsServices.Domain.ProductoOnlineCategoriaResponse;
 import com.ShopAutoPartsServices.Domain.ProductoRequets;
-import com.ShopAutoPartsServices.Domain.ProductoStock;
-import com.ShopAutoPartsServices.Domain.ProductoStockResponse;
-import com.ShopAutoPartsServices.Domain.SubirImagen;
+ 
 import com.ShopAutoPartsServices.Enums.FilterProducto;
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
 import com.ShopAutoPartsServices.Service.ProductoService;

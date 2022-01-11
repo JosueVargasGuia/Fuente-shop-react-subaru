@@ -11,14 +11,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping; 
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ShopAutoPartsServices.Domain.ClienteUsuario;
 import com.ShopAutoPartsServices.Domain.Direccion;
-import com.ShopAutoPartsServices.Domain.DireccionResponse;
-import com.ShopAutoPartsServices.Enums.CRUD;
+import com.ShopAutoPartsServices.Domain.DireccionResponse; 
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
 import com.ShopAutoPartsServices.Service.Impl.DireccionServiceImpl;
 

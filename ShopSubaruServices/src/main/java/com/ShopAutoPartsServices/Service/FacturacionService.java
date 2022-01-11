@@ -3,6 +3,7 @@ package com.ShopAutoPartsServices.Service;
 import java.io.File;
 import java.util.ArrayList;
 
+import com.ShopAutoPartsServices.Domain.AsociaOc;
 import com.ShopAutoPartsServices.Domain.ReportePdfRequets;
 import com.ShopAutoPartsServices.Domain.IziPay.ScheduledProceso;
 import com.ShopAutoPartsServices.FE.Beans.BeanEmpresa;
@@ -31,5 +32,7 @@ public interface FacturacionService {
 	File obtenerFileReporteOcOnline(ScheduledProceso scheduledProceso)throws Exception;
 
 	String obtenerReporteOrdenCompraOnline(ReportePdfRequets reportePdfRequets)throws Exception;
+
+	String asignarOcToCotizacion(AsociaOc asociaOc)throws Exception;
 
 }
