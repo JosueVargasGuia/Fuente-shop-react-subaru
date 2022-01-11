@@ -30,4 +30,6 @@ public interface FacturacionService {
 
 	File obtenerFileReporteOcOnline(ScheduledProceso scheduledProceso)throws Exception;
 
+	String obtenerReporteOrdenCompraOnline(ReportePdfRequets reportePdfRequets)throws Exception;
+
 }

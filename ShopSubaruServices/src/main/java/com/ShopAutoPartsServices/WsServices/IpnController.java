@@ -320,7 +320,7 @@ public class IpnController {
 									asuntoOc = "Orden de Compra " + scheduledProcesoStatus.getChrCodigoOc()
 											+ " generada por Venta On-line(" + empresa.getAlias() + ")";
 									correoOcStatus = buildEnviaCorreo.buildCorreoSSL(correoFERequest,
-											HTML_FE_(clienteFactura, OcEmail.OrdenCompra), asuntoOc,
+											HTML_OC_(clienteFactura,scheduledProcesoStatus, OcEmail.OrdenCompra), asuntoOc,
 											AccountsEmail.Compras, file);
 									file.deleteOnExit();
 								}
@@ -508,6 +508,13 @@ public class IpnController {
 		return html.toString();
 	}
 
+	public String HTML_OC_(ClienteFactura clienteFactura,ScheduledProceso scheduledProcesoStatus , OcEmail ocEmail) throws Exception {
+		StringBuilder html = new StringBuilder();
+		html.append("<!DOCTYPE html>" + "<html lang='en'>" + "<body>");
+		html.append("Estimados, <br> Se adjunta la orden de Compra que debe ser generada para el documento Nro:<span style='font-weight: bold;'>"+scheduledProcesoStatus.getNumFacturas()+"</span>.");
+		html.append("</body>" + "</html>");
+		return html.toString();
+	}
 	public String HTML_FE_(ClienteFactura clienteFactura, OcEmail ocEmail) throws Exception {
 		StringBuilder html = new StringBuilder();
 		html.append("<!DOCTYPE html>" + "<html lang='en'>" + "<body>");

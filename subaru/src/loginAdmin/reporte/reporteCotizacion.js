@@ -175,7 +175,7 @@ export default function ReporteCotizacion(props) {
                   handleEventBlankPdf({ chrCodigoOc: rpt.chrCodigoOc, typeReporte: "ReporteOrdenCompra" })}>
                   {rpt.chrCodigoOc}
                 </span>
-              </td>   
+              </td>
               <td
                 style={{
                   width: "11%",
@@ -197,9 +197,11 @@ export default function ReporteCotizacion(props) {
 
                 }}
               >
-                <span className="span-link-pdf"  >
+                <span className="span-link-pdf" onClick={() =>
+                  handleEventBlankPdf({ chrCodigoOcOnline: rpt.chrCodigoOcOnline, typeReporte: "ReporteOrdenCompraOnline" })}>
                   {rpt.chrCodigoOcOnline}
                 </span>
+
               </td>
 
               <td
@@ -262,9 +264,10 @@ export default function ReporteCotizacion(props) {
     const server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO };
     const rpt = await obtenerReporteToPdf({
       numCodigoCotizacion: _reporteRequets.numCodigoCotizacion,
-      numFacturas:_reporteRequets.numFacturas,
-      chrCodigoOc:_reporteRequets.chrCodigoOc,
-      chrCodigoGuia:_reporteRequets.chrCodigoGuia,
+      numFacturas: _reporteRequets.numFacturas,
+      chrCodigoOc: _reporteRequets.chrCodigoOc,
+      chrCodigoGuia: _reporteRequets.chrCodigoGuia,
+      chrCodigoOcOnline: _reporteRequets.chrCodigoOcOnline,
       typeReporte: _reporteRequets.typeReporte,
     });
     if (rpt.status === HttpStatus.HttpStatus_OK) {
@@ -411,7 +414,7 @@ export default function ReporteCotizacion(props) {
                     }}
                     title="OC.Online"
                   >
-                  OC.Online
+                    OC.Online
                   </td>
                   <td
                     style={{
@@ -478,18 +481,24 @@ export default function ReporteCotizacion(props) {
               <tbody>
                 {state.loading ? (
                   <tr>
-                    <td colSpan="8">
+                    <td colSpan="13">
                       <LoadingClassic></LoadingClassic>
                     </td>
                   </tr>
                 ) : (
                   <tr style={{ display: "none" }}>
-                    <td colSpan="8"></td>
+                    <td colSpan="13"></td>
                   </tr>
                 )}
-                {state.listData}
+                {state.listData.length === 0 ?
+                  <tr>
+                    <td colSpan="13">
+                      Sin registros.
+                    </td>
+                  </tr> : state.listData}
               </tbody>
             </table>
+
           </div>
         </div>
 

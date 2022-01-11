@@ -168,8 +168,8 @@ public class CotizacionController {
 		ResponseEntity<MetodoEnvioRequets> responseEntity = null;
 		try {
 			MetodoEnvioRequets metodoEnvioResponse = cotizacionOnlineService.registrarModoEnvio(metodoEnvioRequets);
-			//metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.EnvioRegular);
-			
+			// metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.EnvioRegular);
+
 			if (metodoEnvioResponse.getStatus() == Status.ERROR_ZONA_INCONRRECTA) {
 				// metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.RecojoAlmacen);
 				metodoEnvioResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO);
@@ -247,7 +247,7 @@ public class CotizacionController {
 				metodoEnvioRequets.setNumCodigoDireccion(0);
 				MetodoEnvioRequets metodoEnvioResponse = cotizacionOnlineService.registrarModoEnvio(metodoEnvioRequets);
 			} catch (Exception e) {
-				 
+
 				logger.info("ERROR Registro de metodo de envio Detalle Carrito");
 				logger.info(e.getMessage());
 				e.printStackTrace();
@@ -457,6 +457,9 @@ public class CotizacionController {
 			} else if (reportePdfRequets.getTypeReporte() == TypeReporte.ReporteGuiaSalida) {
 				reporteCotizacionResponse
 						.setByteEnconderBase64(facturacionService.obtenerReporteGuiaSalida(reportePdfRequets));
+			} else if (reportePdfRequets.getTypeReporte() == TypeReporte.ReporteOrdenCompraOnline) {
+				reporteCotizacionResponse
+						.setByteEnconderBase64(facturacionService.obtenerReporteOrdenCompraOnline(reportePdfRequets));
 			}
 			reporteCotizacionResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK)
 					.setError(new ArrayList<String>()).setError(error);

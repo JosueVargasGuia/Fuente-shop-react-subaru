@@ -634,4 +634,29 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 		}
 	}
 
+	public String obtenerReporteOrdenCompraOnline(ReportePdfRequets reportePdfRequets)throws Exception  {
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		try {
+			String path = new ClassPathResource("/").getFile().getAbsolutePath();
+
+			@SuppressWarnings("rawtypes")
+			HashMap parametros = new HashMap();		 
+			parametros.put("p_nrooc", reportePdfRequets.getChrCodigoOcOnline() .trim());
+			parametros.put("REPORT_LOCALE", new Locale("en", "US"));
+
+			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/reporteOCOnline.jasper");
+			byte[] bytes = JasperRunManager.runReportToPdf(inputStream, parametros, connection);
+			String pdfBase64 = Base64.getEncoder().encodeToString(bytes);
+			connection.close();
+			return pdfBase64;
+		} catch (Exception e) {
+			logger.info("**********************obtenerReporteOrdenCompraOnline******************");
+			e.printStackTrace();
+			logger.info("**********************obtenerReporteOrdenCompraOnline printStackTrace******************");
+			connection.close();
+			return "";
+
+		}
+	}
+
 }

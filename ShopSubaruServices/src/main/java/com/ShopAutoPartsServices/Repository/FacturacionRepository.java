@@ -22,4 +22,5 @@ public interface FacturacionRepository {
 	public String obtenerReporteFactura(ReportePdfRequets reportePdfRequets)throws Exception;
 	public String obtenerReporteOrdenCompra(ReportePdfRequets reportePdfRequets)throws Exception;
 	public String obtenerReporteGuiaSalida(ReportePdfRequets reportePdfRequets)throws Exception;
+	public String obtenerReporteOrdenCompraOnline(ReportePdfRequets reportePdfRequets)throws Exception;
 }

@@ -76,5 +76,11 @@ public class FacturacionImpl implements FacturacionService {
 	public File obtenerFileReporteOcOnline(ScheduledProceso scheduledProceso) throws Exception {
 		// TODO Auto-generated method stub
 		return facturacionRepositoryImpl.obtenerFileReporteOcOnline(scheduledProceso);
+	}
+
+	@Override
+	public String obtenerReporteOrdenCompraOnline(ReportePdfRequets reportePdfRequets) throws Exception {
+		// TODO Auto-generated method stub
+		return facturacionRepositoryImpl.obtenerReporteOrdenCompraOnline(reportePdfRequets);
 	} 
 }

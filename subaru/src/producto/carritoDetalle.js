@@ -272,7 +272,7 @@ export function CarritoDetalle(props) {
                 className="producto-det-carrito-row"
                 key={obj.numcodCotizacionOnlinedet}
               >
-                <div className="producto-det-row-img">{obj.numcodCotizacionOnlinedet}
+                <div className="producto-det-row-img"> 
                   <Link to={obj.redirect}>
                     <img
                       src={"data:image/png;base64," + obj.chrSrcImagen}
