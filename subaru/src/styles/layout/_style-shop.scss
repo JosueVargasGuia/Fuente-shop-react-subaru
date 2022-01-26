@@ -111,6 +111,7 @@ a {
 
 .server-exception-body {
     min-width: 150px;
+    height: auto;
     display: flex;
 }
 
@@ -120,8 +121,8 @@ a {
 }
 
 .server-exception span {
-    font-size: 15px;
-    margin: 0.5em;
+    font-size: 13px;
+    margin: 0.2em;
 }
 
 .server-exception svg {
@@ -922,6 +923,11 @@ h4 {
     box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
     ;
     cursor: pointer;
+    svg{
+        width: 106px;
+        height: 55px;
+        margin-left: 8px; 
+    }
 }
 
 .dashboard-card div {

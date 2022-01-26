@@ -18,6 +18,7 @@ async function obtenerCotizacionActiva(body) {
   return response;
 }
 async function registrarCotizacionDetalle(body) {
+  console.log(body);
   const response = await fetchService(
     IP(URL.REGISTRAR_COTIZACION_DETALLE),
     body,

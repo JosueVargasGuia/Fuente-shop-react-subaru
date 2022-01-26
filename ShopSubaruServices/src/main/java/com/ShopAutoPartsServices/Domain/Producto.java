@@ -20,6 +20,7 @@ public class Producto {
 	/*Total de registros de la BD*/
 	int totalRegistros;
 	int numOutlet;
+	int numProductoVigencia;
 	/*Valores de solo vizualizacion*/
 	String numValorVentaRefDolar;// NUMBER,
 	String numValorVentaRefSoles;// NUMBER,
@@ -179,6 +180,14 @@ public class Producto {
 		this.numValorDesc = numValorDesc;
 	}
 
+	public int getNumProductoVigencia() {
+		return numProductoVigencia;
+	}
+
+	public void setNumProductoVigencia(int numProductoVigencia) {
+		this.numProductoVigencia = numProductoVigencia;	 
+	}
+
 	@Override
 	public String toString() {
 		return "Producto [chrCodigoProducto=" + chrCodigoProducto + ", numValorVentaDolar=" + numValorVentaDolar
@@ -186,7 +195,10 @@ public class Producto {
 				+ chrEstado + ", vchDescripcion=" + vchDescripcion + ", vchDescripcionSmall=" + vchDescripcionSmall
 				+ ", numStock=" + numStock + ", familia=" + familia + ", listaProductoImagen=" + listaProductoImagen
 				+ ", listaProductoDetalle=" + listaProductoDetalle + ", imagenDefault=" + imagenDefault
-				+ ", totalRegistros=" + totalRegistros + "]";
+				+ ", totalRegistros=" + totalRegistros + ", numOutlet=" + numOutlet + ", numProductoVigencia="
+				+ numProductoVigencia + ", numValorVentaRefDolar=" + numValorVentaRefDolar + ", numValorVentaRefSoles="
+				+ numValorVentaRefSoles + ", numValorDesc=" + numValorDesc + "]";
 	}
+ 
 
 }

@@ -118,8 +118,7 @@ async function obtenerReporteToPdf(body) {
   );
   return response;
 }
-async function asociarOcToCotizacion(body) {
-  console.log(body);
+async function asociarOcToCotizacion(body) { 
   const response = await tokenFetchService(
     IP(URL.ASOCIAR_OC_TO_COTIZACION),
     body,
@@ -127,7 +126,38 @@ async function asociarOcToCotizacion(body) {
   );
   return response;
 }
-
+async function listarProductoOutletVigencia(body) {
+  const response = await tokenFetchService(
+    IP(URL.LISTA_PRODUCTO_OUTLET_VIGENCIA),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
+async function saveProductoOutletVigencia(body) {
+  const response = await tokenFetchService(
+    IP(URL.REGISTRAR_PROD_OUTLET_VIGENCIA),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
+async function listarProductoOutlet(body) {  
+  const response = await tokenFetchService(
+    IP(URL.LISTA_PRODUCTO_OUTLET),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
+async function saveUpdateProductoOutlet(body) {  
+  const response = await tokenFetchService(
+    IP(URL.SAVE_UPDATE_PRODUCTO_OUTLET),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 export {
   findProductos,
   obtenerTipoCambio,
@@ -144,5 +174,9 @@ export {
   actualizarProductosStock,
   listaReporteCotizacion,
   obtenerReporteToPdf,
-  asociarOcToCotizacion
+  asociarOcToCotizacion,
+  listarProductoOutletVigencia,
+  saveProductoOutletVigencia,
+  listarProductoOutlet,
+  saveUpdateProductoOutlet
 };

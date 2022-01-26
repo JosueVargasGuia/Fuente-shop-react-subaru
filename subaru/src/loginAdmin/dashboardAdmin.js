@@ -10,6 +10,7 @@ import {
 import { obtenerCliente } from "../service/loginCliente.service";
 import Loading from "../utils/loading";
 import ServerException from "../utils/serverException";
+import { outlet } from "./svgIcon/outLet";
 
 let actionType = { ROL: "ROL" };
 /*Funcion reducer */
@@ -144,6 +145,16 @@ export default function DashboardAdmin(props) {
                 aria-hidden="true"
               ></i>
               <span>Reporte de Ventas</span>
+            </div>
+          </Link>
+          <Link
+            to={"/listaProductosOutlet"}
+            className="dashboard-card"
+          >
+            <div>
+            {outlet}
+              
+              <span>Productos OutLet</span>
             </div>
           </Link>
         </div>

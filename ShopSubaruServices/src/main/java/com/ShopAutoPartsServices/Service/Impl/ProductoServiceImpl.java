@@ -13,6 +13,8 @@ import com.ShopAutoPartsServices.Domain.ProductoCaracteristica;
  
 import com.ShopAutoPartsServices.Domain.ProductoImagen;
 import com.ShopAutoPartsServices.Domain.ProductoOnlineCategoria;
+import com.ShopAutoPartsServices.Domain.ProductoOutlet;
+import com.ShopAutoPartsServices.Domain.ProductoOutletVigencia;
 import com.ShopAutoPartsServices.Domain.ProductoRequets;
 import com.ShopAutoPartsServices.Domain.ProductoStock;
 import com.ShopAutoPartsServices.Domain.SubFamilia;
@@ -94,6 +96,31 @@ public class ProductoServiceImpl implements ProductoService {
 	public Vigencia obtenerVigencia() throws Exception {
 		// TODO Auto-generated method stub
 		return productoServiceRepository.obtenerVigencia();
+	}
+	@Override
+	public List<ProductoOutletVigencia> listarProductoOutletVigencia() throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.listarProductoOutletVigencia();
+	}
+	@Override
+	public ProductoOutletVigencia saveProductoOutletVigencia(ProductoOutletVigencia productoOutletVigencia) throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.saveProductoOutletVigencia(productoOutletVigencia);
+	}
+	@Override
+	public List<ProductoOutlet> listaProductosOutlet(ProductoOutlet productoOutlet) throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.listaProductosOutlet(productoOutlet);
+	}
+	@Override
+	public ProductoOutletVigencia obtenerVigenciaXCodigo(ProductoOutlet productoOutlet) throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.obtenerVigenciaXCodigo(productoOutlet);
+	}
+	@Override
+	public String saveProductoOutlet(ProductoOutlet productoOutlet) throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.saveProductoOutlet(productoOutlet);
 	}
 	 
 

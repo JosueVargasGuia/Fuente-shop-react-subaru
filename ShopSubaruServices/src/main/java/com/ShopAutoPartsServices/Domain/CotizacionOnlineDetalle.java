@@ -220,13 +220,14 @@ public class CotizacionOnlineDetalle {
 	public String toString() {
 		return "CotizacionOnlineDetalle [numCodigoCotizacionOnline=" + numCodigoCotizacionOnline
 				+ ", numcodCotizacionOnlinedet=" + numcodCotizacionOnlinedet + ", tipoActualizacionCotizacionDetalle="
-				+ tipoActualizacionCotizacionDetalle + ", metodoEnvio=" + metodoEnvio + ", producto=" + producto.toString()
+				+ tipoActualizacionCotizacionDetalle + ", metodoEnvio=" + metodoEnvio + ", producto=" + producto
 				+ ", numCantidad=" + numCantidad + ", numSubTotalSol=" + numSubTotalSol + ", numIgvSol=" + numIgvSol
 				+ ", numTotalSol=" + numTotalSol + ", numSubTotalDol=" + numSubTotalDol + ", numIgvDol=" + numIgvDol
 				+ ", numTotalDol=" + numTotalDol + ", numPrecioUnitarioDol=" + numPrecioUnitarioDol
 				+ ", numPrecioUnitarioSol=" + numPrecioUnitarioSol + ", numTotalDisplay=" + numTotalDisplay
 				+ ", response=" + response + ", chrSrcImagen=" + chrSrcImagen + ", chrType=" + chrType + "]";
 	}
+ 
 
  
 

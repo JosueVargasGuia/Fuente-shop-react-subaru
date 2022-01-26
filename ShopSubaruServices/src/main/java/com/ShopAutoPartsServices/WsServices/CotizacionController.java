@@ -387,7 +387,8 @@ public class CotizacionController {
 			httpPost.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
 			httpPost.addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE);
 			httpPost.addHeader(HttpHeaders.AUTHORIZATION,
-					"Basic " + Base64Utils.encodeToString(new String(izipayConfiguracion.getPrivateKey()).getBytes()));
+					"Basic " + Base64Utils.encodeToString(new String(izipayConfiguracion.getPrivateKey()).getBytes()));		
+			
 			Gson gson = new Gson();
 			String json = gson.toJson(createPayment);
 			StringEntity entity = new StringEntity(json);

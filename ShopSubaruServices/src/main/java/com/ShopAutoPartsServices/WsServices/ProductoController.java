@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ShopAutoPartsServices.Domain.Familia;
- 
+import com.ShopAutoPartsServices.Domain.ProductoOutletVigencia;
+import com.ShopAutoPartsServices.Domain.ProductoOutletVigenciaResponse;
 import com.ShopAutoPartsServices.Domain.ProductoRequets;
 import com.ShopAutoPartsServices.Domain.ProductoResponse;
  
@@ -118,5 +119,5 @@ public class ProductoController {
 		}
 		return responseEntity;
 	}
-
+	
 }

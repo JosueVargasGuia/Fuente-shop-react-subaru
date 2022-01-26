@@ -138,6 +138,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 					cs.setInt(4, cotizacionOnlineDetalle.getNumCantidad());
 					cs.setString(5, cotizacionOnlineDetalle.getTipoActualizacionCotizacionDetalle().toString());
 					cs.setInt(6, cotizacionOnlineDetalle.getProducto().getNumOutlet());
+					cs.setInt(7, cotizacionOnlineDetalle.getProducto().getNumProductoVigencia());
 					cs.execute();
 					cotizacionOnlineDetalle.setNumcodCotizacionOnlinedet(cs.getInt(1));
 					return cotizacionOnlineDetalle;
@@ -147,7 +148,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_COTIZACION_DET(?,?,?,?,?,?)";
+		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_COTIZACION_DET(?,?,?,?,?,?,?)";
 		return jdbcTemplate.execute(sql, callback);
 
 	}
@@ -174,6 +175,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 						p.setVchDescripcion(rs.getString("VCHDESCRIPCION"));
 						p.setNumStock(rs.getInt("NUMSTOCK"));
 						p.setNumOutlet(rs.getInt("NUMOUTLET"));
+						p.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
 						Familia f = new Familia();
 						f.setChrCodigoFamilia(rs.getString("CHRCODIGOFAMILIA"));
 						f.setVchDescripcion(rs.getString("FVCHDESCRIPCION"));
@@ -517,7 +519,16 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 				@Override
 				public ScheduledProceso doInCallableStatement(CallableStatement cs)
 						throws SQLException, DataAccessException {
-					logger.info(scheduledProceso.toString());
+					logger.info(scheduledProceso.toString());					
+					
+					logger.info("CONFIRMAR_SCHEDULED [numCodigoCotizacionOnline:" + scheduledProceso.getNumCodigoCotizacionOnline()
+							+ " estadoCotizacion:" + scheduledProceso.getEstadoCotizacion().toString()
+							+ " estadoCotizacion:" + scheduledProceso.getStatusAction() + " status:"
+							+ scheduledProceso.getStatus() + " proceso:" + scheduledProceso.getProceso() + " totalLetras:"
+							+ scheduledProceso.getTotalLetras()+"]");
+					
+					
+					
 					cs.setInt(1, scheduledProceso.getNumCodigoCotizacionOnline());
 					cs.setString(2, scheduledProceso.getEstadoCotizacion().toString());
 					cs.setString(3, scheduledProceso.getStatusAction());

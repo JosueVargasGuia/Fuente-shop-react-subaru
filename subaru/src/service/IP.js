@@ -45,12 +45,17 @@ const URL = {
   REGISTRAR_CORREO_JOBS:"/correo/registrarCorreoJobs",/*Privado Administrador */
   REPORTE_COTIZACION:"/cotizacion/reporteCotizacion",/*Privado Administrador */
   OBTENER_REPORTE_TO_PDF:"/cotizacion/obtenerReporteToPdf",/*Privado Administrador */
-  ASOCIAR_OC_TO_COTIZACION:"/cotizacion/asignarOcToCotizacion",/*Privado Administrador */
+  ASOCIAR_OC_TO_COTIZACION:"/cotizacion/asignarOcToCotizacion",/*Privado Administrador */ 
+  LISTA_PRODUCTO_OUTLET_VIGENCIA:"/productoImagen/listaProductoOutletVigencia",/*Privado Administrador */
+  REGISTRAR_PROD_OUTLET_VIGENCIA:"/productoImagen/saveProductoOutletVigencia",/*Privado Administrador */
+  LISTA_PRODUCTO_OUTLET:"/productoImagen/listaProductosOutlet",/*Privado Administrador */
+  SAVE_UPDATE_PRODUCTO_OUTLET:"/productoImagen/saveUpdateProductoOutlet",/*Privado Administrador */
+  
   };
 
 function IP(uri) {
 
-  let _CONTEXT    ="DESARROLLO";//PRODUCCION -- DESARROLLO
+  let _CONTEXT    ="PRODUCCION";//PRODUCCION -- DESARROLLO
   let _PROTOCOLO  = (_CONTEXT==="PRODUCCION"?'https':'http');
   let _URL_API    = (_CONTEXT==="PRODUCCION"?'bk.subaruparts.eanet.pe':'localhost'); 
   let _PORT       = (_CONTEXT==="PRODUCCION"?undefined:'8086'); 

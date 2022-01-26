@@ -64,6 +64,8 @@ import StockProducto from "./loginAdmin/producto/stockProducto";
 import ListaCorreoJobs from "./loginAdmin/correojobs/listaCorreoJobs";
 import ReporteCotizacion from "./loginAdmin/reporte/reporteCotizacion";
 import { ProductoOutlet } from "./producto/productoOutlet";
+import OutletCargaProducto  from "./loginAdmin/producto/outletCargaProducto";
+import ListadoProductoOutlet  from "./loginAdmin/producto/listadoProductoOutlet";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -414,6 +416,12 @@ function App() {
             </Route>
             <Route path="/productoImagen">
               <ImagenProducto />
+            </Route>
+            <Route path="/listaProductosOutlet">
+              <ListadoProductoOutlet numCodigoCliente={state.usuario.numCodigoCliente}></ListadoProductoOutlet>
+            </Route>
+            <Route path="/outletCarga/:numProductoVigencia/:crud">
+              <OutletCargaProducto numCodigoCliente={state.usuario.numCodigoCliente}></OutletCargaProducto>
             </Route>
             <Route path="/stock">
               <StockProducto

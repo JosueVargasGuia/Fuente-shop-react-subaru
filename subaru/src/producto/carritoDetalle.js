@@ -117,6 +117,7 @@ export function CarritoDetalle(props) {
                 vchDescripcion: obj.producto.vchDescripcion,
                 numStock: obj.producto.numStock,
                 numOutlet: obj.producto.numOutlet,
+                numProductoVigencia:obj.producto.numProductoVigencia
               },
             });
           }
@@ -201,6 +202,7 @@ export function CarritoDetalle(props) {
         producto: {
           chrCodigoProducto: data.producto.chrCodigoProducto,
           numOutlet: data.producto.numOutlet,
+          numProductoVigencia:data.producto.numProductoVigencia
         },
         numCantidad: e.target.value,
 
