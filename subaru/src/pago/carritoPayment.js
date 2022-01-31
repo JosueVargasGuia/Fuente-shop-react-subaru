@@ -52,6 +52,7 @@ export function CarritoPayment(props) {
   };
   const [state, dispatch] = useReducer(reducer, {
     enableButton: true,
+    enableLoading: false,
     cotizacionResumen: cotizacionResumen,
     listaCotizacionDetalle: [],
     lstDireccion: [],
@@ -297,7 +298,7 @@ export function CarritoPayment(props) {
   }
   //eslint-disable-next-line
   async function loadPago() {
-
+    dispatch({ type: actionType.enableLoading, enableLoading: true });
     let builtPayment = await initCreatePaymentRequets(
       state.cotizacionResumen.numCodigoCotizacionOnline,
       state.MetodoEnvio.codigo,
@@ -306,6 +307,7 @@ export function CarritoPayment(props) {
       (props.moneda.numCodigoMoneda === Moneda.DOLARES.numCodigoMoneda ? 'DOLARES' : 'SOLES'));
     console.log(builtPayment);
     if (builtPayment.server.success === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+      
       const endpoint = builtPayment.payment.endPoint;
       const publicKey = builtPayment.payment.publicKey;
       const formToken = builtPayment.payment.formToken;
@@ -348,6 +350,7 @@ export function CarritoPayment(props) {
           console.log(result);
           console.log("show the payment form");
           KR.showForm(result.formId);
+          KR.onFormCreated(() => dispatch({ type: actionType.enableLoading, enableLoading: false }));
         })
         .catch(error =>
           console.log(error + " (see console for more details)")
@@ -357,6 +360,7 @@ export function CarritoPayment(props) {
       setFocusMenu(3);
       console.log(builtPayment.server);
       dispatch({ type: actionType.ERROR, server: builtPayment.server });
+      dispatch({ type: actionType.enableLoading, enableLoading: false })
     }
   }
 
@@ -400,10 +404,10 @@ export function CarritoPayment(props) {
       statusMetodoEnvio: { status: statusMetodoEnvio.DEFAULT, mensaje: "" },
     });
     //handleEventChangeModoEnvio(MetodoEnvio.RecojoAlmacen); Reunion Nro1
-    handleEventChangeModoEnvio( _direccion.numCodigoDireccion, false);
+    handleEventChangeModoEnvio(_direccion.numCodigoDireccion, false);
   }
-  async function handleEventChangeModoEnvio( _numCodigoDireccion, _flgChange) {
-    let _metodoEnvio= MetodoEnvio.EnvioRegular;
+  async function handleEventChangeModoEnvio(_numCodigoDireccion, _flgChange) {
+    let _metodoEnvio = MetodoEnvio.EnvioRegular;
     /*Resumen de cotizacion*/
     let _statusMetodoEnvio = { status: statusMetodoEnvio.DEFAULT, mensaje: "" };
     let cotizacion = handleSyncDatosCotizacion();
@@ -415,19 +419,19 @@ export function CarritoPayment(props) {
     const jsonR = await rptM.json();
     console.log(jsonR);
     if (rptM.status === HttpStatus.HttpStatus_OK) {
-      _metodoEnvio = jsonR.metodoEnvio===MetodoEnvio.EnvioRegular.codigo?MetodoEnvio.EnvioRegular:MetodoEnvio.RecojoAlmacen;
+      _metodoEnvio = jsonR.metodoEnvio === MetodoEnvio.EnvioRegular.codigo ? MetodoEnvio.EnvioRegular : MetodoEnvio.RecojoAlmacen;
       if (jsonR.status === statusMetodoEnvio.ERROR_ZONA_INCONRRECTA) {
-        
+
         _statusMetodoEnvio.status = statusMetodoEnvio.ERROR_ZONA_INCONRRECTA;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
       if (jsonR.status === statusMetodoEnvio.ERROR_SUPERA_CARGA) {
-         
+
         _statusMetodoEnvio.status = statusMetodoEnvio.ERROR_SUPERA_CARGA;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
       if (jsonR.status === statusMetodoEnvio.ACTUALIZADO) {
-        
+
         _statusMetodoEnvio.status = statusMetodoEnvio.ACTUALIZADO;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
@@ -648,8 +652,8 @@ export function CarritoPayment(props) {
                 <input
                   type="radio"
                   name="MetodoEnvio"
-                   className="label-disable"
-                    
+                  className="label-disable"
+
                   checked={
                     state.MetodoEnvio.codigo ===
                       MetodoEnvio.RecojoAlmacen.codigo
@@ -677,8 +681,8 @@ export function CarritoPayment(props) {
               <div className="inputs">
                 <input
                   type="radio"
-                  name="MetodoEnvio"   
-                   
+                  name="MetodoEnvio"
+
                   checked={
                     state.MetodoEnvio.codigo === MetodoEnvio.EnvioRegular.codigo
                       ? true
@@ -748,7 +752,7 @@ export function CarritoPayment(props) {
             }
           ></input>
           Estoy de acuerdo con los{" "}
-          <span  onClick={() => handleActionCerrar(true)} className="form-pago-link-tc">
+          <span onClick={() => handleActionCerrar(true)} className="form-pago-link-tc">
             términos del servicio
           </span>{" "}
           y los acepto sin reservas.
@@ -779,11 +783,9 @@ export function CarritoPayment(props) {
             <div className="form">
               <div className="container">
                 <div id="myPaymentForm">
-
-
-                  <Loading></Loading>
                 </div>
-
+                {state.enableLoading===true?<Loading></Loading>:<></>}
+                
               </div>
             </div>
           </div>
@@ -856,22 +858,22 @@ export function CarritoPayment(props) {
         </div>
         <div className="form-pago-resumen-info">
           <div className="carrito-detalle-item">
-             
+
             {InfoCondicionCompra.EMISION}
             <hr />
           </div>
           <div className="carrito-detalle-item">
-           
-           {InfoCondicionCompra.STOCK}
-           <hr />
-         </div>
+
+            {InfoCondicionCompra.STOCK}
+            <hr />
+          </div>
           <div className="carrito-detalle-item">
-           
+
             {InfoCondicionCompra.TRANSPORTE}
             <hr />
           </div>
           <div className="carrito-detalle-item">
-         
+
             {InfoCondicionCompra.DEVOLUCIONES}
             <hr />
           </div>
@@ -915,7 +917,8 @@ let actionType = {
   SET_CREATE_PAYMENT: "SET_CREATE_PAYMENT",
   ERROR: "ERROR",
   INIT_PAYMENT: "INIT_PAYMENT",
-  OBSERVACION: "OBSERVACION"
+  OBSERVACION: "OBSERVACION",
+  enableLoading: "enableLoading"
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -966,6 +969,11 @@ const reducer = (state, action) => {
         numCodigoDireccion: action.numCodigoDireccion,
         MetodoEnvio: action.MetodoEnvio,
         statusMetodoEnvio: action.statusMetodoEnvio,
+      };
+    case actionType.enableLoading:
+      return {
+        ...state,
+        enableLoading: action.enableLoading,
       };
     default:
       return state;
