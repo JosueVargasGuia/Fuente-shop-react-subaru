@@ -109,7 +109,7 @@ export function ProductoOutlet(props) {
               </td>
               <td className="td-producto">
                 <div className="td-producto-div-desc">
-                  <div className="td-producto-div-desc-porc" style={{width:producto.numValorDesc+"%"}}>
+                  <div className="td-producto-div-desc-porc" style={{width:(producto.numValorDesc<=50?50:producto.numValorDesc)+"%"}}>
                     {producto.numValorDesc}
                     {" %"}
                   </div>
@@ -232,7 +232,7 @@ export function ProductoOutlet(props) {
             </td>
             <td className="td-precio">
               <div className="td-producto-div">
-                <span>Precio Normal</span>
+                <span>Precio al Público</span>
                 <span className="td-precio-simbolo">
                   {props.moneda.codigoIso4217}{" "}
                 </span>
@@ -246,7 +246,7 @@ export function ProductoOutlet(props) {
             </td>
             <td className="td-precio">
               <div className="td-producto-div">
-                <span>Precio</span>
+                <span>Precio OutLet</span>
                 <span className="td-precio-simbolo">
                   {props.moneda.codigoIso4217}{" "}
                 </span>

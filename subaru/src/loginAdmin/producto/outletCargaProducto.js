@@ -151,12 +151,15 @@ export default function OutletCargaProducto(props) {
             /* Convert array of arrays */
             const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
             /* Update state */
-
+            console.log(data.length); 
 
            // let _server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO }
             for (let index = 0; index < data.length; index++) {
+                const element = data[index];
+                console.log(element);
                 if (index >= 1) {
-                    const element = data[index];
+                    
+                    
                     let _stock = {
                         index: index,
                         chrCodigoProducto: element[0],
@@ -248,16 +251,16 @@ export default function OutletCargaProducto(props) {
                     };
                     _listDataJson.push(_stock);
                     _listData.push(<tr key={_stock.index}>
-                        <td>{_stock.index}</td>
-                        <td>{_stock.chrCodigoProducto}</td>
-                        <td>{_stock.vchDescripcion}</td>
-                        <td>{_stock.numUnspc}</td>
-                        <td className="td_number">{_stock.numValorVenta}</td>
-                        <td className="td_number">{_stock.numValorRefVenta}</td>
-                        <td className="td_number">{_stock.numValorCompra}</td>
-                        <td className="td_number">{_stock.numValorDesc}</td>
-                        <td className="td_number">{_stock.numStock}</td>
-                        <td className="td_number"></td>
+                        <td style={{ width: '3%' }}>{_stock.index+1}</td>
+                        <td style={{ width: '80px' }}>{_stock.chrCodigoProducto}</td>
+                        <td style={{ minWidth: '270px' }}>{_stock.vchDescripcion}</td>
+                        <td style={{ width: '8%', minWidth: '60px'}}>{_stock.numUnspc}</td>
+                        <td style={{ width: '8%', minWidth: '120px' }} className="td_number">{_stock.numValorVenta}</td>
+                        <td style={{ width: '12%', minWidth: '120px'}}className="td_number">{_stock.numValorRefVenta}</td>
+                        <td style={{ width: '8%', minWidth: '120px'}} className="td_number">{_stock.numValorCompra}</td>
+                        <td style={{ width: '8%', minWidth: '120px' }} className="td_number">{_stock.numValorDesc}</td>
+                        <td style={{ width: '8%', minWidth: '120px'}}  className="td_number">{_stock.numStock}</td>
+                        
                     </tr>);
                 }
 
@@ -436,17 +439,18 @@ export default function OutletCargaProducto(props) {
                 <hr />
 
                 <div className="div-table">
+                    
                     <table style={{ fontSize: '13px' }} >
-                        <thead>
+                     <thead>
                             <tr>
                                 <td style={{ width: '3%' }}>Nro</td>
                                 <td style={{ width: '80px' }}>Código</td>
-                                <td style={{ minWidth: '280px' }}>Descripción</td>
-                                <td style={{ width: '8%', minWidth: '60px', textAlign: 'center' }} title="Precio venta">UNSPC</td>
-                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Precio venta">Pr.Venta</td>
-                                <td style={{ width: '12%', minWidth: '120px', textAlign: 'center' }} title="Precio venta Igv">Pr.Venta Referencial</td>
-                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Precio venta Promocional">Pr.De Compra</td>
-                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Precio venta Igv Promocional">Descuento</td>
+                                <td style={{ minWidth: '270px' }}>Descripción</td>
+                                <td style={{ width: '8%', minWidth: '60px', textAlign: 'center' }} title="UNSPC">UNSPC</td>
+                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Precio Publico Promocional Unitario">Precio Publico Promocional Unitario</td>
+                                <td style={{ width: '12%', minWidth: '120px', textAlign: 'center' }} title="Precio Publico Regular Unitario">Precio Publico Regular Unitario</td>
+                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Valor Unitario Promocional Dealer ">Valor Unitario Promocional Dealer </td>
+                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Descuento">Descuento</td>
                                 <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="">Stock</td>
                                 
 

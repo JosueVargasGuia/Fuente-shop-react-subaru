@@ -849,10 +849,10 @@
         max-width: 1200px;
         min-width: 99%;
         min-height: 300px;
-        overflow-x: auto;
         table {
             width: 100%;
             thead {
+                display: block;
                 tr {
                     td {
                         text-align: center;
@@ -866,20 +866,25 @@
             }
             tbody {
                 font-size: 0.8em;
+                height: 270px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                display: block;
                 tr {
                     td {
                         border: solid 0.5px var(--color-font2);
                         font-size: 11px;
-                      
                     }
                 }
             }
         }
     }
 }
-.td_number{
+
+.td_number {
     text-align: right;
 }
+
 .form-body-correo {
     display: flex;
     flex-wrap: wrap;
@@ -1203,11 +1208,10 @@
     background-color: var(--color-font3);
     min-height: 320px;
     border-radius: 5px 5px 5px 5px;
-    .form-accion{
+    .form-accion {
         margin: 0.5em;
         display: flex;
         justify-content: flex-end;
-        
     }
     .div-table {
         width: 98%;
@@ -1238,8 +1242,8 @@
                     td {
                         border: solid 0.5px var(--color-font2);
                         font-size: 12px;
-                        text-align: center;                        
-                        i{                           
+                        text-align: center;
+                        i {
                             font-size: 15px;
                             color: var(--color-font-default);
                             cursor: pointer;
@@ -1250,23 +1254,25 @@
         }
     }
 }
-.clsbutton{
-    width: 130px !important;
-} 
 
-.onState{
-height: 15px;
-width: 15px;
-border-radius: 50px;
-background-color: #05b105;
-border-color: #05b105;
-border: none;
+.clsbutton {
+    width: 130px !important;
 }
-.offState{
+
+.onState {
     height: 15px;
-width: 15px;
-border-radius: 50px;
-background-color: #d00;
-border-color: #d00;
-border: none;
+    width: 15px;
+    border-radius: 50px;
+    background-color: #05b105;
+    border-color: #05b105;
+    border: none;
+}
+
+.offState {
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background-color: #d00;
+    border-color: #d00;
+    border: none;
 }
