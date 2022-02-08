@@ -487,7 +487,7 @@ export default function ProductoFilter(props) {
                 {_marca.codigoMarca === 0 && FILTER === MENU ? (
                   <ul className="prod-filter-menu">
                     <li className="prod-filter-menu-titulo" key="Oferta">
-                      {state.MenuDescripcion}
+                     {state.MenuDescripcion}
                     </li>
                   </ul>
                 ) : (

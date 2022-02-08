@@ -129,7 +129,7 @@ FilterMarcas(props) {
         </div>
         <div className="inner-header">
           <div className="filter-home">
-            <Link className="filter-home-concecionario" to={'/shop'}> <span className="filter-home-emp-nombre">EA Corp</span>&nbsp;<span className="filter-home-emp-sociedad">sac&nbsp;</span>
+            <Link className="filter-home-concecionario" to={'/shop'}> <span className="filter-home-emp-nombre">EA Corp</span>&nbsp;<span className="filter-home-emp-sociedad">SAC&nbsp;</span>
             </Link>
            
           </div>
