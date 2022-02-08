@@ -923,10 +923,10 @@ h4 {
     box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
     ;
     cursor: pointer;
-    svg{
+    svg {
         width: 106px;
         height: 55px;
-        margin-left: 8px; 
+        margin-left: 8px;
     }
 }
 
@@ -1099,7 +1099,7 @@ h4 {
     height: 85%;
     width: 100%;
     text-align: center;
-    border-bottom: 2px solid rgba(70, 67, 67, 20%);
+    border-bottom: 2px solid rgba(146, 143, 143, 0.2);
 }
 
 .producto-card-img hr {
@@ -1127,13 +1127,15 @@ h4 {
 .producto-card-vista {
     text-align: center;
     position: relative;
+    height: auto;
+    top: inherit;
     top: -2.5em;
     height: 0em;
     padding: 0.3em;
     z-index: 99;
     background: var(--color-background-white);
-    border-top: 2px solid rgba(70, 67, 67, 20%);
-    ;
+    transition: ease-in-out all 250ms;
+    box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.2%);
     display: none;
 }
 
@@ -1430,7 +1432,7 @@ h4 {
     padding-right: 0.1em;
     background-color: var(--btn-primary);
     color: var(--color-font3);
-    min-width: 70px;
+    min-width: 55px;
 }
 
 .filter-row-mobile .header-link {
@@ -1547,7 +1549,6 @@ h4 {
     margin-bottom: 1em;
     background: var(--color-background-white);
     box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
-    
     font-weight: bold;
     color: var(--color-font-default);
 }
@@ -1629,9 +1630,10 @@ h4 {
     margin-right: 0.2em;
 }
 
-.producto-det-row-cantidad  {
-    input{
-        width: 98%;}
+.producto-det-row-cantidad {
+    input {
+        width: 98%;
+    }
 }
 
 .producto-det-row-subtotal {
@@ -1644,7 +1646,7 @@ h4 {
 .producto-det-row-accion {
     padding-top: 2em;
     width: 8%;
-    .btn{
+    .btn {
         padding: 0.2em 0.3em;
     }
 }
@@ -1703,11 +1705,10 @@ h4 {
     .producto-det-row-subtotal {
         width: 70%;
     }
-   
     .producto-det-row-cantidad {
         width: 20%;
     }
-    .producto-det-row-accion{
+    .producto-det-row-accion {
         padding-top: 2em;
         width: 13%;
     }

@@ -47,7 +47,8 @@ const listaCategoria = [
 const whatsAppLink = "https://api.whatsapp.com/send?phone=51989174932&text=";
 export default function ProductoDestacado(props) {
   const [state, dispatch] = useReducer(reducer, {
-    rowProducto: null,
+    rowProducto: [],
+    rowProductoOferta:[],
     pagina: 1,
     activeIndex: 1,
     displayLista: displayLista.DETALLE,
@@ -98,11 +99,15 @@ export default function ProductoDestacado(props) {
    
     let rowProducto = [];
     //let rowProductoRecomendado = [];
-    //let rowProductoOferta = [];
+    let rowProductoOferta = [];
     //let rowProductoRemate = [];
     let _FilterProducto = FilterProducto.FILTER_DESTACADO_MARCA;
 
-
+    rowProductoOferta = await handleServicioBuscarProductoFilter(
+      _pagina,
+      _limit,
+      FilterProducto.FILTER_OFERTA
+    );
     const rpt = await findProductos({
       chrCodigoFamilia: chrCodigoFamilia,
       vchDescripcion: vchDescripcion,
@@ -110,7 +115,7 @@ export default function ProductoDestacado(props) {
       limit: _limit,
       filterProducto: _FilterProducto,
     });
-    console.log(rpt);
+    console.log(rowProductoOferta);
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
 
@@ -152,6 +157,7 @@ export default function ProductoDestacado(props) {
         dispatch({
           type: actionType.FIND_PRODUCTOS,
           rowProducto: rowProducto,
+          rowProductoOferta:rowProductoOferta,
           displayLista: displayLista.DETALLE,
           server: {
             error: "",
@@ -179,42 +185,118 @@ export default function ProductoDestacado(props) {
       });
     }
   }
+  async function handleServicioBuscarProductoFilter(
+    _pagina,
+    _limit,
+    _FilterProducto
+  ) {
+    let row = [];
+    const rpt = await findProductos({
+      chrCodigoFamilia: null,
+      vchDescripcion: null,
+      pagina: _pagina,
+      limit: _limit,
+      filterProducto: _FilterProducto,
+    });
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+      const json = await rpt.json();
+      for (let index = 0; index < json.listaProductos.length; index++) {
+        let e = json.listaProductos[index];
+        let producto = {
+          chrCodigoProducto: e.chrCodigoProducto,
+          numValorVentaDolar: e.numValorVentaDolar,
+          numValorVentaSoles: e.numValorVentaSoles,
+          numCodigoMoneda: e.numCodigoMoneda,
+          vchDescripcion: e.vchDescripcion,
+          vchDescripcionSmall: e.vchDescripcionSmall,
+          numStock: e.numStock,
+          totalRegistros: e.totalRegistros,
+          familia: {
+            chrCodigoFamilia: e.familia.chrCodigoFamilia,
+            vchDescripcion: e.familia.vchDescripcion,
+          },
+          /*Url de la imagen a mostrar en la lista de productos  */
+          imagenDefault: {
+            numCodigoProductoIimagen: e.imagenDefault.numCodigoProductoIimagen,
+            chrCodigoProducto: e.imagenDefault.chrCodigoProducto,
+            chrSrcImagen: e.imagenDefault.chrSrcImagen,
+            chrNombre: e.imagenDefault.chrNombre,
+            chrType: e.imagenDefault.chrType,
+          },
+          listaProductoImagen: [],
+        };
+        row.push(
+          <ProductosCard
+            moneda={props.moneda}
+            producto={producto}
+            key={producto.chrCodigoProducto}
+          ></ProductosCard>
+        );
+      }
+    }
+    return row;
+  }
+
 
   return (
-    <div key={props.marcaSelect.chrCodigoFamilia} >
-
+    <div key={props.marcaSelect.chrCodigoFamilia}>
       <div className="produc-destacado">
+      {state.rowProductoOferta.length <= 0? (
+          <></>
+        ) : (
+          <>
+            <div className="produc-destacado-title">
+              <h4>OFERTAS</h4>
+            </div>
+            <div className="produc-destacado-wrapper">
+              <div className="produc-destacado-item">
+                {state.rowProductoOferta }
+              </div>
+              <div className="produc-destacado-item produc-destacado-item-right link-href">
+                <Link
+                  to={"/shop/oferta/filter/all"}
+                >
+                  Todos en Oferta &raquo;
+                </Link>
+              </div>
+            </div>
+          </>
+        )}
+
         <div className="produc-destacado-title">
-          <h4>PRODUCTOS DESTACADOS</h4>
+          <h4>DESTACADOS</h4>
         </div>
         <div className="produc-destacado-wrapper">
           <div className="produc-destacado-item">
-            {state.rowProducto === null ? <LoadingClassic></LoadingClassic> : state.rowProducto}
+            {state.rowProducto === null ? (
+              <LoadingClassic></LoadingClassic>
+            ) : (
+              state.rowProducto
+            )}
           </div>
           <div className="produc-destacado-item produc-destacado-item-right link-href">
-            <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"}>Todos los productos &raquo;</Link>
+            <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"}>
+              Todos los productos &raquo;
+            </Link>
           </div>
         </div>
+       
         <div className="produc-destacado-links">
           <h3 className="produc-destacado-links-title">Piezas de Repuesto</h3>
           <hr />
-          <div className="produc-link">
-            {rowRepuesto}
-          </div>
+          <div className="produc-link">{rowRepuesto}</div>
         </div>
         <div className="produc-destacado-links">
           <h3 className="produc-destacado-links-title">Accesorios Populares</h3>
           <hr />
-          <div className="produc-link">
-            {rowAccesorios}
-          </div>
+          <div className="produc-link">{rowAccesorios}</div>
         </div>
         <div className="produc-destacado-links">
-          <h3 className="produc-destacado-links-title">Accesorios subaru por categoría</h3>
+          <h3 className="produc-destacado-links-title">
+            Accesorios subaru por categoría
+          </h3>
           <hr />
-          <div className="produc-link-accesorio">
-            {rowCategoria}
-          </div>
+          <div className="produc-link-accesorio">{rowCategoria}</div>
         </div>
       </div>
 
@@ -228,7 +310,6 @@ export default function ProductoDestacado(props) {
         </a>
       </div>
     </div>
-
   );
 }
 
@@ -242,6 +323,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         rowProducto: action.rowProducto,
+        rowProductoOferta:action.rowProductoOferta,
         displayLista: action.displayLista,
         server: action.server,
       };

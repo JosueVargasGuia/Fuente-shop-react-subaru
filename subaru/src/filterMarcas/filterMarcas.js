@@ -2,29 +2,9 @@ import "./filterMarcas.css";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import TipoCambio from "../producto/tipoCambio";
-import { homepage, LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
+import { homepage, listaAcesorios, listaRepuesto, LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
 import BottonCarrito from "../utils/bottonCarrito";
-
-const listaRepuesto = [
-  { descripcion: "Tren de Transmisión" ,codigo:1},
-  { descripcion: "Sistema Eléctrico",codigo:2 },
-  { descripcion: "Sistema de enfriamiento",codigo:3 },
-  { descripcion: "Repuestos de Mantenimiento",codigo:4 },
-  { descripcion: "Sistema de Dirección",codigo:5 },
-  { descripcion: "Estilo de Vida Subaru",codigo:6 },
-  { descripcion: "Interior" ,codigo:7},
-  { descripcion: "Fluidos",codigo:8 },
-  { descripcion: "Sistemas de Frenos" ,codigo:9},
-  { descripcion: "Puertas y Paneles",codigo:10 },
-  { descripcion: "Suspensión",codigo:11 },]
-
-const listaAcesorios = [
-  { descripcion: "Audio / Media",codigo:1 },
-  { descripcion: "Comodidad y Conveniencia",codigo:2 },
-  { descripcion: " Estilo de Vida",codigo:3 },
-  { descripcion: "Protección y Seguridad",codigo:4 },
-  { descripcion: "Estilo",codigo:5 },
-  { descripcion: " Productos STI",codigo:6 },]
+import {  } from "../service/ENUM";
 export default function 
 FilterMarcas(props) {
   //let status = props.marcaSelect.codigoMarca === 0 ? 0 : 1;
@@ -33,11 +13,11 @@ FilterMarcas(props) {
 
   const [srcLogo] = useState(window.location.origin+(homepage===undefined?"":"/"+homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
-  let rowRepuesto = listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
-    <Link to="/shop">{rowRepu.descripcion}</Link>
+  let rowRepuesto =listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
+    <Link to={"/shop/"+rowRepu.identificador+"/filter/all"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
   </li>);
   let rowAccesorio = listaAcesorios.map((rowAcce) => <li key={rowAcce.codigo}>
-    <Link to="/shop">{rowAcce.descripcion}</Link>
+    <Link to={"/shop/"+rowAcce.identificador+"/filter/all"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
   </li>);
 
 
@@ -66,9 +46,9 @@ FilterMarcas(props) {
       <div className="header-nav">
         <div className="header-phone">
           <span className="span-phone">
-            Llámenos:{" "}
+            Central Repuestos:{" "}
             <a className="class-telf" href="tel:">
-              01 631 5020
+             (511) 630 7600
             </a>
           </span>
         </div>
@@ -133,12 +113,12 @@ FilterMarcas(props) {
           </div>
           <div className="filter-marca-categoria">
             <ul className="nav-span">
-              <li>REPUESTOS
+              <li>Repuestos
                 <ul>
                   {rowRepuesto}
                 </ul>
               </li>
-              <li >ACCESORIOS
+              <li >Accesorios y LifeStyle
                 <ul>
                   {rowAccesorio}
                 </ul>
@@ -149,7 +129,7 @@ FilterMarcas(props) {
         </div>
         <div className="inner-header">
           <div className="filter-home">
-            <Link className="filter-home-concecionario" to={'/shop'}> EA Corp - Concesionario Autorizado
+            <Link className="filter-home-concecionario" to={'/shop'}> <span className="filter-home-emp-nombre">EA Corp</span>&nbsp;<span className="filter-home-emp-sociedad">sac&nbsp;</span>
             </Link>
            
           </div>
@@ -247,12 +227,12 @@ FilterMarcas(props) {
       <div className="filter-row-mobile-input">
       <div className="filter-row-mobile-menu">
       <ul className="nav-span">
-              <li>REPUESTOS
+              <li>Repuestos
                 <ul>
                   {rowRepuesto}
                 </ul>
               </li>
-              <li >ACCESORIOS
+              <li >Accesorios y LifeStyle
                 <ul>
                   {rowAccesorio}
                 </ul>

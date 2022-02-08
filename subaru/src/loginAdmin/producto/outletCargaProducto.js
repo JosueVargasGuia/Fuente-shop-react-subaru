@@ -253,13 +253,13 @@ export default function OutletCargaProducto(props) {
                     _listData.push(<tr key={_stock.index}>
                         <td style={{ width: '3%' }}>{_stock.index+1}</td>
                         <td style={{ width: '80px' }}>{_stock.chrCodigoProducto}</td>
-                        <td style={{ minWidth: '270px' }}>{_stock.vchDescripcion}</td>
+                        <td style={{ width: '270px' }}>{_stock.vchDescripcion}</td>
                         <td style={{ width: '8%', minWidth: '60px'}}>{_stock.numUnspc}</td>
                         <td style={{ width: '8%', minWidth: '120px' }} className="td_number">{_stock.numValorVenta}</td>
                         <td style={{ width: '12%', minWidth: '120px'}}className="td_number">{_stock.numValorRefVenta}</td>
                         <td style={{ width: '8%', minWidth: '120px'}} className="td_number">{_stock.numValorCompra}</td>
-                        <td style={{ width: '8%', minWidth: '120px' }} className="td_number">{_stock.numValorDesc}</td>
-                        <td style={{ width: '8%', minWidth: '120px'}}  className="td_number">{_stock.numStock}</td>
+                        <td style={{ width: '5%', minWidth: '100px'}} className="td_number">{_stock.numValorDesc}</td>
+                        <td style={{ width: '5%', minWidth: '60px'}}  className="td_number">{_stock.numStock}</td>
                         
                     </tr>);
                 }
@@ -445,16 +445,15 @@ export default function OutletCargaProducto(props) {
                             <tr>
                                 <td style={{ width: '3%' }}>Nro</td>
                                 <td style={{ width: '80px' }}>Código</td>
-                                <td style={{ minWidth: '270px' }}>Descripción</td>
+                                <td style={{ width: '270px' }}>Descripción</td>
                                 <td style={{ width: '8%', minWidth: '60px', textAlign: 'center' }} title="UNSPC">UNSPC</td>
                                 <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Precio Publico Promocional Unitario">Precio Publico Promocional Unitario</td>
                                 <td style={{ width: '12%', minWidth: '120px', textAlign: 'center' }} title="Precio Publico Regular Unitario">Precio Publico Regular Unitario</td>
                                 <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Valor Unitario Promocional Dealer ">Valor Unitario Promocional Dealer </td>
-                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Descuento">Descuento</td>
-                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="">Stock</td>
-                                
-
+                                <td style={{ width: '5%', minWidth: '100px'}} title="Descuento">Descuento</td>
+                                <td style={{ width: '5%', minWidth: '60px'}} title="">Stock</td>
                             </tr>
+                                
                         </thead>
                         <tbody>
                             {state.listData}

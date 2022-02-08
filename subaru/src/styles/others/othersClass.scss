@@ -1,8 +1,13 @@
 /*Josue 19/05/2021 cambios de la reunion Nroº1*/
 
+@font-face {
+    font-family: EurostileExtended;
+    src: url(Eurostile-ExtendedTwo.otf);
+}
+
 .header-nav-banner {
     padding: 0.5em;
-    background-color: #00a3e0;
+    background-color: #0000ff;
     color: var(--color-font3);
     text-align: center;
 }
@@ -437,8 +442,9 @@
         color: var(--color-font-default);
         &:hover {
             color: var(--color-button-hover2);
+            border-bottom: solid 1px var(--color-button-hover2);
         }
-        width: 120px;
+        margin-right: 0.5em;
         ul {
             display: none;
             width: 250px;
@@ -446,15 +452,18 @@
             li {
                 list-style: none;
                 text-align: start;
-                margin-left: 1em;
-                width: 230px;
+                width: 250px;
+                font-weight: normal;
+                font-size: 14px;
+                font-family: serif;
                 a {
-                    color: var(--color-font-default);
+                    color: var(--color-font);
                     text-decoration: none;
                     &:hover {
                         color: var(--color-button-hover2);
                     }
                 }
+                border-bottom: solid 1px #c9c7c7;
             }
         }
     }
@@ -858,7 +867,7 @@
                         text-align: center;
                         font-size: 0.8em;
                         font-weight: bold;
-                        border: solid 0.5px var(--color-font2);
+                        border: solid 0.5px var(--color-font3);
                         color: var(--color-font3);
                         background-color: var(--color-font2);
                     }
@@ -1179,6 +1188,10 @@
     .prod-filter-page {
         margin-top: 6px;
     }
+    h4 {
+        font-size: 20px;
+        font-weight: normal;
+    }
 }
 
 .container-Carousel-list {
@@ -1275,4 +1288,15 @@
     background-color: #d00;
     border-color: #d00;
     border: none;
+}
+
+.filter-home-emp-nombre {
+    font-family: EurostileExtended;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.filter-home-emp-sociedad {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
 }

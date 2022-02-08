@@ -163,6 +163,7 @@ export default function DashboardAdmin(props) {
             <Loading></Loading>
           </div></div>
         </>}
+        <a href='http://190.81.61.102:8080/EACORP-TEST/welcome.do' target='_balnk'>ERP</a>
       <ServerException server={state.server}></ServerException>
     </div>
   );

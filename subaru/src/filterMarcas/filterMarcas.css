@@ -21,6 +21,7 @@
     .nav-marcas li:hover>ul {
         display: block !important;
         cursor: pointer !important;
+        list-style-type: none;
     }
     .nav-marcas-li-ul-li {
         display: block !important;

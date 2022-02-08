@@ -79,6 +79,7 @@ let actionType = {
 const reducer = (state, action) => {
   switch (action.type) {
     case actionType.SELECT_MARCAS:
+       
       return {
         ...state,
         marca: action.marca,
@@ -87,6 +88,7 @@ const reducer = (state, action) => {
         indexCarrucel: 0,
       };
     case actionType.SELECT_MARCAS_FORDETALLE:
+       
       return {
         ...state,
         marca: action.marca,
@@ -252,7 +254,11 @@ function App() {
 
   /*Al seleccionar la marca del producto */
   async function handleSelectMarcaChange(e, invoke) {
+    
     let marca = lstMarcas.find((marca) => marca.codigoMarca === e);
+    if(marca===undefined){
+      marca=lstMarcas[0];
+    }
     dispatch({
       type: actionType.SELECT_MARCAS,
       marca: marca,
@@ -328,6 +334,7 @@ function App() {
                   displayLista={state.displayLista}
                   moneda={state.moneda}
                 ></ProductoDestacado>
+                
               </div>
             </Route>
             <Route path={"/outlet"} exact={true}>
