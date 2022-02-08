@@ -46,7 +46,7 @@ FilterMarcas(props) {
       <div className="header-nav">
         <div className="header-phone">
           <span className="span-phone">
-            Central Repuestos:{" "}
+            Central de Repuestos:{" "}
             <a className="class-telf" href="tel:">
              (511) 630 7600
             </a>
