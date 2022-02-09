@@ -447,15 +447,23 @@
     font-weight: bold;
     li {
         color: var(--color-font-default);
+        margin-left: 1.5em;
+        margin-right: 0.5em;
+        @media (min-width: 0px) and (max-width: 994px){
+            margin-left: 0.1em;
+            margin-right: 0.1em;
+            font-size: 15px;
+        }
         &:hover {
             color: var(--color-button-hover2);
             border-bottom: solid 1px var(--color-button-hover2);
         }
-        margin-right: 0.5em;
+        
         ul {
             display: none;
-            width: 250px;
+            width: 260px;
             box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+           
             li {
                 list-style: none;
                 text-align: start;
@@ -463,6 +471,7 @@
                 font-weight: none !important;
                 font-size: 14px;
                 font-family: Helvetica, sans-serif;
+                margin-left: 0em;
                 a {
                     color: var(--color-font);
                     text-decoration: none;

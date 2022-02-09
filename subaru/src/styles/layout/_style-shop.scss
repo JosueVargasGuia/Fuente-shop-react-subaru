@@ -2198,7 +2198,7 @@ h4 {
     padding-top: 1em;
     padding-bottom: 1em;
     box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
-    ;
+  
 }
 
 .prod-filter-menu input[type="checkbox"] {
@@ -2209,7 +2209,7 @@ h4 {
     margin: 0.5em;
     font-weight: bold;
     border-bottom: solid 1px var(--color-font);
-    color: var(--color-font-default);
+    color: var(--color-font5);
     cursor: pointer;
 }
 
@@ -2238,6 +2238,7 @@ h4 {
 
 .prod-filter-menu-titulo {
     border-bottom: none !important;
+    color: var(--color-arrow-active) !important;
 }
 
 .prod-filter-page {

@@ -2,6 +2,7 @@ import { fetchService, tokenFetchService, METHOD } from "../matchService/fetchSe
 
 import { IP, URL } from "./IP";
 async function findProductos(body) {
+  console.log(body);
   const response = await fetchService(
     IP(URL.OBTENER_PRODUCTOS),
     body,

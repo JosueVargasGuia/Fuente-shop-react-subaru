@@ -96,7 +96,7 @@
 }
 
 .filter-row-mobile-menu {
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 0.5em !important;
 }
 
@@ -110,8 +110,10 @@
 
 .filter-row-mobile-input .filter-input-search {
     width: 100%;
+    border-top: solid 2px var(--color-font-disable);
+    padding-top: 2px;
 }
-
+ 
 .filter-input-search {
     margin-top: 0.5em;
 }
