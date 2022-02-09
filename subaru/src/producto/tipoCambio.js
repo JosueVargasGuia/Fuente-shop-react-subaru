@@ -67,7 +67,7 @@ export default function TipoCambio(props) {
 
   return (
     <span className="tipo-cambio">
-      {state.tipoCambio.tipoCambioVenta}
+      S/{parseFloat(state.tipoCambio.tipoCambioVenta).toFixed(2)}
       {state.server.success === SUCCESS_SERVER.SUCCES_SERVER_INFO ? (
         <div>
           <br />

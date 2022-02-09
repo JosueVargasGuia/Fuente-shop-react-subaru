@@ -4,20 +4,20 @@ import { Link, useHistory } from "react-router-dom";
 import TipoCambio from "../producto/tipoCambio";
 import { homepage, listaAcesorios, listaRepuesto, LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
 import BottonCarrito from "../utils/bottonCarrito";
-import {  } from "../service/ENUM";
-export default function 
-FilterMarcas(props) {
+import { } from "../service/ENUM";
+export default function
+  FilterMarcas(props) {
   //let status = props.marcaSelect.codigoMarca === 0 ? 0 : 1;
 
 
 
-  const [srcLogo] = useState(window.location.origin+(homepage===undefined?"":"/"+homepage) + "/marcas/logo.png");
+  const [srcLogo] = useState(window.location.origin + (homepage === undefined ? "" : "/" + homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
-  let rowRepuesto =listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
-    <Link to={"/shop/"+rowRepu.identificador+"/filter/all"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
+  let rowRepuesto = listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
+    <Link to={"/shop/" + rowRepu.identificador + "/filter/all"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
   </li>);
   let rowAccesorio = listaAcesorios.map((rowAcce) => <li key={rowAcce.codigo}>
-    <Link to={"/shop/"+rowAcce.identificador+"/filter/all"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
+    <Link to={"/shop/" + rowAcce.identificador + "/filter/all"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
   </li>);
 
 
@@ -28,9 +28,9 @@ FilterMarcas(props) {
     props.handleSelectMarcaChange(lstMarcas[0].codigoMarca, 'FilterMarcas');
     history.push("/shop");
   };
- /* const onClickImageShop = () => {
-    props.handleSelectMarcaChange(0, 'FilterMarcas');
-  };*/
+  /* const onClickImageShop = () => {
+     props.handleSelectMarcaChange(0, 'FilterMarcas');
+   };*/
   async function handleClickBuscarProductos() {
     console.log(descripcion);
     history.push("/shop/search/filter/" + descripcion);
@@ -48,7 +48,7 @@ FilterMarcas(props) {
           <span className="span-phone">
             Central Repuestos:{" "}
             <a className="class-telf" href="tel:">
-             (511) 630 7600
+              (511) 630 7600
             </a>
           </span>
         </div>
@@ -58,7 +58,7 @@ FilterMarcas(props) {
             <span className="tip-cambio">
               <TipoCambio></TipoCambio>
             </span>
-            Moneda
+            <span className="tip-cambio-moneda">Moneda</span>
             <select
               className="tip-cambio-select "
               name="numTipoMoneda"
@@ -129,9 +129,17 @@ FilterMarcas(props) {
         </div>
         <div className="inner-header">
           <div className="filter-home">
-            <Link className="filter-home-concecionario" to={'/shop'}> <span className="filter-home-emp-nombre">EA Corp</span>&nbsp;<span className="filter-home-emp-sociedad">SAC&nbsp;</span>
-            </Link>
-           
+            <ul className="nav-span">
+              <li>
+                <Link className="filter-home-concecionario" to={'/shop'}> <span className="filter-home-emp-nombre">EA Corp</span>&nbsp;<span className="filter-home-emp-sociedad">SAC&nbsp;</span>
+                </Link>
+                <ul className="nav-span-filter-home">
+                   <li><a href='https://subaru.eanet.pe/misubaru/' target="_parent">&nbsp;&nbsp;&nbsp;Ir a suite MiSubaru</a></li>
+                   <li><a href='https://subaru.eanet.pe/service/turno-atencion.do?p_accion_back=5' target="_parent">&nbsp;&nbsp;&nbsp;Agendar Servicio</a></li>
+                </ul>
+                </li>
+            </ul>
+
           </div>
           <i className="fa fa-peru" aria-hidden="true"></i>
           <div className="filter-input">
@@ -159,12 +167,12 @@ FilterMarcas(props) {
       </div>
 
       <div className="filter-row-mobile">
-      <ul className="nav-marcas">
+        <ul className="nav-marcas">
           <li>
             <span>
               <i className="fa fa-bars menu-bar" aria-hidden="true"></i>
             </span>
-            <ul>              
+            <ul>
               <li>
                 <div className="header-link-tipcambio">
                   Moneda
@@ -175,10 +183,10 @@ FilterMarcas(props) {
                     onChange={props.handleChangeTipoMoneda}
                   >
                     <option value={Moneda.DOLARES.numCodigoMoneda}>
-                      {Moneda.DOLARES.codigoIso4217  }
+                      {Moneda.DOLARES.codigoIso4217}
                     </option>
                     <option value={Moneda.SOLES.numCodigoMoneda}>
-                      {Moneda.SOLES.codigoIso4217 }
+                      {Moneda.SOLES.codigoIso4217}
                     </option>
                   </select>
                 </div>
@@ -187,11 +195,11 @@ FilterMarcas(props) {
           </li>
         </ul>
 
-      
-          <div className="filter-image">
-            <img src={srcLogo} alt="" onClick={onClickImage}></img>
-          </div>
-       
+
+        <div className="filter-image">
+          <img src={srcLogo} alt="" onClick={onClickImage}></img>
+        </div>
+
 
         <div className="header-link">
           {props.islogin !== LOGGIN.LOGGIN ? (
@@ -220,27 +228,27 @@ FilterMarcas(props) {
           )}
           <BottonCarrito islogin={props.islogin}></BottonCarrito>
         </div>
-        <br/>
-        
+        <br />
+
       </div>
-     
+
       <div className="filter-row-mobile-input">
-      <div className="filter-row-mobile-menu">
-      <ul className="nav-span">
-              <li>Repuestos
-                <ul>
-                  {rowRepuesto}
-                </ul>
-              </li>
-              <li >Accesorios y LifeStyle
-                <ul>
-                  {rowAccesorio}
-                </ul>
-              </li>
-            </ul>
-      </div>
+        <div className="filter-row-mobile-menu">
+          <ul className="nav-span">
+            <li>Repuestos
+              <ul>
+                {rowRepuesto}
+              </ul>
+            </li>
+            <li >Accesorios y LifeStyle
+              <ul>
+                {rowAccesorio}
+              </ul>
+            </li>
+          </ul>
+        </div>
         <div className="filter-input-search">
-          
+
           <input
             placeholder="Búsqueda en Catálogo"
             value={props.decripcion}
