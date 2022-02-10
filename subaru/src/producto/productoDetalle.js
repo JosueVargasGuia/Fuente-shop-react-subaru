@@ -406,7 +406,7 @@ export default function ProductoDetalle(props) {
               {state.producto.listaProductoImagen}
             </Carousel>
           </div>
-
+          <div className="prod-det-carrousel-text">Imagen referencial</div>
         </div>
         <div className="producto-det-row2">
           <div className="producto-det-row2-nombre">

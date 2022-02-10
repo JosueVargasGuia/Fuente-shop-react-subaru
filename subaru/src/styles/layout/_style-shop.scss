@@ -1188,6 +1188,12 @@ h4 {
 .producto-det-row1 {
     width: 50%;
     text-align: center;
+    .prod-det-carrousel-text {
+        font-family: cursive;
+        color: var(--color-button-hover2);
+        font-size: 1em;
+        margin-bottom: 2px;
+    }
 }
 
 .producto-det-row1 img {

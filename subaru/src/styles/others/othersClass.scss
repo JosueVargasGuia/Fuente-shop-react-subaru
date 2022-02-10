@@ -917,6 +917,21 @@
                         border: solid 0.5px var(--color-font3);
                         color: var(--color-font3);
                         background-color: var(--color-font2);
+                        i {
+                            width: 20px;
+                            cursor: pointer;
+                        }
+                        .search {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            input {
+                                width: 70%;
+                                font-size: 12px;
+                                height: 18px;
+                                padding: 0.1em;
+                            }
+                        }
                     }
                 }
             }

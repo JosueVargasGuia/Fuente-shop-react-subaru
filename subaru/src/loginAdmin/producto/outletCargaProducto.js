@@ -12,68 +12,83 @@ let actionType = {
     LISTDATA: "LISTDATA",
     setFile: "setFile",
     setListDataJson: "setListDataJson",
+    setListDataJsonLoad: "setListDataJsonLoad",
     setListDataJsonAndVigencia: "setListDataJsonAndVigencia",
     setDteDesde: "setDteDesde",
     setDteHasta: "setDteHasta",
     setNumEstado: "setNumEstado",
     setListaError: "setListaError",
+   
     ERROR: "ERROR"
 };
 const reducer = (state, action) => {
     switch (action.type) {
-        case actionType.ERROR:
-            return {
-                ...state,
-                server: action.server,
-            };
-        case actionType.setFile:
-            return {
-                ...state,
-                file: action.file,
-            };
-        case actionType.setListDataJson:
-            return {
-                ...state,
-                listDataJson: action.listDataJson,
-                listData: action.listData,
-                server: action.server,
-            };
-        case actionType.setListDataJsonAndVigencia:
-            return {
-                ...state,
-                listDataJson: action.listDataJson,
-                listData: action.listData,
-                dteDesde: action.dteDesde,
-                dteHasta: action.dteHasta,
-                numEstado: action.numEstado,
-                server: action.server,
-            };
-        case actionType.setDteDesde:
-            return {
-                ...state,
-                dteDesde: action.dteDesde,
-            };
+      case actionType.ERROR:
+        return {
+          ...state,
+          server: action.server,
+        };
+      case actionType.setFile:
+        return {
+          ...state,
+          file: action.file,
+        };
+      case actionType.setListDataJson:
+        return {
+          ...state,
+          listDataJson: action.listDataJson,
+          listData: action.listData,
+          server: action.server,
+        };
+      case actionType.setListDataJsonLoad:
+          console.log(action.filter);
+        return {
+          ...state,
+          listDataJson: action.listDataJson,
+          listData: action.listData,
+          filter: action.filter,
+        };
+      case actionType.setListDataJsonAndVigencia:
+        return {
+          ...state,
+          listDataJson: action.listDataJson,
+          listData: action.listData,
+          dteDesde: action.dteDesde,
+          dteHasta: action.dteHasta,
+          numEstado: action.numEstado,
+          server: action.server,
+        };
+      case actionType.setDteDesde:
+        return {
+          ...state,
+          dteDesde: action.dteDesde,
+        };
 
-        case actionType.setDteHasta:
-            return {
-                ...state,
-                dteHasta: action.dteHasta,
-            };
-        case actionType.setNumEstado:
-            return {
-                ...state,
-                numEstado: action.numEstado,
-            };
-        case actionType.setListaError:
-            return {
-                ...state,
-                listaError: action.listaError,
-            };
-
-        default:
-            return state;
+      case actionType.setDteHasta:
+        return {
+          ...state,
+          dteHasta: action.dteHasta,
+        };
+      case actionType.setNumEstado:
+        return {
+          ...state,
+          numEstado: action.numEstado,
+        };
+      case actionType.setListaError:
+        return {
+          ...state,
+          listaError: action.listaError,
+        };
+     
+      default:
+        return state;
     }
 }
+const _FILTER={codigoOrderByAsc:'codigoOrderByAsc',
+    codigoOrderByDesc:'codigoOrderByDesc',
+    descripcionOrderByAsc:'descripcionOrderByAsc',
+    descripcionOrderByDesc:'descripcionOrderByDesc',
+    descripcionSearch:'search'};
 export default function OutletCargaProducto(props) {
     let params = useParams();
     let _numProductoVigencia = params.numProductoVigencia;
@@ -90,6 +105,9 @@ export default function OutletCargaProducto(props) {
         listaError: [],
         crud: (_crud === 'update' ? CRUD.UPDATE : CRUD.INSERT),
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
+        filter:{codigoOrderBy:_FILTER.codigoOrderByDesc,
+                descripcionOrderBy:_FILTER.descripcionOrderByAsc,
+                descripcionSearch:_FILTER.descripcionSearch},
     });
     useEffect(() => {
         handleObtenerCliente(props.numCodigoCliente);
@@ -156,7 +174,7 @@ export default function OutletCargaProducto(props) {
            // let _server = { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO }
             for (let index = 0; index < data.length; index++) {
                 const element = data[index];
-                console.log(element);
+                
                 if (index >= 1) {
                     
                     
@@ -180,17 +198,17 @@ export default function OutletCargaProducto(props) {
 
                     };
                     _listDataJson.push(_stock);
-                    _listData.push(<tr key={_stock.index}>
-                        <td>{_stock.index}</td>
-                        <td>{_stock.chrCodigoProducto}</td>
-                        <td>{_stock.vchDescripcion}</td>
-                        <td>{_stock.numUnspc}</td>
-                        <td className="td_number">{_stock.numValorVenta}</td>
-                        <td className="td_number">{_stock.numValorRefVenta}</td>
-                        <td className="td_number">{_stock.numValorCompra}</td>
-                        <td className="td_number">{_stock.numValorDesc}</td>
-                        <td className="td_number">{_stock.numStock}</td>
-                        <td></td>
+                    _listData.push(<tr key={_stock.index}>                        
+                        <td style={{ width: '137px' ,maxWidth:"98px" }}>{_stock.chrCodigoProducto}</td>
+                        <td style={{ width: '334px'   }}>{_stock.vchDescripcion}</td>
+                        <td style={{ width: '85px' }}>{_stock.numUnspc}</td>
+                        <td style={{ width: '100px'  }} className="td_number">{_stock.numValorVenta}</td>
+                        <td style={{ width: '100px' }} className="td_number">{_stock.numValorRefVenta}</td>
+                        <td style={{ width: '100px'  }} className="td_number">{_stock.numValorCompra}</td>
+                        <td style={{width: '80px'  }} className="td_number">{_stock.numValorDesc}</td>
+                        <td style={{ width: '80px'}} title="Modelo">Modelo</td>
+                        <td style={{width: '67px' }} className="td_number">{_stock.numStock}</td>
+                         
                     </tr>);
                 }
             }
@@ -250,17 +268,17 @@ export default function OutletCargaProducto(props) {
 
                     };
                     _listDataJson.push(_stock);
-                    _listData.push(<tr key={_stock.index}>
-                        <td style={{ width: '3%' }}>{_stock.index+1}</td>
-                        <td style={{ width: '80px' }}>{_stock.chrCodigoProducto}</td>
-                        <td style={{ width: '270px' }}>{_stock.vchDescripcion}</td>
-                        <td style={{ width: '8%', minWidth: '60px'}}>{_stock.numUnspc}</td>
-                        <td style={{ width: '8%', minWidth: '120px' }} className="td_number">{_stock.numValorVenta}</td>
-                        <td style={{ width: '12%', minWidth: '120px'}}className="td_number">{_stock.numValorRefVenta}</td>
-                        <td style={{ width: '8%', minWidth: '120px'}} className="td_number">{_stock.numValorCompra}</td>
-                        <td style={{ width: '5%', minWidth: '100px'}} className="td_number">{_stock.numValorDesc}</td>
-                        <td style={{ width: '5%', minWidth: '60px'}}  className="td_number">{_stock.numStock}</td>
-                        
+                    _listData.push(<tr key={_stock.index}>                        
+                        <td style={{ width: '100px' }}>{_stock.chrCodigoProducto}</td>
+                        <td style={{ width: '334px' }}>{_stock.vchDescripcion}</td>
+                        <td style={{ width: '85px'}}>{_stock.numUnspc}</td>
+                        <td style={{ width: '100px'}} className="td_number">{ parseFloat(_stock.numValorVenta).toFixed(2)}</td>
+                        <td style={{ width: '100px'}}className="td_number">{parseFloat(_stock.numValorRefVenta).toFixed(2)}</td>
+                        <td style={{ width: '100px'}} className="td_number">{parseFloat(_stock.numValorCompra).toFixed(2)}</td>
+                        <td style={{ width: '80px'}} className="td_number">{parseFloat(_stock.numValorDesc).toFixed(2)}</td>
+                        <td style={{ width: '80px'}} title="Modelo">Modelo</td>
+                        <td style={{ width: '67px'}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
+                     
                     </tr>);
                 }
 
@@ -344,7 +362,125 @@ export default function OutletCargaProducto(props) {
             });
         }
     }
+    async function handleEventHeadFilter(_FILTER_TYPE) {
+      let _filter = state.filter;
+      let _filterChange = {
+        codigoOrderBy: _filter.codigoOrderByDesc,
+        descripcionOrderBy: _filter.descripcionOrderByAsc,
+        descripcionSearch: _filter.descripcionSearch,
+      };
+      let _listDataJson = state.listDataJson;
+      
+      if (_FILTER_TYPE === "_FILTER_CODIGO") {
+        if (_filter.codigoOrderBy === _FILTER.codigoOrderByAsc) {
+          _listDataJson.sort((a, b) => {
+            let fa = a.chrCodigoProducto;
+            let fb = b.chrCodigoProducto;
+            if (fa < fb) {
+              return -1;
+            }
+            if (fa > fb) {
+              return 1;
+            }
+            return 0;
+          });
+          _filterChange.codigoOrderBy=_FILTER.codigoOrderByDesc;
+        }
+        if (_filter.codigoOrderBy === _FILTER.codigoOrderByDesc) {
+          _listDataJson.sort((a, b) => {
+            let fa = a.chrCodigoProducto;
+            let fb = b.chrCodigoProducto;
+            if (fa < fb) {
+              return -1;
+            }
+            if (fa > fb) {
+              return 1;
+            }
+            return 0;
+          }).reverse();
+          _filterChange.codigoOrderBy=_FILTER.codigoOrderByAsc;
+        }
+        
+       
+      }
 
+
+      if (_FILTER_TYPE === "_FILTER_DESCRIPCION") {
+        if (_filter.codigoOrderBy === _FILTER.descripcionOrderByAsc) {
+          _listDataJson.sort((a, b) => {
+            let fa = a.vchDescripcion;
+            let fb = b.vchDescripcion;
+            if (fa < fb) {
+              return -1;
+            }
+            if (fa > fb) {
+              return 1;
+            }
+            return 0;
+          });
+          _filterChange.codigoOrderBy=_FILTER.codigoOrderByDesc;
+        }
+        if (_filter.codigoOrderBy === _FILTER.codigoOrderByDesc) {
+          _listDataJson.sort((a, b) => {
+            let fa = a.vchDescripcion;
+            let fb = b.vchDescripcion;
+            if (fa < fb) {
+              return -1;
+            }
+            if (fa > fb) {
+              return 1;
+            }
+            return 0;
+          }).reverse();
+          _filterChange.codigoOrderBy=_FILTER.descripcionOrderByAsc;
+        }
+        
+       
+      }
+      handleEventReloadLista(_listDataJson,_filterChange);
+    }
+    async function  handleEventReloadLista(_lista,_filter){
+        let _listDataJson=[];
+        let _listData=[];
+        for (let index = 0; index < _lista.length; index++) {
+            const _object = _lista[index];
+            let _stock = {
+                index: index,
+                chrCodigoProducto: _object.chrCodigoProducto,
+                vchDescripcion: _object.vchDescripcion,
+                numUnspc: _object.numUnspc,
+                numValorVenta: _object.numValorVenta,
+                numValorRefVenta: _object.numValorRefVenta,
+                numValorCompra: _object.numValorCompra,
+                numValorDesc: _object.numValorDesc,
+                numStock: _object.numStock,
+                numProductoVigencia: _object.numProductoVigencia,
+                numProductoOutlet: _object.numProductoOutlet,
+
+            };
+            _listDataJson.push(_stock);
+            _listData.push(<tr key={_stock.index}>                        
+                <td style={{ width: '100px' }}> {_stock.chrCodigoProducto}</td>
+                <td style={{ width: '334px' }}>{_stock.vchDescripcion}</td>
+                <td style={{ width: '85px'}}>{_stock.numUnspc}</td>
+                <td style={{ width: '100px' }} className="td_number">{ parseFloat(_stock.numValorVenta).toFixed(2)}</td>
+                <td style={{ width: '100px'}}className="td_number">{parseFloat(_stock.numValorRefVenta).toFixed(2)}</td>
+                <td style={{ width: '100px'}} className="td_number">{parseFloat(_stock.numValorCompra).toFixed(2)}</td>
+                <td style={{ width: '80px'}} className="td_number">{parseFloat(_stock.numValorDesc).toFixed(2)}</td>
+                <td style={{ width: '80px'}} title="Modelo">Modelo</td>
+                <td style={{ width: '67px'}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
+                
+            </tr>);
+        }
+        
+        dispatch({
+            type: actionType.setListDataJsonLoad,
+            listDataJson: _listDataJson,
+            listData: _listData,
+            filter: _filter,
+        });
+       
+    }
     return (<>
         <div className="registrar-stock">
             <div className="link-href">
@@ -443,19 +579,25 @@ export default function OutletCargaProducto(props) {
                     <table style={{ fontSize: '13px' }} >
                      <thead>
                             <tr>
-                                <td style={{ width: '3%' }}>Nro</td>
-                                <td style={{ width: '80px' }}>Código</td>
-                                <td style={{ width: '270px' }}>Descripción</td>
-                                <td style={{ width: '8%', minWidth: '60px', textAlign: 'center' }} title="UNSPC">UNSPC</td>
-                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Precio Publico Promocional Unitario">Precio Publico Promocional Unitario</td>
-                                <td style={{ width: '12%', minWidth: '120px', textAlign: 'center' }} title="Precio Publico Regular Unitario">Precio Publico Regular Unitario</td>
-                                <td style={{ width: '8%', minWidth: '120px', textAlign: 'center' }} title="Valor Unitario Promocional Dealer ">Valor Unitario Promocional Dealer </td>
-                                <td style={{ width: '5%', minWidth: '100px'}} title="Descuento">Descuento</td>
-                                <td style={{ width: '5%', minWidth: '60px'}} title="">Stock</td>
+                               
+                                <td style={{ width: '137px' }}>Código&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_CODIGO')}></i></td>
+                                <td style={{ width: '334px' }}><div className="search"><div className="search-title">Descripción&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_DESCRIPCION')}></i></div></div></td>
+                                <td style={{ width: '85px',textAlign: 'center' }} title="UNSPC">UNSPC</td>
+                                <td style={{ width: '100px', textAlign: 'center' }} title="Precio Publico Promocional Unitario">Precio Publico Promocional Unitario</td>
+                                <td style={{ width: '100px', textAlign: 'center' }} title="Precio Publico Regular Unitario">Precio Publico Regular Unitario</td>
+                                <td style={{ width: '100px', textAlign: 'center' }} title="Valor Unitario Promocional Dealer ">Valor Unitario Promocional Dealer </td>
+                                <td style={{ width: '80px'}} title="Descuento">Descuento</td>
+                                <td style={{ width: '80px'}} title="Modelo">Modelo</td>
+                                <td style={{ width: '86px'}} title="">Stock</td>
+                                
                             </tr>
                                 
                         </thead>
-                        <tbody>
+                    
+                    </table>
+                     
+                    <table style={{ fontSize: '13px' }} >
+                    <tbody>
                             {state.listData}
                         </tbody>
                     </table>

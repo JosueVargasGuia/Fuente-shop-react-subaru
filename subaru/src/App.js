@@ -7,7 +7,7 @@ import Carrucel from "./carrucel/carrucel";
 import {
   displayLista,
   Empresa,
-  homepage,
+   
   HttpStatus,
   localStoreEnum,
   LOGGIN,
