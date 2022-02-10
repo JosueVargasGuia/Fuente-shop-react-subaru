@@ -299,7 +299,7 @@ function App() {
 
   return (
     <div className="App" style={{ height: height }}>
-      <BrowserRouter basename={homepage}>
+      <BrowserRouter  >
         <BannerHeader></BannerHeader>
         <div className="header-top">
           <div className="container">

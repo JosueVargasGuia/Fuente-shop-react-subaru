@@ -145,7 +145,7 @@ export default function
           <div className="filter-input">
             <div className="filter-input-search">
               <input
-                placeholder="Búsqueda en Catálogo"
+                placeholder="Búscar por descripción "
                 value={props.decripcion}
                 onChange={(e) => handleInputChangeDescripcion(e)}
               ></input>

@@ -11,7 +11,7 @@ import {
   listaRepuesto,
   listaAcesorios,
 } from "../service/ENUM";
-import { obtenerSubFamilia, findProductos } from "../service/producto.service";
+import {  findProductos } from "../service/producto.service";
 import Loading from "../utils/loading";
 
 import ProductosCard from "./productoCard";
@@ -126,82 +126,82 @@ export default function ProductoFilter(props) {
         _INDEN_MENU="Búsqueda";   
         _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});            
         break;
-      case "MENU-1-1":
+      case "Repuesto-1-1":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-2":
+      case "Repuesto-1-2":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-3":
+      case "Repuesto-1-3":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-4":
+      case "Repuesto-1-4":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-5":
+      case "Repuesto-1-5":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-6":
+      case "Repuesto-1-6":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-7":
+      case "Repuesto-1-7":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-8":
+      case "Repuesto-1-8":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-9":
+      case "Repuesto-1-9":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-10":
+      case "Repuesto-1-10":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-11":
+      case "Repuesto-1-11":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-1-12":
+      case "Repuesto-1-12":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-2-1":
+      case "Accesorio-2-1":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-2-2":
+      case "Accesorio-2-2":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-2-3":
+      case "Accesorio-2-3":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
         break;
-      case "MENU-2-4":
+      case "Accesorio-2-4":
         _MENU = _var;
         _FILTER = MENU;
         _INDEN_MENU="Búsqueda";
@@ -236,7 +236,7 @@ if(_MENU!==MENU){
       filter: _FILTER,}
   }  
 
-  async function handleEventCargarSubFamilia(_chrCodigoFamilia) {
+  /*async function handleEventCargarSubFamilia(_chrCodigoFamilia) {
     let lstSubFamilia = [];
     const rpt = await obtenerSubFamilia({
       chrCodigoFamilia: _chrCodigoFamilia,
@@ -282,7 +282,7 @@ if(_MENU!==MENU){
         },
       });
     }
-  }
+  }*/
   async function handleEventAddSubFamiliaSelect(
     _currentPage,
     _filterOrder,
@@ -446,7 +446,7 @@ if(_MENU!==MENU){
         <div className="prod-filter-column1">
           <div className="link-href">
             <Link to="/shop">Inicio</Link> &nbsp;&nbsp;/
-             <span>{_marca.decripcion}</span>
+             <span className="link-href-span">{_marca.decripcion}</span>
           </div>
           <ul className="prod-filter-menu">              
               {state.lstMenuVertical.map((_objeto) => (
