@@ -1035,6 +1035,7 @@ h4 {
 .link-href span {
     padding-right: 0.5em;
     padding-left: 1em;
+    cursor: context-menu;
 }
 
 .link-href a:hover {
@@ -2185,6 +2186,7 @@ h4 {
     width: 74%;
     justify-content: left;
     align-content: flex-start;
+    min-height: 253px;
 }
 
 .prod-filter-menu {
@@ -2198,7 +2200,7 @@ h4 {
     padding-top: 1em;
     padding-bottom: 1em;
     box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
-  
+    font-family: ArialTFF, Arial, Helvetica, sans-serif;
 }
 
 .prod-filter-menu input[type="checkbox"] {
@@ -2208,9 +2210,14 @@ h4 {
 .prod-filter-menu li {
     margin: 0.5em;
     font-weight: bold;
-    border-bottom: solid 1px var(--color-font);
+    border-bottom: solid 1px var(--color-font5);
     color: var(--color-font5);
     cursor: pointer;
+}
+
+.prod-filter-menu li:hover {
+    border-bottom: solid 1px var(--color-font-hover);
+    color: var(--color-font-hover);
 }
 
 .prod-filter-menu li ul {

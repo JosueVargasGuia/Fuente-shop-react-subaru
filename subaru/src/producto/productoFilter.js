@@ -27,8 +27,7 @@ export default function ProductoFilter(props) {
   let _marca = lstMarcas[0];
   
    
-  
-  let _menu = params.descripcion;
+
   
   // eslint-disable-next-line default-case   
  
@@ -47,7 +46,8 @@ export default function ProductoFilter(props) {
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
   useEffect(() => {
-    handleInitVariable(_menu);
+    console.log("handleInitVariable 1");
+    handleInitVariable(params.descripcion);
   }, [params.descripcion]);
   useEffect(() => {
     if (_marca.codigoMarca >= 0) {
@@ -56,10 +56,16 @@ export default function ProductoFilter(props) {
     //handleEventCargarSubFamilia(_marca.chrcodigofamilia);
     
     console.log("useEffect 1");
-    handleEventAddSubFamiliaSelect(     
-      1,
-      filterOrder.FilterAscDescripcion,params.descripcion,state.filter
-    );
+   
+    handleInitVariable(params.descripcion).then(_object=> {
+      handleEventAddSubFamiliaSelect(     
+        1,
+        filterOrder.FilterAscDescripcion,params.descripcion,_object.filter
+      );
+    })
+
+     
+    
     //eslint-disable-next-line
   }, [props.moneda, params.query,params.descripcion]);
   /*
@@ -79,6 +85,7 @@ export default function ProductoFilter(props) {
     let _MENU;
     let _lstMenuVertical=[];
     
+    // eslint-disable-next-line 
     switch (_var) {
       case "Subaru":
         _MENU = _var;
@@ -99,25 +106,25 @@ export default function ProductoFilter(props) {
         _MENU = _var;
         _FILTER = RECOMENDADO;
         _INDEN_MENU="Recomendado";        
-        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_INDEN_MENU,subFamilia:[]});      
+        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});      
         break;
         case "remate":
         _MENU = _var;
         _FILTER = REMATE;
         _INDEN_MENU="Remate";      
-        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_INDEN_MENU,subFamilia:[]});        
+        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});        
         break;
         case "oferta":
         _MENU = _var;
         _FILTER = OFERTA;
         _INDEN_MENU="Oferta"; 
-        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_INDEN_MENU,subFamilia:[]});            
+        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});            
         break;
-        case "Search":
+        case "search":
         _MENU = _var;
         _FILTER = SEARCH;
         _INDEN_MENU="Búsqueda";   
-        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_INDEN_MENU,subFamilia:[]});            
+        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});            
         break;
       case "MENU-1-1":
         _MENU = _var;
@@ -201,7 +208,7 @@ export default function ProductoFilter(props) {
         break;
     }
 
-if(_MENU!=MENU){
+if(_MENU!==MENU){
   for (let index = 0; index < listaRepuesto.length; index++) {
     const row = listaRepuesto[index];
       if(row.identificador===_MENU){            
@@ -215,14 +222,18 @@ if(_MENU!=MENU){
       }
   }
 }
- 
+ console.log(_INDEN_MENU ,_MENU,_FILTER);
 
     dispatch({
-      type: actionType.LOAD_MENU, MenuDescripcion: _INDEN_MENU,
+      type: actionType.LOAD_MENU, 
+      MenuDescripcion: _INDEN_MENU,
       MenuConext: _MENU,
       filter: _FILTER,
       lstMenuVertical:_lstMenuVertical
     });
+    return {MenuDescripcion: _INDEN_MENU,
+      MenuConext: _MENU,
+      filter: _FILTER,}
   }  
 
   async function handleEventCargarSubFamilia(_chrCodigoFamilia) {
@@ -280,13 +291,13 @@ if(_MENU!=MENU){
   ) {
     
    
-    console.log(_filterOrder);
-    console.log(__MENU);
-    console.log(  state.MenuConext);  
-    console.log(_FILTER);
-    console.log('***************************');
+    console.log(_currentPage,
+      _filterOrder,
+      __MENU,
+      _FILTER);
+  
     let _totalRegistros = 0;
-    let _MENU_CONTEX='';
+  
    
     let lstSubFamiliaFilter = [];  
     /*Listado de Producto */
@@ -403,10 +414,9 @@ if(_MENU!=MENU){
     }
   }
   function handleEventToPage(_currentPage) {
-    handleEventAddSubFamiliaSelect(
-      _marca.chrcodigofamilia,
+    handleEventAddSubFamiliaSelect(       
       _currentPage,
-      state.filterOrder
+      state.filterOrder,state.MenuConext,state.filter
     );
   }
   function handleEventChangeFilterOrder(e) {
@@ -417,10 +427,15 @@ if(_MENU!=MENU){
     handleEventAddSubFamiliaSelect(1, e.target.value,
       state.MenuConext,state.filter);
   }
-  function handleEventChangeMenu(_param) {   
-    console.log(_param)  
-    handleEventAddSubFamiliaSelect(1, state.filterOrder,
-      _param.identificador,MENU);
+  function handleEventChangeMenu(_param) {    
+    if (_param.identificador !== "TITULO") {
+      handleEventAddSubFamiliaSelect(
+        1,
+        state.filterOrder,
+        _param.identificador,
+        state.filter
+      );
+    }
   }
 
   return (
@@ -430,9 +445,8 @@ if(_MENU!=MENU){
       <div className="prod-filter-content">
         <div className="prod-filter-column1">
           <div className="link-href">
-            <Link to="/shop">Inicio</Link> &nbsp;&nbsp;/&nbsp;&nbsp;
-             {_marca.decripcion}
-            
+            <Link to="/shop">Inicio</Link> &nbsp;&nbsp;/
+             <span>{_marca.decripcion}</span>
           </div>
           <ul className="prod-filter-menu">              
               {state.lstMenuVertical.map((_objeto) => (
@@ -440,7 +454,7 @@ if(_MENU!=MENU){
                <li  className={(_objeto.identificador==="TITULO"?"prod-filter-menu-titulo":"")} 
                key={_objeto.codigo+_objeto.identificador}>
                   <span onClick={(e) => {
-                    handleEventChangeMenu(_objeto);
+                     handleEventChangeMenu(_objeto) ;
                   }
                   }>
                     {_objeto.descripcion}</span>
