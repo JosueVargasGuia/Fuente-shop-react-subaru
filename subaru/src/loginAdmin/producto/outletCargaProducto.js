@@ -105,7 +105,7 @@ export default function OutletCargaProducto(props) {
         listaError: [],
         crud: (_crud === 'update' ? CRUD.UPDATE : CRUD.INSERT),
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
-        filter:{codigoOrderBy:_FILTER.codigoOrderByDesc,
+        filter:{codigoOrderBy:_FILTER.codigoOrderByAsc,
                 descripcionOrderBy:_FILTER.descripcionOrderByAsc,
                 descripcionSearch:_FILTER.descripcionSearch},
     });
@@ -365,8 +365,8 @@ export default function OutletCargaProducto(props) {
     async function handleEventHeadFilter(_FILTER_TYPE) {
       let _filter = state.filter;
       let _filterChange = {
-        codigoOrderBy: _filter.codigoOrderByDesc,
-        descripcionOrderBy: _filter.descripcionOrderByAsc,
+        codigoOrderBy: _filter.codigoOrderBy,
+        descripcionOrderBy: _filter.descripcionOrderBy,
         descripcionSearch: _filter.descripcionSearch,
       };
       let _listDataJson = state.listDataJson;
@@ -406,7 +406,7 @@ export default function OutletCargaProducto(props) {
 
 
       if (_FILTER_TYPE === "_FILTER_DESCRIPCION") {
-        if (_filter.codigoOrderBy === _FILTER.descripcionOrderByAsc) {
+        if (_filter.descripcionOrderBy === _FILTER.descripcionOrderByAsc) {
           _listDataJson.sort((a, b) => {
             let fa = a.vchDescripcion;
             let fb = b.vchDescripcion;
@@ -418,9 +418,9 @@ export default function OutletCargaProducto(props) {
             }
             return 0;
           });
-          _filterChange.codigoOrderBy=_FILTER.codigoOrderByDesc;
+          _filterChange.descripcionOrderBy=_FILTER.descripcionOrderByDesc;
         }
-        if (_filter.codigoOrderBy === _FILTER.codigoOrderByDesc) {
+        if (_filter.descripcionOrderBy === _FILTER.descripcionOrderByDesc) {
           _listDataJson.sort((a, b) => {
             let fa = a.vchDescripcion;
             let fb = b.vchDescripcion;
@@ -432,7 +432,7 @@ export default function OutletCargaProducto(props) {
             }
             return 0;
           }).reverse();
-          _filterChange.codigoOrderBy=_FILTER.descripcionOrderByAsc;
+          _filterChange.descripcionOrderBy=_FILTER.descripcionOrderByAsc;
         }
         
        
@@ -580,7 +580,7 @@ export default function OutletCargaProducto(props) {
                      <thead>
                             <tr>
                                
-                                <td style={{ width: '137px' }}>Código&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_CODIGO')}></i></td>
+                                <td style={{ width: '100px' }}>Código&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_CODIGO')}></i></td>
                                 <td style={{ width: '334px' }}><div className="search"><div className="search-title">Descripción&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_DESCRIPCION')}></i></div></div></td>
                                 <td style={{ width: '85px',textAlign: 'center' }} title="UNSPC">UNSPC</td>
                                 <td style={{ width: '100px', textAlign: 'center' }} title="Precio Publico Promocional Unitario">Precio Publico Promocional Unitario</td>
