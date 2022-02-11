@@ -241,26 +241,30 @@ export default function ProductoDestacado(props) {
   return (
     <div key={props.marcaSelect.chrCodigoFamilia}>
       <div className="produc-destacado">
-      {state.rowProductoOferta.length <= 0? (
-          <></>
-        ) : (
+        {state.rowProductoOferta !== undefined ? (
           <>
-            <div className="produc-destacado-title">
-              <h4>OFERTAS</h4>
-            </div>
-            <div className="produc-destacado-wrapper">
-              <div className="produc-destacado-item">
-                {state.rowProductoOferta }
-              </div>
-              <div className="produc-destacado-item produc-destacado-item-right link-href">
-                <Link
-                  to={"/shop/oferta/filter/all"}
-                >
-                  Todos en Oferta &raquo;
-                </Link>
-              </div>
-            </div>
+            {state.rowProductoOferta.length <= 0 ? (
+              <></>
+            ) : (
+              <>
+                <div className="produc-destacado-title">
+                  <h4>OFERTAS</h4>
+                </div>
+                <div className="produc-destacado-wrapper">
+                  <div className="produc-destacado-item">
+                    {state.rowProductoOferta}
+                  </div>
+                  <div className="produc-destacado-item produc-destacado-item-right link-href">
+                    <Link to={"/shop/oferta/filter/all"}>
+                      Todos en Oferta &raquo;
+                    </Link>
+                  </div>
+                </div>
+              </>
+            )}
           </>
+        ) : (
+          <></>
         )}
 
         <div className="produc-destacado-title">
@@ -280,7 +284,7 @@ export default function ProductoDestacado(props) {
             </Link>
           </div>
         </div>
-       
+
         <div className="produc-destacado-links">
           <h3 className="produc-destacado-links-title">Piezas de Repuesto</h3>
           <hr />
