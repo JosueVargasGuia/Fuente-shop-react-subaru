@@ -1,20 +1,13 @@
 package com.ShopAutoPartsServices.WsServices;
-
-import java.io.File;
-import java.security.NoSuchAlgorithmException;
+ 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Base64;
+ 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.codec.binary.Hex;
+ 
+ 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,36 +23,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ShopAutoPartsServices.Config.CorreoConfiguracion;
-import com.ShopAutoPartsServices.Config.Empresa;
-import com.ShopAutoPartsServices.Domain.ClienteFactura;
+
 import com.ShopAutoPartsServices.Domain.CorreoJobsOnline;
 import com.ShopAutoPartsServices.Domain.CorreoJobsResponse;
 import com.ShopAutoPartsServices.Domain.CorreoRequest;
-import com.ShopAutoPartsServices.Domain.CotizacionOnline;
-import com.ShopAutoPartsServices.Domain.CotizacionOnlineDetalle;
-import com.ShopAutoPartsServices.Domain.CotizacionOnlineDetalleResponse;
-import com.ShopAutoPartsServices.Domain.IziPay.Answer;
-import com.ShopAutoPartsServices.Domain.IziPay.IpnRequets;
-import com.ShopAutoPartsServices.Domain.IziPay.ScheduledProceso;
-import com.ShopAutoPartsServices.Domain.IziPay.StatusAction;
-import com.ShopAutoPartsServices.Domain.IziPay.StatusIziPay;
-import com.ShopAutoPartsServices.Enums.AccountsEmail;
-import com.ShopAutoPartsServices.Enums.EstadoCotizacion;
+ 
+ 
+import com.ShopAutoPartsServices.Enums.AccountsEmail; 
 import com.ShopAutoPartsServices.Enums.FilterCorreo;
 import com.ShopAutoPartsServices.Enums.FilterValidacionGenerico;
-import com.ShopAutoPartsServices.Enums.Moneda;
-import com.ShopAutoPartsServices.Enums.OcEmail;
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
-import com.ShopAutoPartsServices.FE.Archivo;
-import com.ShopAutoPartsServices.FE.Constantes;
-import com.ShopAutoPartsServices.FE.Beans.BeanEmpresa;
-import com.ShopAutoPartsServices.FE.Beans.BeanFacturacion;
+ 
 import com.ShopAutoPartsServices.Service.CorreoJobsService;
-import com.ShopAutoPartsServices.Service.CotizacionOnlineService;
-import com.ShopAutoPartsServices.Service.FacturacionService;
+ 
+ 
 import com.ShopAutoPartsServices.Util.BuildEnviaCorreo;
-import com.ShopAutoPartsServices.Util.NumeroLetras;
-import com.google.gson.Gson;
 
 @SpringBootApplication
 @EnableScheduling

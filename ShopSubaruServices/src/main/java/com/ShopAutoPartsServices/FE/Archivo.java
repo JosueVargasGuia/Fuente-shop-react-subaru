@@ -39,7 +39,7 @@ import com.ShopAutoPartsServices.FE.Enums.FeOtrosConcepto;
 import com.ShopAutoPartsServices.FE.Enums.FePropiedadesAdicionales;
 import com.ShopAutoPartsServices.FE.Enums.FeSeccion;
 import com.ShopAutoPartsServices.FE.Enums.TipoComprobante;
-import com.ShopAutoPartsServices.WsServices.IpnController;
+ 
 
 public class Archivo {
 	static Logger logger = LoggerFactory.getLogger(Archivo.class);

@@ -8,8 +8,10 @@ import {
   lstMarcas,
   SUCCESS_SERVER,
   filterOrder,
+  listaRepuesto,
+  listaAcesorios,
 } from "../service/ENUM";
-import { obtenerSubFamilia, findProductos } from "../service/producto.service";
+import {  findProductos } from "../service/producto.service";
 import Loading from "../utils/loading";
 
 import ProductosCard from "./productoCard";
@@ -19,29 +21,16 @@ const OFERTA = "OFERTA";
 const REMATE = "REMATE";
 const DEFAULT = "DEFAULT";
 const SEARCH = "SEARCH";
+const MENU = "MENU";
 export default function ProductoFilter(props) {
   let params = useParams();
-  let _marca = { codigoMarca: 0 };
-  let FILTER = null;
-  for (let index = 0; index < lstMarcas.length; index++) {
-    const element = lstMarcas[index];
-    if (element.decripcion === params.descripcion) {
-      _marca = element;
-      FILTER = DEFAULT;
-    }
-  }
-  if (params.descripcion === "recomendado") {
-    FILTER = RECOMENDADO;
-  }
-  if (params.descripcion === "remate") {
-    FILTER = REMATE;
-  }
-  if (params.descripcion === "oferta") {
-    FILTER = OFERTA;
-  }
-  if (params.descripcion === "search") {
-    FILTER = SEARCH;
-  }
+  let _marca = lstMarcas[0];
+  
+   
+
+  
+  // eslint-disable-next-line default-case   
+ 
   const [state, dispatch] = useReducer(reducer, {
     lstSubFamilia: [],
     lstSubFamiliaHtml: [],
@@ -50,22 +39,35 @@ export default function ProductoFilter(props) {
     currentPage: 1,
     filterOrder: filterOrder.FilterAscDescripcion,
     isLoandingProductos: false,
+    MenuDescripcion:"",
+    MenuConext:"",
+    filter:"",
+    lstMenuVertical:[],
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
-
+  useEffect(() => {
+    console.log("handleInitVariable 1");
+    handleInitVariable(params.descripcion);
+  }, [params.descripcion]);
   useEffect(() => {
     if (_marca.codigoMarca >= 0) {
-      props.handleSelectMarcaChange(_marca.codigoMarca, 'ProductoFilter');
-    }
-    handleEventCargarSubFamilia(_marca.chrcodigofamilia);
-    console.log("useEffect 1")
-    handleEventAddSubFamiliaSelect(
-      _marca.chrcodigofamilia,
-      1,
-      filterOrder.FilterAscDescripcion
-    );
+      props.handleSelectMarcaChange(_marca.codigoMarca, "ProductoFilter");
+    } 
+    //handleEventCargarSubFamilia(_marca.chrcodigofamilia);
+    
+    console.log("useEffect 1");
+   
+    handleInitVariable(params.descripcion).then(_object=> {
+      handleEventAddSubFamiliaSelect(     
+        1,
+        filterOrder.FilterAscDescripcion,params.descripcion,_object.filter
+      );
+    })
+
+     
+    
     //eslint-disable-next-line
-  }, [props.moneda, params.query]);
+  }, [props.moneda, params.query,params.descripcion]);
   /*
     useEffect(()=>{
       console.log("useEffect 2")
@@ -77,8 +79,164 @@ export default function ProductoFilter(props) {
   // eslint-disable-next-line
     },[params.query])
     */
+  async function handleInitVariable(_var){
+    let _INDEN_MENU;
+    let _FILTER;
+    let _MENU;
+    let _lstMenuVertical=[];
+    
+    // eslint-disable-next-line 
+    switch (_var) {
+      case "Subaru":
+        _MENU = _var;
+        _FILTER =MENU;
+        _INDEN_MENU="Subaru";
+        _lstMenuVertical.push({ descripcion: "Repuestos",codigo:1,identificador:"TITULO",subFamilia:[]});      
+        for (let index = 0; index < listaRepuesto.length; index++) {          
+          const row = listaRepuesto[index];
+          _lstMenuVertical.push(row);      
+        }
+        _lstMenuVertical.push({ descripcion: "Accesorios y LifeStyle",codigo:2,identificador:"TITULO",subFamilia:[]});      
+        for (let index = 0; index < listaAcesorios.length; index++) {
+          const row = listaAcesorios[index];
+          _lstMenuVertical.push(row);      
+        }          
+        break;
+      case "recomendado":
+        _MENU = _var;
+        _FILTER = RECOMENDADO;
+        _INDEN_MENU="Recomendado";        
+        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});      
+        break;
+        case "remate":
+        _MENU = _var;
+        _FILTER = REMATE;
+        _INDEN_MENU="Remate";      
+        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});        
+        break;
+        case "oferta":
+        _MENU = _var;
+        _FILTER = OFERTA;
+        _INDEN_MENU="Oferta"; 
+        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});            
+        break;
+        case "search":
+        _MENU = _var;
+        _FILTER = SEARCH;
+        _INDEN_MENU="Búsqueda";   
+        _lstMenuVertical.push({ descripcion: _INDEN_MENU,codigo:0,identificador:_var,subFamilia:[]});            
+        break;
+      case "Repuesto-1-1":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-2":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-3":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-4":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-5":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-6":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-7":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-8":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-9":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-10":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-11":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Repuesto-1-12":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Accesorio-2-1":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Accesorio-2-2":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Accesorio-2-3":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+      case "Accesorio-2-4":
+        _MENU = _var;
+        _FILTER = MENU;
+        _INDEN_MENU="Búsqueda";
+        break;
+    }
 
-  async function handleEventCargarSubFamilia(_chrCodigoFamilia) {
+if(_MENU!==MENU){
+  for (let index = 0; index < listaRepuesto.length; index++) {
+    const row = listaRepuesto[index];
+      if(row.identificador===_MENU){            
+        _lstMenuVertical.push(row);
+      }
+  }
+  for (let index = 0; index < listaAcesorios.length; index++) {
+    const row = listaAcesorios[index];
+      if(row.identificador===_MENU){            
+        _lstMenuVertical.push(row);
+      }
+  }
+}
+ console.log(_INDEN_MENU ,_MENU,_FILTER);
+
+    dispatch({
+      type: actionType.LOAD_MENU, 
+      MenuDescripcion: _INDEN_MENU,
+      MenuConext: _MENU,
+      filter: _FILTER,
+      lstMenuVertical:_lstMenuVertical
+    });
+    return {MenuDescripcion: _INDEN_MENU,
+      MenuConext: _MENU,
+      filter: _FILTER,}
+  }  
+
+  /*async function handleEventCargarSubFamilia(_chrCodigoFamilia) {
     let lstSubFamilia = [];
     const rpt = await obtenerSubFamilia({
       chrCodigoFamilia: _chrCodigoFamilia,
@@ -124,62 +282,75 @@ export default function ProductoFilter(props) {
         },
       });
     }
-  }
+  }*/
   async function handleEventAddSubFamiliaSelect(
-    _chrCodigoSubFamilia,
     _currentPage,
-    _filterOrder
+    _filterOrder,
+    __MENU,
+    _FILTER
   ) {
+    
+   
+    console.log(_currentPage,
+      _filterOrder,
+      __MENU,
+      _FILTER);
+  
     let _totalRegistros = 0;
-    for (let index = 0; index < state.lstSubFamilia.length; index++) {
-      const element = state.lstSubFamilia[index];
-      if (element.chrCodigoSubFamilia === _chrCodigoSubFamilia) {
-        if (state.lstSubFamilia[index].chrEstado === false) {
-          state.lstSubFamilia[index].chrEstado = true;
-        } else {
-          state.lstSubFamilia[index].chrEstado = false;
-        }
-      } else {
-        state.lstSubFamilia[index].chrEstado = false;
-      }
-    }
-    dispatch({
-      type: actionType.SUBFAMILIA_CHANGE_SELECT,
-      lstSubFamilia: state.lstSubFamilia,
-      isLoandingProductos: true,
-    });
-    let lstSubFamiliaFilter = [];
-    for (let index = 0; index < state.lstSubFamilia.length; index++) {
-      const element = state.lstSubFamilia[index];
-      if (element.chrEstado === true) {
-        lstSubFamiliaFilter.push(element);
-      }
-    }
+  
+   
+    let lstSubFamiliaFilter = [];  
     /*Listado de Producto */
     let _filterProducto = FilterProducto.FILTER_ALL_FIND;
     let _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
     let _vchDescripcion = null;
-    if (FILTER === DEFAULT) {
+    if (_FILTER === DEFAULT) {
       _filterProducto = FilterProducto.FILTER_ALL_FIND;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
     }
-    if (FILTER === RECOMENDADO) {
+    if (_FILTER === RECOMENDADO) {
       _filterProducto = FilterProducto.FILTER_RECOMENDADO;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
     }
-    if (FILTER === REMATE) {
+    if (_FILTER === REMATE) {
       _filterProducto = FilterProducto.FILTER_REMATE;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
     }
-    if (FILTER === OFERTA) {
+    if (_FILTER === OFERTA) {
       _filterProducto = FilterProducto.FILTER_OFERTA;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
     }
-    if (FILTER === SEARCH) {
+    if (_FILTER === SEARCH) {
       _filterProducto = FilterProducto.FILTER_SEARCH;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
       _vchDescripcion = params.query;
     }
+ 
+    if(_FILTER === MENU){
+      lstSubFamiliaFilter=[];
+      // eslint-disable-next-line default-case
+      for (let index = 0; index < listaRepuesto.length; index++) {
+        const row = listaRepuesto[index];
+          if(row.identificador===__MENU){            
+            for (let j = 0; j < row.subFamilia.length; j++) {
+              const _e = row.subFamilia[j];
+              lstSubFamiliaFilter.push({chrCodigoSubFamilia:_e});
+            }
+          }
+      }
+      for (let index = 0; index < listaAcesorios.length; index++) {
+        const row = listaAcesorios[index];
+          if(row.identificador===__MENU){            
+            for (let j = 0; j < row.subFamilia.length; j++) {
+              const _e = row.subFamilia[j];
+              lstSubFamiliaFilter.push({chrCodigoSubFamilia:_e});
+            }
+          }
+      }
+    }
+
+
+
     let lstProducto = [];
     const rpt = await findProductos({
       chrCodigoFamilia: _marca.chrcodigofamilia,
@@ -236,17 +407,16 @@ export default function ProductoFilter(props) {
           type: actionType.LOAD_PRODUCTO,
           lstProducto: lstProducto,
           totalRegistros: _totalRegistros,
-          isLoandingProductos: false,
+          isLoandingProductos: false, 
           currentPage: _currentPage,
         });
       }
     }
   }
   function handleEventToPage(_currentPage) {
-    handleEventAddSubFamiliaSelect(
-      _marca.chrcodigofamilia,
+    handleEventAddSubFamiliaSelect(       
       _currentPage,
-      state.filterOrder
+      state.filterOrder,state.MenuConext,state.filter
     );
   }
   function handleEventChangeFilterOrder(e) {
@@ -254,8 +424,20 @@ export default function ProductoFilter(props) {
       type: actionType.CHANGE_FILTER_ORDERBY,
       filterOrder: e.target.value,
     });
-    handleEventAddSubFamiliaSelect(_marca.chrcodigofamilia, 1, e.target.value);
+    handleEventAddSubFamiliaSelect(1, e.target.value,
+      state.MenuConext,state.filter);
   }
+  function handleEventChangeMenu(_param) {    
+    if (_param.identificador !== "TITULO") {
+      handleEventAddSubFamiliaSelect(
+        1,
+        state.filterOrder,
+        _param.identificador,
+        state.filter
+      );
+    }
+  }
+
   return (
     <>
       {state.isLoandingProductos ? <Loading></Loading> : ""}
@@ -263,112 +445,26 @@ export default function ProductoFilter(props) {
       <div className="prod-filter-content">
         <div className="prod-filter-column1">
           <div className="link-href">
-            <Link to="/shop">Inicio</Link> &nbsp;&nbsp;/&nbsp;&nbsp;
-            {_marca.codigoMarca === 0 && FILTER === DEFAULT ? (
-              "Todas las Marcas"
-            ) : (
-              <>
-                {_marca.codigoMarca === 0 && FILTER === REMATE ? "Remate" : <></>}
-                {_marca.codigoMarca === 0 && FILTER === RECOMENDADO ? (
-                  "Recomendado"
-                ) : (
-                  <></>
-                )}
-                {_marca.codigoMarca === 0 && FILTER === OFERTA ? "Oferta" : <></>}
-                {_marca.codigoMarca === 0 && FILTER === SEARCH ? "Resultados de la búsqueda" : <></>}
-                {_marca.codigoMarca >= 1 ? _marca.decripcion : <></>}
-              </>
-            )}
+            <Link to="/shop">Inicio</Link> &nbsp;&nbsp;/
+             <span className="link-href-span">{_marca.decripcion}</span>
           </div>
-          {_marca.codigoMarca <= 0 ? (
-            _marca.codigoMarca === 0 && FILTER === DEFAULT ? (
-              <ul className="prod-filter-menu">
-                {lstMarcas.map((row) =>
-                  row.codigoMarca >= 1 ? (
-                    <li>
-                      <li
-                        key={row.codigoMarca}
-                        className="prod-filter-menu-titulo"
-                      >
-                        {row.decripcion}
-                        <ul key={row.codigoMarca}>
-                          {state.lstSubFamilia.map((familia) =>
-                            familia.chrCodigoFamilia ===
-                              row.chrcodigofamilia ? (
-                              <li key={familia.chrCodigoSubFamilia}>
-                                 
-                                <span onClick={(e) => {
-                                    handleEventAddSubFamiliaSelect(
-                                      familia.chrCodigoSubFamilia,
-                                      1,
-                                      state.filterOrder
-                                  );
-                                }
-                                } className={familia.chrEstado === true ? "span-link-select" : "span-link-default"}>{familia.vchDescripcion}</span>
-                              </li>
-                            ) : (
-                              <></>
-                            )
-                          )}
-                        </ul>
-                      </li>
-                    </li>
-                  ) : (
-                    <></>
-                  )
-                )}
-              </ul>
-            ) : (
-              <>
-                {_marca.codigoMarca === 0 && FILTER === REMATE ? (
-                  <ul className="prod-filter-menu">
-                    <li className="prod-filter-menu-titulo" key="Remate">
-                      Remate
-                    </li>
-                  </ul>
-                ) : (
-                  <></>
-                )}
-                {_marca.codigoMarca === 0 && FILTER === RECOMENDADO ? (
-                  <ul className="prod-filter-menu">
-                    <li className="prod-filter-menu-titulo" key="Recomendado">
-                      Recomendado
-                    </li>
-                  </ul>
-                ) : (
-                  <></>
-                )}
-                {_marca.codigoMarca === 0 && FILTER === OFERTA ? (
-                  <ul className="prod-filter-menu">
-                    <li className="prod-filter-menu-titulo" key="Oferta">
-                      Oferta
-                    </li>
-                  </ul>
-                ) : (
-                  <></>
-                )}
-              </>
-            )
-          ) : (
-            <ul className="prod-filter-menu">
-              <li className="prod-filter-menu-titulo">FILTRAR POR</li>
-              {state.lstSubFamilia.map((familia) => (
-                <li key={familia.chrCodigoSubFamilia}>
-
+          <ul className="prod-filter-menu">              
+              {state.lstMenuVertical.map((_objeto) => (
+               
+               <li  className={(_objeto.identificador==="TITULO"?"prod-filter-menu-titulo":"")} 
+               key={_objeto.codigo+_objeto.identificador}>
                   <span onClick={(e) => {
-                    handleEventAddSubFamiliaSelect(
-                      familia.chrCodigoSubFamilia,
-                      1,
-                      state.filterOrder
-                    );
+                     handleEventChangeMenu(_objeto) ;
                   }
-                  }
-                    className={familia.chrEstado === true ? "span-link-select" : "span-link-default"}
-                  >{familia.vchDescripcion}</span>
+                  }>
+                    {_objeto.descripcion}</span>
                 </li>
               ))}
+                
             </ul>
-          )}
+               
+          
+          
         </div>
 
         <div className="prod-filter-column2">
@@ -440,6 +536,7 @@ let actionType = {
   SUBFAMILIA_CHANGE_SELECT: "SUBFAMILIA_CHANGE_SELECT",
   LOAD_PRODUCTO: "LOAD_PRODUCTO",
   CHANGE_FILTER_ORDERBY: "CHANGE_FILTER_ORDERBY",
+  LOAD_MENU:"LOAD_MENU"
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -466,13 +563,21 @@ const reducer = (state, action) => {
         lstProducto: action.lstProducto,
         totalRegistros: action.totalRegistros,
         isLoandingProductos: action.isLoandingProductos,
-        currentPage: action.currentPage,
+        currentPage: action.currentPage, 
       };
     case actionType.CHANGE_FILTER_ORDERBY:
       return {
         ...state,
         filterOrder: action.filterOrder,
       };
+    case actionType.LOAD_MENU:
+      return {
+        ...state,
+        MenuDescripcion: action.MenuDescripcion,
+        MenuConext: action.MenuConext,
+        filter: action.filter,
+        lstMenuVertical:action.lstMenuVertical,
+      }; 
     default:
       return state;
   }
@@ -545,11 +650,10 @@ function Paginacion(props) {
     props.currentPage,
     props.pageNeighbours
   );
-    
+
   return (
     <>
       <nav aria-label="Pagination">
-     
         <ul className="pagination">
           {pages.map((page, index) => {
             if (page === LEFT_PAGE) {
@@ -575,12 +679,12 @@ function Paginacion(props) {
               );
             }
             return (
-              
               <li
-                className={`${props.currentPage === page
-                  ? "paginacion-item-active "
-                  : "paginacion-item"
-                  }`}
+                className={`${
+                  props.currentPage === page
+                    ? "paginacion-item-active "
+                    : "paginacion-item"
+                }`}
                 key={index}
                 onClick={() => props.handleEventToPage(page)}
               >

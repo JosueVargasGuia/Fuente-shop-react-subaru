@@ -33,6 +33,8 @@ export default function ProductoDetalle(props) {
     vchDescripcion: "",
     vchDescripcionSmall: "",
     numStock: 0,
+    numOutlet: 0,
+    numProductoVigencia: 0,
     familia: {
       chrCodigoFamilia: "",
       vchDescripcion: "",
@@ -89,10 +91,11 @@ export default function ProductoDetalle(props) {
     let shareTwitter = "";
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
-
+      console.log(json);
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let index = 0; index < json.listaProductos.length; index++) {
           let e = json.listaProductos[index];
+          
           let _listaProductoImagen = [];
           /*Lista de imagenes del producto */
           for (let i = 0; i < e.listaProductoImagen.length; i++) {
@@ -161,6 +164,8 @@ export default function ProductoDetalle(props) {
           producto.numStock = e.numStock;
           producto.familia.chrCodigoFamilia = e.familia.chrCodigoFamilia;
           producto.familia.vchDescripcion = e.familia.vchDescripcion;
+          producto.numOutlet = e.numOutlet;
+          producto.numProductoVigencia = json.vigencia.numProductoVigencia;
           /*Url de la imagen a mostrar en la lista de productos */
           producto.imagenDefault.numCodigoProductoIimagen =
             e.imagenDefault.numCodigoProductoIimagen;
@@ -191,7 +196,7 @@ export default function ProductoDetalle(props) {
             "&text=" +
             producto.vchDescripcion;
         }
-        console.log(producto);
+
         dispatch({
           type: actionType.LOAD_PRODUCTOS,
           producto: producto,
@@ -267,7 +272,11 @@ export default function ProductoDetalle(props) {
           /*Registro de cotizacion detalle */
           let cotizacionDetalleRequest = {
             numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
-            producto: { chrCodigoProducto: state.producto.chrCodigoProducto },
+            producto: {
+              chrCodigoProducto: state.producto.chrCodigoProducto,
+              numOutlet: state.producto.numOutlet,
+              numProductoVigencia:state.producto.numProductoVigencia
+            },
             numCantidad: state.cantidad,
             tipoActualizacionCotizacionDetalle:
               tipoActualizacionCotizacionDetalle.ADICIONAR,
@@ -397,7 +406,7 @@ export default function ProductoDetalle(props) {
               {state.producto.listaProductoImagen}
             </Carousel>
           </div>
-
+          <div className="prod-det-carrousel-text">Imagen referencial</div>
         </div>
         <div className="producto-det-row2">
           <div className="producto-det-row2-nombre">
@@ -465,22 +474,22 @@ export default function ProductoDetalle(props) {
       <div className="producto-det-row-content">
         <div className="producto-det-row2-content">
           <div className="titulo">
-            <span>Detalles del producto</span>              
+            <span>Detalles del producto</span>
           </div>
-          <div className="titulo-border"></div>          
+          <div className="titulo-border"></div>
           {state.producto.listaProductoDetalle}
         </div>
         <div className="producto-det-row2-content">
-          <div className="producto-det-row2-info">            
+          <div className="producto-det-row2-info">
             {InfoCondicionCompra.EMISION}
           </div>
           <div className="producto-det-row2-info">
             {InfoCondicionCompra.STOCK}
           </div>
-          <div className="producto-det-row2-info">            
+          <div className="producto-det-row2-info">
             {InfoCondicionCompra.TRANSPORTE}
           </div>
-          <div className="producto-det-row2-info">            
+          <div className="producto-det-row2-info">
             {InfoCondicionCompra.DEVOLUCIONES}
           </div>
         </div>

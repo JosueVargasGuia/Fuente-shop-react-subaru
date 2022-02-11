@@ -3,6 +3,7 @@ package com.ShopAutoPartsServices.Repository;
 import java.io.File;
 import java.util.ArrayList;
 
+import com.ShopAutoPartsServices.Domain.AsociaOc;
 import com.ShopAutoPartsServices.Domain.ReportePdfRequets;
 import com.ShopAutoPartsServices.Domain.IziPay.ScheduledProceso;
 import com.ShopAutoPartsServices.FE.Beans.BeanEmpresa;
@@ -22,4 +23,6 @@ public interface FacturacionRepository {
 	public String obtenerReporteFactura(ReportePdfRequets reportePdfRequets)throws Exception;
 	public String obtenerReporteOrdenCompra(ReportePdfRequets reportePdfRequets)throws Exception;
 	public String obtenerReporteGuiaSalida(ReportePdfRequets reportePdfRequets)throws Exception;
+	public String obtenerReporteOrdenCompraOnline(ReportePdfRequets reportePdfRequets)throws Exception;
+	public String asignarOcToCotizacion(AsociaOc asociaOc)throws Exception;
 }

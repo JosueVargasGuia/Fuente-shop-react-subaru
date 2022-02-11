@@ -10,6 +10,7 @@ import {
 import { obtenerCliente } from "../service/loginCliente.service";
 import Loading from "../utils/loading";
 import ServerException from "../utils/serverException";
+import { outlet } from "./svgIcon/outLet";
 
 let actionType = { ROL: "ROL" };
 /*Funcion reducer */
@@ -146,12 +147,23 @@ export default function DashboardAdmin(props) {
               <span>Reporte de Ventas</span>
             </div>
           </Link>
+          <Link
+            to={"/listaProductosOutlet"}
+            className="dashboard-card"
+          >
+            <div>
+            {outlet}
+              
+              <span>Productos OutLet</span>
+            </div>
+          </Link>
         </div>
         : <>
           <div className="dashboard-content"><div className="dashboard-content">
             <Loading></Loading>
           </div></div>
         </>}
+        <a href='http://190.81.61.102:8080/EACORP-TEST/welcome.do' target='_balnk'>ERP</a>
       <ServerException server={state.server}></ServerException>
     </div>
   );

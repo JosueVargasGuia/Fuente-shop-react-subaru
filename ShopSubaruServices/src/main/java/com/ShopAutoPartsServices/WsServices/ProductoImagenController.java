@@ -25,10 +25,13 @@ import com.ShopAutoPartsServices.Domain.ProductoImagen;
 import com.ShopAutoPartsServices.Domain.ProductoImagenResponse;
 import com.ShopAutoPartsServices.Domain.ProductoOnlineCategoria;
 import com.ShopAutoPartsServices.Domain.ProductoOnlineCategoriaResponse;
+import com.ShopAutoPartsServices.Domain.ProductoOutlet;
+import com.ShopAutoPartsServices.Domain.ProductoOutletRequets;
+import com.ShopAutoPartsServices.Domain.ProductoOutletResponse;
+import com.ShopAutoPartsServices.Domain.ProductoOutletVigencia;
+import com.ShopAutoPartsServices.Domain.ProductoOutletVigenciaResponse;
 import com.ShopAutoPartsServices.Domain.ProductoRequets;
-import com.ShopAutoPartsServices.Domain.ProductoStock;
-import com.ShopAutoPartsServices.Domain.ProductoStockResponse;
-import com.ShopAutoPartsServices.Domain.SubirImagen;
+import com.ShopAutoPartsServices.Enums.CRUD;
 import com.ShopAutoPartsServices.Enums.FilterProducto;
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
 import com.ShopAutoPartsServices.Service.ProductoService;
@@ -201,6 +204,114 @@ public class ProductoImagenController {
 		}
 		return responseEntity;
 	}
+	@PostMapping(value = "/listaProductoOutletVigencia", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ProductoOutletVigenciaResponse> listaProductoOutletVigencia() {
+		ProductoOutletVigenciaResponse outletVigenciaResponse = new ProductoOutletVigenciaResponse();
+		ResponseEntity<ProductoOutletVigenciaResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();
+		try {
+			outletVigenciaResponse.setLista(productoService.listarProductoOutletVigencia());
+			outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
+			responseEntity = new ResponseEntity<ProductoOutletVigenciaResponse>(outletVigenciaResponse, HttpStatus.OK);
+		} catch (Exception e) {	 
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_ERROR)
+					.setError(new ArrayList<String>()).getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<ProductoOutletVigenciaResponse>(outletVigenciaResponse, HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+	}
+	@PostMapping(value = "/saveProductoOutletVigencia", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ProductoOutletVigenciaResponse> saveProductoOutletVigencia(@RequestBody ProductoOutletVigencia productoOutletVigencia) {
+		ProductoOutletVigenciaResponse outletVigenciaResponse = new ProductoOutletVigenciaResponse();
+		ResponseEntity<ProductoOutletVigenciaResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();
+		logger.info(productoOutletVigencia.toString());
+		try {
+			String _result=productoService.saveProductoOutletVigencia(productoOutletVigencia).getStatus();
+			if(_result.equalsIgnoreCase("OK")) {
+				outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
+			}else {
+				error.add(_result);
+				outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
+			}
+			
+			responseEntity = new ResponseEntity<ProductoOutletVigenciaResponse>(outletVigenciaResponse, HttpStatus.OK);
+		} catch (Exception e) {	 
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_ERROR)
+					.setError(new ArrayList<String>()).getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<ProductoOutletVigenciaResponse>(outletVigenciaResponse, HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+	}
+	
+	@PostMapping(value = "/listaProductosOutlet", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ProductoOutletResponse> listaProductosOutlet(@RequestBody ProductoOutlet productoOutlet) {
+		ProductoOutletResponse productoOutletResponse = new ProductoOutletResponse();
+		ResponseEntity<ProductoOutletResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();	 
+		try {
+			productoOutletResponse.setLista(productoService.listaProductosOutlet(productoOutlet)); 
+			productoOutletResponse.setProductoOutletVigencia(productoService.obtenerVigenciaXCodigo(productoOutlet));
+			productoOutletResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
+			responseEntity = new ResponseEntity<ProductoOutletResponse>(productoOutletResponse, HttpStatus.OK);
+		} catch (Exception e) {	 
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			productoOutletResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_ERROR)
+					.setError(new ArrayList<String>()).getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<ProductoOutletResponse>(productoOutletResponse, HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+	}
+	
+	@PostMapping(value = "/saveUpdateProductoOutlet", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ProductoOutletVigenciaResponse> saveUpdateProductoOutlet(@RequestBody ProductoOutletRequets  outletRequets) {
+		ProductoOutletVigenciaResponse outletVigenciaResponse = new ProductoOutletVigenciaResponse();
+		ResponseEntity<ProductoOutletVigenciaResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();
+		logger.info(outletRequets.toString());
+		try {
+			ProductoOutletVigencia _result=productoService.saveProductoOutletVigencia(outletRequets.getProductoOutletVigencia());
+			outletRequets.getProductoOutletVigencia().setNumProductoVigencia(_result.getNumProductoVigencia());
+			String _result2="";
+			if(_result.getStatus().equalsIgnoreCase("OK")) {			
+				if(CRUD.INSERT==outletRequets.getCrud().INSERT) {
+					for (ProductoOutlet productoOutlet : outletRequets.getLista()) {
+						productoOutlet.setNumProductoVigencia(_result.getNumProductoVigencia());
+						try {
+							_result2=productoService.saveProductoOutlet(productoOutlet);	
+						} catch (Exception e) {
+							logger.info("Carga de Outlet Error:"+productoOutlet.toString());
+							logger.info("Exception Carga de Outlet Error:"+e.getMessage());
+						}
+						
+					}						
+				}
+				 
+					outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);	
+			 
+				
+			}else {
+				error.add(_result.getStatus());
+				outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
+			}
+			
+			responseEntity = new ResponseEntity<ProductoOutletVigenciaResponse>(outletVigenciaResponse, HttpStatus.OK);
+		} catch (Exception e) {	 
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_ERROR)
+					.setError(new ArrayList<String>()).getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<ProductoOutletVigenciaResponse>(outletVigenciaResponse, HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+	}
+	
+	
 /*
 	@PostMapping(value = "/listaProductosStock", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductoStockResponse> listaProductosStock(

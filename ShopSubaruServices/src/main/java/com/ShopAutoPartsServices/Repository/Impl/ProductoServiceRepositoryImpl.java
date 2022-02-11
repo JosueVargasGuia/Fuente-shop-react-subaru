@@ -1,7 +1,7 @@
 package com.ShopAutoPartsServices.Repository.Impl;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
+import java.math.RoundingMode;
 import java.sql.Blob;
 import java.sql.CallableStatement;
 
@@ -9,8 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
+ 
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+ 
 import org.springframework.stereotype.Repository;
 
 import com.ShopAutoPartsServices.Domain.Caracteristica;
@@ -30,19 +29,19 @@ import com.ShopAutoPartsServices.Domain.ProductoCaracteristica;
 import com.ShopAutoPartsServices.Domain.ProductoDetalle;
 import com.ShopAutoPartsServices.Domain.ProductoImagen;
 import com.ShopAutoPartsServices.Domain.ProductoOnlineCategoria;
+import com.ShopAutoPartsServices.Domain.ProductoOutlet;
+import com.ShopAutoPartsServices.Domain.ProductoOutletVigencia;
 import com.ShopAutoPartsServices.Domain.ProductoRequets;
 import com.ShopAutoPartsServices.Domain.ProductoStock;
 import com.ShopAutoPartsServices.Domain.SubFamilia;
 import com.ShopAutoPartsServices.Domain.SubirImagen;
+import com.ShopAutoPartsServices.Domain.Vigencia;
 import com.ShopAutoPartsServices.Enums.FilterProducto;
 import com.ShopAutoPartsServices.Repository.ProductoServiceRepository;
-import com.ShopAutoPartsServices.WsServices.ProductoController;
-
+ 
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import oracle.jdbc.OracleTypes;
-import oracle.jdbc.oracore.OracleTypeBLOB;
-import oracle.jdbc.rowset.OracleSerialBlob;
-import oracle.sql.BLOB;
+ 
 
 @Repository
 public class ProductoServiceRepositoryImpl implements ProductoServiceRepository {
@@ -87,14 +86,14 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					cs.setString(9, productoRequets.getFilterOrder().toString());
 
 					
-					 /*logger.info("I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
+					 logger.info("I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
 					  ) +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
 					  +" I_CHRCODIGOPRODUCTO:"+productoRequets.getChrCodigoProducto()
 					  +" I_PAGE:"+productoRequets.getPagina()
 					  +" I_LIMIT:"+productoRequets.getLimit()
 					  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
 					  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString()
-					  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString());*/
+					  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString());/**/
 					 
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);
@@ -111,7 +110,11 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						producto.setFamilia(new Familia()).getFamilia()
 								.setChrCodigoFamilia(rs.getString("CHRCODIGOFAMILIA"))
 								.setVchDescripcion(rs.getString("VCHDESCRIPCIONFAMILIA"));
-
+						producto.setNumOutlet(rs.getInt("NUMOUTLET"));
+						producto.setNumValorVentaRefDolar(rs.getString("NUMVALORVENTAREFDOLAR"));
+						producto.setNumValorVentaRefSoles(rs.getString("NUMVALORVENTAREFSOLES"));
+						producto.setNumValorDesc(rs.getString("NUMVALORDESC"));
+						
 						imagenDefault.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));
 						imagenDefault.setChrNombre(rs.getString("CHRNOMBRE"));
 
@@ -636,6 +639,201 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		String sql = "{call " + PKG_TIENDA + ".UPDATE_STOCK_PRODUCTO(?,?)}";
 		return jdbcTemplate.execute(sql, callback);
 
+	}
+
+	@Override
+	public Vigencia obtenerVigencia() throws Exception {
+		CallableStatementCallback<Vigencia> callback = null;
+		SimpleDateFormat dmy=new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			callback = new CallableStatementCallback<Vigencia>() {
+				@Override
+				public Vigencia doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					cs.registerOutParameter(1, OracleTypes.CURSOR);				
+					cs.executeQuery();
+					ResultSet rs = (ResultSet) cs.getObject(1);
+					Vigencia vigencia = new Vigencia();
+					while (rs.next()) {
+						vigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
+						vigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
+						vigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
+					}
+					return vigencia;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{?=call " + PKG_TIENDA + ".OBT_VIGENCIA()}";
+		return jdbcTemplate.execute(sql, callback);
+
+	}
+
+	@Override
+	public List<ProductoOutletVigencia> listarProductoOutletVigencia() throws Exception {
+		CallableStatementCallback<List<ProductoOutletVigencia>> callback = null;
+		SimpleDateFormat dmy=new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		try {
+			callback = new CallableStatementCallback<List<ProductoOutletVigencia>>() {
+				@Override
+				public List<ProductoOutletVigencia> doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					cs.registerOutParameter(1, OracleTypes.CURSOR);				
+					cs.executeQuery();
+					ResultSet rs = (ResultSet) cs.getObject(1);
+					List<ProductoOutletVigencia> lista=new ArrayList<ProductoOutletVigencia>();
+					while (rs.next()) {
+						ProductoOutletVigencia vigencia=new ProductoOutletVigencia();
+						vigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
+						vigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
+						vigencia.setNumEstado(rs.getInt("NUMESTADO"));
+						vigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
+						lista.add(vigencia);
+					}
+					return lista;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{?=call " + PKG_TIENDA + ".LISTA_VIGENCIA()}";
+		return jdbcTemplate.execute(sql, callback);
+	}
+
+	@Override
+	public ProductoOutletVigencia saveProductoOutletVigencia(ProductoOutletVigencia productoOutletVigencia) throws Exception {
+		CallableStatementCallback<ProductoOutletVigencia> callback = null;
+		SimpleDateFormat dmy=new SimpleDateFormat("dd/MM/yyyy");
+		 
+		logger.info(dmy.format(productoOutletVigencia.getDteDesdeDate())+" 00:00:00");
+		
+		try {
+			callback = new CallableStatementCallback<ProductoOutletVigencia>() {
+				@Override
+				public ProductoOutletVigencia doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					cs.setInt(1, productoOutletVigencia.getNumProductoVigencia());
+					cs.setString(2,dmy.format(productoOutletVigencia.getDteDesdeDate())+" 00:00:00");
+					cs.setString(3, dmy.format(productoOutletVigencia.getDteHastaDate())+" 11:59:59");
+					cs.setInt(4, productoOutletVigencia.getNumEstado());
+					cs.registerOutParameter(5, OracleTypes.VARCHAR);
+					cs.registerOutParameter(6, OracleTypes.NUMBER);
+					cs.execute();
+					productoOutletVigencia.setStatus(cs.getString(5));
+					productoOutletVigencia.setNumProductoVigencia(cs.getInt(6));
+					
+					return productoOutletVigencia;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_OUTLETVIGENCIA(?,?,?,?,?,?)}";
+		return jdbcTemplate.execute(sql, callback);
+	}
+
+	@Override
+	public List<ProductoOutlet> listaProductosOutlet(ProductoOutlet productoOutlet) throws Exception {
+		CallableStatementCallback<List<ProductoOutlet>> callback = null;		 
+		try {
+			callback = new CallableStatementCallback<List<ProductoOutlet>>() {
+				@Override
+				public List<ProductoOutlet> doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					cs.registerOutParameter(1, OracleTypes.CURSOR);	
+					cs.setInt(2, productoOutlet.getNumProductoVigencia());
+					cs.executeQuery();
+					ResultSet rs = (ResultSet) cs.getObject(1);
+					List<ProductoOutlet> lista=new ArrayList<ProductoOutlet>();
+					while (rs.next()) {
+						ProductoOutlet productoOutlet=new ProductoOutlet();
+						productoOutlet.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));
+						productoOutlet.setNumProductoOutlet(rs.getInt("NUMPRODUCTO_OUTLET"));
+						productoOutlet.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
+						productoOutlet.setNumStock(rs.getInt("NUMSTOCK"));
+						productoOutlet.setNumUnspc(rs.getString("NUMUNSPC"));
+						productoOutlet.setNumValorCompra(rs.getBigDecimal("NUMVALORCOMPRA").setScale(2, RoundingMode.HALF_UP));
+						productoOutlet.setNumValorDesc(rs.getBigDecimal("NUMVALORDESC").setScale(2, RoundingMode.HALF_UP));
+						productoOutlet.setNumValorRefVenta(rs.getBigDecimal("NUMVALORREFVENTA").setScale(2, RoundingMode.HALF_UP));
+						productoOutlet.setNumValorVenta(rs.getBigDecimal("NUMVALORVENTA").setScale(2, RoundingMode.HALF_UP));
+						productoOutlet.setVchDescripcion(rs.getString("VCHDESCRIPCION"));
+						lista.add(productoOutlet);
+					}
+					return lista;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{?=call " + PKG_TIENDA + ".LISTA_PROD_OUTLET(?)}";
+		return jdbcTemplate.execute(sql, callback);
+	}
+
+	@Override
+	public ProductoOutletVigencia obtenerVigenciaXCodigo(ProductoOutlet productoOutlet) throws Exception {
+		CallableStatementCallback<ProductoOutletVigencia> callback = null;
+		SimpleDateFormat dmy=new SimpleDateFormat("yyyy/MM/dd");
+		try {
+			callback = new CallableStatementCallback<ProductoOutletVigencia>() {
+				@Override
+				public ProductoOutletVigencia doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					cs.registerOutParameter(1, OracleTypes.CURSOR);		
+					cs.setInt(2, productoOutlet.getNumProductoVigencia());
+					cs.executeQuery();
+					ResultSet rs = (ResultSet) cs.getObject(1);
+					ProductoOutletVigencia ProductoOutletVigencia=new ProductoOutletVigencia();
+					while (rs.next()) {					 
+						ProductoOutletVigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
+						ProductoOutletVigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
+						ProductoOutletVigencia.setNumEstado(rs.getInt("NUMESTADO"));
+						ProductoOutletVigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));						 
+					}
+					return ProductoOutletVigencia;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{?=call " + PKG_TIENDA + ".OBTENER_VIGENCIA(?)}";
+		return jdbcTemplate.execute(sql, callback);
+	}
+
+	@Override
+	public String saveProductoOutlet(ProductoOutlet productoOutlet) throws Exception {
+		CallableStatementCallback<String> callback = null;
+		try {
+			callback = new CallableStatementCallback<String>() {
+				@Override
+				public String doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					 cs.setString(1, productoOutlet.getChrCodigoProducto().trim());
+					 cs.setString(2, productoOutlet.getVchDescripcion());
+					 cs.setBigDecimal(3, productoOutlet.getNumValorVenta());
+					 cs.setString(4, productoOutlet.getNumUnspc());
+					 cs.setDouble(5, productoOutlet.getNumStock());
+					 cs.setBigDecimal(6, productoOutlet.getNumValorRefVenta());
+					 cs.setBigDecimal(7, productoOutlet.getNumValorDesc());
+					 cs.setInt(8, productoOutlet.getNumProductoVigencia());
+					 cs.setBigDecimal(9, productoOutlet.getNumValorCompra());
+					 cs.setInt(10, productoOutlet.getNumProductoOutlet());
+					 cs.registerOutParameter(11, OracleTypes.VARCHAR);
+					cs.execute();
+					return cs.getString(11);
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_PRODUC_OUTLET(?,?,?,?,?,?,?,?,?,?,?)}";
+		return jdbcTemplate.execute(sql, callback);
 	}
 
  

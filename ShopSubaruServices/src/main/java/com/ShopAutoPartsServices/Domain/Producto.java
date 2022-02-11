@@ -1,6 +1,6 @@
 package com.ShopAutoPartsServices.Domain;
 
-import java.math.BigDecimal;
+ 
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +19,12 @@ public class Producto {
 	ProductoImagen imagenDefault;
 	/*Total de registros de la BD*/
 	int totalRegistros;
+	int numOutlet;
+	int numProductoVigencia;
+	/*Valores de solo vizualizacion*/
+	String numValorVentaRefDolar;// NUMBER,
+	String numValorVentaRefSoles;// NUMBER,
+	String numValorDesc;// NUMBER,
 	/*
 	 * TPRODUCTO.CHRCODIGOPRODUCTO,TPRODUCTO.NUMVALORVENTA AS
 	 * NUMVALORVENTADOLAR,TPRODUCTO.NUMVALORVENTA AS NUMVALORVENTASOLES,
@@ -142,6 +148,46 @@ public class Producto {
 		return this;
 	}
 
+	public int getNumOutlet() {
+		return numOutlet;
+	}
+
+	public void setNumOutlet(int numOutlet) {
+		this.numOutlet = numOutlet;
+	}
+
+	public String getNumValorVentaRefDolar() {
+		return numValorVentaRefDolar;
+	}
+
+	public void setNumValorVentaRefDolar(String numValorVentaRefDolar) {
+		this.numValorVentaRefDolar = numValorVentaRefDolar;
+	}
+
+	public String getNumValorVentaRefSoles() {
+		return numValorVentaRefSoles;
+	}
+
+	public void setNumValorVentaRefSoles(String numValorVentaRefSoles) {
+		this.numValorVentaRefSoles = numValorVentaRefSoles;
+	}
+
+	public String getNumValorDesc() {
+		return numValorDesc;
+	}
+
+	public void setNumValorDesc(String numValorDesc) {
+		this.numValorDesc = numValorDesc;
+	}
+
+	public int getNumProductoVigencia() {
+		return numProductoVigencia;
+	}
+
+	public void setNumProductoVigencia(int numProductoVigencia) {
+		this.numProductoVigencia = numProductoVigencia;	 
+	}
+
 	@Override
 	public String toString() {
 		return "Producto [chrCodigoProducto=" + chrCodigoProducto + ", numValorVentaDolar=" + numValorVentaDolar
@@ -149,7 +195,10 @@ public class Producto {
 				+ chrEstado + ", vchDescripcion=" + vchDescripcion + ", vchDescripcionSmall=" + vchDescripcionSmall
 				+ ", numStock=" + numStock + ", familia=" + familia + ", listaProductoImagen=" + listaProductoImagen
 				+ ", listaProductoDetalle=" + listaProductoDetalle + ", imagenDefault=" + imagenDefault
-				+ ", totalRegistros=" + totalRegistros + "]";
+				+ ", totalRegistros=" + totalRegistros + ", numOutlet=" + numOutlet + ", numProductoVigencia="
+				+ numProductoVigencia + ", numValorVentaRefDolar=" + numValorVentaRefDolar + ", numValorVentaRefSoles="
+				+ numValorVentaRefSoles + ", numValorDesc=" + numValorDesc + "]";
 	}
+ 
 
 }
