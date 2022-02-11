@@ -7,7 +7,7 @@ import Carrucel from "./carrucel/carrucel";
 import {
   displayLista,
   Empresa,
-  homepage,
+   
   HttpStatus,
   localStoreEnum,
   LOGGIN,
@@ -64,6 +64,8 @@ import StockProducto from "./loginAdmin/producto/stockProducto";
 import ListaCorreoJobs from "./loginAdmin/correojobs/listaCorreoJobs";
 import ReporteCotizacion from "./loginAdmin/reporte/reporteCotizacion";
 import { ProductoOutlet } from "./producto/productoOutlet";
+import OutletCargaProducto  from "./loginAdmin/producto/outletCargaProducto";
+import ListadoProductoOutlet  from "./loginAdmin/producto/listadoProductoOutlet";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -77,6 +79,7 @@ let actionType = {
 const reducer = (state, action) => {
   switch (action.type) {
     case actionType.SELECT_MARCAS:
+       
       return {
         ...state,
         marca: action.marca,
@@ -85,6 +88,7 @@ const reducer = (state, action) => {
         indexCarrucel: 0,
       };
     case actionType.SELECT_MARCAS_FORDETALLE:
+       
       return {
         ...state,
         marca: action.marca,
@@ -250,7 +254,11 @@ function App() {
 
   /*Al seleccionar la marca del producto */
   async function handleSelectMarcaChange(e, invoke) {
+    
     let marca = lstMarcas.find((marca) => marca.codigoMarca === e);
+    if(marca===undefined){
+      marca=lstMarcas[0];
+    }
     dispatch({
       type: actionType.SELECT_MARCAS,
       marca: marca,
@@ -291,7 +299,7 @@ function App() {
 
   return (
     <div className="App" style={{ height: height }}>
-      <BrowserRouter basename={homepage}>
+      <BrowserRouter  >
         <BannerHeader></BannerHeader>
         <div className="header-top">
           <div className="container">
@@ -326,6 +334,7 @@ function App() {
                   displayLista={state.displayLista}
                   moneda={state.moneda}
                 ></ProductoDestacado>
+                
               </div>
             </Route>
             <Route path={"/outlet"} exact={true}>
@@ -414,6 +423,12 @@ function App() {
             </Route>
             <Route path="/productoImagen">
               <ImagenProducto />
+            </Route>
+            <Route path="/listaProductosOutlet">
+              <ListadoProductoOutlet numCodigoCliente={state.usuario.numCodigoCliente}></ListadoProductoOutlet>
+            </Route>
+            <Route path="/outletCarga/:numProductoVigencia/:crud">
+              <OutletCargaProducto numCodigoCliente={state.usuario.numCodigoCliente}></OutletCargaProducto>
             </Route>
             <Route path="/stock">
               <StockProducto

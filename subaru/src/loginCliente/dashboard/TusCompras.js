@@ -89,11 +89,11 @@ export default function TusCompras() {
             </div>
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Costo de Envío</label>
-              <label className="tuscompras-row-value">{(compras.moneda === 'SOLES' ? Moneda.SOLES.codigoIso4217 : Moneda.DOLARES.codigoIso4217)}{' ' + compras.costoFlete}</label>
+              <label className="tuscompras-row-value">{(compras.moneda === 'SOLES' ? Moneda.SOLES.codigoIso4217 : Moneda.DOLARES.codigoIso4217)}{' ' + (compras.costoFlete).toFixed(2)}</label>
             </div>
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Total</label>
-              <label className="tuscompras-row-value">{(compras.moneda === 'SOLES' ? Moneda.SOLES.codigoIso4217 : Moneda.DOLARES.codigoIso4217)}{' ' + compras.costoTotal}</label>
+              <label className="tuscompras-row-value">{(compras.moneda === 'SOLES' ? Moneda.SOLES.codigoIso4217 : Moneda.DOLARES.codigoIso4217)}{' ' + (compras.costoTotal).toFixed(2)}</label>
             </div>
             <div className="tuscompras-row-g">
               <label className="tuscompras-row-title">Nro.Pedido</label>
@@ -167,8 +167,11 @@ export default function TusCompras() {
         ""
       )}
     </div>
-    <h4>Sus Compras</h4>
+    <h4>Tus Movimientos</h4>
     <div className="form-body-compras">
+      <div className="form-body-accion">
+        <button type="button" onClick={(e)=>loadTusCompras()} className=" btn btn-primary fa fa-refresh" > Actualizar</button>
+      </div>
       {state.rowTusCompras}
     </div>
 

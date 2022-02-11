@@ -45,14 +45,23 @@ const URL = {
   REGISTRAR_CORREO_JOBS:"/correo/registrarCorreoJobs",/*Privado Administrador */
   REPORTE_COTIZACION:"/cotizacion/reporteCotizacion",/*Privado Administrador */
   OBTENER_REPORTE_TO_PDF:"/cotizacion/obtenerReporteToPdf",/*Privado Administrador */
+  ASOCIAR_OC_TO_COTIZACION:"/cotizacion/asignarOcToCotizacion",/*Privado Administrador */ 
+  LISTA_PRODUCTO_OUTLET_VIGENCIA:"/productoImagen/listaProductoOutletVigencia",/*Privado Administrador */
+  REGISTRAR_PROD_OUTLET_VIGENCIA:"/productoImagen/saveProductoOutletVigencia",/*Privado Administrador */
+  LISTA_PRODUCTO_OUTLET:"/productoImagen/listaProductosOutlet",/*Privado Administrador */
+  SAVE_UPDATE_PRODUCTO_OUTLET:"/productoImagen/saveUpdateProductoOutlet",/*Privado Administrador */
+  
   };
 
 function IP(uri) {
-  let _PROTOCOLO='http';
-  let _URL_API = 'localhost';//localhost ,bk.subaruparts.eanet.pe
-  let _PORT = '8084';//undefined --> sin puerto,'8084'--> con puerto
-  let _SERVICE = 'service';//'ShopAutoPartsServices/service' ,'service'-->localhost
-  return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri 
+
+  let _CONTEXT    ="PRODUCCION";//PRODUCCION -- DESARROLLO
+  let _PROTOCOLO  = (_CONTEXT==="PRODUCCION"?'https':'http');
+  let _URL_API    = (_CONTEXT==="PRODUCCION"?'bk.subaruparts.eanet.pe':'localhost'); 
+  let _PORT       = (_CONTEXT==="PRODUCCION"?undefined:'8086'); 
+  let _SERVICE    = (_CONTEXT==="PRODUCCION"?'ShopSubaruServices/service':'service');
+
+  return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri;
 }
 function IziPay() {
   return `https://api.micuentaweb.pe/api-payment/V4/Charge/SDKTest`;
