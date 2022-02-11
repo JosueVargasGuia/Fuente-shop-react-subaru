@@ -189,8 +189,13 @@ export default function
                       {Moneda.SOLES.codigoIso4217}
                     </option>
                   </select>
+                  
                 </div>
               </li>
+              <li> Tip.cambio:
+            <span className="tip-cambio">
+              <TipoCambio></TipoCambio>
+            </span></li>
             </ul>
           </li>
         </ul>

@@ -256,7 +256,7 @@ export default function ProductoDestacado(props) {
                   </div>
                   <div className="produc-destacado-item produc-destacado-item-right link-href">
                     <Link to={"/shop/oferta/filter/all"}>
-                      Todos en Oferta &raquo;
+                     Ver todos en Oferta &raquo;
                     </Link>
                   </div>
                 </div>
@@ -266,21 +266,30 @@ export default function ProductoDestacado(props) {
         ) : (
           <></>
         )}
-
+        {state.rowProducto !== undefined ? <>
+        {state.rowProducto.length <= 0 ?<></>:<>
         <div className="produc-destacado-title">
           <h4>DESTACADOS</h4>
         </div>
+        </>}
+        </>:<></>}
         <div className="produc-destacado-wrapper">
+          
+        {state.rowProducto !== undefined ? <>
+        {state.rowProducto.length <= 0 ?<></>:<>
           <div className="produc-destacado-item">
             {state.rowProducto === null ? (
               <LoadingClassic></LoadingClassic>
             ) : (
               state.rowProducto
             )}
-          </div>
+          </div></>}
+        </>:<></>}
+          
+
           <div className="produc-destacado-item produc-destacado-item-right link-href">
             <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"}>
-              Todos los productos &raquo;
+              Ver todos los productos &raquo;
             </Link>
           </div>
         </div>
