@@ -25,6 +25,7 @@ export default function Carrucel(props) {
         <img alt="outlet"   src={window.location.origin +(homepage===undefined?"":"/"+homepage) +"/marcas/outlet.png"} ></img> 
       </Link> 
     </div>
+    <div className="container-Carousel-list-root">
       <Carousel
         autoPlay={true}
         infiniteLoop={true}
@@ -38,7 +39,7 @@ export default function Carrucel(props) {
       >
         {rowItem}
       </Carousel>
-     
+      </div>
     </div>
   );
 }

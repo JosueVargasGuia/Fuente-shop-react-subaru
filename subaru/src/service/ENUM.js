@@ -247,7 +247,7 @@ const filterOrder = {
 const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */
   status: 1,
-  text: "Página en Modo de Prueba. Próximamente estará habilitada al 100%",
+  text: "En Modo de Prueba, Próximamente estará habilitada",
 };
 const tipoDireccion = {
   DESPACHO: "Dirección de Despacho",

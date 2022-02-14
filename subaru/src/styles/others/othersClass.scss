@@ -11,10 +11,17 @@
 }
 
 .header-nav-banner {
-    padding: 0.5em;
+    padding: 0.1em;
     background-color: #0000ff;
     color: var(--color-font3);
     text-align: center;
+    font-size: 15px;
+    vertical-align: middle;
+    height: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-evenly;
 }
 
 .label-disable {
@@ -459,7 +466,7 @@
         border-bottom: solid 1px white;
         @media (min-width: 0px) and (max-width: 994px) {
             margin-left: 0.1em;
-            margin-right: 0.1em;
+            margin-right: 2em;
             font-size: 15px;
         }
         &:hover {
@@ -565,6 +572,12 @@
         margin-left: 0.5em;
         padding-bottom: 0.4em;
         text-align: center;
+        @media (min-width: 1000px) and (max-width: 1200px) {
+            width: 30%;
+        }
+        @media (min-width: 0px) and (max-width: 999px) {
+            width: 45%;
+        }
         a {
             text-decoration: none;
             color: var(--color-font-default);

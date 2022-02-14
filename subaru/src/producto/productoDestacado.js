@@ -8,8 +8,8 @@ import ServerException from "../utils/serverException";
 import { LoadingClassic } from "../utils/loading"
 const LIMITE = 8;
 const listaRepuesto = [
-  { key: 1, discripcion: "Filtros de Aire", srcimg: "/marcas/subaru/repuestos/1.png", url: "/shop" },
-  { key: 2, discripcion: "Filtros de Aceite", srcimg: "/marcas/subaru/repuestos/2.png", url: "/shop" },
+  { key: 1, discripcion: "Filtro de Aire", srcimg: "/marcas/subaru/repuestos/1.png", url: "/shop" },
+  { key: 2, discripcion: "Filtro de Aceite", srcimg: "/marcas/subaru/repuestos/2.png", url: "/shop" },
   { key: 3, discripcion: "Pastillas de Freno", srcimg: "/marcas/subaru/repuestos/3.png", url: "/shop" },
   { key: 4, discripcion: "Discos de Freno", srcimg: "/marcas/subaru/repuestos/4.png", url: "/shop" },
   { key: 5, discripcion: "Alternadores", srcimg: "/marcas/subaru/repuestos/5.png", url: "/shop" },
@@ -58,13 +58,13 @@ export default function ProductoDestacado(props) {
   let rowRepuesto = listaRepuesto.map((rowRep) => <div key={rowRep.key}>
     <Link to={rowRep.url} key={rowRep.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg} loading='lazy'></img>
-      {rowRep.discripcion}-to={rowRep.url} 
+      {rowRep.discripcion} 
     </Link>
   </div>);
   let rowAccesorios = listaAccesorios.map((rowAcce) => <div key={rowAcce.key}>
     <Link to={rowAcce.url} key={rowAcce.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
-      {rowAcce.discripcion}-to={rowAcce.url}
+      {rowAcce.discripcion} 
     </Link>
   </div>);
 

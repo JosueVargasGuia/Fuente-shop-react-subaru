@@ -119,13 +119,7 @@
 }
 
 .filter-row-mobile .header-link {
-    width: 26%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.filter-row-mobile .header-link {
-    width: 26%;
+    width: 35%;
     display: flex;
     justify-content: flex-end;
 }
