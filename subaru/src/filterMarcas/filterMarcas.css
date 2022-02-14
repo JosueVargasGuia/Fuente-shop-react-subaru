@@ -1,4 +1,4 @@
-@media (min-width: 200px) and (max-width: 830px) {
+@media (min-width: 200px) and (max-width: 992px) {
     .header-nav,
     .filter-row-1,
     .filter-row-2 {
@@ -34,34 +34,6 @@
         background: white;
         padding: 0px 0px 0px 0px;
         z-index: 999;
-    }
-}
-
-@media (min-width: 200px) and (max-width: 576px) {
-    /*Pantallas extra pequeñas (móviles) < 576px*/
-    .filter-marcas {
-        /*background-color: chartreuse;*/
-    }
-}
-
-@media (min-width: 577px) and (max-width: 768px) {
-    /*Pantallas medianas (md, para tablets en horizontal)  ≥ 768px */
-    .filter-marcas {
-        /* background-color: pink;*/
-    }
-}
-
-@media (min-width: 769px) and (max-width: 992px) {
-    /* Pantallas grandes (lg, tamaño escritorio) ≥ 992px*/
-    .filter-marcas {
-        /*background-color: orange;*/
-    }
-}
-
-@media (min-width: 993px) and (max-width: 1200px) {
-    /*Pantallas extra grandes (xl, escritorio grande) ≥ 1200px */
-    .filter-marcas {
-        /* background-color: blue;*/
     }
 }
 
@@ -119,7 +91,7 @@
 }
 
 .filter-row-mobile .header-link {
-    width: 35%;
+    width: 60%;
     display: flex;
     justify-content: flex-end;
 }

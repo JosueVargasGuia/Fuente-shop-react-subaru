@@ -463,10 +463,14 @@
         color: var(--color-font-default);
         margin-left: 1.5em;
         margin-right: 0.5em;
-        border-bottom: solid 1px white;
-        @media (min-width: 0px) and (max-width: 994px) {
+        @media (min-width: 0px) and (max-width: 830px) {
             margin-left: 0.1em;
             margin-right: 2em;
+            font-size: 15px;
+        }
+        @media (min-width: 831px) and (max-width: 992px) {
+            margin-left: 0.1em;
+            margin-right: 0.5em;
             font-size: 15px;
         }
         &:hover {
@@ -581,9 +585,11 @@
         a {
             text-decoration: none;
             color: var(--color-font-default);
-            font-size: 0.8em;
             &:hover {
                 color: var(--color-button-hover2);
+            }
+            .produc-link-title {
+                font-size: 1.2em;
             }
         }
         img {
@@ -695,10 +701,6 @@
     a {
         text-decoration: none;
     }
-}
-
-.carousel .slide img {
-    height: inherit !important;
 }
 
 .prod-det-carrousel .carousel .slide img {
@@ -1365,15 +1367,33 @@
     border: none;
 }
 
-.filter-home-emp-nombre {
-    font-family: EurostileExtended;
-    font-weight: bold;
-    font-size: 14px;
-    color: var(--color-background-Gray);
+.inner-header {
+    display: flex;
+    .filter-home-emp-nombre {
+        font-family: EurostileExtended;
+        font-weight: bold;
+        font-size: 14px;
+        color: var(--color-background-Gray);
+    }
+    .filter-home-emp-sociedad {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 9px;
+        color: var(--color-background-Gray);
+    }
+    @media (min-width: 993px) and (max-width: 1200px) {
+        .fa-peru {
+            display: none;
+        }
+    }
 }
 
-.filter-home-emp-sociedad {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 9px;
-    color: var(--color-background-Gray);
+.filter-row-mobile-menu {
+    flex-direction: row;
+    justify-content: space-between;
+    .inner-header {
+        @media (max-width: 500px) {
+            display: none;
+            width: 0px;
+        }
+    }
 }

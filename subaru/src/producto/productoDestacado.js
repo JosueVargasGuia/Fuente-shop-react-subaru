@@ -58,13 +58,13 @@ export default function ProductoDestacado(props) {
   let rowRepuesto = listaRepuesto.map((rowRep) => <div key={rowRep.key}>
     <Link to={rowRep.url} key={rowRep.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg} loading='lazy'></img>
-      {rowRep.discripcion} 
+      <span className="produc-link-title">{rowRep.discripcion}</span>
     </Link>
   </div>);
   let rowAccesorios = listaAccesorios.map((rowAcce) => <div key={rowAcce.key}>
     <Link to={rowAcce.url} key={rowAcce.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
-      {rowAcce.discripcion} 
+      <span className="produc-link-title">{rowAcce.discripcion}</span>
     </Link>
   </div>);
 
