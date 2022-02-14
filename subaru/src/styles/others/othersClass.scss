@@ -1389,7 +1389,7 @@
 
 .filter-row-mobile-menu {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-between !important;
     .inner-header {
         @media (max-width: 500px) {
             display: none;
