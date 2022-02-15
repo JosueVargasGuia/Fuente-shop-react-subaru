@@ -761,6 +761,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						productoOutlet.setNumValorRefVenta(rs.getBigDecimal("NUMVALORREFVENTA").setScale(2, RoundingMode.HALF_UP));
 						productoOutlet.setNumValorVenta(rs.getBigDecimal("NUMVALORVENTA").setScale(2, RoundingMode.HALF_UP));
 						productoOutlet.setVchDescripcion(rs.getString("VCHDESCRIPCION"));
+						productoOutlet.setVchModelo(rs.getString("VCHMODELO"));
 						lista.add(productoOutlet);
 					}
 					return lista;
@@ -823,7 +824,8 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					 cs.setInt(8, productoOutlet.getNumProductoVigencia());
 					 cs.setBigDecimal(9, productoOutlet.getNumValorCompra());
 					 cs.setInt(10, productoOutlet.getNumProductoOutlet());
-					 cs.registerOutParameter(11, OracleTypes.VARCHAR);
+					 cs.setString(11, productoOutlet.getVchModelo());
+					 cs.registerOutParameter(12, OracleTypes.VARCHAR);
 					cs.execute();
 					return cs.getString(11);
 				}
@@ -832,7 +834,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_PRODUC_OUTLET(?,?,?,?,?,?,?,?,?,?,?)}";
+		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_PRODUC_OUTLET(?,?,?,?,?,?,?,?,?,?,?,?)}";
 		return jdbcTemplate.execute(sql, callback);
 	}
 

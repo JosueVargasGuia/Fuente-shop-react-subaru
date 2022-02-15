@@ -957,6 +957,7 @@
                 overflow-x: hidden;
                 display: block;
                 tr {
+                    height: 28px;
                     td {
                         border: solid 0.5px var(--color-font2);
                         font-size: 11px;
@@ -1395,5 +1396,26 @@
             display: none;
             width: 0px;
         }
+    }
+}
+
+.btn-edit-action {
+    cursor: pointer;
+    height: 15px;
+    color: #0000ff;
+    border-bottom: 1px solid #0000ff;
+    text-align: center;
+}
+
+.outlet-cell-edit {
+    input {
+        width: 60%;
+        margin-right: 2px;
+        font-size: 12px;
+        text-align: center;
+    }
+    i {
+        vertical-align: text-top;
+        font-size: 18px;
     }
 }

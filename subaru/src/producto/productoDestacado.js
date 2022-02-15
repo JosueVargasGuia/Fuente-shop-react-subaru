@@ -306,7 +306,7 @@ export default function ProductoDestacado(props) {
         </div>
         <div className="produc-destacado-links">
           <h3 className="produc-destacado-links-title">
-            Accesorios subaru por categoría
+            Accesorios Subaru por categoría
           </h3>
           <hr />
           <div className="produc-link-accesorio">{rowCategoria}</div>

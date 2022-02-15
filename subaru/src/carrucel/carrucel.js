@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useReducer } from "react";
 //import Carousel from "react-elastic-carousel";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -6,6 +6,23 @@ import { Link } from "react-router-dom";
 
 import "../filterMarcas/filterMarcas.css";
 import { homepage } from "../service/ENUM";
+
+
+let actionType = {
+  setCarrucel: "setCarrucel",   
+  ERROR: "ERROR",
+}
+const reducer = (state, action) => {
+  switch (action.type) {
+    case actionType.setCarrucel:
+      return {
+        ...state,
+        rowItem: action.rowItem,
+      };    
+    default:
+      return state;
+  }
+}
 
 export default function Carrucel(props) {   
   /* <img alt="outlet"  src={window.location.origin +(homepage==undefined?"":"/"+homepage) +"/marcas/outlet.png"}></img> */ 
@@ -18,6 +35,41 @@ export default function Carrucel(props) {
     ></img>
   ));
 
+  const [state, dispatch] = useReducer(reducer, {rowItem:rowItem  });
+
+
+  useEffect(()=>{  
+    handleWindowsResize();
+    window.addEventListener('resize',handleWindowsResize);
+    //eslint-disable-next-line 
+  },[props.marca]);
+  
+  function handleWindowsResize(){
+    if(window.innerWidth<=767){
+      let rowItem=[];
+      rowItem = props.marca.lstCarrucel.map((objImagen) => (
+        <img
+          className="container-Carousel-img"
+          key={objImagen.codigoCarrucel}
+          alt={ objImagen.srcImageMobile}
+          src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile}
+        ></img>
+      )); 
+      dispatch({ type: actionType.setCarrucel, rowItem: rowItem });     
+    } else{
+      let rowItem=[];
+      rowItem = props.marca.lstCarrucel.map((objImagen) => (
+        <img
+          className="container-Carousel-img"
+          key={objImagen.codigoCarrucel}
+          alt={ objImagen.srcImage}
+          src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
+        ></img>
+      )); 
+      dispatch({ type: actionType.setCarrucel, rowItem: rowItem });  
+    } 
+  }
+  
   return (
     <div className="container-Carousel-list">    
     <div className="outlet">
@@ -37,7 +89,7 @@ export default function Carrucel(props) {
         dynamicHeight={true} 
         
       >
-        {rowItem}
+        {state.rowItem}
       </Carousel>
       </div>
     </div>
