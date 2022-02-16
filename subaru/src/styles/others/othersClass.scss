@@ -11,10 +11,17 @@
 }
 
 .header-nav-banner {
-    padding: 0.5em;
+    padding: 0.1em;
     background-color: #0000ff;
     color: var(--color-font3);
     text-align: center;
+    font-size: 15px;
+    vertical-align: middle;
+    height: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-evenly;
 }
 
 .label-disable {
@@ -456,10 +463,14 @@
         color: var(--color-font-default);
         margin-left: 1.5em;
         margin-right: 0.5em;
-        border-bottom: solid 1px white;
-        @media (min-width: 0px) and (max-width: 994px) {
+        @media (min-width: 0px) and (max-width: 830px) {
             margin-left: 0.1em;
-            margin-right: 0.1em;
+            margin-right: 2em;
+            font-size: 15px;
+        }
+        @media (min-width: 831px) and (max-width: 992px) {
+            margin-left: 0.1em;
+            margin-right: 0.5em;
             font-size: 15px;
         }
         &:hover {
@@ -565,12 +576,20 @@
         margin-left: 0.5em;
         padding-bottom: 0.4em;
         text-align: center;
+        @media (min-width: 1000px) and (max-width: 1200px) {
+            width: 30%;
+        }
+        @media (min-width: 0px) and (max-width: 999px) {
+            width: 45%;
+        }
         a {
             text-decoration: none;
             color: var(--color-font-default);
-            font-size: 0.8em;
             &:hover {
                 color: var(--color-button-hover2);
+            }
+            .produc-link-title {
+                font-size: 1.2em;
             }
         }
         img {
@@ -682,10 +701,6 @@
     a {
         text-decoration: none;
     }
-}
-
-.carousel .slide img {
-    height: inherit !important;
 }
 
 .prod-det-carrousel .carousel .slide img {
@@ -942,6 +957,7 @@
                 overflow-x: hidden;
                 display: block;
                 tr {
+                    height: 28px;
                     td {
                         border: solid 0.5px var(--color-font2);
                         font-size: 11px;
@@ -1352,15 +1368,54 @@
     border: none;
 }
 
-.filter-home-emp-nombre {
-    font-family: EurostileExtended;
-    font-weight: bold;
-    font-size: 14px;
-    color: var(--color-background-Gray);
+.inner-header {
+    display: flex;
+    .filter-home-emp-nombre {
+        font-family: EurostileExtended;
+        font-weight: bold;
+        font-size: 14px;
+        color: var(--color-background-Gray);
+    }
+    .filter-home-emp-sociedad {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 9px;
+        color: var(--color-background-Gray);
+    }
+    @media (min-width: 993px) and (max-width: 1200px) {
+        .fa-peru {
+            display: none;
+        }
+    }
 }
 
-.filter-home-emp-sociedad {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 9px;
-    color: var(--color-background-Gray);
+.filter-row-mobile-menu {
+    flex-direction: row;
+    justify-content: space-between !important;
+    .inner-header {
+        @media (max-width: 500px) {
+            display: none;
+            width: 0px;
+        }
+    }
+}
+
+.btn-edit-action {
+    cursor: pointer;
+    height: 15px;
+    color: #0000ff;
+    border-bottom: 1px solid #0000ff;
+    text-align: center;
+}
+
+.outlet-cell-edit {
+    input {
+        width: 60%;
+        margin-right: 2px;
+        font-size: 12px;
+        text-align: center;
+    }
+    i {
+        vertical-align: text-top;
+        font-size: 18px;
+    }
 }

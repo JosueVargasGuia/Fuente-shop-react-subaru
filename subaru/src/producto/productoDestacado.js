@@ -8,8 +8,8 @@ import ServerException from "../utils/serverException";
 import { LoadingClassic } from "../utils/loading"
 const LIMITE = 8;
 const listaRepuesto = [
-  { key: 1, discripcion: "Filtros de Aire", srcimg: "/marcas/subaru/repuestos/1.png", url: "/shop" },
-  { key: 2, discripcion: "Filtros de Aceite", srcimg: "/marcas/subaru/repuestos/2.png", url: "/shop" },
+  { key: 1, discripcion: "Filtro de Aire", srcimg: "/marcas/subaru/repuestos/1.png", url: "/shop" },
+  { key: 2, discripcion: "Filtro de Aceite", srcimg: "/marcas/subaru/repuestos/2.png", url: "/shop" },
   { key: 3, discripcion: "Pastillas de Freno", srcimg: "/marcas/subaru/repuestos/3.png", url: "/shop" },
   { key: 4, discripcion: "Discos de Freno", srcimg: "/marcas/subaru/repuestos/4.png", url: "/shop" },
   { key: 5, discripcion: "Alternadores", srcimg: "/marcas/subaru/repuestos/5.png", url: "/shop" },
@@ -58,13 +58,13 @@ export default function ProductoDestacado(props) {
   let rowRepuesto = listaRepuesto.map((rowRep) => <div key={rowRep.key}>
     <Link to={rowRep.url} key={rowRep.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg} loading='lazy'></img>
-      {rowRep.discripcion}-to={rowRep.url} 
+      <span className="produc-link-title">{rowRep.discripcion}</span>
     </Link>
   </div>);
   let rowAccesorios = listaAccesorios.map((rowAcce) => <div key={rowAcce.key}>
     <Link to={rowAcce.url} key={rowAcce.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
-      {rowAcce.discripcion}-to={rowAcce.url}
+      <span className="produc-link-title">{rowAcce.discripcion}</span>
     </Link>
   </div>);
 
@@ -241,46 +241,59 @@ export default function ProductoDestacado(props) {
   return (
     <div key={props.marcaSelect.chrCodigoFamilia}>
       <div className="produc-destacado">
-      {state.rowProductoOferta.length <= 0? (
-          <></>
-        ) : (
+        {state.rowProductoOferta !== undefined ? (
           <>
-            <div className="produc-destacado-title">
-              <h4>OFERTAS</h4>
-            </div>
-            <div className="produc-destacado-wrapper">
-              <div className="produc-destacado-item">
-                {state.rowProductoOferta }
-              </div>
-              <div className="produc-destacado-item produc-destacado-item-right link-href">
-                <Link
-                  to={"/shop/oferta/filter/all"}
-                >
-                  Todos en Oferta &raquo;
-                </Link>
-              </div>
-            </div>
+            {state.rowProductoOferta.length <= 0 ? (
+              <></>
+            ) : (
+              <>
+                <div className="produc-destacado-title">
+                  <h4>OFERTAS</h4>
+                </div>
+                <div className="produc-destacado-wrapper">
+                  <div className="produc-destacado-item">
+                    {state.rowProductoOferta}
+                  </div>
+                  <div className="produc-destacado-item produc-destacado-item-right link-href">
+                    <Link to={"/shop/oferta/filter/all"}>
+                     Ver todos en Oferta &raquo;
+                    </Link>
+                  </div>
+                </div>
+              </>
+            )}
           </>
+        ) : (
+          <></>
         )}
-
+        {state.rowProducto !== undefined ? <>
+        {state.rowProducto.length <= 0 ?<></>:<>
         <div className="produc-destacado-title">
           <h4>DESTACADOS</h4>
         </div>
+        </>}
+        </>:<></>}
         <div className="produc-destacado-wrapper">
+          
+        {state.rowProducto !== undefined ? <>
+        {state.rowProducto.length <= 0 ?<></>:<>
           <div className="produc-destacado-item">
             {state.rowProducto === null ? (
               <LoadingClassic></LoadingClassic>
             ) : (
               state.rowProducto
             )}
-          </div>
+          </div></>}
+        </>:<></>}
+          
+
           <div className="produc-destacado-item produc-destacado-item-right link-href">
             <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"}>
-              Todos los productos &raquo;
+              Ver todos los productos &raquo;
             </Link>
           </div>
         </div>
-       
+
         <div className="produc-destacado-links">
           <h3 className="produc-destacado-links-title">Piezas de Repuesto</h3>
           <hr />
@@ -293,7 +306,7 @@ export default function ProductoDestacado(props) {
         </div>
         <div className="produc-destacado-links">
           <h3 className="produc-destacado-links-title">
-            Accesorios subaru por categoría
+            Accesorios Subaru por categoría
           </h3>
           <hr />
           <div className="produc-link-accesorio">{rowCategoria}</div>

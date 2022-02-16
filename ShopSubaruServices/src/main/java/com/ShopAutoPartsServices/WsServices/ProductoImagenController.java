@@ -277,6 +277,7 @@ public class ProductoImagenController {
 		try {
 			ProductoOutletVigencia _result=productoService.saveProductoOutletVigencia(outletRequets.getProductoOutletVigencia());
 			outletRequets.getProductoOutletVigencia().setNumProductoVigencia(_result.getNumProductoVigencia());
+			outletVigenciaResponse.setProductoOutletVigencia(_result);
 			String _result2="";
 			if(_result.getStatus().equalsIgnoreCase("OK")) {			
 				if(CRUD.INSERT==outletRequets.getCrud().INSERT) {

@@ -21,6 +21,12 @@
             .nav-marcas {
                 align-items: center;
                 span {
+                    font-size: 14px;
+                }
+            }
+            .header-link {
+                align-items: center;
+                i {
                     font-size: 24px;
                 }
             }
@@ -30,22 +36,13 @@
                 margin-right: 0.1em;
                 padding-left: 0.1em;
                 padding-right: 0.1em;
-                min-width: 50%;
-            }
-            .header-link {
-                align-items: center;
-                i {
-                    font-size: 24px;
-                }
-            }
-            .filter-image {
+                min-width: 20%;
                 width: auto;
-                padding-left: 0.1em;
-                padding-right: 0.1em;
                 img {
                     width: 94%;
                     height: 37px;
                     object-fit: contain;
+                    max-width: 200px;
                 }
             }
         }
@@ -56,6 +53,7 @@
         .filter-row-mobile-input {
             position: relative;
             flex-wrap: wrap;
+            width: calc(100% + 7px);
             input {
                 width: 100%;
                 height: auto;
@@ -81,18 +79,26 @@
             align-items: center;
             padding: 0;
             border-bottom: 1px solid #f1f1f1;
-            padding-top: 0.3em;
             cursor: context-menu;
+            padding-top: 0.3em;
             .header-phone {
                 padding: 0;
                 text-align: left;
+                width: 20%;
+                /*Para el MENU de Moneda,usuario,cerrar session*/
+                @media (min-width: 994px) and (max-width: 1211px) {
+                    width: 22%;
+                }
+                @media (min-width: 600px) and (max-width: 994px) {
+                    width: 30%;
+                }
             }
             &__wrapper {
                 display: flex;
                 justify-content: flex-end;
                 align-items: center;
+                width: 75%;
                 .header-link-tipcambio {
-                    width: auto;
                     font-size: 12px;
                     color: #7a7a7a;
                     .tip-cambio-moneda {

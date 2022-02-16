@@ -3,7 +3,7 @@ package com.ShopAutoPartsServices.Domain;
 import java.math.BigDecimal;
 
 public class ProductoOutlet {
-	String chrCodigoProducto, vchDescripcion, numUnspc;
+	String chrCodigoProducto, vchDescripcion, numUnspc,vchModelo;
 	BigDecimal numValorVenta, numValorRefVenta, numValorDesc, numValorCompra;
 	int  numProductoVigencia, numProductoOutlet;
 	double numStock;
@@ -76,6 +76,13 @@ public class ProductoOutlet {
 	public ProductoOutlet setNumProductoOutlet(int numProductoOutlet) {
 		this.numProductoOutlet = numProductoOutlet;
 		return this;
+	}
+	
+	public String getVchModelo() {
+		return vchModelo;
+	}
+	public void setVchModelo(String vchModelo) {
+		this.vchModelo = vchModelo;
 	}
 	@Override
 	public String toString() {
