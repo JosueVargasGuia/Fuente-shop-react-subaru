@@ -87,7 +87,7 @@
 }
 
 .filter-input-search {
-    margin-top: 0.5em;
+    position: relative;
 }
 
 .filter-row-mobile .header-link {
