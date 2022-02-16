@@ -1,6 +1,5 @@
 package com.ShopAutoPartsServices.Domain.IziPay;
-
-import com.ShopAutoPartsServices.Domain.Response;
+ 
 
 public class CreatePaymentResponse {
 	String webService, version, applicationVersion, status, ticket, serverDate, applicationProvider, metadata, _type,

@@ -72,9 +72,9 @@ export default function BottonCarrito(props) {
         <div className={`box_shop ${state.cantidad>=1 ? ' div-carrito' : ''}`}>
           <i className="material-icons">shopping_cart</i>
           {state.cantidad === 0 ? (
-            <span>Carrito</span>
+            <span></span>
           ) : (
-            <><span>Carrito</span>({state.cantidad})</>
+            <>({state.cantidad})</>
           )}
         </div>
       </Link>

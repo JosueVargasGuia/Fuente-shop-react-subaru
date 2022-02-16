@@ -21,6 +21,7 @@ import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.ShopAutoPartsServices.Domain.AsociaOc;
 import com.ShopAutoPartsServices.Domain.ReportePdfRequets;
 import com.ShopAutoPartsServices.Domain.IziPay.ScheduledProceso;
 import com.ShopAutoPartsServices.FE.Constantes;
@@ -28,7 +29,6 @@ import com.ShopAutoPartsServices.FE.UtilString;
 import com.ShopAutoPartsServices.FE.Beans.BeanEmpresa;
 import com.ShopAutoPartsServices.FE.Beans.BeanFacturacion;
 import com.ShopAutoPartsServices.Repository.FacturacionRepository;
-import com.ShopAutoPartsServices.WsServices.IpnController;
 
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -39,11 +39,13 @@ import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import oracle.jdbc.OracleTypes;
 
+@SuppressWarnings({ "deprecation", "unused" })
 @Repository
 public class FacturacionRepositoryImpl implements FacturacionRepository {
 	final private String PKG_EMPRESA = "PKG_EMPRESA";
 	final private String PKG_METODOS = "PKG_METODOS";
 	final private String PKG_FACTURACION = "PKG_FACTURACION";
+	final private String PKG_TIENDA = "PKG_TIENDA";
 	Logger logger = LoggerFactory.getLogger(FacturacionRepositoryImpl.class);
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -521,7 +523,7 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 			parametros.put("duplicado",
 					"******************************************* DOCUMENTO SIN VALOR COMERCIAL - DUPLICADO ***************************");
 			parametros.put("pathReport", path);
-		 	parametros.put("REPORT_LOCALE", new Locale("en", "US"));
+			parametros.put("REPORT_LOCALE", new Locale("en", "US"));
 
 			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/reporteFacturaOS.jasper");
 			byte[] bytes = JasperRunManager.runReportToPdf(inputStream, parametros, connection);
@@ -529,7 +531,7 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 			connection.close();
 			return pdfBase64;
 		} catch (Exception e) {
-			 logger.info("**********************obtenerReporteFactura******************");
+			logger.info("**********************obtenerReporteFactura******************");
 			e.printStackTrace();
 			connection.close();
 			logger.info("**********************obtenerReporteFactura printStackTrace******************");
@@ -552,9 +554,9 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 
 			@SuppressWarnings("rawtypes")
 			HashMap parametros = new HashMap();
-			parametros.put("numoc", reportePdfRequets.getChrCodigoOc()+"");
+			parametros.put("numoc", reportePdfRequets.getChrCodigoOc() + "");
 			parametros.put("pathReport", path);
-			 parametros.put("REPORT_LOCALE", new Locale("en", "US"));
+			parametros.put("REPORT_LOCALE", new Locale("en", "US"));
 
 			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/rpt_OrdenCompra.jasper");
 			byte[] bytes = JasperRunManager.runReportToPdf(inputStream, parametros, connection);
@@ -580,7 +582,7 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 			HashMap parametros = new HashMap();
 			parametros.put("numguia", reportePdfRequets.getChrCodigoGuia());
 			parametros.put("pathReport", path);
-			 parametros.put("REPORT_LOCALE", new Locale("en", "US"));
+			parametros.put("REPORT_LOCALE", new Locale("en", "US"));
 
 			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/rpt_GuiasSalida.jasper");
 			byte[] bytes = JasperRunManager.runReportToPdf(inputStream, parametros, connection);
@@ -595,6 +597,93 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 			return "";
 
 		}
+	}
+
+	public File obtenerFileReporteOcOnline(ScheduledProceso scheduledProceso) throws Exception {
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		try {
+
+			String fileName = "OrdenCompra_" + scheduledProceso.getChrCodigoOc();
+			String fileNameRoot = System.getProperty("java.io.tmpdir") + "/" + fileName + ".xls";
+			String rptFileName = "reporteOCOnline.jasper";
+
+			@SuppressWarnings("rawtypes")
+			HashMap parametros = new HashMap();
+			parametros.put("p_nrooc", scheduledProceso.getChrCodigoOc().trim());
+			parametros.put("REPORT_LOCALE", new Locale("en", "US"));
+			logger.info(fileNameRoot);
+			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/" + rptFileName);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parametros, connection);
+			JRXlsExporter exporter = new JRXlsExporter();
+			exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+			exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+			exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.TRUE);
+			exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, fileNameRoot);
+			// exportar Excel
+			exporter.exportReport();
+
+			// -- Se crea el archivo en esta ruta
+			File file = new File(fileNameRoot);
+			connection.close();
+			return file;
+		} catch (Exception e) {
+			// TODO: handle exception
+			connection.close();
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public String obtenerReporteOrdenCompraOnline(ReportePdfRequets reportePdfRequets) throws Exception {
+		Connection connection = jdbcTemplate.getDataSource().getConnection();
+		try {
+			String path = new ClassPathResource("/").getFile().getAbsolutePath();
+
+			@SuppressWarnings("rawtypes")
+			HashMap parametros = new HashMap();
+			parametros.put("p_nrooc", reportePdfRequets.getChrCodigoOcOnline().trim());
+			parametros.put("REPORT_LOCALE", new Locale("en", "US"));
+
+			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/reporteOCOnline.jasper");
+			byte[] bytes = JasperRunManager.runReportToPdf(inputStream, parametros, connection);
+			String pdfBase64 = Base64.getEncoder().encodeToString(bytes);
+			connection.close();
+			return pdfBase64;
+		} catch (Exception e) {
+			logger.info("**********************obtenerReporteOrdenCompraOnline******************");
+			e.printStackTrace();
+			logger.info("**********************obtenerReporteOrdenCompraOnline printStackTrace******************");
+			connection.close();
+			return "";
+
+		}
+	}
+
+	public String asignarOcToCotizacion(AsociaOc asociaOc) throws Exception {
+		CallableStatementCallback<String> callback = null;
+		try {
+			callback = new CallableStatementCallback<String>() {
+				@Override
+				public String doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+
+					String _result = "";
+					cs.setInt(1, asociaOc.getNumCodigoCotizacion());
+					cs.setString(2, asociaOc.getChrCodigoCotizacion());
+					cs.setString(3, asociaOc.getChrCodigoOc());
+					cs.registerOutParameter(4, OracleTypes.VARCHAR);
+					cs.execute();
+					_result=cs.getString(4);
+					return _result;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{call " + PKG_TIENDA+ ".ASOCIAR_OC_TO_COT(?,?,?,?)}";
+		return jdbcTemplate.execute(sql, callback);
 	}
 
 }

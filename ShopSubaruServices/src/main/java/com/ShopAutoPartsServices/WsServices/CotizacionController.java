@@ -1,6 +1,6 @@
 package com.ShopAutoPartsServices.WsServices;
 
-import java.text.SimpleDateFormat;
+ 
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,20 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ShopAutoPartsServices.Config.IzipayConfiguracion;
-import com.ShopAutoPartsServices.Domain.ClienteUsuario;
+import com.ShopAutoPartsServices.Domain.AsociaOc;
 import com.ShopAutoPartsServices.Domain.CotizacionOnline;
 import com.ShopAutoPartsServices.Domain.CotizacionOnlineActiva;
 import com.ShopAutoPartsServices.Domain.CotizacionOnlineDetalle;
 import com.ShopAutoPartsServices.Domain.CotizacionOnlineDetalleResponse;
 import com.ShopAutoPartsServices.Domain.CotizacionOnlineResumen;
-import com.ShopAutoPartsServices.Domain.Direccion;
-import com.ShopAutoPartsServices.Domain.Familia;
+ 
 import com.ShopAutoPartsServices.Domain.MetodoEnvioRequets;
-import com.ShopAutoPartsServices.Domain.Producto;
-import com.ShopAutoPartsServices.Domain.ProductoImagen;
-import com.ShopAutoPartsServices.Domain.ProductoImagenResponse;
-import com.ShopAutoPartsServices.Domain.ProductoRequets;
-import com.ShopAutoPartsServices.Domain.ReporteCotizacion;
+ 
 import com.ShopAutoPartsServices.Domain.ReporteCotizacionResponse;
 import com.ShopAutoPartsServices.Domain.ReportePdfRequets;
 import com.ShopAutoPartsServices.Domain.ReportePdfResponse;
@@ -49,7 +44,7 @@ import com.ShopAutoPartsServices.Domain.IziPay.CreatePaymentFormResponse;
 import com.ShopAutoPartsServices.Domain.IziPay.CreatePaymentRequest;
 import com.ShopAutoPartsServices.Domain.IziPay.CreatePaymentResponse;
 import com.ShopAutoPartsServices.Domain.IziPay.StatusAction;
-import com.ShopAutoPartsServices.Enums.FilterProducto;
+ 
 import com.ShopAutoPartsServices.Enums.MetodoEnvio;
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
 import com.ShopAutoPartsServices.Enums.Status;
@@ -168,10 +163,10 @@ public class CotizacionController {
 		ResponseEntity<MetodoEnvioRequets> responseEntity = null;
 		try {
 			MetodoEnvioRequets metodoEnvioResponse = cotizacionOnlineService.registrarModoEnvio(metodoEnvioRequets);
-			metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.EnvioRegular);
+			// metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.EnvioRegular);
+
 			if (metodoEnvioResponse.getStatus() == Status.ERROR_ZONA_INCONRRECTA) {
 				// metodoEnvioResponse.setMetodoEnvio(MetodoEnvio.RecojoAlmacen);
-
 				metodoEnvioResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO);
 				responseEntity = new ResponseEntity<MetodoEnvioRequets>(metodoEnvioResponse, HttpStatus.OK);
 			} else {
@@ -247,7 +242,7 @@ public class CotizacionController {
 				metodoEnvioRequets.setNumCodigoDireccion(0);
 				MetodoEnvioRequets metodoEnvioResponse = cotizacionOnlineService.registrarModoEnvio(metodoEnvioRequets);
 			} catch (Exception e) {
-				 
+
 				logger.info("ERROR Registro de metodo de envio Detalle Carrito");
 				logger.info(e.getMessage());
 				e.printStackTrace();
@@ -392,7 +387,8 @@ public class CotizacionController {
 			httpPost.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
 			httpPost.addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE);
 			httpPost.addHeader(HttpHeaders.AUTHORIZATION,
-					"Basic " + Base64Utils.encodeToString(new String(izipayConfiguracion.getPrivateKey()).getBytes()));
+					"Basic " + Base64Utils.encodeToString(new String(izipayConfiguracion.getPrivateKey()).getBytes()));		
+			
 			Gson gson = new Gson();
 			String json = gson.toJson(createPayment);
 			StringEntity entity = new StringEntity(json);
@@ -457,6 +453,9 @@ public class CotizacionController {
 			} else if (reportePdfRequets.getTypeReporte() == TypeReporte.ReporteGuiaSalida) {
 				reporteCotizacionResponse
 						.setByteEnconderBase64(facturacionService.obtenerReporteGuiaSalida(reportePdfRequets));
+			} else if (reportePdfRequets.getTypeReporte() == TypeReporte.ReporteOrdenCompraOnline) {
+				reporteCotizacionResponse
+						.setByteEnconderBase64(facturacionService.obtenerReporteOrdenCompraOnline(reportePdfRequets));
 			}
 			reporteCotizacionResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK)
 					.setError(new ArrayList<String>()).setError(error);
@@ -471,5 +470,32 @@ public class CotizacionController {
 		}
 		return responseEntity;
 	}
-
+	@PostMapping(value = "/asignarOcToCotizacion", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ReportePdfResponse> asignarOcToCotizacion(
+			@RequestBody AsociaOc asociaOc) {
+		ReportePdfResponse reporteCotizacionResponse = new ReportePdfResponse();
+		ResponseEntity<ReportePdfResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();
+		try {
+			String _resultado=facturacionService.asignarOcToCotizacion(asociaOc);
+			if(_resultado.equalsIgnoreCase("OK")) {
+			reporteCotizacionResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK)
+					.setError(new ArrayList<String>()).setError(error);
+			responseEntity = new ResponseEntity<ReportePdfResponse>(reporteCotizacionResponse, HttpStatus.OK);
+			}else {
+				error.add(_resultado);
+				reporteCotizacionResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO)
+				.setError(new ArrayList<String>()).setError(error);
+				responseEntity = new ResponseEntity<ReportePdfResponse>(reporteCotizacionResponse, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			logger.info(asociaOc.toString());
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			reporteCotizacionResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_ERROR)
+					.setError(new ArrayList<String>()).getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<ReportePdfResponse>(reporteCotizacionResponse, HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+	}
 }

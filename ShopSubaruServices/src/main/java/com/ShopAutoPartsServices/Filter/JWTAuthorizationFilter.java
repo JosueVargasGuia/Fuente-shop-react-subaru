@@ -2,7 +2,6 @@ package com.ShopAutoPartsServices.Filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.FilterChain;
@@ -28,6 +27,7 @@ import io.jsonwebtoken.Jwts;
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 	Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {

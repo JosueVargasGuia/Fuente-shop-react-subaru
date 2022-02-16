@@ -1,6 +1,5 @@
 package com.ShopAutoPartsServices.Domain;
-
-import java.io.File;
+ 
 
 public class ReportePdfResponse {
 	Response response=new Response();

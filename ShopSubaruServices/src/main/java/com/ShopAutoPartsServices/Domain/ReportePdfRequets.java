@@ -7,6 +7,7 @@ public class ReportePdfRequets {
 	String numCodigoCotizacion;
 	String chrCodigoOc;
 	String chrCodigoGuia;
+	String chrCodigoOcOnline;
 	TypeReporte typeReporte;
   
 	public String getNumCodigoCotizacion() {
@@ -51,6 +52,15 @@ public class ReportePdfRequets {
 
 	public ReportePdfRequets setChrCodigoGuia(String chrCodigoGuia) {
 		this.chrCodigoGuia = chrCodigoGuia;
+		return this;
+	}
+
+	public String getChrCodigoOcOnline() {
+		return chrCodigoOcOnline;
+	}
+
+	public ReportePdfRequets setChrCodigoOcOnline(String chrCodigoOcOnline) {
+		this.chrCodigoOcOnline = chrCodigoOcOnline;
 		return this;
 	}
 

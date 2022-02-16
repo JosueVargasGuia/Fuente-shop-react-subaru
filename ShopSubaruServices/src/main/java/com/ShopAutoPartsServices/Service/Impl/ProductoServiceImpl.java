@@ -10,13 +10,16 @@ import com.ShopAutoPartsServices.Domain.Familia;
 import com.ShopAutoPartsServices.Domain.ImagenProductoReporte;
 import com.ShopAutoPartsServices.Domain.Producto;
 import com.ShopAutoPartsServices.Domain.ProductoCaracteristica;
-import com.ShopAutoPartsServices.Domain.ProductoDetalle;
+ 
 import com.ShopAutoPartsServices.Domain.ProductoImagen;
 import com.ShopAutoPartsServices.Domain.ProductoOnlineCategoria;
+import com.ShopAutoPartsServices.Domain.ProductoOutlet;
+import com.ShopAutoPartsServices.Domain.ProductoOutletVigencia;
 import com.ShopAutoPartsServices.Domain.ProductoRequets;
 import com.ShopAutoPartsServices.Domain.ProductoStock;
 import com.ShopAutoPartsServices.Domain.SubFamilia;
 import com.ShopAutoPartsServices.Domain.SubirImagen;
+import com.ShopAutoPartsServices.Domain.Vigencia;
 import com.ShopAutoPartsServices.Repository.ProductoServiceRepository;
 import com.ShopAutoPartsServices.Service.ProductoService;
 @Service
@@ -88,6 +91,36 @@ public class ProductoServiceImpl implements ProductoService {
 	public void actualizarProductoStock(List<ProductoStock> listaStock) throws Exception {
 		productoServiceRepository.actualizarProductoStock(listaStock);
 		
+	}
+	@Override
+	public Vigencia obtenerVigencia() throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.obtenerVigencia();
+	}
+	@Override
+	public List<ProductoOutletVigencia> listarProductoOutletVigencia() throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.listarProductoOutletVigencia();
+	}
+	@Override
+	public ProductoOutletVigencia saveProductoOutletVigencia(ProductoOutletVigencia productoOutletVigencia) throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.saveProductoOutletVigencia(productoOutletVigencia);
+	}
+	@Override
+	public List<ProductoOutlet> listaProductosOutlet(ProductoOutlet productoOutlet) throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.listaProductosOutlet(productoOutlet);
+	}
+	@Override
+	public ProductoOutletVigencia obtenerVigenciaXCodigo(ProductoOutlet productoOutlet) throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.obtenerVigenciaXCodigo(productoOutlet);
+	}
+	@Override
+	public String saveProductoOutlet(ProductoOutlet productoOutlet) throws Exception {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.saveProductoOutlet(productoOutlet);
 	}
 	 
 

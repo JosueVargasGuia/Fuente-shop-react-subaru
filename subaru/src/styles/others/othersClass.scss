@@ -1,8 +1,18 @@
 /*Josue 19/05/2021 cambios de la reunion Nroº1*/
 
+@font-face {
+    font-family: EurostileExtended;
+    src: url(EUROSTILE-BOLDEXTENDEDTWO.OTF);
+}
+
+@font-face {
+    font-family: ArialTFF;
+    src: url(ARIAL.TTF);
+}
+
 .header-nav-banner {
     padding: 0.5em;
-    background-color: #00a3e0;
+    background-color: #0000ff;
     color: var(--color-font3);
     text-align: center;
 }
@@ -421,6 +431,13 @@
     font-size: 1.1em;
 }
 
+
+/*
+15 mobil
+95 mobil
+117 destock
+*/
+
 .nav-span {
     margin-block-start: 0;
     margin-block-end: 1em;
@@ -433,28 +450,67 @@
     display: flex;
     text-align: start;
     font-weight: bold;
+    font-size: 16px;
+    font-family: ArialTFF, Arial, Helvetica, sans-serif;
     li {
         color: var(--color-font-default);
+        margin-left: 1.5em;
+        margin-right: 0.5em;
+        border-bottom: solid 1px white;
+        @media (min-width: 0px) and (max-width: 994px) {
+            margin-left: 0.1em;
+            margin-right: 0.1em;
+            font-size: 15px;
+        }
         &:hover {
             color: var(--color-button-hover2);
+            border-bottom: solid 1px var(--color-button-hover2);
         }
-        width: 120px;
         ul {
             display: none;
-            width: 250px;
+            width: 260px;
             box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
             li {
                 list-style: none;
                 text-align: start;
-                margin-left: 1em;
-                width: 230px;
+                width: 250px;
+                font-weight: none !important;
+                font-size: 14px;
+                margin-left: 0em;
+                height: 25px;
                 a {
-                    color: var(--color-font-default);
+                    color: var(--color-font);
                     text-decoration: none;
                     &:hover {
                         color: var(--color-button-hover2);
                     }
                 }
+                border-bottom: solid 1px #c9c7c7;
+            }
+        }
+        .nav-span-filter-home {
+            width: 165px;
+            margin-top: 0.1em;
+            li {
+                list-style: none;
+                text-align: start;
+                width: auto;
+                font-weight: none !important;
+                font-size: 14px;
+                height: 25px;
+                color: var(--color-font-default);
+                a {
+                    color: var(--color-font);
+                    text-decoration: none;
+                    &:hover {
+                        color: var(--color-button-hover2);
+                    }
+                }
+                &:hover {
+                    color: var(--color-button-hover2);
+                    border-bottom: solid 1px var(--color-button-hover2);
+                }
+                border-bottom: solid 1px #c9c7c7;
             }
         }
     }
@@ -581,7 +637,7 @@
     background-color: transparent;
     display: inline-block;
     top: 92%;
-    right: 2%;
+    right: 9.2%;
     z-index: 100;
     position: fixed;
     border-radius: 2px;
@@ -590,6 +646,18 @@
     height: 47px;
     vertical-align: middle;
     padding: 1px;
+    @media (min-width: 576px) {
+        right: calc(((100% - 540px) / 2) + 43px);
+    }
+    @media (min-width: 999px) {
+        right: calc(((100% - 720px) / 2) + 43px);
+    }
+    @media (min-width: 1199px) {
+        right: calc(((100% - 930px) / 2) + 34px);
+    }
+    @media (min-width: 1200px) {
+        right: calc(((100% - 1140px) / 2) + 64px);
+    }
     div {
         color: white;
         height: 30px;
@@ -661,11 +729,9 @@
     .outlet img {
         width: 97%;
         height: 65%;
+        object-fit: contain;
     }
 }
-
-
-/*-----*/
 
 .form-row-option {
     display: flex;
@@ -839,32 +905,55 @@
         max-width: 1200px;
         min-width: 99%;
         min-height: 300px;
-        overflow-x: auto;
         table {
             width: 100%;
             thead {
+                display: block;
                 tr {
                     td {
                         text-align: center;
                         font-size: 0.8em;
                         font-weight: bold;
-                        border: solid 0.5px var(--color-font2);
+                        border: solid 0.5px var(--color-font3);
                         color: var(--color-font3);
                         background-color: var(--color-font2);
+                        i {
+                            width: 20px;
+                            cursor: pointer;
+                        }
+                        .search {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            input {
+                                width: 70%;
+                                font-size: 12px;
+                                height: 18px;
+                                padding: 0.1em;
+                            }
+                        }
                     }
                 }
             }
             tbody {
                 font-size: 0.8em;
+                height: 270px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                display: block;
                 tr {
                     td {
                         border: solid 0.5px var(--color-font2);
-                        font-size: 12px;
+                        font-size: 11px;
                     }
                 }
             }
         }
     }
+}
+
+.td_number {
+    text-align: right;
 }
 
 .form-body-correo {
@@ -1082,7 +1171,7 @@
                 }
                 .td-producto {
                     margin-left: 3px;
-                    border-right: solid 1px var(--color-font3);
+                    border-left: solid 1px var(--color-font3);
                     .td-producto-div {
                         text-align: center;
                         display: flex;
@@ -1096,6 +1185,7 @@
                 }
                 .td-precio {
                     width: 12%;
+                    border-left: solid 1px var(--color-font3);
                     .td-producto-div {
                         text-align: center;
                         display: flex;
@@ -1126,6 +1216,19 @@
                 span {
                     margin-left: 5px;
                 }
+                .td-producto-div-desc {
+                    background-color: #ffffff;
+                    width: 98%;
+                    height: 90%;
+                    margin: auto;
+                    .td-producto-div-desc-porc {
+                        background-color: var(--color-font2);
+                        text-align: left;
+                        background-image: linear-gradient(to right, rgba(202, 219, 237, 0), rgba(169, 196, 237, 1));
+                        color: var(--color-font3);
+                        min-width: 30px !important;
+                    }
+                }
             }
             .td-precio {
                 width: 12%;
@@ -1147,17 +1250,117 @@
     .prod-filter-page {
         margin-top: 6px;
     }
+    h4 {
+        font-size: 20px;
+        font-weight: normal;
+    }
 }
 
-
-.container-Carousel-list{
+.container-Carousel-list {
     position: relative;
 }
-.suscripcion-message{
+
+.suscripcion-message {
     text-align: center;
 }
-.producto-det-row2 .producto-det-row2-social{
-    &:nth-child(2){
+
+.producto-det-row2 .producto-det-row2-social {
+    &:nth-child(2) {
         margin-bottom: 1em;
     }
+}
+
+.form-body-outlet {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border-left: solid 1px var(--color-font3);
+    border-right: solid 1px var(--color-font3);
+    border-bottom: solid 1px var(--color-font3);
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-bottom: 1em;
+    background-color: var(--color-font3);
+    min-height: 320px;
+    border-radius: 5px 5px 5px 5px;
+    .form-accion {
+        margin: 0.5em;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .div-table {
+        width: 98%;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        max-height: 300px;
+        max-width: 1200px;
+        min-width: 99%;
+        min-height: 300px;
+        overflow-x: auto;
+        table {
+            width: 100%;
+            thead {
+                tr {
+                    td {
+                        text-align: center;
+                        font-size: 12px;
+                        font-weight: bold;
+                        border: solid 0.5px var(--color-font2);
+                        color: var(--color-font3);
+                        background-color: var(--color-font2);
+                    }
+                }
+            }
+            tbody {
+                font-size: 0.8em;
+                tr {
+                    td {
+                        border: solid 0.5px var(--color-font2);
+                        font-size: 12px;
+                        text-align: center;
+                        i {
+                            font-size: 15px;
+                            color: var(--color-font-default);
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.clsbutton {
+    width: 130px !important;
+}
+
+.onState {
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background-color: #05b105;
+    border-color: #05b105;
+    border: none;
+}
+
+.offState {
+    height: 15px;
+    width: 15px;
+    border-radius: 50px;
+    background-color: #d00;
+    border-color: #d00;
+    border: none;
+}
+
+.filter-home-emp-nombre {
+    font-family: EurostileExtended;
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--color-background-Gray);
+}
+
+.filter-home-emp-sociedad {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    color: var(--color-background-Gray);
 }

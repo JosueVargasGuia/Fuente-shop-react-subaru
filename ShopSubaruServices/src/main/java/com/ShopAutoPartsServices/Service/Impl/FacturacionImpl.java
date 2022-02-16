@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ShopAutoPartsServices.Domain.AsociaOc;
 import com.ShopAutoPartsServices.Domain.ReportePdfRequets;
 import com.ShopAutoPartsServices.Domain.IziPay.ScheduledProceso;
 import com.ShopAutoPartsServices.FE.Beans.BeanEmpresa;
@@ -70,5 +71,24 @@ public class FacturacionImpl implements FacturacionService {
 	public String obtenerReporteGuiaSalida(ReportePdfRequets reportePdfRequets) throws Exception {
 		// TODO Auto-generated method stub
 		return facturacionRepositoryImpl.obtenerReporteGuiaSalida(reportePdfRequets);
-	} 
+	}
+
+	@Override
+	public File obtenerFileReporteOcOnline(ScheduledProceso scheduledProceso) throws Exception {
+		// TODO Auto-generated method stub
+		return facturacionRepositoryImpl.obtenerFileReporteOcOnline(scheduledProceso);
+	}
+
+	@Override
+	public String obtenerReporteOrdenCompraOnline(ReportePdfRequets reportePdfRequets) throws Exception {
+		// TODO Auto-generated method stub
+		return facturacionRepositoryImpl.obtenerReporteOrdenCompraOnline(reportePdfRequets);
+	}
+
+	@Override
+	public String asignarOcToCotizacion(AsociaOc asociaOc) throws Exception {
+		return facturacionRepositoryImpl.asignarOcToCotizacion(asociaOc);
+	}
+
+	 
 }
