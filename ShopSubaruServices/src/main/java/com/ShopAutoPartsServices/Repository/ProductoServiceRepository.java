@@ -42,6 +42,7 @@ public interface ProductoServiceRepository {
 	List<ProductoOutlet> listaProductosOutlet(ProductoOutlet productoOutlet)throws Exception ;
 	ProductoOutletVigencia obtenerVigenciaXCodigo(ProductoOutlet productoOutlet)throws Exception ;
 	String saveProductoOutlet(ProductoOutlet productoOutlet)throws Exception ;
+	ProductoOutlet updateProductoOutlet(ProductoOutlet outletRequets)throws Exception ;
 	 
  
 }

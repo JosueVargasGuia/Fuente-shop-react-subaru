@@ -58,5 +58,7 @@ public interface ProductoService  {
 
 	String saveProductoOutlet(ProductoOutlet productoOutlet)throws Exception;
 
+	ProductoOutlet updateProductoOutlet(ProductoOutlet outletRequets)throws Exception;
+
 	 
 }

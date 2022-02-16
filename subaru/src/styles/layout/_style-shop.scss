@@ -72,12 +72,13 @@ a {
 }
 
 .server-exception-action {
-    position: fixed;
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
     width: inherit;
     flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
 }
 
 .server-exception {
@@ -97,7 +98,10 @@ a {
     transition: visibility 0.3s linear, opacity 0.3s linear;
     text-align: justify;
     opacity: 1;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-around;
 }
 
 @media (min-width: 10px) and (max-width: 900px) {
@@ -116,7 +120,7 @@ a {
 }
 
 .server-exception-opacity {
-    opacity: 0;
+    opacity: 1;
     display: none;
 }
 

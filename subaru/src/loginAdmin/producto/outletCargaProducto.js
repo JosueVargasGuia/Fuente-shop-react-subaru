@@ -6,7 +6,7 @@ import ServerException from "../../utils/serverException";
 import * as XLSX from "xlsx";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { obtenerCliente } from "../../service/loginCliente.service";
-import { listarProductoOutlet, saveUpdateProductoOutlet } from "../../service/producto.service";
+import { listarProductoOutlet, saveUpdateProductoOutlet,updateProductoOutletRow } from "../../service/producto.service";
 import DatePicker  from "react-datepicker";
 let actionType = {
     LISTDATA: "LISTDATA",
@@ -17,12 +17,11 @@ let actionType = {
     setDteDesde: "setDteDesde",
     setDteHasta: "setDteHasta",
     setNumEstado: "setNumEstado",
-    setListaError: "setListaError",
-   
+    setListaError: "setListaError" ,
     ERROR: "ERROR"
 };
 const reducer = (state, action) => {
-    console.log(action.type,state);
+   
     switch (action.type) {
       case actionType.ERROR:
         return {
@@ -33,7 +32,7 @@ const reducer = (state, action) => {
         return {
           ...state,
           file: action.file,
-        };
+        };     
       case actionType.setListDataJson:
         return {
           ...state,
@@ -41,12 +40,12 @@ const reducer = (state, action) => {
           listData: action.listData,
           server: action.server,
         };
-      case actionType.setListDataJsonLoad:         
+      case actionType.setListDataJsonLoad:
         return {
           ...state,
           listDataJson: action.listDataJson,
           listData: action.listData,
-          filter: action.filter,
+          filter: action.filter,          
         };
       case actionType.setListDataJsonAndVigencia:
         return {
@@ -56,8 +55,8 @@ const reducer = (state, action) => {
           dteDesde: action.dteDesde,
           dteHasta: action.dteHasta,
           numEstado: action.numEstado,
-          crud:action.crud,
-          numProductoVigencia:action.numProductoVigencia,
+          crud: action.crud,
+          numProductoVigencia: action.numProductoVigencia,
           server: action.server,
         };
       case actionType.setDteDesde:
@@ -81,7 +80,7 @@ const reducer = (state, action) => {
           ...state,
           listaError: action.listaError,
         };
-     
+
       default:
         return state;
     }
@@ -123,7 +122,7 @@ export default function OutletCargaProducto(props) {
         dteDesde: "",
         dteHasta: "",
         numEstado: 1,
-        listaError: [],
+        listaError: [], 
         crud: (_crud === 'update' ? CRUD.UPDATE : CRUD.INSERT),
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
         filter:{codigoOrderBy:_FILTER.codigoOrderByAsc,
@@ -312,7 +311,7 @@ export default function OutletCargaProducto(props) {
                             <div onClick={(e)=>handleEventEditUnspc(_stock,_listDataJson,CRUD.SELECT)} 
                                  style={{minWidth:_WIDTH_TABLE.numUnspc,width:_WIDTH_TABLE.numUnspc}}
                                  className="btn-edit-action">
-                            {_stock.numUnspc}</div>
+                            <div>{_stock.numUnspc}</div></div>
                         </td>
                         <td style={{ width: _WIDTH_TABLE.numValorVenta}} className="td_number">{ parseFloat(_stock.numValorVenta).toFixed(2)}</td>
                         <td style={{ width: _WIDTH_TABLE.numValorRefVenta}}className="td_number">{parseFloat(_stock.numValorRefVenta).toFixed(2)}</td>
@@ -335,17 +334,6 @@ export default function OutletCargaProducto(props) {
                     server: { error: json.response.error, success: SUCCESS_SERVER.SUCCES_SERVER_OK },
                 });
                
-                  console.log({
-                    type: actionType.setListDataJsonAndVigencia,
-                    listDataJson: _listDataJson,
-                    listData: _listData,
-                    dteDesde: Date.parse(_dteDesde),
-                    dteHasta: Date.parse(_dteHasta),
-                    numEstado: _numEstado,
-                    numProductoVigencia:_numProductoVigencia,
-                    crud:_crud,
-                    server: { error: json.response.error, success: SUCCESS_SERVER.SUCCES_SERVER_OK },
-                },state);
             }
             if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
                 dispatch({
@@ -559,18 +547,17 @@ export default function OutletCargaProducto(props) {
                 <td style={{ width: _WIDTH_TABLE.vchDescripcion }}>{_stock.vchDescripcion}</td>
                 <td style={{ width: _WIDTH_TABLE.numUnspc}}>
                             {_stock.flagEditNumUnspc===_CRUD_UNSPC.updateOn?
-                           
+                                
                                 <div className="outlet-cell-edit">
-                                    <input key={"_numUnspc"+_stock.index} type="text" value={_stock.numUnspc} ></input> 
-                                    <i className="fa fa-save" onClick={(e)=>handleEventEditUnspc(_stock,_listDataJson,CRUD.UPDATE)} ></i>
-                                    <i className="fa fa-close" onClick={(e)=>handleEventEditUnspc(_stock,_listDataJson,CRUD.DELETE)} ></i>
+                                    <ProductoUnspcCard outlet={_stock} reload={()=>handleEventListaProdOutlet(state.numProductoVigencia,CRUD.UPDATE)}></ProductoUnspcCard>
+                                
                                 </div>
                              :
                          
                                 <div onClick={(e)=>handleEventEditUnspc(_stock,_listDataJson,CRUD.SELECT)} 
                                     style={{minWidth:_WIDTH_TABLE.numUnspc,width:_WIDTH_TABLE.numUnspc}}
                                     className="btn-edit-action">
-                                    {_stock.numUnspc}
+                                    <div>{_stock.numUnspc}</div>
                                 </div> 
                             }
                                
@@ -588,7 +575,7 @@ export default function OutletCargaProducto(props) {
             type: actionType.setListDataJsonLoad,
             listDataJson: _listDataJson,
             listData: _listData,
-            filter: _filter,
+            filter: _filter 
         });
        
     }
@@ -596,7 +583,7 @@ export default function OutletCargaProducto(props) {
     async function handleEventEditUnspc(_object_param,_listDataJson_param,_CRUD){
       
         let _listDataJson=[];
-      
+        
         for (let index = 0; index < _listDataJson_param.length; index++) {
             const _object = _listDataJson_param[index];
             let _stock = {
@@ -617,24 +604,30 @@ export default function OutletCargaProducto(props) {
             };
             if ((_CRUD.codigoCrud === CRUD.DELETE.codigoCrud)) {
                 _stock.flagEditNumUnspc = _CRUD_UNSPC.updateOff;
+       
             } else {
                 if (
                     _object_param.numProductoOutlet === _object.numProductoOutlet
                   ) {
-                    _stock.flagEditNumUnspc = _CRUD_UNSPC.updateOn;
+                    _stock.flagEditNumUnspc = _CRUD_UNSPC.updateOn;   
+                   
                   } else {
                     _stock.flagEditNumUnspc = _CRUD_UNSPC.updateOff;
+                    
                   }
              
             }
             _listDataJson.push(_stock);           
         }
-        if ((_CRUD.codigoCrud === CRUD.UPDATE.codigoCrud)) {
+       
+      
+        if (_CRUD.codigoCrud === CRUD.UPDATE.codigoCrud) {
             /*Falta logica de update del registro */
-            handleEventListaProdOutlet(_object_param.numProductoVigencia,CRUD.UPDATE);
-        }else{
-            handleEventReloadLista(_listDataJson,state.filter);
-        }
+            handleEventListaProdOutlet(_object_param.numProductoVigencia,CRUD.UPDATE);            
+        }else{                     
+            handleEventReloadLista(_listDataJson,state.filter);             
+        }      
+       
      
     }
     return (<>
@@ -647,7 +640,7 @@ export default function OutletCargaProducto(props) {
             </div>
             <h3>{
                 state.crud === CRUD.UPDATE ? "Detalle de Productos del Outlet Nro:" +state.numProductoVigencia : "Cargar Productos del Outlet"}</h3>
- 
+  
             <div className="form-body-stock">
                 <div className="form-accion">
                     <table>
@@ -875,6 +868,88 @@ export default function OutletCargaProducto(props) {
         </div>
     </>)
 }
+const actionTypeProductoUnspcCard={
+    setNumUnspc: "setNumUnspc" ,
+    ERROR: "ERROR"
+}
+const reducerProductoCard = (state, action) => {
+    switch (action.type) {
+        case actionTypeProductoUnspcCard.ERROR:
+          return {
+            ...state,
+            server: action.server,
+          };
+        case actionTypeProductoUnspcCard.setNumUnspc:
+          return {
+            ...state,
+            numUnspc: action.numUnspc,
+          };    
+        default:
+          return state;
+      }
+
+};
+function ProductoUnspcCard(props) {
+  const [state, dispatch] = useReducer(reducerProductoCard, {
+    outlet: props.outlet,
+    numUnspc: (props.outlet.numUnspc===undefined ||props.outlet.numUnspc===null?"":props.outlet.numUnspc ),
+    server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
+  });
+
+  async function handleEventEditUnspc() {
+     //numProductoOutlet
+     const rpt = await updateProductoOutletRow({
+        
+            chrCodigoProducto:state.outlet.chrCodigoProducto,
+            numUnspc:state.numUnspc,
+            numProductoVigencia:state.outlet.numProductoVigencia,
+            numProductoOutlet:state.outlet.numProductoOutlet, 
+       
+    });
+    console.log("handleEventEditUnspc");
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+        const json = await rpt.json();
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+            props.reload();                                
+        }
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+            dispatch({
+                type: actionTypeProductoUnspcCard.ERROR,
+                server: { error: json.response.error, success: SUCCESS_SERVER.SUCCES_SERVER_INFO },
+            });
+        }
+    } else {
+   
+        dispatch({
+            type: actionTypeProductoUnspcCard.ERROR,
+            server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
+        });
+    }
+  }
+  function handleEventReload() {
+    props.reload();
+  }
+  return (
+    <>
+      <input
+        key={"_numUnspc" + state.outlet.index}
+        type="text"
+        value={state.numUnspc}
+        onChange={(e) =>
+          dispatch({
+            type: actionTypeProductoUnspcCard.setNumUnspc,
+            numUnspc: e.target.value,
+          })
+        }
+      ></input>
+      <i className="fa fa-save" onClick={(e) => handleEventEditUnspc()}></i>
+      <i className="fa fa-close" onClick={(e) => handleEventReload()}></i>
+      <ServerException server={state.server}></ServerException>
+
+    </>
+  );
+}
+export { ProductoUnspcCard};
 /*
   {state.loading ? <tr><td colSpan="8"><LoadingClassic></LoadingClassic></td></tr> : ""}
                             {state.listData}

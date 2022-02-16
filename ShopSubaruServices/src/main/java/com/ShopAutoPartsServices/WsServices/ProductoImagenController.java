@@ -313,6 +313,46 @@ public class ProductoImagenController {
 	}
 	
 	
+	@PostMapping(value = "/updateProductoOutlet", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ProductoOutletResponse> updateProductoOutlet(@RequestBody ProductoOutlet  outletRequets) {
+		ProductoOutletResponse outletVigenciaResponse = new ProductoOutletResponse();
+		ResponseEntity<ProductoOutletResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();
+		logger.info(outletRequets.toString());
+		try {
+			boolean valida=true;
+			try {
+			 if(!outletRequets.getNumUnspc().equalsIgnoreCase("")) {
+				Integer.parseInt(outletRequets.getNumUnspc());
+			 }
+			} catch (Exception e) {
+				error.add("El UNSPC tiene que ser un valor numerico de 8 digitos");
+				valida=false;
+			}
+			if (valida) {
+				ProductoOutlet _result = productoService.updateProductoOutlet(outletRequets);
+				outletVigenciaResponse.setProductoOutlet(_result);
+				if (_result.getStatus().equalsIgnoreCase("OK")) {
+					outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
+				} else {
+					error.add(_result.getStatus());
+					outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
+				}
+			}else {
+				outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
+			}
+			responseEntity = new ResponseEntity<ProductoOutletResponse>(outletVigenciaResponse, HttpStatus.OK);
+		} catch (Exception e) {	 
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			outletVigenciaResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_ERROR)
+					.setError(new ArrayList<String>()).getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<ProductoOutletResponse>(outletVigenciaResponse, HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+	}
+	
+	
 /*
 	@PostMapping(value = "/listaProductosStock", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductoStockResponse> listaProductosStock(

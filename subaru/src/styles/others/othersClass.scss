@@ -458,7 +458,7 @@
     text-align: start;
     font-weight: bold;
     font-size: 16px;
-    font-family: Arial, Helvetica,ArialTFF, sans-serif;
+    font-family: Arial, Helvetica, ArialTFF, sans-serif;
     li {
         color: var(--color-font-default);
         margin-left: 1.5em;
@@ -500,7 +500,7 @@
             }
         }
         .nav-span-filter-home {
-            width: 165px;
+            width: 172px;
             margin-top: 0.1em;
             li {
                 list-style: none;
@@ -518,10 +518,23 @@
                     }
                 }
                 &:hover {
+                    text-decoration: none;
                     color: var(--color-button-hover2);
                     border-bottom: solid 1px var(--color-button-hover2);
                 }
                 border-bottom: solid 1px #c9c7c7;
+            }
+        }
+    }
+}
+
+.filter-home {
+    .nav-span {
+        li {
+            border-bottom: solid 1px white;
+            &:hover {
+                color: var(--color-button-hover2);
+                border-bottom: solid 1px var(--color-button-hover2);
             }
         }
     }
@@ -538,9 +551,13 @@
 .filter-home-concecionario {
     color: var(--color-font-default);
     font-size: 0.85em;
+    border-bottom: solid 1px white;
+    @media (min-width: 200px) and (max-width: 992px) {
+        border-bottom: solid 1px #f1f1f1;
+    }
+    text-decoration: none;
     &:hover {
         text-decoration: none;
-        color: var(--color-button-hover2);
     }
 }
 
@@ -568,7 +585,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     div {
-        width: 15%;
+        width: 23%;
         min-height: 15%;
         margin-top: 0.5em;
         margin-bottom: 0.5em;
@@ -590,11 +607,14 @@
             }
             .produc-link-title {
                 font-size: 1.2em;
+                font-family: Arial, Helvetica, ArialTFF, sans-serif;
             }
         }
         img {
             border: none;
             width: 99%;
+            height: 230px;
+            object-fit: contain;
         }
     }
 }
@@ -1403,8 +1423,14 @@
     cursor: pointer;
     height: 15px;
     color: #0000ff;
-    border-bottom: 1px solid #0000ff;
     text-align: center;
+    display: flex;
+    justify-content: space-around;
+    div {
+        border-bottom: 1px solid #0000ff;
+        height: 100%;
+        width: 80%;
+    }
 }
 
 .outlet-cell-edit {
@@ -1417,5 +1443,9 @@
     i {
         vertical-align: text-top;
         font-size: 18px;
+        cursor: pointer;
+        &:hover {
+            color: var(--color-arrow-active);
+        }
     }
 }

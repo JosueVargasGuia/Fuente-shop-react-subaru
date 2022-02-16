@@ -7,34 +7,47 @@ import { Link } from "react-router-dom";
 import ServerException from "../utils/serverException";
 import { LoadingClassic } from "../utils/loading"
 const LIMITE = 8;
-const listaRepuesto = [
-  { key: 1, discripcion: "Filtro de Aire", srcimg: "/marcas/subaru/repuestos/1.png", url: "/shop" },
-  { key: 2, discripcion: "Filtro de Aceite", srcimg: "/marcas/subaru/repuestos/2.png", url: "/shop" },
-  { key: 3, discripcion: "Pastillas de Freno", srcimg: "/marcas/subaru/repuestos/3.png", url: "/shop" },
-  { key: 4, discripcion: "Discos de Freno", srcimg: "/marcas/subaru/repuestos/4.png", url: "/shop" },
-  { key: 5, discripcion: "Alternadores", srcimg: "/marcas/subaru/repuestos/5.png", url: "/shop" },
-  { key: 6, discripcion: "Bujías", srcimg: "/marcas/subaru/repuestos/6.png", url: "/shop" },
-  { key: 7, discripcion: "Arrancadores", srcimg: "/marcas/subaru/repuestos/7.png", url: "/shop" },
-  { key: 8, discripcion: "Fajas, correas y templadores", srcimg: "/marcas/subaru/repuestos/8.png", url: "/shop" },
-  { key: 9, discripcion: "Radiadores", srcimg: "/marcas/subaru/repuestos/9.png", url: "/shop" },
-  { key: 10, discripcion: "Suspensión", srcimg: "/marcas/subaru/repuestos/10.png",url: "/shop" },
-  { key: 11, discripcion: "Limpiaparabrisas", srcimg: "/marcas/subaru/repuestos/11.png", url: "/shop" },
-  { key: 12, discripcion: "Todas las categorías", srcimg: "/marcas/subaru/repuestos/12.png", url: "/shop" },
+
+
+const segmentoMantenimiento = [
+  { key: 1, discripcion: "Filtro de Aire", srcimg: "/marcas/subaru/mantenimiento/M1.png", url: "/shop" },
+  { key: 2, discripcion: "Filtro de Aceite", srcimg: "/marcas/subaru/mantenimiento/M2.png", url: "/shop" },
+  { key: 3, discripcion: "Pastillas de Freno", srcimg: "/marcas/subaru/mantenimiento/M3.png", url: "/shop" },
+  { key: 4, discripcion: "Discos de Freno", srcimg: "/marcas/subaru/mantenimiento/M4.png", url: "/shop" }, 
+  { key: 5, discripcion: "Bujías", srcimg: "/marcas/subaru/mantenimiento/M5.png", url: "/shop" }, 
+  { key: 6, discripcion: "Fajas, correas y templadores", srcimg: "/marcas/subaru/mantenimiento/M6.png", url: "/shop" }, 
 ];
-const listaAccesorios = [
-  { key: 1, discripcion: "Interior", srcimg: "/marcas/subaru/accesorios/1.png", url: "/shop" },
-  { key: 2, discripcion: "Carga", srcimg: "/marcas/subaru/accesorios/2.png", url: "/shop" },
-  { key: 3, discripcion: "Travesaños de la puerta", srcimg: "/marcas/subaru/accesorios/3.png", url: "/shop" },
-  { key: 4, discripcion: "Alfombras de Piso", srcimg: "/marcas/subaru/accesorios/4.png", url: "/shop" },
-  { key: 5, discripcion: "Electronics", srcimg: "/marcas/subaru/accesorios/5.png", url: "/shop" },
-  { key: 6, discripcion: "Perillas de cambio", srcimg: "/marcas/subaru/accesorios/6.png", url: "/shop" },
-  { key: 7, discripcion: "Sombrillas", srcimg: "/marcas/subaru/accesorios/7.png", url: "/shop" },
-  { key: 8, discripcion: "Exterior", srcimg: "/marcas/subaru/accesorios/8.png", url: "/shop" },
-  { key: 9, discripcion: "Cubiertas de carro", srcimg: "/marcas/subaru/accesorios/9.png", url: "/shop" },
-  { key: 10, discripcion: "Bastidores de techo", srcimg: "/marcas/subaru/accesorios/10.png", url: "/shop" },
-  { key: 11, discripcion: "Spoilers", srcimg: "/marcas/subaru/accesorios/11.png", url: "/shop" },
-  { key: 12, discripcion: "Todos los Accesorios", srcimg: "/marcas/subaru/accesorios/12.png", url: "/shop" },
+
+const segmentoRecambio = [
+  { key: 1, discripcion: "Alternadores", srcimg: "/marcas/subaru/recambio/R1.png", url: "/shop" },
+  { key: 2, discripcion: "Arrancadores", srcimg: "/marcas/subaru/recambio/R2.png", url: "/shop" },
+  { key: 3, discripcion: "Radiadores", srcimg: "/marcas/subaru/recambio/R3.png", url: "/shop" },
+  { key: 4, discripcion: "Suspensión", srcimg: "/marcas/subaru/recambio/R4.png",url: "/shop" },
+  { key: 5, discripcion: "Limpiaparabrisas", srcimg: "/marcas/subaru/recambio/R5.png", url: "/shop" },
+  { key: 6, discripcion: "Todas las categorías", srcimg: "/marcas/subaru/recambio/R6.png", url: "/shop" },
 ];
+
+const segmentoAccesorios = [
+  
+  { key: 1, discripcion: "Carga", srcimg: "/marcas/subaru/accesorios/A1.png", url: "/shop" },
+  { key: 2, discripcion: "Embellecedor de Estribo", srcimg: "/marcas/subaru/accesorios/A2.png", url: "/shop" },
+  { key: 3, discripcion: "Cargomat y Pisos de Alfombra", srcimg: "/marcas/subaru/accesorios/A3.png", url: "/shop" },
+   
+  { key: 4, discripcion: "Perillas de cambio", srcimg: "/marcas/subaru/accesorios/A4.png", url: "/shop" },
+  { key: 5, discripcion: "Parrillas y Riel de Techo", srcimg: "/marcas/subaru/accesorios/A5.png", url: "/shop" },
+  { key: 6, discripcion: "Spoiler Post. y Estribo ", srcimg: "/marcas/subaru/accesorios/A6.png", url: "/shop" },
+  { key: 7, discripcion: "Kit de Seguros de Ruedas", srcimg: "/marcas/subaru/accesorios/A7.png", url: "/shop" },
+ 
+  { key: 8, discripcion: "Sistema de Remolque", srcimg: "/marcas/subaru/accesorios/A8.png", url: "/shop" },
+  { key: 9, discripcion: "Interior", srcimg: "/marcas/subaru/accesorios/A9.png", url: "/shop" },
+   
+];
+const segmentoLifeStyle = [
+  //{ key: 1, discripcion: "Interior", srcimg: "/marcas/subaru/accesorios/1.png", url: "/shop" },
+  { key: 1, discripcion: "Llaveros", srcimg: "/marcas/subaru/lifestyle/l1.png", url: "/shop" },
+  
+];
+
 const listaCategoria = [
   { key: 1, title: "Audio/Media", content: "Donde quiera que la te aventura conduzca, mantente conectado en tu Subaru.", srcimg: "/marcas/subaru/categoria/1.png" },
   { key: 2, title: "Comodidad y conveniencia", content: "Menos dificultad Más disfrute. Todo personalizado para ti y tu Subaru.", srcimg: "/marcas/subaru/categoria/2.png" },
@@ -55,18 +68,35 @@ export default function ProductoDestacado(props) {
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
-  let rowRepuesto = listaRepuesto.map((rowRep) => <div key={rowRep.key}>
+  let rowSegmentoMantenimiento = segmentoMantenimiento.map((rowRep) => <div key={rowRep.key}>
     <Link to={rowRep.url} key={rowRep.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg} loading='lazy'></img>
       <span className="produc-link-title">{rowRep.discripcion}</span>
     </Link>
   </div>);
-  let rowAccesorios = listaAccesorios.map((rowAcce) => <div key={rowAcce.key}>
+  let rowsegmentoRecambio = segmentoRecambio.map((rowAcce) => 
+  <div key={rowAcce.key}>
     <Link to={rowAcce.url} key={rowAcce.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
       <span className="produc-link-title">{rowAcce.discripcion}</span>
     </Link>
   </div>);
+
+let rowSegmentoAccesorios = segmentoAccesorios.map((rowAcce) => 
+<div key={rowAcce.key}>
+  <Link to={rowAcce.url} key={rowAcce.key} >
+    <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
+    <span className="produc-link-title">{rowAcce.discripcion}</span>
+  </Link>
+</div>);
+
+
+let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowAcce) => <div key={rowAcce.key}>
+<Link to={rowAcce.url} key={rowAcce.key} >
+  <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
+  <span className="produc-link-title">{rowAcce.discripcion}</span>
+</Link>
+</div>);
 
   let rowCategoria = listaCategoria.map((rowCate) =>
     <div key={rowCate.key}  className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
@@ -295,15 +325,29 @@ export default function ProductoDestacado(props) {
         </div>
 
         <div className="produc-destacado-links">
-          <h3 className="produc-destacado-links-title">Piezas de Repuesto</h3>
+          <h3 className="produc-destacado-links-title">Partes de Mantenimiento</h3>
           <hr />
-          <div className="produc-link">{rowRepuesto}</div>
+          <div className="produc-link">{rowSegmentoMantenimiento}</div>
         </div>
+        
         <div className="produc-destacado-links">
-          <h3 className="produc-destacado-links-title">Accesorios Populares</h3>
+          <h3 className="produc-destacado-links-title">Partes de Recambio</h3>
           <hr />
-          <div className="produc-link">{rowAccesorios}</div>
+          <div className="produc-link">{rowsegmentoRecambio}</div>
         </div>
+
+        <div className="produc-destacado-links">
+          <h3 className="produc-destacado-links-title">Accesorios</h3>
+          <hr />
+          <div className="produc-link">{rowSegmentoAccesorios}</div>
+        </div>
+        
+        <div className="produc-destacado-links">
+          <h3 className="produc-destacado-links-title">LifeStyle</h3>
+          <hr />
+          <div className="produc-link">{rowSegmentoLifeStyle}</div>
+        </div>
+
         <div className="produc-destacado-links">
           <h3 className="produc-destacado-links-title">
             Accesorios Subaru por categoría

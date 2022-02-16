@@ -50,6 +50,7 @@ const URL = {
   REGISTRAR_PROD_OUTLET_VIGENCIA:"/productoImagen/saveProductoOutletVigencia",/*Privado Administrador */
   LISTA_PRODUCTO_OUTLET:"/productoImagen/listaProductosOutlet",/*Privado Administrador */
   SAVE_UPDATE_PRODUCTO_OUTLET:"/productoImagen/saveUpdateProductoOutlet",/*Privado Administrador */
+  UPDATE_PRODUCTO_OUTLET:"/productoImagen/updateProductoOutlet",/*Privado Administrador */
   
   };
 

@@ -838,6 +838,33 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		return jdbcTemplate.execute(sql, callback);
 	}
 
+	@Override
+	public ProductoOutlet updateProductoOutlet(ProductoOutlet outletRequets) throws Exception {
+		CallableStatementCallback<ProductoOutlet> callback = null;
+		try {
+			callback = new CallableStatementCallback<ProductoOutlet>() {
+				@Override
+				public ProductoOutlet doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					cs.setString(1, outletRequets.getChrCodigoProducto());
+					cs.setString(2, (outletRequets.getNumUnspc().length()<=0?null:outletRequets.getNumUnspc()));
+					cs.setInt(3, outletRequets.getNumProductoVigencia());
+					cs.setInt(4, outletRequets.getNumProductoOutlet());
+					cs.registerOutParameter(5, OracleTypes.VARCHAR);
+					cs.execute();
+					outletRequets.setStatus(cs.getString(5));
+					return outletRequets;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{call " + PKG_TIENDA + ".UPDATE_EC_PRODUC_OUTLET(?,?,?,?,?)}";
+		return jdbcTemplate.execute(sql, callback);
+	}
+	 
+
  
 
 }
