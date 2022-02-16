@@ -1944,21 +1944,34 @@ h4 {
     object-fit: contain;
 }
 
-.carousel .slide img {
-    height: 340px;
+.container-Carousel-list-root {
+    .carousel-root {
+        height: 100% !important;
+        .carousel {
+            height: 100% !important;
+        }
+    }
 }
 
+
+/*
 @media (max-width: 1199px) {
+    .carousel .slide {
+        height: 265px;
+    }
     .carousel .slide img {
-        height: 288px;
+        object-fit: contain;
     }
 }
 
 @media (max-width: 760px) {
-    .carousel .slide img {
-        height: 200px;
+    .carousel .slide {
+        height: 265px;
     }
-}
+    .carousel .slide img {
+        object-fit: contain;
+    }
+}*/
 
 .prod-resumen {
     width: 100%;
