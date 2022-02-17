@@ -57,6 +57,7 @@ const reducer = (state, action) => {
           numEstado: action.numEstado,
           crud: action.crud,
           numProductoVigencia: action.numProductoVigencia,
+          vigenciaTitulo:action.vigenciaTitulo,
           server: action.server,
         };
       case actionType.setDteDesde:
@@ -95,14 +96,15 @@ const _FILTER={codigoOrderByAsc:'codigoOrderByAsc',
     descripcionSearch:'search'};
 const _WIDTH_TABLE = {
   chrCodigoProducto: "100px",
-  vchDescripcion: "324px",
-  numUnspc: "118px",
+  vchDescripcion: "332px",
+  numUnspc: "105px",
+  numUnspcHead: "107px",
   numValorVenta: "80px",
   numValorRefVenta: "80px",
   numValorCompra: "80px",
   numValorDesc: "40px",  
-  vchModelo: "171px",
-  numStock: "53px", 
+  vchModelo: "184px",
+  numStock: "45px", 
 }; 
 const _CRUD_UNSPC={
     updateOn:"updateOn",
@@ -114,19 +116,19 @@ export default function OutletCargaProducto(props) {
     let _numProductoVigencia = params.numProductoVigencia;
     let _crud = params.crud;
   
-    var date = new Date();
-    var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
-    var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    console.log(date,primerDia,ultimoDia);
-
+    let date = new Date();
+    let primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+    let ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+   
     let history = useHistory();
     const [state, dispatch] = useReducer(reducer, {
         file: undefined,
         listDataJson: [],
         listData: [],
         numProductoVigencia: _numProductoVigencia,
-        dteDesde: "",
-        dteHasta: "",
+        vigenciaTitulo:"",
+        dteDesde: primerDia,
+        dteHasta: ultimoDia,
         numEstado: 1,
         listaError: [], 
         crud: (_crud === 'update' ? CRUD.UPDATE : CRUD.INSERT),
@@ -243,7 +245,7 @@ export default function OutletCargaProducto(props) {
                         <td style={{ width: _WIDTH_TABLE.numValorCompra }} className="td_number">{_stock.numValorCompra}</td>
                         <td style={{ width: _WIDTH_TABLE.numValorDesc  }} className="td_number">{_stock.numValorDesc}</td>
                         <td style={{ width: _WIDTH_TABLE.vchModelo}} title="Modelo">{_stock.vchModelo}</td>
-                        <td style={{ width: _WIDTH_TABLE.numStock }} className="td_number">{_stock.numStock}</td>
+                        <td style={{ width: _WIDTH_TABLE.numStock,textAlign:"center" }} className="td_number">{_stock.numStock}</td>
                          
                     </tr>);
                 }
@@ -281,11 +283,13 @@ export default function OutletCargaProducto(props) {
         let _dteDesde = "";
         let _dteHasta = "";
         let _numEstado = 0;
+        let _vigenciaTitulo="";
         if (rpt.status === HttpStatus.HttpStatus_OK) {
             const json = await rpt.json();
             _dteDesde = json.productoOutletVigencia.dteDesde;
             _dteHasta = json.productoOutletVigencia.dteHasta;
             _numEstado = json.productoOutletVigencia.numEstado;
+            _vigenciaTitulo=json.productoOutletVigencia.dteDesdeFormato+" al "+json.productoOutletVigencia.dteHastaFormato;
             if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
                 for (let index = 0; index < json.lista.length; index++) {
                     const _object = json.lista[index];
@@ -324,7 +328,7 @@ export default function OutletCargaProducto(props) {
                         <td style={{ width: _WIDTH_TABLE.numValorCompra}} className="td_number">{parseFloat(_stock.numValorCompra).toFixed(2)}</td>
                         <td style={{ width: _WIDTH_TABLE.numValorDesc}} className="td_number">{parseFloat(_stock.numValorDesc).toFixed(0)}</td>
                         <td style={{ width: _WIDTH_TABLE.vchModelo}} title="Modelo">{_stock.vchModelo}</td>
-                        <td style={{ width: _WIDTH_TABLE.numStock}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
+                        <td style={{ width: _WIDTH_TABLE.numStock,textAlign:"center"}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
                      
                     </tr>);
                 }
@@ -336,6 +340,7 @@ export default function OutletCargaProducto(props) {
                     dteHasta: Date.parse(_dteHasta),
                     numEstado: _numEstado,
                     numProductoVigencia:_numProductoVigencia,
+                    vigenciaTitulo:_vigenciaTitulo,
                     crud:_crud,
                     server: { error: json.response.error, success: SUCCESS_SERVER.SUCCES_SERVER_OK },
                 });
@@ -573,7 +578,7 @@ export default function OutletCargaProducto(props) {
                 <td style={{ width: _WIDTH_TABLE.numValorCompra}} className="td_number">{parseFloat(_stock.numValorCompra).toFixed(2)}</td>
                 <td style={{ width: _WIDTH_TABLE.numValorDesc}} className="td_number">{parseFloat(_stock.numValorDesc).toFixed(0)}</td>
                 <td style={{ width: _WIDTH_TABLE.vchModelo}} title="Modelo">{_stock.vchModelo}</td>
-                <td style={{ width: _WIDTH_TABLE.numStock}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
+                <td style={{ width: _WIDTH_TABLE.numStock,textAlign:"center"}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
                 
             </tr>);
         }
@@ -645,11 +650,12 @@ export default function OutletCargaProducto(props) {
                 </Link>
             </div>
             <h3>{
-                state.crud === CRUD.UPDATE ? "Detalle de Productos del Outlet Nro:" +state.numProductoVigencia : "Cargar Productos del Outlet"}</h3>
+                state.crud === CRUD.UPDATE ? "Detalle de Productos del Outlet Nro:" +state.vigenciaTitulo : "Cargar Productos del Outlet"}</h3>
   
             <div className="form-body-stock">
                 <div className="form-accion">
                     <table>
+                        <tbody>
                         <tr>
                             <td>Fecha Desde&nbsp;:</td>
                             <td style={{ width: "120px" }}><DatePicker
@@ -724,6 +730,7 @@ export default function OutletCargaProducto(props) {
                                 >
                                 </input> : ""}</td>
                         </tr>
+                        </tbody>
                     </table>
 
                 </div>
@@ -737,26 +744,31 @@ export default function OutletCargaProducto(props) {
                             
                                 <td style={{ width: _WIDTH_TABLE.chrCodigoProducto }}>Código&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_CODIGO')}></i></td>
                                 <td style={{ width: _WIDTH_TABLE.vchDescripcion}}><div className="search"><div className="search-title">Descripción&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_DESCRIPCION')}></i></div></div></td>
-                                <td style={{ width: _WIDTH_TABLE.numUnspc,textAlign: 'center' }} title="UNSPC">UNSPC&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_UNSPC')}></i></td>
+                                <td style={{ width: _WIDTH_TABLE.numUnspcHead,textAlign: 'center' }} title="UNSPC">UNSPC&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_UNSPC')}></i></td>
                                 <td style={{ width: _WIDTH_TABLE.numValorVenta, textAlign: 'center' }} title="Precio Publico Promocional Unitario">Precio Publico Promocional Unitario</td>
                                 <td style={{ width: _WIDTH_TABLE.numValorRefVenta, textAlign: 'center' }} title="Precio Publico Regular Unitario">Precio Publico Regular Unitario</td>
                                 <td style={{ width: _WIDTH_TABLE.numValorCompra, textAlign: 'center' }} title="Valor Unitario Promocional Dealer ">Valor Unitario Promocional Dealer </td>
-                                <td style={{ width: _WIDTH_TABLE.numValorDesc}} title="Descuento">Desc.</td>
+                                <td style={{ width: _WIDTH_TABLE.numValorDesc}} title="Descuento">Dsct.%</td>
                                 <td style={{ width: _WIDTH_TABLE.vchModelo}} title="Modelo">Modelo</td>
                                 <td style={{ width: _WIDTH_TABLE.numStock}} title="">Stock</td>
                                 
                             </tr>
                                 
                         </thead>
-                    
+                
                     </table>
                      
                     <table style={{ fontSize: '13px' }} >
                     <tbody>
+                        
                             {state.listData}
-                        </tbody>
+                    </tbody>
+                     
                     </table>
 
+                </div>
+                <div className="div-table-foot">
+                    <div className="div-table-foot-text">Total registros:&nbsp;{state.listDataJson.length}</div>
                 </div>
             </div>
             <div>

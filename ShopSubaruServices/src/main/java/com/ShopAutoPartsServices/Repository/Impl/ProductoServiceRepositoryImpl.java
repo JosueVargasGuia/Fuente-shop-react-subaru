@@ -645,6 +645,9 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 	public Vigencia obtenerVigencia() throws Exception {
 		CallableStatementCallback<Vigencia> callback = null;
 		SimpleDateFormat dmy=new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dmyday=new SimpleDateFormat("dd");
+		SimpleDateFormat dmymonth=new SimpleDateFormat("MMMM");
+		SimpleDateFormat dmyanio=new SimpleDateFormat("yyyy");
 		try {
 			callback = new CallableStatementCallback<Vigencia>() {
 				@Override
@@ -654,10 +657,13 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);
 					Vigencia vigencia = new Vigencia();
+					
 					while (rs.next()) {
 						vigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
 						vigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
 						vigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
+						vigencia.setDteDesdeFormato(dmyday.format(rs.getDate("DTEDESDE"))+" de "+dmymonth.format(rs.getDate("DTEDESDE")) +" del "+dmyanio.format(rs.getDate("DTEDESDE")));
+						vigencia.setDteHastaFormato(dmyday.format(rs.getDate("DTEHASTA"))+" de "+dmymonth.format(rs.getDate("DTEHASTA")) +" del "+dmyanio.format(rs.getDate("DTEHASTA")));
 					}
 					return vigencia;
 				}
@@ -779,6 +785,10 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 	public ProductoOutletVigencia obtenerVigenciaXCodigo(ProductoOutlet productoOutlet) throws Exception {
 		CallableStatementCallback<ProductoOutletVigencia> callback = null;
 		SimpleDateFormat dmy=new SimpleDateFormat("yyyy/MM/dd");
+
+		SimpleDateFormat dmyday=new SimpleDateFormat("dd");
+		SimpleDateFormat dmymonth=new SimpleDateFormat("MMMM");
+		SimpleDateFormat dmyanio=new SimpleDateFormat("yyyy");
 		try {
 			callback = new CallableStatementCallback<ProductoOutletVigencia>() {
 				@Override
@@ -793,7 +803,10 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						ProductoOutletVigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
 						ProductoOutletVigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
 						ProductoOutletVigencia.setNumEstado(rs.getInt("NUMESTADO"));
-						ProductoOutletVigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));						 
+						ProductoOutletVigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
+						ProductoOutletVigencia.setDteDesdeFormato(dmyday.format(rs.getDate("DTEDESDE"))+" de "+dmymonth.format(rs.getDate("DTEDESDE")) +" del "+dmyanio.format(rs.getDate("DTEDESDE")));
+						ProductoOutletVigencia.setDteHastaFormato(dmyday.format(rs.getDate("DTEHASTA"))+" de "+dmymonth.format(rs.getDate("DTEHASTA")) +" del "+dmyanio.format(rs.getDate("DTEHASTA")));
+					
 					}
 					return ProductoOutletVigencia;
 				}

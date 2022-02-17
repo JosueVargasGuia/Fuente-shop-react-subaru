@@ -288,13 +288,14 @@ const listaRepuesto = [
   { descripcion: "Puertas y Paneles Exterior" ,codigo:9,identificador:'Repuesto-1-9',subFamilia:['112A1']},
   { descripcion: "Faros, Iluminación y Eléctricos",codigo:10,identificador:'Repuesto-1-10',subFamilia:['112A3', '112A4'] },
   { descripcion: "Parabrisas, Vidrios de Puertas",codigo:11,identificador:'Repuesto-1-11',subFamilia:['112A5'] },
-  { descripcion: "Aire Acondicionado",codigo:12,identificador:'Repuesto-1-12',subFamilia:['112A7']},]
+  { descripcion: "Aire Acondicionado",codigo:12,identificador:'Repuesto-1-12',subFamilia:['112A7']},
+  { descripcion: "Fluidos Subaru",codigo:4,identificador:'Accesorio-2-4',subFamilia:['112A9']  },
+]
 
 const listaAcesorios = [
   { descripcion: "Accesorios Subaru",codigo:1,identificador:'Accesorio-2-1',subFamilia:['113A1'] },
   { descripcion: "Subaru Lifestyle",codigo:2,identificador:'Accesorio-2-2',subFamilia:['113A2']  },
-  { descripcion: "Accesorios STI",codigo:3,identificador:'Accesorio-2-3',subFamilia:['113A3']  },
-  { descripcion: "Fluidos Subaru",codigo:4,identificador:'Accesorio-2-4',subFamilia:['112A9']  },]
+  { descripcion: "Accesorios STI",codigo:3,identificador:'Accesorio-2-3',subFamilia:['113A3']  },  ]
 export {
   SUCCESS_SERVER,
   HttpStatus,

@@ -10,8 +10,8 @@ const LIMITE = 8;
 
 
 const segmentoMantenimiento = [
-  { key: 1, discripcion: "Filtro de Aire", srcimg: "/marcas/subaru/mantenimiento/M1.png", url: "/shop" },
-  { key: 2, discripcion: "Filtro de Aceite", srcimg: "/marcas/subaru/mantenimiento/M2.png", url: "/shop" },
+  { key: 1, discripcion: "Filtros de Aire", srcimg: "/marcas/subaru/mantenimiento/M1.png", url: "/shop" },
+  { key: 2, discripcion: "Filtros de Aceite", srcimg: "/marcas/subaru/mantenimiento/M2.png", url: "/shop" },
   { key: 3, discripcion: "Pastillas de Freno", srcimg: "/marcas/subaru/mantenimiento/M3.png", url: "/shop" },
   { key: 4, discripcion: "Discos de Freno", srcimg: "/marcas/subaru/mantenimiento/M4.png", url: "/shop" }, 
   { key: 5, discripcion: "Bujías", srcimg: "/marcas/subaru/mantenimiento/M5.png", url: "/shop" }, 
@@ -49,13 +49,13 @@ const segmentoLifeStyle = [
 ];
 
 const listaCategoria = [
-  { key: 1, title: "Audio/Media", content: "Donde quiera que la te aventura conduzca, mantente conectado en tu Subaru.", srcimg: "/marcas/subaru/categoria/1.png" },
-  { key: 2, title: "Comodidad y conveniencia", content: "Menos dificultad Más disfrute. Todo personalizado para ti y tu Subaru.", srcimg: "/marcas/subaru/categoria/2.png" },
-  { key: 3, title: "Estilo de Vida", content: "Estilo Subaru sintonizado precisamente para usted y su Subaru.", srcimg: "/marcas/subaru/categoria/3.png" },
-  { key: 4, title: "Protección y seguridad", content: "Ayuda a prevenir lo peor y a disminuir el impacto de lo inevitable en tu Subaru.", srcimg: "/marcas/subaru/categoria/4.png" },
-  { key: 5, title: "Marca de STI", content: "Las modificaciones de Subaru que deseas para el poder que anhelas.", srcimg: "/marcas/subaru/categoria/5.png" },
-  { key: 6, title: "Estilo", content: "Cuando lo que está afuera de tu Subaru es lo que cuenta.", srcimg: "/marcas/subaru/categoria/6.png" },
-
+  { key: 1, title: <><span>Impresa</span><span> / XV</span></>, content: "Donde quiera que la te aventura conduzca, mantente conectado en tu Subaru.", srcimg: "/marcas/subaru/categoria/1.png" },
+  { key: 2, title: <><span>Legacy </span></>, content: "Menos dificultad Más disfrute. Todo personalizado para ti y tu Subaru.", srcimg: "/marcas/subaru/categoria/2.png" },
+  { key: 3, title: <><span>Forester</span></>, content: "Estilo Subaru sintonizado precisamente para usted y su Subaru.", srcimg: "/marcas/subaru/categoria/3.png" },
+  { key: 4, title: <><span>Outback </span></>, content: "Ayuda a prevenir lo peor y a disminuir el impacto de lo inevitable en tu Subaru.", srcimg: "/marcas/subaru/categoria/4.png" },
+  { key: 5, title:<><span>WRX</span><span> / STI</span></>, content: "Las modificaciones de Subaru que deseas para el poder que anhelas.", srcimg: "/marcas/subaru/categoria/5.png" },
+  { key: 6, title:  <><span>BRZ </span></>, content: "Cuando lo que está afuera de tu Subaru es lo que cuenta.", srcimg: "/marcas/subaru/categoria/6.png" },
+   
 ];
 const whatsAppLink = "https://api.whatsapp.com/send?phone=51989174932&text=";
 export default function ProductoDestacado(props) {
@@ -347,10 +347,13 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowAcce) => <div key={rowAcce.
           <hr />
           <div className="produc-link">{rowSegmentoLifeStyle}</div>
         </div>
-
+        <div className="div-text-type-nota">
+          <span className="div-text-type-nota-resaltado">Nota:</span>
+          &nbsp;Imagen referencial. El producto podrá variar según modelo, versión y año.
+        </div>      
         <div className="produc-destacado-links">
           <h3 className="produc-destacado-links-title">
-            Accesorios Subaru por categoría
+            Accesorios Subaru por modelo
           </h3>
           <hr />
           <div className="produc-link-accesorio">{rowCategoria}</div>
@@ -362,7 +365,7 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowAcce) => <div key={rowAcce.
         <a href={whatsAppLink} target="noreferrer">
           <div>
             <i className="fa fa-whatsapp" aria-hidden="true"></i>
-            <p>Consulta</p>
+           
           </div>
         </a>
       </div>

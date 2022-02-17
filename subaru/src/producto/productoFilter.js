@@ -439,7 +439,7 @@ if(_MENU!==MENU){
   }
 
   return (
-    <>
+    <div className="produc-destacado">
       {state.isLoandingProductos ? <Loading></Loading> : ""}
 
       <div className="prod-filter-content">
@@ -467,8 +467,8 @@ if(_MENU!==MENU){
           
         </div>
 
-        <div className="prod-filter-column2">
-          <div className="prod-filter-page">
+        <div className="prod-filter-column2 ">
+          <div className="prod-filter-page ">
             <span>Ordenar por: &nbsp;&nbsp;</span>
             <select
               className="form-control"
@@ -527,7 +527,7 @@ if(_MENU!==MENU){
           ""
         )}
       </div>
-    </>
+    </div>
   );
 }
 let actionType = {
