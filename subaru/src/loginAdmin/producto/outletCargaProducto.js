@@ -113,6 +113,12 @@ export default function OutletCargaProducto(props) {
     let params = useParams();
     let _numProductoVigencia = params.numProductoVigencia;
     let _crud = params.crud;
+  
+    var date = new Date();
+    var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+    var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    console.log(date,primerDia,ultimoDia);
+
     let history = useHistory();
     const [state, dispatch] = useReducer(reducer, {
         file: undefined,

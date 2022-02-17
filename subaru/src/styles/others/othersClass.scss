@@ -575,11 +575,6 @@
     }
 }
 
-.produc-destacado-links-title {
-    font-weight: bold;
-    margin-left: 0.5em;
-}
-
 .produc-link {
     display: flex;
     flex-wrap: wrap;
@@ -622,6 +617,10 @@
 .produc-destacado-links-title {
     font-family: "Lato", sans-serif;
     font-size: 17pt;
+    font-weight: bold;
+    margin-left: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 .produc-link-accesorio {
@@ -924,6 +923,7 @@
     .form-accion {
         display: flex;
         justify-content: flex-start;
+        margin-top: 0.5em;
         input[type="file"] {
             width: 50%;
         }
