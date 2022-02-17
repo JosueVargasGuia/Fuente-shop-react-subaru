@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
  
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -646,7 +647,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		CallableStatementCallback<Vigencia> callback = null;
 		SimpleDateFormat dmy=new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat dmyday=new SimpleDateFormat("dd");
-		SimpleDateFormat dmymonth=new SimpleDateFormat("MMMM");
+		SimpleDateFormat dmymonth=new SimpleDateFormat("MM",new Locale("es_ES"));
 		SimpleDateFormat dmyanio=new SimpleDateFormat("yyyy");
 		try {
 			callback = new CallableStatementCallback<Vigencia>() {
@@ -662,8 +663,8 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						vigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
 						vigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
 						vigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
-						vigencia.setDteDesdeFormato(dmyday.format(rs.getDate("DTEDESDE"))+" de "+dmymonth.format(rs.getDate("DTEDESDE")) +" del "+dmyanio.format(rs.getDate("DTEDESDE")));
-						vigencia.setDteHastaFormato(dmyday.format(rs.getDate("DTEHASTA"))+" de "+dmymonth.format(rs.getDate("DTEHASTA")) +" del "+dmyanio.format(rs.getDate("DTEHASTA")));
+						vigencia.setDteDesdeFormato(dmyday.format(rs.getDate("DTEDESDE"))+" "+findMesEspañol(dmymonth.format(rs.getDate("DTEDESDE"))) +" "+dmyanio.format(rs.getDate("DTEDESDE")));
+						vigencia.setDteHastaFormato(dmyday.format(rs.getDate("DTEHASTA"))+" "+findMesEspañol(dmymonth.format(rs.getDate("DTEHASTA"))) +" "+dmyanio.format(rs.getDate("DTEHASTA")));
 					}
 					return vigencia;
 				}
@@ -676,7 +677,37 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		return jdbcTemplate.execute(sql, callback);
 
 	}
+	public String findMesEspañol(String _mes) {
+		switch (_mes) {
+		case "01":
+			return "enero";
+		case "02":
+			return "febrero";
+		case "03":
+			return "marzo";
+		case "04":
+			return "abril";
+		case "05":
+			return "mayo";
+		case "06":
+			return "junio";
+		case "07":
+			return "julio";
+		case "08":
+			return "agosto";
+		case "09":
+			return "setiembre";
+		case "10":
+			return "octubre";
+		case "11":
+			return "noviembre";
+		case "12":
+			return "diciempre"	;
 
+		default:
+			return "";
+		}
+	}
 	@Override
 	public List<ProductoOutletVigencia> listarProductoOutletVigencia() throws Exception {
 		CallableStatementCallback<List<ProductoOutletVigencia>> callback = null;
@@ -787,7 +818,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		SimpleDateFormat dmy=new SimpleDateFormat("yyyy/MM/dd");
 
 		SimpleDateFormat dmyday=new SimpleDateFormat("dd");
-		SimpleDateFormat dmymonth=new SimpleDateFormat("MMMM");
+		SimpleDateFormat dmymonth=new SimpleDateFormat("MM",new Locale("es_ES"));
 		SimpleDateFormat dmyanio=new SimpleDateFormat("yyyy");
 		try {
 			callback = new CallableStatementCallback<ProductoOutletVigencia>() {
@@ -804,8 +835,8 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						ProductoOutletVigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
 						ProductoOutletVigencia.setNumEstado(rs.getInt("NUMESTADO"));
 						ProductoOutletVigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
-						ProductoOutletVigencia.setDteDesdeFormato(dmyday.format(rs.getDate("DTEDESDE"))+" de "+dmymonth.format(rs.getDate("DTEDESDE")) +" del "+dmyanio.format(rs.getDate("DTEDESDE")));
-						ProductoOutletVigencia.setDteHastaFormato(dmyday.format(rs.getDate("DTEHASTA"))+" de "+dmymonth.format(rs.getDate("DTEHASTA")) +" del "+dmyanio.format(rs.getDate("DTEHASTA")));
+						ProductoOutletVigencia.setDteDesdeFormato(dmyday.format(rs.getDate("DTEDESDE"))+" "+findMesEspañol(dmymonth.format(rs.getDate("DTEDESDE"))) +" "+dmyanio.format(rs.getDate("DTEDESDE")));
+						ProductoOutletVigencia.setDteHastaFormato(dmyday.format(rs.getDate("DTEHASTA"))+" "+findMesEspañol(dmymonth.format(rs.getDate("DTEHASTA"))) +" "+dmyanio.format(rs.getDate("DTEHASTA")));
 					
 					}
 					return ProductoOutletVigencia;

@@ -283,8 +283,8 @@ export function ProductoOutlet(props) {
           <span className="div-text-type-nota-resaltado">Notas</span>
           <ul>
             <li>El descuento porcentual ha sido redondeado, su compra podrá contener diferencias de décimas porcentuales. </li>
-            <li>Nuestra empresa no se responsabiliza si el precio de algunos ítems difiere por corrupción del sistema, agradeceremos consultar al número telefónico: (511) 630 7600.  </li>
-            <li>Los stocks exhibidos podrán variar en cualquier momento, en el caso de realizarse la transacción y el stock estuviera agotado, nos comunicaremos con usted para aplicarle la devolución de su dinero o aplicar una  nota de crédito para su próxima compra. </li>
+            <li>Nuestra empresa no se responsabiliza si el precio de algunos ítems difiere por corrupción del sistema, si eso ocurriera agradeceremos consultar al número telefónico: (511) 630 7600.  </li>
+            <li>Los stocks exhibidos podrán variar en cualquier momento, en el caso de realizarse la transacción y el stock estuviera agotado, nos comunicaremos con usted para aplicarle la devolución de su dinero o emitir una  nota de crédito para su próxima compra. </li>
           </ul>
           
         </div>  

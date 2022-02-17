@@ -650,7 +650,7 @@ export default function OutletCargaProducto(props) {
                 </Link>
             </div>
             <h3>{
-                state.crud === CRUD.UPDATE ? "Detalle de Productos del Outlet Nro:" +state.vigenciaTitulo : "Cargar Productos del Outlet"}</h3>
+                state.crud === CRUD.UPDATE ? "Detalle de Productos en Outlet del " +state.vigenciaTitulo : "Cargar Productos en Outlet"}</h3>
   
             <div className="form-body-stock">
                 <div className="form-accion">
