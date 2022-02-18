@@ -579,7 +579,7 @@ function App() {
                     >
                       {" "}
                       <span className="text-break">
-                        repuestos.subaru@eanet.pe
+                      repuestos.subaru@eacorp.pe
                       </span>
                     </a>
                   </p>

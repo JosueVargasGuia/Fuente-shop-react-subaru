@@ -460,7 +460,7 @@
     font-size: 16px;
     font-family: Arial, Helvetica, ArialTFF, sans-serif;
     li {
-        color: var(--color-font-default);
+        color: var(--color-font5);
         margin-left: 1.5em;
         margin-right: 0.5em;
         @media (min-width: 0px) and (max-width: 830px) {
@@ -1371,9 +1371,7 @@
     }
     h4 {
         font-size: 20px;
-        font-weight: normal;
         padding-top: 0.5em;
-        font-weight: bold;
     }
 }
 
@@ -1382,7 +1380,6 @@
         font-size: 22px;
         font-weight: normal;
         padding-top: 0.5em;
-        font-weight: bold;
     }
 }
 
@@ -1545,6 +1542,7 @@
 }
 
 .div-text-type-nota {
+    font-size: 1em;
     background-color: #ffffff;
     padding-left: 1em;
     color: #C85055;
@@ -1563,4 +1561,11 @@
             text-align: justify;
         }
     }
+}
+
+.div-text-type-nota-home {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 0.5em;
 }

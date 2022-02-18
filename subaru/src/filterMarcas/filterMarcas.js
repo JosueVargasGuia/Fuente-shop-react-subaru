@@ -2,7 +2,8 @@ import "./filterMarcas.css";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import TipoCambio from "../producto/tipoCambio";
-import { homepage, listaAcesorios, listaRepuesto, LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
+import { homepage,  LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
+import {  listaAcesorios, listaRepuesto} from "../service/EnumMenu";
 import BottonCarrito from "../utils/bottonCarrito";
 import { } from "../service/ENUM";
 export default function

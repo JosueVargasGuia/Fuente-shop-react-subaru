@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
-import { FilterProducto, homepage, HttpStatus, SUCCESS_SERVER } from "../service/ENUM";
+import {  listaCategoria, segmentoAccesorios, segmentoLifeStyle, segmentoMantenimiento, segmentoRecambio } from "../service/EnumMenu";
 import { findProductos } from "../service/producto.service";
-import { displayLista } from "../service/ENUM";
+import { displayLista,FilterProducto, homepage, HttpStatus,SUCCESS_SERVER } from "../service/ENUM";
 import ProductosCard from "./productoCard";
 import { Link } from "react-router-dom";
 import ServerException from "../utils/serverException";
@@ -9,54 +9,6 @@ import { LoadingClassic } from "../utils/loading"
 const LIMITE = 8;
 
 
-const segmentoMantenimiento = [
-  { key: 1, discripcion: "Filtros de Aire", srcimg: "/marcas/subaru/mantenimiento/M1.png", url: "/shop" },
-  { key: 2, discripcion: "Filtros de Aceite", srcimg: "/marcas/subaru/mantenimiento/M2.png", url: "/shop" },
-  { key: 3, discripcion: "Pastillas de Freno", srcimg: "/marcas/subaru/mantenimiento/M3.png", url: "/shop" },
-  { key: 4, discripcion: "Discos de Freno", srcimg: "/marcas/subaru/mantenimiento/M4.png", url: "/shop" }, 
-  { key: 5, discripcion: "Bujías", srcimg: "/marcas/subaru/mantenimiento/M5.png", url: "/shop" }, 
-  { key: 6, discripcion: "Fajas, correas y templadores", srcimg: "/marcas/subaru/mantenimiento/M6.png", url: "/shop" }, 
-];
-
-const segmentoRecambio = [
-  { key: 1, discripcion: "Alternadores", srcimg: "/marcas/subaru/recambio/R1.png", url: "/shop" },
-  { key: 2, discripcion: "Arrancadores", srcimg: "/marcas/subaru/recambio/R2.png", url: "/shop" },
-  { key: 3, discripcion: "Radiadores", srcimg: "/marcas/subaru/recambio/R3.png", url: "/shop" },
-  { key: 4, discripcion: "Suspensión", srcimg: "/marcas/subaru/recambio/R4.png",url: "/shop" },
-  { key: 5, discripcion: "Limpiaparabrisas", srcimg: "/marcas/subaru/recambio/R5.png", url: "/shop" },
-  { key: 6, discripcion: "Todas las categorías", srcimg: "/marcas/subaru/recambio/R6.png", url: "/shop" },
-];
-
-const segmentoAccesorios = [
-  
-  { key: 1, discripcion: "Carga", srcimg: "/marcas/subaru/accesorios/A1.png", url: "/shop" },
-  { key: 2, discripcion: "Embellecedor de Estribo", srcimg: "/marcas/subaru/accesorios/A2.png", url: "/shop" },
-  { key: 3, discripcion: "Cargomat y Pisos de Alfombra", srcimg: "/marcas/subaru/accesorios/A3.png", url: "/shop" },
-   
-  { key: 4, discripcion: "Perillas de cambio", srcimg: "/marcas/subaru/accesorios/A4.png", url: "/shop" },
-  { key: 5, discripcion: "Parrillas y Riel de Techo", srcimg: "/marcas/subaru/accesorios/A5.png", url: "/shop" },
-  { key: 6, discripcion: "Spoiler Post. y Estribo ", srcimg: "/marcas/subaru/accesorios/A6.png", url: "/shop" },
-  { key: 7, discripcion: "Kit de Seguros de Ruedas", srcimg: "/marcas/subaru/accesorios/A7.png", url: "/shop" },
- 
-  { key: 8, discripcion: "Sistema de Remolque", srcimg: "/marcas/subaru/accesorios/A8.png", url: "/shop" },
-  { key: 9, discripcion: "Interior", srcimg: "/marcas/subaru/accesorios/A9.png", url: "/shop" },
-   
-];
-const segmentoLifeStyle = [
-  //{ key: 1, discripcion: "Interior", srcimg: "/marcas/subaru/accesorios/1.png", url: "/shop" },
-  { key: 1, discripcion: "Llaveros", srcimg: "/marcas/subaru/lifestyle/l1.png", url: "/shop" },
-  
-];
-
-const listaCategoria = [
-  { key: 1, title: <><span>Impresa</span><span> / XV</span></>, content: "Donde quiera que la te aventura conduzca, mantente conectado en tu Subaru.", srcimg: "/marcas/subaru/categoria/1.png" },
-  { key: 2, title: <><span>Legacy </span></>, content: "Menos dificultad Más disfrute. Todo personalizado para ti y tu Subaru.", srcimg: "/marcas/subaru/categoria/2.png" },
-  { key: 3, title: <><span>Forester</span></>, content: "Estilo Subaru sintonizado precisamente para usted y su Subaru.", srcimg: "/marcas/subaru/categoria/3.png" },
-  { key: 4, title: <><span>Outback </span></>, content: "Ayuda a prevenir lo peor y a disminuir el impacto de lo inevitable en tu Subaru.", srcimg: "/marcas/subaru/categoria/4.png" },
-  { key: 5, title:<><span>WRX</span><span> / STI</span></>, content: "Las modificaciones de Subaru que deseas para el poder que anhelas.", srcimg: "/marcas/subaru/categoria/5.png" },
-  { key: 6, title:  <><span>BRZ </span></>, content: "Cuando lo que está afuera de tu Subaru es lo que cuenta.", srcimg: "/marcas/subaru/categoria/6.png" },
-   
-];
 const whatsAppLink = "https://api.whatsapp.com/send?phone=51989174932&text=";
 export default function ProductoDestacado(props) {
   const [state, dispatch] = useReducer(reducer, {
@@ -69,32 +21,32 @@ export default function ProductoDestacado(props) {
   });
 
   let rowSegmentoMantenimiento = segmentoMantenimiento.map((rowRep) => <div key={rowRep.key}>
-    <Link to={rowRep.url} key={rowRep.key} >
+    <Link to={rowRep.url+"/"+rowRep.identificador+"/filter/all"} key={rowRep.key} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg} loading='lazy'></img>
       <span className="produc-link-title">{rowRep.discripcion}</span>
     </Link>
   </div>);
-  let rowsegmentoRecambio = segmentoRecambio.map((rowAcce) => 
-  <div key={rowAcce.key}>
-    <Link to={rowAcce.url} key={rowAcce.key} >
-      <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
-      <span className="produc-link-title">{rowAcce.discripcion}</span>
+  let rowsegmentoRecambio = segmentoRecambio.map((rowReca) => 
+  <div key={rowReca.key}>
+    <Link to={rowReca.url+"/"+rowReca.identificador+"/filter/all"} key={rowReca.key} >
+      <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowReca.srcimg} alt={rowReca.srcimg} loading='lazy'></img>
+      <span className="produc-link-title">{rowReca.discripcion}</span>
     </Link>
   </div>);
 
 let rowSegmentoAccesorios = segmentoAccesorios.map((rowAcce) => 
 <div key={rowAcce.key}>
-  <Link to={rowAcce.url} key={rowAcce.key} >
+  <Link to={rowAcce.url+"/"+rowAcce.identificador+"/filter/all"} key={rowAcce.key} >
     <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
     <span className="produc-link-title">{rowAcce.discripcion}</span>
   </Link>
 </div>);
 
 
-let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowAcce) => <div key={rowAcce.key}>
-<Link to={rowAcce.url} key={rowAcce.key} >
-  <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
-  <span className="produc-link-title">{rowAcce.discripcion}</span>
+let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlefSty.key}>
+<Link to={rowlefSty.url+"/"+rowlefSty.identificador+"/filter/all"} key={rowlefSty.key} >
+  <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowlefSty.srcimg} alt={rowlefSty.srcimg} loading='lazy'></img>
+  <span className="produc-link-title">{rowlefSty.discripcion}</span>
 </Link>
 </div>);
 
@@ -347,7 +299,7 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowAcce) => <div key={rowAcce.
           <hr />
           <div className="produc-link">{rowSegmentoLifeStyle}</div>
         </div>
-        <div className="div-text-type-nota">
+        <div className="div-text-type-nota div-text-type-nota-home">
           <span className="div-text-type-nota-resaltado">Nota:</span>
           &nbsp;Imagen referencial. El producto podrá variar según modelo, versión y año.
         </div>      

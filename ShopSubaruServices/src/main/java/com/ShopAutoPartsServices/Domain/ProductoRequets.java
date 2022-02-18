@@ -6,18 +6,25 @@ import java.util.List;
 import com.ShopAutoPartsServices.Enums.FilterOrderBy;
 import com.ShopAutoPartsServices.Enums.FilterProducto;
 import com.ShopAutoPartsServices.Enums.FilterSubFamilia;
+ 
+import com.ShopAutoPartsServices.Enums.FilterTypeLista;
 
 public class ProductoRequets {
 	String chrCodigoProducto;
 	String chrCodigoFamilia;
 	String vchDescripcion;
+	/*Filtro de type: Destacado,oferta,remate,destacado en marca*/
 	FilterProducto filterProducto=FilterProducto.FILTER_ALL;
+	/*Filtro de las subfamilias*/
 	FilterSubFamilia filterSubFamilia=FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
+	/*Filter de ordenamiento,con imagenes*/
 	FilterOrderBy filterOrder=FilterOrderBy.FilterAscDescripcion;
- 
+	/*Filter de type normal o de atajo se adiciona la busqueda de atajos o palabras en la busqueda
+	FilterTypeLista filterTypeLista=FilterTypeLista.FilterNormal;*/
 	/*variables del paginado*/
 	int pagina=0,limit=0;
 	List<SubFamilia>listaSubFamilia=new ArrayList<SubFamilia>();
+	List<String>listaQuery=new ArrayList<String>();
 	public String getChrCodigoFamilia() {
 		return chrCodigoFamilia;
 	}
@@ -78,20 +85,21 @@ public class ProductoRequets {
 		this.filterSubFamilia = filterSubFamilia;
 		return this;
 	}
-	
-	
-	
- 
- 
 	public FilterOrderBy getFilterOrder() {
 		return filterOrder;
 	}
 	public ProductoRequets setFilterOrder(FilterOrderBy filterOrder) {
 		this.filterOrder = filterOrder;
 		return this;
+	}	
+ 
+	
+	public List<String> getListaQuery() {
+		return listaQuery;
 	}
-	
-	
+	public void setListaQuery(List<String> listaQuery) {
+		this.listaQuery = listaQuery;
+	}
 	@Override
 	public String toString() {
 		return "ProductoRequets [chrCodigoProducto=" + chrCodigoProducto + ", chrCodigoFamilia=" + chrCodigoFamilia

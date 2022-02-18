@@ -69,7 +69,7 @@ public class ProductoController {
 				productoResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
 				responseEntity = new ResponseEntity<ProductoResponse>(productoResponse, HttpStatus.OK);
 			}
-			logger.info("Size:" + productoResponse.getListaProductos().size() + " " + productoRequets.toString());
+			//logger.info("Size:" + productoResponse.getListaProductos().size() + " " + productoRequets.toString());
 		} catch (Exception e) {
 			logger.info(productoRequets.toString());
 			logger.info(e.getMessage());

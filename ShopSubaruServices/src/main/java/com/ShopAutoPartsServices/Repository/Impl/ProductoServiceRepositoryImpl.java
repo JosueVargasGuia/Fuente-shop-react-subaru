@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
- 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,6 +64,19 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		}
 		builder.append("</lista>");
 
+		
+		StringBuilder builderQuery = new StringBuilder("");
+		for (String query : productoRequets.getListaQuery()) {
+			if (builderQuery.toString().equals("")) {
+				builderQuery.append(query);
+			} else {
+				builderQuery.append("|").append(query);
+			}
+		}
+		if (builderQuery.toString().equalsIgnoreCase("")) {
+			builderQuery.append("*");
+		}
+		 
 		CallableStatementCallback<List<Producto>> callback = null;
 		try {
 			callback = new CallableStatementCallback<List<Producto>>() {
@@ -85,16 +98,9 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					cs.setString(7, productoRequets.getFilterProducto().toString());
 					cs.setString(8, builder.toString());
 					cs.setString(9, productoRequets.getFilterOrder().toString());
-
+					cs.setString(10,  builderQuery.toString());
+				 
 					
-					 logger.info("I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
-					  ) +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
-					  +" I_CHRCODIGOPRODUCTO:"+productoRequets.getChrCodigoProducto()
-					  +" I_PAGE:"+productoRequets.getPagina()
-					  +" I_LIMIT:"+productoRequets.getLimit()
-					  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
-					  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString()
-					  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString());/**/
 					 
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);
@@ -158,24 +164,38 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					
 					cs.close();
 					rs.close();
+					 logger.info("Size : "+productos.size()+
+							 " I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
+							  ) +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
+							  +" I_CHRCODIGOPRODUCTO:"+productoRequets.getChrCodigoProducto()
+							  +" I_PAGE:"+productoRequets.getPagina()
+							  +" I_LIMIT:"+productoRequets.getLimit()
+							  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
+							  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString()
+							  
+							  +" I_FILTER_QUERY:"+builderQuery.toString()
+							  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString());
 					return productos;
 				}
 			};
 		} catch (Exception e) {
 			logger.info("STORE --LISTA_PRODUCTOS");
-			logger.info("I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
-					  ) +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
+			logger.info("I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia() 
+					  +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
 					  +" I_CHRCODIGOPRODUCTO:"+productoRequets.getChrCodigoProducto()
 					  +" I_PAGE:"+productoRequets.getPagina()
 					  +" I_LIMIT:"+productoRequets.getLimit()
 					  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
+					  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString()
+				 
+					  +" I_FILTER_QUERY:"+builderQuery.toString()
 					  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString()
-					  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString()); 
+					  ); 
 					 
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{?=call " + PKG_TIENDA + ".LISTA_PRODUCTOS(?,?,?,?,?,?,?,?)}";
+		String sql = "{?=call " + PKG_TIENDA + ".LISTA_PRODUCTOS(?,?,?,?,?,?,?,?,?)}";
 		return jdbcTemplate.execute(sql, callback);
 
 	}
