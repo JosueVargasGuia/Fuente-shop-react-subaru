@@ -10,6 +10,7 @@ import {
   registrarCotizacionDetalle,
 } from "../service/cotizacion.service";
 import { handleSyncDatosCotizacion } from "../service/general";
+import ServerException from "../utils/serverException";
 export default function ProductosCard(props) {
   let history = useHistory();
 
@@ -161,8 +162,10 @@ export default function ProductosCard(props) {
           if (
             jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO
           ) {
+            
             dispatch({
-              type: actionType.ERROR,
+              type: actionType.SETMENSAJE,
+              showModal:false,
               server: {
                 error: jsonDetalle.response.error,
                 success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
@@ -482,6 +485,7 @@ export default function ProductosCard(props) {
           </button>
         </Modal.Footer>
       </Modal>
+      <ServerException server={state.server}></ServerException>
     </>
   );
 }
@@ -494,7 +498,8 @@ let actionType = {
   SHOW_RESUMEN:"SHOW_RESUMEN",
   SET_SHOW_RESUMEN:"SET_SHOW_RESUMEN",
   PRODUCTO:"PRODUCTO",
-  CANTIDAD_STOCK:'CANTIDAD_STOCK'
+  CANTIDAD_STOCK:'CANTIDAD_STOCK',
+  SETMENSAJE:"SETMENSAJE"
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -508,6 +513,13 @@ const reducer = (state, action) => {
         ...state,
         server: action.server,
       };
+      case actionType.SETMENSAJE:
+        return {
+          ...state,
+          showModal:action.showModal,
+          server: action.server,
+        };
+      
     case actionType.SET_CANTIDAD:
       return {
         ...state,

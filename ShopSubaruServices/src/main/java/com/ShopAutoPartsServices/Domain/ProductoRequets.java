@@ -7,7 +7,7 @@ import com.ShopAutoPartsServices.Enums.FilterOrderBy;
 import com.ShopAutoPartsServices.Enums.FilterProducto;
 import com.ShopAutoPartsServices.Enums.FilterSubFamilia;
  
-import com.ShopAutoPartsServices.Enums.FilterTypeLista;
+//import com.ShopAutoPartsServices.Enums.FilterTypeLista;
 
 public class ProductoRequets {
 	String chrCodigoProducto;

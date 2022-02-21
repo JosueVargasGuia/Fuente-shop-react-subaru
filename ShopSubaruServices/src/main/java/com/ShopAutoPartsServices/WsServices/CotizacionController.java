@@ -131,6 +131,7 @@ public class CotizacionController {
 			}
 			if (isValidado) {
 				cotizacionOnlineDetalle = cotizacionOnlineService.registrarCotizacionDetalle(cotizacionOnlineDetalle);
+				if(cotizacionOnlineDetalle.getResponse().getObjectStatus().equalsIgnoreCase("OK")) {
 				cotizacionOnline = cotizacionOnlineService
 						.obtenerCotizacionOnline(cotizacionOnlineDetalle.getNumCodigoCotizacionOnline());
 
@@ -139,6 +140,11 @@ public class CotizacionController {
 
 				cotizacionOnline.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
 				responseEntity = new ResponseEntity<CotizacionOnlineResumen>(cotizacionOnline, HttpStatus.OK);
+				}else {
+					error.add(cotizacionOnlineDetalle.getResponse().getObjectStatus());
+					cotizacionOnline.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
+					responseEntity = new ResponseEntity<CotizacionOnlineResumen>(cotizacionOnline, HttpStatus.OK);
+				}
 			} else {
 				cotizacionOnlineDetalle.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
 				responseEntity = new ResponseEntity<CotizacionOnlineResumen>(cotizacionOnline, HttpStatus.OK);
