@@ -52,7 +52,7 @@ export function ProductoOutlet(props) {
       console.log(json);
       _titulo=(json.vigencia.dteDesde===null 
         && json.vigencia.dteHasta===null?
-        "Productos del outlet":"Productos del outlet del "+ json.vigencia.dteDesde +" hasta "+json.vigencia.dteHasta);
+        "Productos en Outlet":"Productos en Outlet: desde "+ json.vigencia.dteDesdeFormato +" al "+json.vigencia.dteHastaFormato);
        
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let index = 0; index < json.listaProductos.length; index++) {
@@ -107,12 +107,12 @@ export function ProductoOutlet(props) {
                     : producto.numValorVentaRefSoles}
                 </span>
               </td>
-              <td className="td-producto">
+              <td className="td-dsct">
                 <div className="td-producto-div-desc">
-                  <div className="td-producto-div-desc-porc" style={{width:(producto.numValorDesc<=50?50:producto.numValorDesc)+"%"}}>
-                    {producto.numValorDesc}
-                    {" %"}
+                  <div className="td-producto-div-desc-porc" style={{width:(producto.numValorDesc)+"%"}}>  
+                    &nbsp;                  
                   </div>
+                  <div className="td-producto-div-desc-porc-text">{parseFloat(producto.numValorDesc).toFixed(0)}{" %"}</div>
                 </div>
               </td>
 
@@ -124,13 +124,19 @@ export function ProductoOutlet(props) {
                     : producto.numValorVentaSoles}
                 </span>
               </td>
+
+              <td className="td-stock">
+                <span className="td-precio-valor">
+                  {producto.numStock}
+                </span>
+              </td>
             </tr>
           );
         }
         if (json.listaProductos.length === 0) {
           rowProducto.push(
             <tr key={0}>
-              <td colSpan="5">Sin registros.</td>
+              <td colSpan="6">Sin registros.</td>
             </tr>
           );
         }
@@ -180,7 +186,8 @@ export function ProductoOutlet(props) {
     }
   }
   function handleEventToPage(_currentPage) {
-    handleServicioBuscarProductos(_currentPage, LIMITE, "");
+    console.log(state);
+    handleServicioBuscarProductos(_currentPage, LIMITE,state.chrCodigoProductoSearch, state.vchDescripcionSearch);
   }
   return (
     <div className="producto-outlet">
@@ -232,29 +239,37 @@ export function ProductoOutlet(props) {
             </td>
             <td className="td-precio">
               <div className="td-producto-div">
-                <span>Precio al Público</span>
+                <span>Precio</span>
+                <span>Público</span>
                 <span className="td-precio-simbolo">
                   {props.moneda.codigoIso4217}{" "}
                 </span>
               </div>
             </td>
-            <td className="td-precio">
+            <td className="td-dsct">
               <div className="td-producto-div">
-                <span>Descuento </span>
-                <span>%</span>
+                <span>Dsct.%</span> 
               </div>
             </td>
             <td className="td-precio">
               <div className="td-producto-div">
-                <span>Precio OutLet</span>
+                <span>Precio</span>
+                <span>OutLet</span>
                 <span className="td-precio-simbolo">
                   {props.moneda.codigoIso4217}{" "}
                 </span>
+              </div>
+            </td>
+            <td className="td-stock">
+              <div className="td-producto-div">
+                <span>Stock</span>              
               </div>
             </td>
           </tr>
         </thead>
-        <tbody> {state.rowProducto}</tbody>
+        <tbody> 
+          <tr colSpan="5" style={{display:"none"}}></tr>
+          {state.rowProducto}</tbody>
       </table>
 
       <div className="prod-filter-page">
@@ -266,6 +281,16 @@ export function ProductoOutlet(props) {
           handleEventToPage={handleEventToPage}
         ></Paginacion>
       </div>
+
+      <div className="div-text-type-nota">
+          <span className="div-text-type-nota-resaltado">Notas</span>
+          <ul>
+            <li>El descuento porcentual ha sido redondeado, su compra podrá contener diferencias de décimas porcentuales. </li>
+            <li>Nuestra empresa no se responsabiliza si el precio de algunos ítems difiere por corrupción del sistema, si eso ocurriera agradeceremos consultar al número telefónico: (511) 630 7600.  </li>
+            <li>Los stocks exhibidos podrán variar en cualquier momento, en el caso de realizarse la transacción y el stock estuviera agotado, nos comunicaremos con usted para aplicarle la devolución de su dinero o emitir una  nota de crédito para su próxima compra. </li>
+          </ul>
+          
+        </div>  
     </div>
   );
 }

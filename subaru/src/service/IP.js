@@ -50,16 +50,17 @@ const URL = {
   REGISTRAR_PROD_OUTLET_VIGENCIA:"/productoImagen/saveProductoOutletVigencia",/*Privado Administrador */
   LISTA_PRODUCTO_OUTLET:"/productoImagen/listaProductosOutlet",/*Privado Administrador */
   SAVE_UPDATE_PRODUCTO_OUTLET:"/productoImagen/saveUpdateProductoOutlet",/*Privado Administrador */
+  UPDATE_PRODUCTO_OUTLET:"/productoImagen/updateProductoOutlet",/*Privado Administrador */
   
   };
 
 function IP(uri) {
 
-  let _CONTEXT    ="DESARROLLO";//PRODUCCION -- DESARROLLO
-  let _PROTOCOLO  = (_CONTEXT==="PRODUCCION"?'https':'http');
-  let _URL_API    = (_CONTEXT==="PRODUCCION"?'bk.subaruparts.eanet.pe':'localhost'); 
-  let _PORT       = (_CONTEXT==="PRODUCCION"?undefined:'8086'); 
-  let _SERVICE    = (_CONTEXT==="PRODUCCION"?'ShopSubaruServices/service':'service');
+  let _CONTEXT    ="PRODUCCION";//PRODUCCION -- DESARROLLO,DESARROLLODEV
+  let _PROTOCOLO  = (_CONTEXT==="PRODUCCION" || _CONTEXT==="DESARROLLODEV" ?'https':'http');
+  let _URL_API    = (_CONTEXT==="PRODUCCION"?'bk.subaruparts.eanet.pe':(_CONTEXT==='DESARROLLODEV'?'bk.desarrollo.subaruparts.eanet.pe':"localhost"));   
+  let _PORT       = (_CONTEXT==="DESARROLLO"?'8086':undefined); 
+  let _SERVICE    = (_CONTEXT==="DESARROLLO"?'service':'ShopSubaruServices/service');
 
   return _PROTOCOLO+'://'+_URL_API+(_PORT===undefined?'':(':'+_PORT))+"/"+_SERVICE+uri;
 }

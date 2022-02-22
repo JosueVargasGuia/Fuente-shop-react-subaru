@@ -568,7 +568,7 @@ function App() {
                     <br />
                     Central de Repuestos:{" "}
                     <a className="class-telf" href="tel:">
-                      01 630 7600
+                      (511) 630 7600
                     </a>
                     <br />
                     Envíenos un correo electrónico:
@@ -579,7 +579,7 @@ function App() {
                     >
                       {" "}
                       <span className="text-break">
-                        repuestos.subaru@eanet.pe
+                      repuestos.subaru@eacorp.pe
                       </span>
                     </a>
                   </p>

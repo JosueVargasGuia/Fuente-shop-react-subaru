@@ -72,6 +72,7 @@ body {
             }
         }
         .produc-destacado-item,
+        .prod-filter-column2,
         .produc-destacado-item-recomentado {
             .producto-card {
                 width: 23.32%;
@@ -113,16 +114,26 @@ body {
                     z-index: 2;
                     background: white;
                     padding-top: .7rem;
+                    cursor: default;
                     // box-shadow: 0 -5px 10px -5px rgba(0, 0,0, 0.2%);
                     .producto-card-nombre {
                         font-size: 15px;
                         text-align: center;
                         text-transform: capitalize;
+                        padding-left: 0.1em;
+                        padding-right: 0.1em;
                     }
                     .producto-card-precio {
                         color: #C85055;
                         font-weight: 800;
-                        font-size: 20px;
+                        font-size: 19px;
+                    }
+                    .producto-card-stock {
+                        font-size: 15px;
+                        text-align: center;
+                        text-transform: capitalize;
+                        color: var(--color-arrow-active);
+                        font-weight: bold;
                     }
                 }
             }

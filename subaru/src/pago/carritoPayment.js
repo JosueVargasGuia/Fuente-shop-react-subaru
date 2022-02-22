@@ -757,7 +757,7 @@ export function CarritoPayment(props) {
           </span>{" "}
           y los acepto sin reservas.
           <div className="form-pago-botonera">
-           {1===2?<button
+           {1===1?<button
               className="btn btn-primary"
               disabled={!(state.enableButton && (state.statusMetodoEnvio.status === statusMetodoEnvio.DEFAULT || state.statusMetodoEnvio.status === statusMetodoEnvio.ACTUALIZADO))}
               onClick={() => handleEnventControlMenuNext()}

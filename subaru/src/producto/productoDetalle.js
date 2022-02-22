@@ -22,6 +22,7 @@ import {
 } from "../service/cotizacion.service";
 import { handleSyncDatosCotizacion } from "../service/general";
 import { Modal } from "react-bootstrap";
+import ServerException from "../utils/serverException";
 
 export default function ProductoDetalle(props) {
   let history = useHistory();
@@ -307,9 +308,11 @@ export default function ProductoDetalle(props) {
                 cotizacionResumen: cotizacionResumen,
               });
             }
+            console.log(jsonDetalle);
             if (
               jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO
             ) {
+            
               dispatch({
                 type: actionType.ERROR,
                 server: {
@@ -639,6 +642,7 @@ export default function ProductoDetalle(props) {
           </button>
         </Modal.Footer>
       </Modal>
+      <ServerException server={state.server}></ServerException>
     </div>
   );
 }
