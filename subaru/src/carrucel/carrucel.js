@@ -31,19 +31,13 @@ export default function Carrucel(props) {
       {/* Imagen PC */}
       <source srcset={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + objImagen.srcImage} media="(min-width: 800px)" />
       {/* Imagen Mobile */}
-      <source srcset="https://via.placeholder.com/600x330?text=IMG" media="(min-width: 768px)"/>
+      <source srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 768px)"/>
       <img
         className="container-Carousel-img"
         key={objImagen.codigoCarrucel}
         alt={ objImagen.srcImage}
         srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
-      ></img>
-      {/* <img
-        className="container-Carousel-img"
-        key={objImagen.codigoCarrucel}
-        alt={ objImagen.srcImage}
-        src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
-      ></img> */}
+      ></img>   
     </picture>
   ));
 
@@ -51,8 +45,8 @@ export default function Carrucel(props) {
 
 
   useEffect(()=>{  
-    handleWindowsResize();
-    window.addEventListener('resize',handleWindowsResize);
+    //handleWindowsResize();
+    //window.addEventListener('resize',handleWindowsResize);
     //eslint-disable-next-line 
   },[props.marca]);
   
@@ -91,11 +85,7 @@ export default function Carrucel(props) {
         </Link> 
       </div>
 
-     <div className="outlet">
-        <Link to="/outlet"> 
-          <img alt="outlet"   src={window.location.origin +(homepage===undefined?"":"/"+homepage) +"/marcas/outlet.png"} ></img> 
-        </Link> 
-      </div>
+      
     <div className="container-Carousel-list-root">
 
       <Carousel
