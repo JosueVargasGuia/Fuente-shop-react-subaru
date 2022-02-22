@@ -243,7 +243,7 @@ export default function ProductosCard(props) {
             className="producto-card-nombre"
             onClick={handleEventShowDetalle}
           >
-            <span>{props.producto.vchDescripcionSmall}</span>
+            <span>{props.producto.vchDescripcion}</span>
           </div>
           <div className="producto-card-stock">
             Stock Disponible:&nbsp;{props.producto.numStock}

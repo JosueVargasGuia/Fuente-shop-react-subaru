@@ -136,7 +136,7 @@ export function ProductoOutlet(props) {
         if (json.listaProductos.length === 0) {
           rowProducto.push(
             <tr key={0}>
-              <td colSpan="5">Sin registros.</td>
+              <td colSpan="6">Sin registros.</td>
             </tr>
           );
         }
@@ -186,7 +186,8 @@ export function ProductoOutlet(props) {
     }
   }
   function handleEventToPage(_currentPage) {
-    handleServicioBuscarProductos(_currentPage, LIMITE, "");
+    console.log(state);
+    handleServicioBuscarProductos(_currentPage, LIMITE,state.chrCodigoProductoSearch, state.vchDescripcionSearch);
   }
   return (
     <div className="producto-outlet">
@@ -266,7 +267,9 @@ export function ProductoOutlet(props) {
             </td>
           </tr>
         </thead>
-        <tbody> {state.rowProducto}</tbody>
+        <tbody> 
+          <tr colSpan="5" style={{display:"none"}}></tr>
+          {state.rowProducto}</tbody>
       </table>
 
       <div className="prod-filter-page">

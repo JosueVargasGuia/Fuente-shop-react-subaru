@@ -12,7 +12,7 @@ const listaRepuesto = [
     { descripcion: "Faros, Iluminación y Eléctricos",codigo:10,identificador:'Repuesto-1-10',subFamilia:['112A3', '112A4'] },
     { descripcion: "Parabrisas, Vidrios de Puertas",codigo:11,identificador:'Repuesto-1-11',subFamilia:['112A5'] },
     { descripcion: "Aire Acondicionado",codigo:12,identificador:'Repuesto-1-12',subFamilia:['112A7']},
-    { descripcion: "Fluidos Subaru",codigo:4,identificador:'Accesorio-2-4',subFamilia:['112A9']  },
+    { descripcion: "Fluidos Subaru",codigo:13,identificador:'Accesorio-2-4',subFamilia:['112A9']  },
   ]
   
   const listaAcesorios = [
