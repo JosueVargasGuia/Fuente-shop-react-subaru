@@ -202,7 +202,8 @@ public class IpnController {
 		}
 	}
 
-	@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+	//@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+	//PRODUCCUIN DESAHABILITADO
 	public void scheduledConfirmaCotizacion() {
 	
 		boolean correoStatusTipoCambioTomado = false;
@@ -315,7 +316,7 @@ public class IpnController {
 								/*OC Originl File file = facturacionService.obtenerFileReporteOc(scheduledProceso);*/
 								File file = facturacionService.obtenerFileReporteOcOnline(scheduledProceso);
 								if (file != null) {
-									asuntoOc = "Orden de Compra " + scheduledProcesoStatus.getChrCodigoOc()
+									asuntoOc = "Orden de Compra Online por registrar " + scheduledProcesoStatus.getChrCodigoOc()
 											+ " generada por Venta On-line(" + empresa.getAlias() + ")";
 									correoOcStatus = buildEnviaCorreo.buildCorreoSSL(correoFERequest,
 											HTML_OC_(clienteFactura,scheduledProcesoStatus, OcEmail.OrdenCompra), asuntoOc,

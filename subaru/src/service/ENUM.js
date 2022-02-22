@@ -212,10 +212,10 @@ const lstMarcas = [
     chrcodigofamilia: "110A",
     classMarca: "class-marca-subaru",
     lstCarrucel: [
-      { codigoCarrucel: 1, srcImage: "/marcas/subaru/1.png" },
-      { codigoCarrucel: 2, srcImage: "/marcas/subaru/2.png" },
-      { codigoCarrucel: 3, srcImage: "/marcas/subaru/3.png" },
-      { codigoCarrucel: 4, srcImage: "/marcas/subaru/4.png" },
+      { codigoCarrucel: 1, srcImage: "/marcas/subaru/1.png", srcImageMobile: "/marcas/subaru/1-M.png" },
+      { codigoCarrucel: 2, srcImage: "/marcas/subaru/2.png", srcImageMobile: "/marcas/subaru/2-M.png"  },
+      { codigoCarrucel: 3, srcImage: "/marcas/subaru/3.png", srcImageMobile: "/marcas/subaru/3-M.png"  },
+      { codigoCarrucel: 4, srcImage: "/marcas/subaru/4.png", srcImageMobile: "/marcas/subaru/4-M.png"  },
     ],
     lstBannerPromocion: [],
   },
@@ -247,7 +247,7 @@ const filterOrder = {
 const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */
   status: 1,
-  text: "Página en Modo de Prueba. Próximamente estará habilitada al 100%",
+  text: "En Modo de Prueba, Próximamente estará habilitada",
 };
 const tipoDireccion = {
   DESPACHO: "Dirección de Despacho",

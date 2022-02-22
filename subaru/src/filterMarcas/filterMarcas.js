@@ -189,8 +189,14 @@ export default function
                       {Moneda.SOLES.codigoIso4217}
                     </option>
                   </select>
+                  
                 </div>
               </li>
+              <li> Tip.cambio:
+                 
+                <TipoCambio></TipoCambio>
+                
+            </li>
             </ul>
           </li>
         </ul>
@@ -246,7 +252,23 @@ export default function
               </ul>
             </li>
           </ul>
+          <div className="inner-header">
+            <div className="filter-home">
+              <ul className="nav-span">
+                <li>
+                  <Link className="filter-home-concecionario" to={'/shop'}> <span className="filter-home-emp-nombre">EA Corp</span>&nbsp;<span className="filter-home-emp-sociedad">SAC&nbsp;</span>
+                  </Link>
+                  <ul className="nav-span-filter-home">
+                    <li><a href='https://subaru.eanet.pe/misubaru/' target="_parent">&nbsp;&nbsp;&nbsp;Ir a suite MiSubaru</a></li>
+                    <li><a href='https://subaru.eanet.pe/service/turno-atencion.do?p_accion_back=5' target="_parent">&nbsp;&nbsp;&nbsp;Agendar Servicio</a></li>
+                  </ul>
+                  </li>
+              </ul>
+            </div>
+            <i className="fa fa-peru" aria-hidden="true"></i>
+          </div>
         </div>
+       
         <div className="filter-input-search">
 
           <input
