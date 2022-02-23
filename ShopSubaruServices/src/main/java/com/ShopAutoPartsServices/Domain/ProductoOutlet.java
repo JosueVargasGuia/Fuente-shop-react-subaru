@@ -7,6 +7,7 @@ public class ProductoOutlet {
 	BigDecimal numValorVenta, numValorRefVenta, numValorDesc, numValorCompra;
 	int  numProductoVigencia, numProductoOutlet;
 	double numStock;
+	String status;
 	public String getChrCodigoProducto() {
 		return chrCodigoProducto;
 	}
@@ -83,6 +84,12 @@ public class ProductoOutlet {
 	}
 	public void setVchModelo(String vchModelo) {
 		this.vchModelo = vchModelo;
+	}	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	@Override
 	public String toString() {

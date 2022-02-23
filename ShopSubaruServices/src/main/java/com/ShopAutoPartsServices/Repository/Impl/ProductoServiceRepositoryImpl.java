@@ -9,8 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
- 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,19 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		}
 		builder.append("</lista>");
 
+		
+		StringBuilder builderQuery = new StringBuilder("");
+		for (String query : productoRequets.getListaQuery()) {
+			if (builderQuery.toString().equals("")) {
+				builderQuery.append(query);
+			} else {
+				builderQuery.append("|").append(query);
+			}
+		}
+		if (builderQuery.toString().equalsIgnoreCase("")) {
+			builderQuery.append("*");
+		}
+		 
 		CallableStatementCallback<List<Producto>> callback = null;
 		try {
 			callback = new CallableStatementCallback<List<Producto>>() {
@@ -84,16 +98,9 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					cs.setString(7, productoRequets.getFilterProducto().toString());
 					cs.setString(8, builder.toString());
 					cs.setString(9, productoRequets.getFilterOrder().toString());
-
+					cs.setString(10,  builderQuery.toString());
+				 
 					
-					 logger.info("I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
-					  ) +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
-					  +" I_CHRCODIGOPRODUCTO:"+productoRequets.getChrCodigoProducto()
-					  +" I_PAGE:"+productoRequets.getPagina()
-					  +" I_LIMIT:"+productoRequets.getLimit()
-					  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
-					  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString()
-					  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString());/**/
 					 
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);
@@ -157,24 +164,38 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					
 					cs.close();
 					rs.close();
+					 logger.info("Size : "+productos.size()+
+							 " I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
+							  ) +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
+							  +" I_CHRCODIGOPRODUCTO:"+productoRequets.getChrCodigoProducto()
+							  +" I_PAGE:"+productoRequets.getPagina()
+							  +" I_LIMIT:"+productoRequets.getLimit()
+							  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
+							  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString()
+							  
+							  +" I_FILTER_QUERY:"+builderQuery.toString()
+							  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString());
 					return productos;
 				}
 			};
 		} catch (Exception e) {
 			logger.info("STORE --LISTA_PRODUCTOS");
-			logger.info("I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
-					  ) +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
+			logger.info("I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia() 
+					  +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
 					  +" I_CHRCODIGOPRODUCTO:"+productoRequets.getChrCodigoProducto()
 					  +" I_PAGE:"+productoRequets.getPagina()
 					  +" I_LIMIT:"+productoRequets.getLimit()
 					  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
+					  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString()
+				 
+					  +" I_FILTER_QUERY:"+builderQuery.toString()
 					  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString()
-					  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString()); 
+					  ); 
 					 
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{?=call " + PKG_TIENDA + ".LISTA_PRODUCTOS(?,?,?,?,?,?,?,?)}";
+		String sql = "{?=call " + PKG_TIENDA + ".LISTA_PRODUCTOS(?,?,?,?,?,?,?,?,?)}";
 		return jdbcTemplate.execute(sql, callback);
 
 	}
@@ -645,6 +666,9 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 	public Vigencia obtenerVigencia() throws Exception {
 		CallableStatementCallback<Vigencia> callback = null;
 		SimpleDateFormat dmy=new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dmyday=new SimpleDateFormat("dd");
+		SimpleDateFormat dmymonth=new SimpleDateFormat("MM",new Locale("es_ES"));
+		SimpleDateFormat dmyanio=new SimpleDateFormat("yyyy");
 		try {
 			callback = new CallableStatementCallback<Vigencia>() {
 				@Override
@@ -654,10 +678,13 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);
 					Vigencia vigencia = new Vigencia();
+					
 					while (rs.next()) {
 						vigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
 						vigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
 						vigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
+						vigencia.setDteDesdeFormato(dmyday.format(rs.getDate("DTEDESDE"))+" "+findMesEspañol(dmymonth.format(rs.getDate("DTEDESDE"))) +" "+dmyanio.format(rs.getDate("DTEDESDE")));
+						vigencia.setDteHastaFormato(dmyday.format(rs.getDate("DTEHASTA"))+" "+findMesEspañol(dmymonth.format(rs.getDate("DTEHASTA"))) +" "+dmyanio.format(rs.getDate("DTEHASTA")));
 					}
 					return vigencia;
 				}
@@ -670,7 +697,37 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		return jdbcTemplate.execute(sql, callback);
 
 	}
+	public String findMesEspañol(String _mes) {
+		switch (_mes) {
+		case "01":
+			return "enero";
+		case "02":
+			return "febrero";
+		case "03":
+			return "marzo";
+		case "04":
+			return "abril";
+		case "05":
+			return "mayo";
+		case "06":
+			return "junio";
+		case "07":
+			return "julio";
+		case "08":
+			return "agosto";
+		case "09":
+			return "setiembre";
+		case "10":
+			return "octubre";
+		case "11":
+			return "noviembre";
+		case "12":
+			return "diciempre"	;
 
+		default:
+			return "";
+		}
+	}
 	@Override
 	public List<ProductoOutletVigencia> listarProductoOutletVigencia() throws Exception {
 		CallableStatementCallback<List<ProductoOutletVigencia>> callback = null;
@@ -779,6 +836,10 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 	public ProductoOutletVigencia obtenerVigenciaXCodigo(ProductoOutlet productoOutlet) throws Exception {
 		CallableStatementCallback<ProductoOutletVigencia> callback = null;
 		SimpleDateFormat dmy=new SimpleDateFormat("yyyy/MM/dd");
+
+		SimpleDateFormat dmyday=new SimpleDateFormat("dd");
+		SimpleDateFormat dmymonth=new SimpleDateFormat("MM",new Locale("es_ES"));
+		SimpleDateFormat dmyanio=new SimpleDateFormat("yyyy");
 		try {
 			callback = new CallableStatementCallback<ProductoOutletVigencia>() {
 				@Override
@@ -793,7 +854,10 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						ProductoOutletVigencia.setDteDesde(dmy.format(rs.getDate("DTEDESDE")));
 						ProductoOutletVigencia.setDteHasta(dmy.format(rs.getDate("DTEHASTA")));
 						ProductoOutletVigencia.setNumEstado(rs.getInt("NUMESTADO"));
-						ProductoOutletVigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));						 
+						ProductoOutletVigencia.setNumProductoVigencia(rs.getInt("NUMPRODUCTOVIGENCIA"));
+						ProductoOutletVigencia.setDteDesdeFormato(dmyday.format(rs.getDate("DTEDESDE"))+" "+findMesEspañol(dmymonth.format(rs.getDate("DTEDESDE"))) +" "+dmyanio.format(rs.getDate("DTEDESDE")));
+						ProductoOutletVigencia.setDteHastaFormato(dmyday.format(rs.getDate("DTEHASTA"))+" "+findMesEspañol(dmymonth.format(rs.getDate("DTEHASTA"))) +" "+dmyanio.format(rs.getDate("DTEHASTA")));
+					
 					}
 					return ProductoOutletVigencia;
 				}
@@ -837,6 +901,33 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_PRODUC_OUTLET(?,?,?,?,?,?,?,?,?,?,?,?)}";
 		return jdbcTemplate.execute(sql, callback);
 	}
+
+	@Override
+	public ProductoOutlet updateProductoOutlet(ProductoOutlet outletRequets) throws Exception {
+		CallableStatementCallback<ProductoOutlet> callback = null;
+		try {
+			callback = new CallableStatementCallback<ProductoOutlet>() {
+				@Override
+				public ProductoOutlet doInCallableStatement(CallableStatement cs)
+						throws SQLException, DataAccessException {
+					cs.setString(1, outletRequets.getChrCodigoProducto());
+					cs.setString(2, (outletRequets.getNumUnspc().length()<=0?null:outletRequets.getNumUnspc()));
+					cs.setInt(3, outletRequets.getNumProductoVigencia());
+					cs.setInt(4, outletRequets.getNumProductoOutlet());
+					cs.registerOutParameter(5, OracleTypes.VARCHAR);
+					cs.execute();
+					outletRequets.setStatus(cs.getString(5));
+					return outletRequets;
+				}
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		String sql = "{call " + PKG_TIENDA + ".UPDATE_EC_PRODUC_OUTLET(?,?,?,?,?)}";
+		return jdbcTemplate.execute(sql, callback);
+	}
+	 
 
  
 

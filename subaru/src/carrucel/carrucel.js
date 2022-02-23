@@ -37,13 +37,7 @@ export default function Carrucel(props) {
         key={objImagen.codigoCarrucel}
         alt={ objImagen.srcImage}
         srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
-      ></img>
-      {/* <img
-        className="container-Carousel-img"
-        key={objImagen.codigoCarrucel}
-        alt={ objImagen.srcImage}
-        src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
-      ></img> */}
+      ></img>   
     </picture>
   ));
 
@@ -51,8 +45,8 @@ export default function Carrucel(props) {
 
 
   useEffect(()=>{  
-    handleWindowsResize();
-    window.addEventListener('resize',handleWindowsResize);
+    //handleWindowsResize();
+    //window.addEventListener('resize',handleWindowsResize);
     //eslint-disable-next-line 
   },[props.marca]);
   
@@ -103,7 +97,7 @@ export default function Carrucel(props) {
         </Link> 
       </div>
 
-  
+
     <div className="container-Carousel-list-root">
 
       <Carousel

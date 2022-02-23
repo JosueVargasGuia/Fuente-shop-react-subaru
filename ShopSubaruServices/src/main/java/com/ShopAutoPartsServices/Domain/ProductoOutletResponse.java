@@ -7,6 +7,7 @@ public class ProductoOutletResponse {
 	List<ProductoOutlet> lista = new ArrayList<ProductoOutlet>();
 	Response response = new Response();
 	ProductoOutletVigencia productoOutletVigencia=new ProductoOutletVigencia();
+	ProductoOutlet productoOutlet=new ProductoOutlet();
 	public List<ProductoOutlet> getLista() {
 		return lista;
 	}
@@ -27,6 +28,12 @@ public class ProductoOutletResponse {
 	public ProductoOutletResponse setProductoOutletVigencia(ProductoOutletVigencia productoOutletVigencia) {
 		this.productoOutletVigencia = productoOutletVigencia;
 		return this;
+	}
+	public ProductoOutlet getProductoOutlet() {
+		return productoOutlet;
+	}
+	public void setProductoOutlet(ProductoOutlet productoOutlet) {
+		this.productoOutlet = productoOutlet;
 	}
 	
 }

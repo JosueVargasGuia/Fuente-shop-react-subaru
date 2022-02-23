@@ -4,6 +4,8 @@ public class Vigencia {
 	String dteDesde;
 	String dteHasta;
 	int numProductoVigencia;
+	String dteDesdeFormato;
+	String dteHastaFormato;
 	public String getDteDesde() {
 		return dteDesde;
 	}
@@ -25,5 +27,18 @@ public class Vigencia {
 		this.numProductoVigencia = numProductoVigencia;
 		return this;
 	}
+	public String getDteDesdeFormato() {
+		return dteDesdeFormato;
+	}
+	public void setDteDesdeFormato(String dteDesdeFormato) {
+		this.dteDesdeFormato = dteDesdeFormato;
+	}
+	public String getDteHastaFormato() {
+		return dteHastaFormato;
+	}
+	public void setDteHastaFormato(String dteHastaFormato) {
+		this.dteHastaFormato = dteHastaFormato;
+	}
+	 
 	
 }

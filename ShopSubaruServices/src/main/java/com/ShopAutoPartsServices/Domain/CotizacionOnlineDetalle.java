@@ -31,6 +31,7 @@ public class CotizacionOnlineDetalle {
 	Response response = new Response();
 	String chrSrcImagen;
 	String chrType;
+	
 	public int getNumCodigoCotizacionOnline() {
 		return numCodigoCotizacionOnline;
 	}

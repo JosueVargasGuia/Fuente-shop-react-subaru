@@ -6,7 +6,7 @@ import ServerException from "../../utils/serverException";
 import * as XLSX from "xlsx";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { obtenerCliente } from "../../service/loginCliente.service";
-import { listarProductoOutlet, saveUpdateProductoOutlet } from "../../service/producto.service";
+import { listarProductoOutlet, saveUpdateProductoOutlet,updateProductoOutletRow } from "../../service/producto.service";
 import DatePicker  from "react-datepicker";
 let actionType = {
     LISTDATA: "LISTDATA",
@@ -17,12 +17,11 @@ let actionType = {
     setDteDesde: "setDteDesde",
     setDteHasta: "setDteHasta",
     setNumEstado: "setNumEstado",
-    setListaError: "setListaError",
-   
+    setListaError: "setListaError" ,
     ERROR: "ERROR"
 };
 const reducer = (state, action) => {
-    console.log(action.type,state);
+   
     switch (action.type) {
       case actionType.ERROR:
         return {
@@ -33,7 +32,7 @@ const reducer = (state, action) => {
         return {
           ...state,
           file: action.file,
-        };
+        };     
       case actionType.setListDataJson:
         return {
           ...state,
@@ -41,12 +40,12 @@ const reducer = (state, action) => {
           listData: action.listData,
           server: action.server,
         };
-      case actionType.setListDataJsonLoad:         
+      case actionType.setListDataJsonLoad:
         return {
           ...state,
           listDataJson: action.listDataJson,
           listData: action.listData,
-          filter: action.filter,
+          filter: action.filter,          
         };
       case actionType.setListDataJsonAndVigencia:
         return {
@@ -56,8 +55,9 @@ const reducer = (state, action) => {
           dteDesde: action.dteDesde,
           dteHasta: action.dteHasta,
           numEstado: action.numEstado,
-          crud:action.crud,
-          numProductoVigencia:action.numProductoVigencia,
+          crud: action.crud,
+          numProductoVigencia: action.numProductoVigencia,
+          vigenciaTitulo:action.vigenciaTitulo,
           server: action.server,
         };
       case actionType.setDteDesde:
@@ -81,7 +81,7 @@ const reducer = (state, action) => {
           ...state,
           listaError: action.listaError,
         };
-     
+
       default:
         return state;
     }
@@ -96,14 +96,15 @@ const _FILTER={codigoOrderByAsc:'codigoOrderByAsc',
     descripcionSearch:'search'};
 const _WIDTH_TABLE = {
   chrCodigoProducto: "100px",
-  vchDescripcion: "324px",
-  numUnspc: "118px",
+  vchDescripcion: "332px",
+  numUnspc: "105px",
+  numUnspcHead: "107px",
   numValorVenta: "80px",
   numValorRefVenta: "80px",
   numValorCompra: "80px",
   numValorDesc: "40px",  
-  vchModelo: "171px",
-  numStock: "53px", 
+  vchModelo: "184px",
+  numStock: "45px", 
 }; 
 const _CRUD_UNSPC={
     updateOn:"updateOn",
@@ -114,16 +115,22 @@ export default function OutletCargaProducto(props) {
     let params = useParams();
     let _numProductoVigencia = params.numProductoVigencia;
     let _crud = params.crud;
+  
+    let date = new Date();
+    let primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+    let ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+   
     let history = useHistory();
     const [state, dispatch] = useReducer(reducer, {
         file: undefined,
         listDataJson: [],
         listData: [],
         numProductoVigencia: _numProductoVigencia,
-        dteDesde: "",
-        dteHasta: "",
+        vigenciaTitulo:"",
+        dteDesde: primerDia,
+        dteHasta: ultimoDia,
         numEstado: 1,
-        listaError: [],
+        listaError: [], 
         crud: (_crud === 'update' ? CRUD.UPDATE : CRUD.INSERT),
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
         filter:{codigoOrderBy:_FILTER.codigoOrderByAsc,
@@ -238,7 +245,7 @@ export default function OutletCargaProducto(props) {
                         <td style={{ width: _WIDTH_TABLE.numValorCompra }} className="td_number">{_stock.numValorCompra}</td>
                         <td style={{ width: _WIDTH_TABLE.numValorDesc  }} className="td_number">{_stock.numValorDesc}</td>
                         <td style={{ width: _WIDTH_TABLE.vchModelo}} title="Modelo">{_stock.vchModelo}</td>
-                        <td style={{ width: _WIDTH_TABLE.numStock }} className="td_number">{_stock.numStock}</td>
+                        <td style={{ width: _WIDTH_TABLE.numStock,textAlign:"center" }} className="td_number">{_stock.numStock}</td>
                          
                     </tr>);
                 }
@@ -276,11 +283,13 @@ export default function OutletCargaProducto(props) {
         let _dteDesde = "";
         let _dteHasta = "";
         let _numEstado = 0;
+        let _vigenciaTitulo="";
         if (rpt.status === HttpStatus.HttpStatus_OK) {
             const json = await rpt.json();
             _dteDesde = json.productoOutletVigencia.dteDesde;
             _dteHasta = json.productoOutletVigencia.dteHasta;
             _numEstado = json.productoOutletVigencia.numEstado;
+            _vigenciaTitulo=json.productoOutletVigencia.dteDesdeFormato+" al "+json.productoOutletVigencia.dteHastaFormato;
             if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
                 for (let index = 0; index < json.lista.length; index++) {
                     const _object = json.lista[index];
@@ -312,14 +321,14 @@ export default function OutletCargaProducto(props) {
                             <div onClick={(e)=>handleEventEditUnspc(_stock,_listDataJson,CRUD.SELECT)} 
                                  style={{minWidth:_WIDTH_TABLE.numUnspc,width:_WIDTH_TABLE.numUnspc}}
                                  className="btn-edit-action">
-                            {_stock.numUnspc}</div>
+                            <div>{_stock.numUnspc}</div></div>
                         </td>
                         <td style={{ width: _WIDTH_TABLE.numValorVenta}} className="td_number">{ parseFloat(_stock.numValorVenta).toFixed(2)}</td>
                         <td style={{ width: _WIDTH_TABLE.numValorRefVenta}}className="td_number">{parseFloat(_stock.numValorRefVenta).toFixed(2)}</td>
                         <td style={{ width: _WIDTH_TABLE.numValorCompra}} className="td_number">{parseFloat(_stock.numValorCompra).toFixed(2)}</td>
                         <td style={{ width: _WIDTH_TABLE.numValorDesc}} className="td_number">{parseFloat(_stock.numValorDesc).toFixed(0)}</td>
                         <td style={{ width: _WIDTH_TABLE.vchModelo}} title="Modelo">{_stock.vchModelo}</td>
-                        <td style={{ width: _WIDTH_TABLE.numStock}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
+                        <td style={{ width: _WIDTH_TABLE.numStock,textAlign:"center"}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
                      
                     </tr>);
                 }
@@ -331,21 +340,11 @@ export default function OutletCargaProducto(props) {
                     dteHasta: Date.parse(_dteHasta),
                     numEstado: _numEstado,
                     numProductoVigencia:_numProductoVigencia,
+                    vigenciaTitulo:_vigenciaTitulo,
                     crud:_crud,
                     server: { error: json.response.error, success: SUCCESS_SERVER.SUCCES_SERVER_OK },
                 });
                
-                  console.log({
-                    type: actionType.setListDataJsonAndVigencia,
-                    listDataJson: _listDataJson,
-                    listData: _listData,
-                    dteDesde: Date.parse(_dteDesde),
-                    dteHasta: Date.parse(_dteHasta),
-                    numEstado: _numEstado,
-                    numProductoVigencia:_numProductoVigencia,
-                    crud:_crud,
-                    server: { error: json.response.error, success: SUCCESS_SERVER.SUCCES_SERVER_OK },
-                },state);
             }
             if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
                 dispatch({
@@ -559,18 +558,17 @@ export default function OutletCargaProducto(props) {
                 <td style={{ width: _WIDTH_TABLE.vchDescripcion }}>{_stock.vchDescripcion}</td>
                 <td style={{ width: _WIDTH_TABLE.numUnspc}}>
                             {_stock.flagEditNumUnspc===_CRUD_UNSPC.updateOn?
-                           
+                                
                                 <div className="outlet-cell-edit">
-                                    <input key={"_numUnspc"+_stock.index} type="text" value={_stock.numUnspc} ></input> 
-                                    <i className="fa fa-save" onClick={(e)=>handleEventEditUnspc(_stock,_listDataJson,CRUD.UPDATE)} ></i>
-                                    <i className="fa fa-close" onClick={(e)=>handleEventEditUnspc(_stock,_listDataJson,CRUD.DELETE)} ></i>
+                                    <ProductoUnspcCard outlet={_stock} reload={()=>handleEventListaProdOutlet(state.numProductoVigencia,CRUD.UPDATE)}></ProductoUnspcCard>
+                                
                                 </div>
                              :
                          
                                 <div onClick={(e)=>handleEventEditUnspc(_stock,_listDataJson,CRUD.SELECT)} 
                                     style={{minWidth:_WIDTH_TABLE.numUnspc,width:_WIDTH_TABLE.numUnspc}}
                                     className="btn-edit-action">
-                                    {_stock.numUnspc}
+                                    <div>{_stock.numUnspc}</div>
                                 </div> 
                             }
                                
@@ -580,7 +578,7 @@ export default function OutletCargaProducto(props) {
                 <td style={{ width: _WIDTH_TABLE.numValorCompra}} className="td_number">{parseFloat(_stock.numValorCompra).toFixed(2)}</td>
                 <td style={{ width: _WIDTH_TABLE.numValorDesc}} className="td_number">{parseFloat(_stock.numValorDesc).toFixed(0)}</td>
                 <td style={{ width: _WIDTH_TABLE.vchModelo}} title="Modelo">{_stock.vchModelo}</td>
-                <td style={{ width: _WIDTH_TABLE.numStock}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
+                <td style={{ width: _WIDTH_TABLE.numStock,textAlign:"center"}}  className="td_number">{parseFloat(_stock.numStock).toFixed(0)}</td>
                 
             </tr>);
         }
@@ -588,7 +586,7 @@ export default function OutletCargaProducto(props) {
             type: actionType.setListDataJsonLoad,
             listDataJson: _listDataJson,
             listData: _listData,
-            filter: _filter,
+            filter: _filter 
         });
        
     }
@@ -596,7 +594,7 @@ export default function OutletCargaProducto(props) {
     async function handleEventEditUnspc(_object_param,_listDataJson_param,_CRUD){
       
         let _listDataJson=[];
-      
+        
         for (let index = 0; index < _listDataJson_param.length; index++) {
             const _object = _listDataJson_param[index];
             let _stock = {
@@ -617,24 +615,30 @@ export default function OutletCargaProducto(props) {
             };
             if ((_CRUD.codigoCrud === CRUD.DELETE.codigoCrud)) {
                 _stock.flagEditNumUnspc = _CRUD_UNSPC.updateOff;
+       
             } else {
                 if (
                     _object_param.numProductoOutlet === _object.numProductoOutlet
                   ) {
-                    _stock.flagEditNumUnspc = _CRUD_UNSPC.updateOn;
+                    _stock.flagEditNumUnspc = _CRUD_UNSPC.updateOn;   
+                   
                   } else {
                     _stock.flagEditNumUnspc = _CRUD_UNSPC.updateOff;
+                    
                   }
              
             }
             _listDataJson.push(_stock);           
         }
-        if ((_CRUD.codigoCrud === CRUD.UPDATE.codigoCrud)) {
+       
+      
+        if (_CRUD.codigoCrud === CRUD.UPDATE.codigoCrud) {
             /*Falta logica de update del registro */
-            handleEventListaProdOutlet(_object_param.numProductoVigencia,CRUD.UPDATE);
-        }else{
-            handleEventReloadLista(_listDataJson,state.filter);
-        }
+            handleEventListaProdOutlet(_object_param.numProductoVigencia,CRUD.UPDATE);            
+        }else{                     
+            handleEventReloadLista(_listDataJson,state.filter);             
+        }      
+       
      
     }
     return (<>
@@ -646,11 +650,12 @@ export default function OutletCargaProducto(props) {
                 </Link>
             </div>
             <h3>{
-                state.crud === CRUD.UPDATE ? "Detalle de Productos del Outlet Nro:" +state.numProductoVigencia : "Cargar Productos del Outlet"}</h3>
- 
+                state.crud === CRUD.UPDATE ? "Detalle de Productos en Outlet desde " +state.vigenciaTitulo : "Cargar Productos en Outlet"}</h3>
+  
             <div className="form-body-stock">
                 <div className="form-accion">
                     <table>
+                        <tbody>
                         <tr>
                             <td>Fecha Desde&nbsp;:</td>
                             <td style={{ width: "120px" }}><DatePicker
@@ -725,6 +730,7 @@ export default function OutletCargaProducto(props) {
                                 >
                                 </input> : ""}</td>
                         </tr>
+                        </tbody>
                     </table>
 
                 </div>
@@ -738,26 +744,31 @@ export default function OutletCargaProducto(props) {
                             
                                 <td style={{ width: _WIDTH_TABLE.chrCodigoProducto }}>Código&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_CODIGO')}></i></td>
                                 <td style={{ width: _WIDTH_TABLE.vchDescripcion}}><div className="search"><div className="search-title">Descripción&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_DESCRIPCION')}></i></div></div></td>
-                                <td style={{ width: _WIDTH_TABLE.numUnspc,textAlign: 'center' }} title="UNSPC">UNSPC&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_UNSPC')}></i></td>
+                                <td style={{ width: _WIDTH_TABLE.numUnspcHead,textAlign: 'center' }} title="UNSPC">UNSPC&nbsp;<i className="fa fa-sort" onClick={(e)=>handleEventHeadFilter('_FILTER_UNSPC')}></i></td>
                                 <td style={{ width: _WIDTH_TABLE.numValorVenta, textAlign: 'center' }} title="Precio Publico Promocional Unitario">Precio Publico Promocional Unitario</td>
                                 <td style={{ width: _WIDTH_TABLE.numValorRefVenta, textAlign: 'center' }} title="Precio Publico Regular Unitario">Precio Publico Regular Unitario</td>
                                 <td style={{ width: _WIDTH_TABLE.numValorCompra, textAlign: 'center' }} title="Valor Unitario Promocional Dealer ">Valor Unitario Promocional Dealer </td>
-                                <td style={{ width: _WIDTH_TABLE.numValorDesc}} title="Descuento">Desc.</td>
+                                <td style={{ width: _WIDTH_TABLE.numValorDesc}} title="Descuento">Dsct.%</td>
                                 <td style={{ width: _WIDTH_TABLE.vchModelo}} title="Modelo">Modelo</td>
                                 <td style={{ width: _WIDTH_TABLE.numStock}} title="">Stock</td>
                                 
                             </tr>
                                 
                         </thead>
-                    
+                
                     </table>
                      
                     <table style={{ fontSize: '13px' }} >
                     <tbody>
+                        
                             {state.listData}
-                        </tbody>
+                    </tbody>
+                     
                     </table>
 
+                </div>
+                <div className="div-table-foot">
+                    <div className="div-table-foot-text">Total registros:&nbsp;{state.listDataJson.length}</div>
                 </div>
             </div>
             <div>
@@ -875,6 +886,88 @@ export default function OutletCargaProducto(props) {
         </div>
     </>)
 }
+const actionTypeProductoUnspcCard={
+    setNumUnspc: "setNumUnspc" ,
+    ERROR: "ERROR"
+}
+const reducerProductoCard = (state, action) => {
+    switch (action.type) {
+        case actionTypeProductoUnspcCard.ERROR:
+          return {
+            ...state,
+            server: action.server,
+          };
+        case actionTypeProductoUnspcCard.setNumUnspc:
+          return {
+            ...state,
+            numUnspc: action.numUnspc,
+          };    
+        default:
+          return state;
+      }
+
+};
+function ProductoUnspcCard(props) {
+  const [state, dispatch] = useReducer(reducerProductoCard, {
+    outlet: props.outlet,
+    numUnspc: (props.outlet.numUnspc===undefined ||props.outlet.numUnspc===null?"":props.outlet.numUnspc ),
+    server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
+  });
+
+  async function handleEventEditUnspc() {
+     //numProductoOutlet
+     const rpt = await updateProductoOutletRow({
+        
+            chrCodigoProducto:state.outlet.chrCodigoProducto,
+            numUnspc:state.numUnspc,
+            numProductoVigencia:state.outlet.numProductoVigencia,
+            numProductoOutlet:state.outlet.numProductoOutlet, 
+       
+    });
+    console.log("handleEventEditUnspc");
+    if (rpt.status === HttpStatus.HttpStatus_OK) {
+        const json = await rpt.json();
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+            props.reload();                                
+        }
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+            dispatch({
+                type: actionTypeProductoUnspcCard.ERROR,
+                server: { error: json.response.error, success: SUCCESS_SERVER.SUCCES_SERVER_INFO },
+            });
+        }
+    } else {
+   
+        dispatch({
+            type: actionTypeProductoUnspcCard.ERROR,
+            server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
+        });
+    }
+  }
+  function handleEventReload() {
+    props.reload();
+  }
+  return (
+    <>
+      <input
+        key={"_numUnspc" + state.outlet.index}
+        type="text"
+        value={state.numUnspc}
+        onChange={(e) =>
+          dispatch({
+            type: actionTypeProductoUnspcCard.setNumUnspc,
+            numUnspc: e.target.value,
+          })
+        }
+      ></input>
+      <i className="fa fa-save" onClick={(e) => handleEventEditUnspc()}></i>
+      <i className="fa fa-close" onClick={(e) => handleEventReload()}></i>
+      <ServerException server={state.server}></ServerException>
+
+    </>
+  );
+}
+export { ProductoUnspcCard};
 /*
   {state.loading ? <tr><td colSpan="8"><LoadingClassic></LoadingClassic></td></tr> : ""}
                             {state.listData}

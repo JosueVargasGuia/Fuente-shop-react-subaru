@@ -346,11 +346,6 @@
     float: right;
 }
 
-.container-Carousel-img {
-    height: 240px;
-    width: 90%;
-}
-
 .marca-select a {
     color: var(--color-font-hover) !important;
 }

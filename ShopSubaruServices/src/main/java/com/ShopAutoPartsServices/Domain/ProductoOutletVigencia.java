@@ -11,6 +11,8 @@ public class ProductoOutletVigencia {
 	int numEstado;
 	String status;
 	Date dteDesdeDate, dteHastaDate;
+	String dteDesdeFormato;
+	String dteHastaFormato;
 	public int getNumProductoVigencia() {
 		return numProductoVigencia;
 	}
@@ -71,12 +73,24 @@ public class ProductoOutletVigencia {
 		this.status = status;
 		return this;
 	}
+	
+	public String getDteDesdeFormato() {
+		return dteDesdeFormato;
+	}
+	public void setDteDesdeFormato(String dteDesdeFormato) {
+		this.dteDesdeFormato = dteDesdeFormato;
+	}
+	public String getDteHastaFormato() {
+		return dteHastaFormato;
+	}
+	public void setDteHastaFormato(String dteHastaFormato) {
+		this.dteHastaFormato = dteHastaFormato;
+	}
+ 
 	@Override
 	public String toString() {
 		return "ProductoOutletVigencia [numProductoVigencia=" + numProductoVigencia + ", dteDesde=" + dteDesde
 				+ ", dteHasta=" + dteHasta + ", numEstado=" + numEstado + ", dteDesdeDate=" + dteDesdeDate
 				+ ", dteHastaDate=" + dteHastaDate + "]";
 	}
- 
-	
 }

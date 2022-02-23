@@ -159,6 +159,15 @@ async function saveUpdateProductoOutlet(body) {
   );
   return response;
 }
+async function updateProductoOutletRow(body) {     
+  const response = await tokenFetchService(
+    IP(URL.UPDATE_PRODUCTO_OUTLET),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
+
 export {
   findProductos,
   obtenerTipoCambio,
@@ -179,5 +188,6 @@ export {
   listarProductoOutletVigencia,
   saveProductoOutletVigencia,
   listarProductoOutlet,
-  saveUpdateProductoOutlet
+  saveUpdateProductoOutlet,
+  updateProductoOutletRow
 };
