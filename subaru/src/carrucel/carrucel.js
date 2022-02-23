@@ -33,7 +33,7 @@ export default function Carrucel(props) {
       {/* Imagen Mobile */}
       <source srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 768px)"/>
       <img
-        className="container-Carousel-img"
+        className="container-Carousel-im22"
         key={objImagen.codigoCarrucel}
         alt={ objImagen.srcImage}
         srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
@@ -71,12 +71,24 @@ export default function Carrucel(props) {
     } else{
       let rowItem=[];
       rowItem = props.marca.lstCarrucel.map((objImagen) => (
-        <img
-          className="container-Carousel-img"
-          key={objImagen.codigoCarrucel}
-          alt={ objImagen.srcImage}
-          src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
-        ></img>
+        <picture>
+          {/* Imagen PC */}
+          <source srcset={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + objImagen.srcImage} media="(min-width: 800px)" />
+          {/* Imagen Mobile */}
+          <source srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 768px)"/>
+          <img
+            className="container-Carousel-img"
+            key={objImagen.codigoCarrucel}
+            alt={ objImagen.srcImage}
+            srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
+          ></img>
+        </picture>
+        // <img
+        //   className="container-Carousel-img"
+        //   key={objImagen.codigoCarrucel}
+        //   alt={ objImagen.srcImage}
+        //   src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
+        // ></img>
       )); 
       dispatch({ type: actionType.setCarrucel, rowItem: rowItem });  
     } 

@@ -717,8 +717,8 @@
 .outlet {
     z-index: 2;
     position: absolute;
-    right: 22px;
-    top: 10%;
+    right: 0;
+    top: 0;
     width: 10%;
     height: auto;
     display: flex;
@@ -737,14 +737,12 @@
     .outlet {
         z-index: 2;
         position: absolute;
-        right: 15px;
-        width: 20%;
+        right: 0;
+        width: 12%;
         height: 15%;
     }
     .outlet img {
         width: 97%;
-        height: 65%;
-        object-fit: contain;
     }
 }
 
