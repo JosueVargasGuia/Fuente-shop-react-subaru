@@ -771,12 +771,12 @@
     .outlet {
         z-index: 2;
         position: absolute;
-        right: 0;
-        width: 12%;
-        height: 15%;
+        right: -1;
+        width: 20%;
+        height: auto;
     }
     .outlet img {
-        width: 97%;
+        width: 100%;
     }
 }
 
