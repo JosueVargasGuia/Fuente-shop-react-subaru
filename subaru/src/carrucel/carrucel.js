@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, {  useReducer } from "react";
 //import Carousel from "react-elastic-carousel";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -25,13 +25,11 @@ const reducer = (state, action) => {
 }
 
 export default function Carrucel(props) {   
-  /* <img alt="outlet"  src={window.location.origin +(homepage==undefined?"":"/"+homepage) +"/marcas/outlet.png"}></img> */ 
+ 
   let rowItem = props.marca.lstCarrucel.map((objImagen) => (
-    <picture>
-      {/* Imagen PC */}
-      <source srcset={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + objImagen.srcImage} media="(min-width: 800px)" />
-      {/* Imagen Mobile */}
-      <source srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 768px)"/>
+    <picture>     
+      <source srcset={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + objImagen.srcImage} media="((min-width: 803px) and (max-width: 1500px))" />     
+      <source srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 10px) and (max-width: 802px)"/>
       <img
         className="container-Carousel-im22"
         key={objImagen.codigoCarrucel}
@@ -40,53 +38,8 @@ export default function Carrucel(props) {
       ></img>   
     </picture>
   ));
-
-  const [state, dispatch] = useReducer(reducer, {rowItem:rowItem  });
-
-
-  useEffect(()=>{  
-    //handleWindowsResize();
-    //window.addEventListener('resize',handleWindowsResize);
-    //eslint-disable-next-line 
-  },[props.marca]);
-  
-  function handleWindowsResize(){
-    if(window.innerWidth<=767){
-      let rowItem=[];
-      rowItem = props.marca.lstCarrucel.map((objImagen) => (
-        <img
-          className="container-Carousel-img"
-          key={objImagen.codigoCarrucel}
-          alt={ objImagen.srcImageMobile}
-          src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile}
-        ></img>
-      )); 
-      dispatch({ type: actionType.setCarrucel, rowItem: rowItem });     
-    } else{
-      let rowItem=[];
-      rowItem = props.marca.lstCarrucel.map((objImagen) => (
-        <picture>
-          {/* Imagen PC */}
-          <source srcset={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + objImagen.srcImage} media="(min-width: 800px)" />
-          {/* Imagen Mobile */}
-          <source srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 768px)"/>
-          <img
-            className="container-Carousel-img"
-            key={objImagen.codigoCarrucel}
-            alt={ objImagen.srcImage}
-            srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
-          ></img>
-        </picture>
-        // <img
-        //   className="container-Carousel-img"
-        //   key={objImagen.codigoCarrucel}
-        //   alt={ objImagen.srcImage}
-        //   src={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
-        // ></img>
-      )); 
-      dispatch({ type: actionType.setCarrucel, rowItem: rowItem });  
-    } 
-  }
+// eslint-disable-next-line 
+  const [state, dispatch] = useReducer(reducer, {rowItem:rowItem  }); 
   
   return (
     <div className="container-Carousel-list">    
