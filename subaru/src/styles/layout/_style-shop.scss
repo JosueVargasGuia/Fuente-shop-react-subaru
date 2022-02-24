@@ -1048,9 +1048,12 @@ h4 {
 .producto-card-vista,
 .producto-card-nombre {
     cursor: pointer;
-    /*font-size: 16px; Hace que el texto sobrepace el contenedor josue 13/05/2021*/
-    font-size: 14px;
-    text-align: center;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: stretch;
 }
 
 .producto-card-nombre span {
@@ -1082,14 +1085,13 @@ h4 {
 
 .producto-card-text {
     display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .producto-card-precio {
     text-align: center;
-    font-weight: bold;
-    color: #c85055;
-    margin: auto;
-    width: 45%;
 }
 
 .producto-card-vista {
@@ -2112,6 +2114,13 @@ h4 {
     }
     .nav-span li {
         margin-left: 0.5em !important;
+    }
+    .filter-row-mobile-menu,
+    .nav-span {
+        li {
+            margin-left: 0.1em !important;
+            margin-right: 0.4em !important;
+        }
     }
     .filter-image {
         margin-left: 0.2em !important;

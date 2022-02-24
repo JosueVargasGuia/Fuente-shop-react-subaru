@@ -7,6 +7,7 @@ import java.sql.CallableStatement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -104,12 +105,15 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					 
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);
+					DecimalFormat formatter = new DecimalFormat("###,###.00");
+
+					 
 					while (rs.next()) {
 						ProductoImagen imagenDefault = new ProductoImagen();
 						Producto producto = new Producto();
 						producto.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));
-						producto.setNumValorVentaDolar(rs.getString("NUMVALORVENTADOLAR"));
-						producto.setNumValorVentaSoles(rs.getString("NUMVALORVENTASOLES"));
+						producto.setNumValorVentaDolar(formatter.format(rs.getBigDecimal("NUMVALORVENTADOLAR")));
+						producto.setNumValorVentaSoles(formatter.format(rs.getBigDecimal("NUMVALORVENTASOLES")));
 						producto.setVchDescripcion(rs.getString("VCHDESCRIPCION"));
 						producto.setVchDescripcionSmall(rs.getString("VCHDESCRIPCIONSMALL"));
 						producto.setNumStock(rs.getInt("NUMSTOCK"));
@@ -118,8 +122,9 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 								.setChrCodigoFamilia(rs.getString("CHRCODIGOFAMILIA"))
 								.setVchDescripcion(rs.getString("VCHDESCRIPCIONFAMILIA"));
 						producto.setNumOutlet(rs.getInt("NUMOUTLET"));
-						producto.setNumValorVentaRefDolar(rs.getString("NUMVALORVENTAREFDOLAR"));
-						producto.setNumValorVentaRefSoles(rs.getString("NUMVALORVENTAREFSOLES"));
+						producto.setNumValorVentaRefDolar(formatter.format(rs.getBigDecimal("NUMVALORVENTAREFDOLAR")));
+						producto.setNumValorVentaRefSoles(formatter.format(rs.getBigDecimal("NUMVALORVENTAREFSOLES")));
+						 
 						producto.setNumValorDesc(rs.getString("NUMVALORDESC"));
 						
 						imagenDefault.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));

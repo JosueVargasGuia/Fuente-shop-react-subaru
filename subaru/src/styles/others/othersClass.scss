@@ -528,6 +528,17 @@
     }
 }
 
+.filter-row-mobile-menu,
+.nav-span {
+    li {
+        @media (min-width: 0px) and (max-width: 830px) {
+            margin-left: 0.1em;
+            margin-right: 0.5em;
+            font-size: 15px;
+        }
+    }
+}
+
 .filter-home {
     .nav-span {
         li {
@@ -725,6 +736,10 @@
 .prod-det-carrousel .carousel .slide img {
     width: 80%;
     object-fit: contain;
+}
+
+.carousel .slide img {
+    height: 100%;
 }
 
 .tbl-rpt-display {
@@ -1501,9 +1516,22 @@
     flex-direction: row;
     justify-content: space-between !important;
     .inner-header {
-        @media (max-width: 500px) {
-            display: none;
-            width: 0px;
+        .nav-span {
+            font-size: 13px;
+            ul {
+                width: 150px;
+                margin-top: 0.1em;
+                margin-left: -4em;
+            }
+        }
+        .filter-home-emp-nombre {
+            font-size: 11px;
+        }
+        i {
+            @media (max-width: 500px) {
+                display: none;
+                width: 0px;
+            }
         }
     }
 }

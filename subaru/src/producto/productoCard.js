@@ -239,15 +239,18 @@ export default function ProductosCard(props) {
         </div>
 
         <div className="producto-card-text">
+        
           <div
             className="producto-card-nombre"
             onClick={handleEventShowDetalle}
           >
             <span>{props.producto.vchDescripcion}</span>
           </div>
+        
           <div className="producto-card-stock">
             Stock Disponible:&nbsp;{props.producto.numStock}
           </div>
+          
           <div className="producto-card-precio">
             <span>{producto.moneda.codigoIso4217} </span>
             <span>
@@ -257,6 +260,7 @@ export default function ProductosCard(props) {
                 : producto.numValorVentaSoles}{" "}
             </span>
           </div>
+
         </div>
       </div>
       <Modal
