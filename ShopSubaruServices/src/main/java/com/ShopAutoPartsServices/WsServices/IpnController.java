@@ -178,7 +178,7 @@ public class IpnController {
 
 	}
 
-	 //@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+	  
 	public void archivo() {
 		try {
 
@@ -202,10 +202,10 @@ public class IpnController {
 		}
 	}
 
-	//@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+	// @Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
 	//PRODUCCUIN DESAHABILITADO
 	public void scheduledConfirmaCotizacion() {
-	
+		logger.info("${izipay.ipn.scheduled");
 		boolean correoStatusTipoCambioTomado = false;
 		String asuntoTipoCambioTomado = "Alerta de tipo de cambio tomado";
 		boolean correoStatus = false;

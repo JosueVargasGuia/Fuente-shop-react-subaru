@@ -31,7 +31,7 @@ import com.ShopAutoPartsServices.Domain.MetodoEnvioRequets;
 import com.ShopAutoPartsServices.Domain.Producto;
 import com.ShopAutoPartsServices.Domain.ReporteCotizacion;
 import com.ShopAutoPartsServices.Domain.ReporteRequest;
- 
+import com.ShopAutoPartsServices.Domain.Response;
 import com.ShopAutoPartsServices.Domain.TusCompras;
  
 import com.ShopAutoPartsServices.Domain.IziPay.BillingDetails;
@@ -139,8 +139,10 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 					cs.setString(5, cotizacionOnlineDetalle.getTipoActualizacionCotizacionDetalle().toString());
 					cs.setInt(6, cotizacionOnlineDetalle.getProducto().getNumOutlet());
 					cs.setInt(7, cotizacionOnlineDetalle.getProducto().getNumProductoVigencia());
-					cs.execute();
+					cs.registerOutParameter(8, OracleTypes.VARCHAR);
+					cs.execute();					 
 					cotizacionOnlineDetalle.setNumcodCotizacionOnlinedet(cs.getInt(1));
+					cotizacionOnlineDetalle.setResponse(new Response().setObjectStatus(cs.getString(8)));
 					return cotizacionOnlineDetalle;
 				}
 			};
@@ -148,7 +150,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_COTIZACION_DET(?,?,?,?,?,?,?)";
+		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_COTIZACION_DET(?,?,?,?,?,?,?,?)";
 		return jdbcTemplate.execute(sql, callback);
 
 	}

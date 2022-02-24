@@ -244,6 +244,7 @@ const filterOrder = {
   FilterConImagen: "FilterConImagen",
   FilterOutlet: "FilterOutlet",
 };
+const FilterTypeLista={FilterNormal:"FilterNormal",FilterQuery:"FilterQuery"};
 const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */
   status: 1,
@@ -272,29 +273,10 @@ const Empresa = {
   nombreComercial: "Ea Corp. Sac",
   urlTienda: "https://subaruparts.eanet.pe/subaruparts/shop",
   direccion: "Av. Republica de Panama Nro. 4259",
-  correo: "consultas@eanetautoparts.pe",
+  correo: "repuestos.subaru@eacorp.pe",
   abreviaturaSucursal: "RP4259",
 };
 
-const listaRepuesto = [
-  { descripcion: "Partes de Mantenimiento" ,codigo:1,identificador:'Repuesto-1-1',subFamilia:['111A0']},
-  { descripcion: "Sistema Enfriamiento del Motor",codigo:2,identificador:'Repuesto-1-2',subFamilia:['111A2'] },
-  { descripcion: "Sistema de Combustible",codigo:3,identificador:'Repuesto-1-3',subFamilia:['111A3'] },
-  { descripcion: "Sistema Eléctrico del Motor",codigo:4,identificador:'Repuesto-1-4',subFamilia:['111A5'] },
-  { descripcion: "Suspensión (Amortiguación)",codigo:5,identificador:'Repuesto-1-5',subFamilia:['111A6'] },
-  { descripcion: "Dirección, Ejes y Ruedas",codigo:6,identificador:'Repuesto-1-6',subFamilia:['111A7']},
-  { descripcion: "Transmisión AT, MT y Diferencial" ,codigo:7,identificador:'Repuesto-1-7',subFamilia:['111A8', '111A9']},
-  { descripcion: "Frenos",codigo:8,identificador:'Repuesto-1-8',subFamilia:['112A0'] },
-  { descripcion: "Puertas y Paneles Exterior" ,codigo:9,identificador:'Repuesto-1-9',subFamilia:['112A1']},
-  { descripcion: "Faros, Iluminación y Eléctricos",codigo:10,identificador:'Repuesto-1-10',subFamilia:['112A3', '112A4'] },
-  { descripcion: "Parabrisas, Vidrios de Puertas",codigo:11,identificador:'Repuesto-1-11',subFamilia:['112A5'] },
-  { descripcion: "Aire Acondicionado",codigo:12,identificador:'Repuesto-1-12',subFamilia:['112A7']},]
-
-const listaAcesorios = [
-  { descripcion: "Accesorios Subaru",codigo:1,identificador:'Accesorio-2-1',subFamilia:['113A1'] },
-  { descripcion: "Subaru Lifestyle",codigo:2,identificador:'Accesorio-2-2',subFamilia:['113A2']  },
-  { descripcion: "Accesorios STI",codigo:3,identificador:'Accesorio-2-3',subFamilia:['113A3']  },
-  { descripcion: "Fluidos Subaru",codigo:4,identificador:'Accesorio-2-4',subFamilia:['112A9']  },]
 export {
   SUCCESS_SERVER,
   HttpStatus,
@@ -322,6 +304,7 @@ export {
   chrRol,
   FilterCorreo,
   Empresa,
-  listaRepuesto,
-  listaAcesorios
+ 
+  FilterTypeLista,
+  
 };

@@ -10,6 +10,7 @@ import {
   registrarCotizacionDetalle,
 } from "../service/cotizacion.service";
 import { handleSyncDatosCotizacion } from "../service/general";
+import ServerException from "../utils/serverException";
 export default function ProductosCard(props) {
   let history = useHistory();
 
@@ -161,8 +162,10 @@ export default function ProductosCard(props) {
           if (
             jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO
           ) {
+            
             dispatch({
-              type: actionType.ERROR,
+              type: actionType.SETMENSAJE,
+              showModal:false,
               server: {
                 error: jsonDetalle.response.error,
                 success: SUCCESS_SERVER.SUCCES_SERVER_INFO,
@@ -226,9 +229,12 @@ export default function ProductosCard(props) {
             alt={producto.vchDescripcion}
           ></img>
 
-          <div className="producto-card-vista" onClick={() => handleEventModal(true)}>
+          <div
+            className="producto-card-vista"
+            onClick={() => handleEventModal(true)}
+          >
             <i className="fa fa-search" aria-hidden="true"></i>
-            <span >Vista Previa</span>
+            <span>Vista Previa</span>
           </div>
         </div>
 
@@ -237,18 +243,20 @@ export default function ProductosCard(props) {
             className="producto-card-nombre"
             onClick={handleEventShowDetalle}
           >
-            <span>{props.producto.vchDescripcionSmall}</span>
+            <span>{props.producto.vchDescripcion}</span>
+          </div>
+          <div className="producto-card-stock">
+            Stock Disponible:&nbsp;{props.producto.numStock}
           </div>
           <div className="producto-card-precio">
             <span>{producto.moneda.codigoIso4217} </span>
             <span>
               {producto.moneda.numCodigoMoneda ===
-                Moneda.DOLARES.numCodigoMoneda
+              Moneda.DOLARES.numCodigoMoneda
                 ? producto.numValorVentaDolar
                 : producto.numValorVentaSoles}{" "}
             </span>
           </div>
-
         </div>
       </div>
       <Modal
@@ -258,14 +266,14 @@ export default function ProductosCard(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton onHide={() => handleEventModal(false)}>
-
-        </Modal.Header>
+        <Modal.Header
+          closeButton
+          onHide={() => handleEventModal(false)}
+        ></Modal.Header>
         <Modal.Body>
-          <div className='producto-card-modal'>
-            <div className='producto-card-modal-column1'>
+          <div className="producto-card-modal">
+            <div className="producto-card-modal-column1">
               <div className="producto-card-carrousel">
-
                 <Carousel
                   showArrows={false}
                   showStatus={false}
@@ -280,26 +288,25 @@ export default function ProductosCard(props) {
                   autoFocus={true}
                   thumbWidth={75}
                   selectedItem={0}
-
-
-
                 >
-                  {
-                    state.listaProductoImagen
-                  }
-
+                  {state.listaProductoImagen}
                 </Carousel>
               </div>
             </div>
-            <div className='producto-card-modal-column2'>
-              <span className='producto-card-modal-nombre'>{producto.vchDescripcion}</span>
-              <span className='producto-card-modal-precio'> {producto.moneda.vchSimbolo}{" "}
+            <div className="producto-card-modal-column2">
+              <span className="producto-card-modal-nombre">
+                {producto.vchDescripcion}
+              </span>
+              <span className="producto-card-modal-precio">
+                {" "}
+                {producto.moneda.vchSimbolo}{" "}
                 {producto.moneda.numCodigoMoneda ===
-                  Moneda.DOLARES.numCodigoMoneda
+                Moneda.DOLARES.numCodigoMoneda
                   ? producto.numValorVentaDolar
-                  : producto.numValorVentaSoles}{" "}</span>
-              <span className='producto-card-modal-cantidad'>Cantidad</span>
-              <div className='producto-card-modal-accion'>
+                  : producto.numValorVentaSoles}{" "}
+              </span>
+              <span className="producto-card-modal-cantidad">Cantidad</span>
+              <div className="producto-card-modal-accion">
                 <input
                   type="number"
                   className="form-control"
@@ -317,12 +324,17 @@ export default function ProductosCard(props) {
                   onClick={handleEventClieckregistrarCotizacion}
                 >
                   <i className="fa fa-shopping-cart"></i>
-                Añadir al Carrito
-              </button>
+                  Añadir al Carrito
+                </button>
               </div>
-             
-              {state.mensajeStock === '' ? '' : <span className='producto-mensaje-stock'>{state.mensajeStock}</span>}
 
+              {state.mensajeStock === "" ? (
+                ""
+              ) : (
+                <span className="producto-mensaje-stock">
+                  {state.mensajeStock}
+                </span>
+              )}
             </div>
           </div>
         </Modal.Body>
@@ -330,17 +342,19 @@ export default function ProductosCard(props) {
           <hr></hr>
           <div>
             <span>Compartir</span>
-            <a className='btn btn-social fa fa-facebook'  
-            href={shareFacebook} 
-            target='noreferrer' ></a>
-            <a className='btn btn-social fa fa-twitter'
-            href={shareTwitter} 
-            target='noreferrer' ></a>
+            <a
+              className="btn btn-social fa fa-facebook"
+              href={shareFacebook}
+              target="noreferrer"
+            ></a>
+            <a
+              className="btn btn-social fa fa-twitter"
+              href={shareTwitter}
+              target="noreferrer"
+            ></a>
           </div>
         </Modal.Footer>
       </Modal>
-
-
 
       <Modal
         className="modal-direccion"
@@ -349,7 +363,7 @@ export default function ProductosCard(props) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton onHide={()=>handleEventCloseModal(false)}>
+        <Modal.Header closeButton onHide={() => handleEventCloseModal(false)}>
           <Modal.Title id="contained-modal-title-vcenter">
             <i className="fa fa-check fa-producto-detalle"></i> Producto añadido
             correctamente a su carrito de compra
@@ -359,7 +373,10 @@ export default function ProductosCard(props) {
           <div className="form-body-modal">
             <div className="producto-det-col1-data">
               <img
-                src={"data:image/png;base64,"+state.producto.imagenDefault.chrSrcImagen}
+                src={
+                  "data:image/png;base64," +
+                  state.producto.imagenDefault.chrSrcImagen
+                }
                 alt={state.producto.vchDescripcion}
               ></img>
             </div>
@@ -373,13 +390,13 @@ export default function ProductosCard(props) {
                 <label className="label-item">Precio:</label>
                 <span>
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.vchSimbolo
                     : Moneda.SOLES.vchSimbolo}{" "}
                 </span>
                 <span>
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.producto.numValorVentaDolar
                     : state.producto.numValorVentaSoles}
                 </span>
@@ -400,14 +417,14 @@ export default function ProductosCard(props) {
                 <label className="label-item">Subtotal:</label>
                 <span>
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.vchSimbolo
                     : Moneda.SOLES.vchSimbolo}{" "}
                 </span>
                 <span>
                   {" "}
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numSubTotalDol
                     : state.cotizacionResumen.numSubTotalSol}
                 </span>
@@ -416,23 +433,22 @@ export default function ProductosCard(props) {
                 <label className="label-item">Igv:</label>
                 <span>
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.vchSimbolo
                     : Moneda.SOLES.vchSimbolo}{" "}
                 </span>
                 <span>
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numIgvDol
                     : state.cotizacionResumen.numIgvSol}
                 </span>
               </div>
               <div className="producto-det-data-item">
-             
                 <label className="label-item">Envío:</label>
-                 <span>
+                <span>
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.vchSimbolo
                     : Moneda.SOLES.vchSimbolo}{" "}
                 </span>
@@ -442,32 +458,34 @@ export default function ProductosCard(props) {
                 <label className="label-item">Total:</label>
                 <span>
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? Moneda.DOLARES.vchSimbolo
                     : Moneda.SOLES.vchSimbolo}{" "}
                 </span>
                 <span>
                   {producto.moneda.numCodigoMoneda ===
-                    Moneda.DOLARES.numCodigoMoneda
+                  Moneda.DOLARES.numCodigoMoneda
                     ? state.cotizacionResumen.numTotalDol
                     : state.cotizacionResumen.numTotalSol}
                 </span>
               </div>
             </div>
-           
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-secondary" onClick={()=>handleEventCloseModal(false)}>
+          <button
+            className="btn btn-secondary"
+            onClick={() => handleEventCloseModal(false)}
+          >
             CONTINUAR COMPRANDO
           </button>
           <button className="btn btn-primary" onClick={handleEventGoCaja}>
             <i className="fa fa-check"></i>
             PASAR POR CAJA
           </button>
-
         </Modal.Footer>
       </Modal>
+      <ServerException server={state.server}></ServerException>
     </>
   );
 }
@@ -480,7 +498,8 @@ let actionType = {
   SHOW_RESUMEN:"SHOW_RESUMEN",
   SET_SHOW_RESUMEN:"SET_SHOW_RESUMEN",
   PRODUCTO:"PRODUCTO",
-  CANTIDAD_STOCK:'CANTIDAD_STOCK'
+  CANTIDAD_STOCK:'CANTIDAD_STOCK',
+  SETMENSAJE:"SETMENSAJE"
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -494,6 +513,13 @@ const reducer = (state, action) => {
         ...state,
         server: action.server,
       };
+      case actionType.SETMENSAJE:
+        return {
+          ...state,
+          showModal:action.showModal,
+          server: action.server,
+        };
+      
     case actionType.SET_CANTIDAD:
       return {
         ...state,

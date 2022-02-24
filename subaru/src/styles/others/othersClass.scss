@@ -458,9 +458,9 @@
     text-align: start;
     font-weight: bold;
     font-size: 16px;
-    font-family: Arial, Helvetica,ArialTFF, sans-serif;
+    font-family: Arial, Helvetica, ArialTFF, sans-serif;
     li {
-        color: var(--color-font-default);
+        color: var(--color-font5);
         margin-left: 1.5em;
         margin-right: 0.5em;
         @media (min-width: 0px) and (max-width: 830px) {
@@ -500,7 +500,7 @@
             }
         }
         .nav-span-filter-home {
-            width: 165px;
+            width: 172px;
             margin-top: 0.1em;
             li {
                 list-style: none;
@@ -518,10 +518,23 @@
                     }
                 }
                 &:hover {
+                    text-decoration: none;
                     color: var(--color-button-hover2);
                     border-bottom: solid 1px var(--color-button-hover2);
                 }
                 border-bottom: solid 1px #c9c7c7;
+            }
+        }
+    }
+}
+
+.filter-home {
+    .nav-span {
+        li {
+            border-bottom: solid 1px white;
+            &:hover {
+                color: var(--color-button-hover2);
+                border-bottom: solid 1px var(--color-button-hover2);
             }
         }
     }
@@ -538,9 +551,13 @@
 .filter-home-concecionario {
     color: var(--color-font-default);
     font-size: 0.85em;
+    border-bottom: solid 1px white;
+    @media (min-width: 200px) and (max-width: 992px) {
+        border-bottom: solid 1px #f1f1f1;
+    }
+    text-decoration: none;
     &:hover {
         text-decoration: none;
-        color: var(--color-button-hover2);
     }
 }
 
@@ -558,17 +575,12 @@
     }
 }
 
-.produc-destacado-links-title {
-    font-weight: bold;
-    margin-left: 0.5em;
-}
-
 .produc-link {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     div {
-        width: 15%;
+        width: 23%;
         min-height: 15%;
         margin-top: 0.5em;
         margin-bottom: 0.5em;
@@ -590,18 +602,26 @@
             }
             .produc-link-title {
                 font-size: 1.2em;
+                font-family: Arial, Helvetica, ArialTFF, sans-serif;
             }
         }
         img {
             border: none;
             width: 99%;
+            height: 230px;
+            object-fit: contain;
         }
     }
 }
 
 .produc-destacado-links-title {
-    font-family: "Lato", sans-serif;
+    //font-family: "Lato", sans-serif;
+    font-family: Arial, Helvetica, ArialTFF, sans-serif;
     font-size: 17pt;
+    font-weight: bold;
+    margin-left: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 .produc-link-accesorio {
@@ -632,7 +652,6 @@
             font-size: 14px;
             font-weight: bold;
             padding-top: 40px;
-            text-transform: uppercase;
         }
         .content {
             font-size: 14px;
@@ -902,6 +921,7 @@
     .form-accion {
         display: flex;
         justify-content: flex-start;
+        margin-top: 0.5em;
         input[type="file"] {
             width: 50%;
         }
@@ -914,7 +934,7 @@
         width: 98%;
         margin-left: 0.5em;
         margin-right: 0.5em;
-        max-height: 300px;
+        max-height: 321px;
         max-width: 1200px;
         min-width: 99%;
         min-height: 300px;
@@ -949,7 +969,7 @@
                 }
             }
             tbody {
-                font-size: 0.8em;
+                font-size: 14px;
                 height: 270px;
                 overflow-y: auto;
                 overflow-x: hidden;
@@ -958,10 +978,25 @@
                     height: 28px;
                     td {
                         border: solid 0.5px var(--color-font2);
-                        font-size: 11px;
+                        font-size: 12px;
                     }
                 }
             }
+        }
+    }
+}
+
+.form-body-stock {
+    .div-table-foot {
+        .div-table-foot-text {
+            text-align: center;
+            font-size: 0.8em;
+            font-weight: bold;
+            border: solid 0.5px var(--color-font3);
+            color: var(--color-font3);
+            background-color: var(--color-font2);
+            margin: 0.3em;
+            margin-right: 1.8em;
         }
     }
 }
@@ -1165,6 +1200,7 @@
     .table-outlet {
         font-size: 13px;
         width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
         thead {
             tr {
                 border: solid 1px var(--color-font2);
@@ -1174,6 +1210,19 @@
                     width: 12%;
                     border-right: solid 1px var(--color-font3);
                     .td-codigo-div {
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        align-content: space-around;
+                        input {
+                            width: 90%;
+                        }
+                    }
+                }
+                .td-dsct {
+                    width: 12%;
+                    border-left: solid 1px var(--color-font3);
+                    .td-producto-div {
                         display: flex;
                         flex-direction: column;
                         flex-wrap: wrap;
@@ -1198,7 +1247,18 @@
                     }
                 }
                 .td-precio {
-                    width: 12%;
+                    width: 6%;
+                    border-left: solid 1px var(--color-font3);
+                    .td-producto-div {
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        align-content: space-around;
+                    }
+                }
+                .td-stock {
+                    width: 5%;
                     border-left: solid 1px var(--color-font3);
                     .td-producto-div {
                         text-align: center;
@@ -1215,8 +1275,12 @@
             }
         }
         tbody {
+            font-size: 1.3em;
+            @media (max-width: 490px) {
+                font-size: 0.7em;
+            }
             .td-codigo {
-                width: 12%;
+                width: 10%;
                 span {
                     margin-left: 5px;
                     a:hover {
@@ -1227,6 +1291,9 @@
             }
             .td-producto {
                 width: 100px;
+                @media (max-width: 490px) {
+                    font-size: 1.2em;
+                }
                 span {
                     margin-left: 5px;
                 }
@@ -1244,10 +1311,42 @@
                     }
                 }
             }
+            .td-dsct {
+                width: 10%;
+                @media (max-width: 490px) {
+                    font-size: 1.2em;
+                }
+                span {
+                    margin-left: 5px;
+                }
+                .td-producto-div-desc {
+                    background-color: #ffffff;
+                    width: 98%;
+                    height: 90%;
+                    margin: auto;
+                    .td-producto-div-desc-porc {
+                        background-color: var(--color-font2);
+                        text-align: left;
+                        background-image: linear-gradient(to right, rgba(202, 219, 237, 0), rgba(169, 196, 237, 1));
+                        color: var(--color-font3);
+                        min-width: 30px !important;
+                        height: 100%;
+                    }
+                    .td-producto-div-desc-porc-text {
+                        position: relative;
+                        z-index: 2;
+                        margin-left: 0.8em;
+                        margin-top: -1.5em;
+                    }
+                }
+            }
             .td-precio {
-                width: 12%;
+                width: 6%;
                 color: #c85055;
                 font-weight: bold;
+                @media (max-width: 490px) {
+                    font-size: 1.2em;
+                }
                 .td-precio-simbolo {
                     margin-left: 5px;
                 }
@@ -1255,6 +1354,10 @@
                     margin-right: 5px;
                     float: right;
                 }
+            }
+            .td-stock {
+                width: 5%;
+                text-align: center;
             }
             td {
                 border: solid 1px var(--color-font2);
@@ -1266,7 +1369,15 @@
     }
     h4 {
         font-size: 20px;
+        padding-top: 0.5em;
+    }
+}
+
+.registrar-stock {
+    h3 {
+        font-size: 22px;
         font-weight: normal;
+        padding-top: 0.5em;
     }
 }
 
@@ -1401,8 +1512,14 @@
     cursor: pointer;
     height: 15px;
     color: #0000ff;
-    border-bottom: 1px solid #0000ff;
     text-align: center;
+    display: flex;
+    justify-content: space-around;
+    div {
+        border-bottom: 1px solid #0000ff;
+        height: 100%;
+        width: 80%;
+    }
 }
 
 .outlet-cell-edit {
@@ -1414,6 +1531,39 @@
     }
     i {
         vertical-align: text-top;
-        font-size: 18px;
+        font-size: 17px;
+        cursor: pointer;
+        &:hover {
+            color: var(--color-arrow-active);
+        }
     }
+}
+
+.div-text-type-nota {
+    font-size: 1em;
+    background-color: #ffffff;
+    padding-left: 1em;
+    color: #C85055;
+    padding-bottom: 0.5em;
+    .div-text-type-nota-resaltado {
+        margin-bottom: 2px;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+    ul {
+        list-style: decimal;
+        padding-inline-start: 20px;
+        padding-inline-end: 20px;
+        li {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: justify;
+        }
+    }
+}
+
+.div-text-type-nota-home {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 0.5em;
 }
