@@ -11,6 +11,7 @@ import {
   SUCCESS_SERVER,
   HttpStatus,
   statusMetodoEnvio,
+  APP_DEV,
 } from "../service/ENUM";
 
 import { useHistory, Link } from "react-router-dom";
@@ -31,6 +32,7 @@ import ServerException from "../utils/serverException";
 import Hex from 'crypto-js/enc-hex';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import { validacionToken } from "../service/loginCliente.service";
+ 
 export function CarritoPayment(props) {
   let history = useHistory();
   const [focusMenu, setFocusMenu] = useState(1);
@@ -757,7 +759,8 @@ export function CarritoPayment(props) {
           </span>{" "}
           y los acepto sin reservas.
           <div className="form-pago-botonera">
-           {1===1?<button
+           
+           {APP_DEV.CONTEXT!=='PRODUCCION' ?<button
               className="btn btn-primary"
               disabled={!(state.enableButton && (state.statusMetodoEnvio.status === statusMetodoEnvio.DEFAULT || state.statusMetodoEnvio.status === statusMetodoEnvio.ACTUALIZADO))}
               onClick={() => handleEnventControlMenuNext()}

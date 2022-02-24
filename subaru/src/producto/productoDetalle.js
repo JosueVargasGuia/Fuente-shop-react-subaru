@@ -126,17 +126,13 @@ export default function ProductoDetalle(props) {
               _listaProductoDetalle.push(
                 <div className="detalle" key={i}>
                   <div className="desc-label">{objDet.titulo}</div>
-                  <div className="desc-value">{objDet.descripcion}</div>
+                  <div className={objDet.titulo==='Código'?"desc-value desc-value-resaltar":"desc-value"}>{objDet.descripcion}</div>
                 </div>
               );
             }
           }
           /*Ficha Tecnica */
-          _listaProductoDetalle.push(
-            <div className="detalle" key={"-1"}>
-              &nbsp;
-            </div>
-          );
+         
           _listaProductoDetalle.push(
             <div className="detalle" key={"-2"}>
               <div className="desc-label">Ficha técnica</div>

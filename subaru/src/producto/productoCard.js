@@ -70,14 +70,14 @@ export default function ProductosCard(props) {
   });
 
   function handleEventShowDetalle() {
-    history.push(
+    window.open(
       "/detalle/" +
       producto.familia.chrCodigoFamilia +
       "/" +
       producto.familia.vchDescripcion +
       "/" +
       producto.chrCodigoProducto
-    );
+    ,'_parent');
   }
   async function handleEventModal(_status) {
     dispatch({type: actionType.PRODUCTO,producto:producto});
@@ -223,6 +223,7 @@ export default function ProductosCard(props) {
     <>
       <div className="producto-card">
         <div className="producto-card-img">
+          
           <img
             src={"data:image/png;base64," + producto.imagenDefault.chrSrcImagen}
             onClick={handleEventShowDetalle}

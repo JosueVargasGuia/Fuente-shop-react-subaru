@@ -276,6 +276,10 @@ const Empresa = {
   correo: "repuestos.subaru@eacorp.pe",
   abreviaturaSucursal: "RP4259",
 };
+const APP_DEV= {
+    CONTEXT:"DESARROLLO",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
+     
+};
 
 export {
   SUCCESS_SERVER,
@@ -306,5 +310,6 @@ export {
   Empresa,
  
   FilterTypeLista,
+  APP_DEV,
   
 };

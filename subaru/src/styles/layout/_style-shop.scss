@@ -1158,10 +1158,10 @@ h4 {
     width: 50%;
     text-align: center;
     .prod-det-carrousel-text {
-        font-family: cursive;
         color: var(--color-button-hover2);
-        font-size: 1em;
+        font-size: 1.5em;
         margin-bottom: 2px;
+        color: var(--color-font7);
     }
 }
 
@@ -1278,6 +1278,12 @@ h4 {
 
 .desc-value {
     width: 80%;
+}
+
+.desc-value-resaltar {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--color-font2);
 }
 
 .fa-shield-p {

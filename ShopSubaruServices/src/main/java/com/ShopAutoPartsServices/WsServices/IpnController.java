@@ -201,8 +201,22 @@ public class IpnController {
 			e.printStackTrace();
 		}
 	}
+	
+	public void archivoExcel() {
+		try {
 
-	// @Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+			 
+			ScheduledProceso scheduledProcesoStatus = new ScheduledProceso();
+			scheduledProcesoStatus.setChrCodigoOc("OCO202239");
+			File file = facturacionService.obtenerFileReporteOcOnline(scheduledProcesoStatus);
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	 @Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
 	//PRODUCCUIN DESAHABILITADO
 	public void scheduledConfirmaCotizacion() {
 		logger.info("${izipay.ipn.scheduled");
