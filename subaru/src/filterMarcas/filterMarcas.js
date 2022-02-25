@@ -34,7 +34,9 @@ export default function
    };*/
   async function handleClickBuscarProductos() {
     console.log(descripcion);
-    history.push("/shop/search/filter/" + descripcion);
+    props.handleInputChangeDescripcion({target:{value:descripcion}});
+    //history.push("/shop/search/filter/" + descripcion);
+    history.push("/shop/search/filter/search");
   }
   function handleInputChangeDescripcion(e) {
     setDescripcion(e.target.value);

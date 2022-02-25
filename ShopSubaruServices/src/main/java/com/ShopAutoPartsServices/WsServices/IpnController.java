@@ -130,7 +130,7 @@ public class IpnController {
 	 * 
 	 * 
 	 */
-	@Scheduled(cron = "${shop.mail.smtp.to.oc.scheduled}")
+	//@Scheduled(cron = "${shop.mail.smtp.to.oc.scheduled}")
 	public void scheduledMailOcConsolidado() {
 		/*
 		 * JOB: Envio de correo de ordenes de compra consolidado

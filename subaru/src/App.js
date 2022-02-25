@@ -348,6 +348,7 @@ function App() {
               <ProductoFilter
                 moneda={state.moneda}
                 handleSelectMarcaChange={handleSelectMarcaChange}
+                query={state.descripcion}
               ></ProductoFilter>
             </Route>
 

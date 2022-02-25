@@ -574,7 +574,7 @@ export default function ProductoFilter(props) {
       _filterProducto = FilterProducto.FILTER_SEARCH;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
       _filterTypeLista = FilterTypeLista.FilterNormal;
-      _vchDescripcion = params.query;
+      _vchDescripcion = props.query;         
     }
     console.log(_filterTypeLista);
     if (_FILTER === MENU) {
