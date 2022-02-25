@@ -406,16 +406,16 @@ export function CarritoPayment(props) {
       statusMetodoEnvio: { status: statusMetodoEnvio.DEFAULT, mensaje: "" },
     });
     //handleEventChangeModoEnvio(MetodoEnvio.RecojoAlmacen); Reunion Nro1
-    handleEventChangeModoEnvio(_direccion.numCodigoDireccion, false);
+    handleEventChangeModoEnvio(MetodoEnvio.RecojoAlmacen,_direccion.numCodigoDireccion, false);
   }
-  async function handleEventChangeModoEnvio(_numCodigoDireccion, _flgChange) {
-    let _metodoEnvio = MetodoEnvio.EnvioRegular;
+  async function handleEventChangeModoEnvio(_metodoEnvio,_numCodigoDireccion, _flgChange) {
+    //let _metodoEnvio = MetodoEnvio.EnvioRegular;
     /*Resumen de cotizacion*/
     let _statusMetodoEnvio = { status: statusMetodoEnvio.DEFAULT, mensaje: "" };
     let cotizacion = handleSyncDatosCotizacion();
     const rptM = await registrarMetodoEnvioCotizacion({
       numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
-      //metodoEnvio: _metodoEnvio.codigo,
+      metodoEnvio: _metodoEnvio.codigo,
       numCodigoDireccion: (_flgChange === false ? _numCodigoDireccion : state.numCodigoDireccion),
     });
     const jsonR = await rptM.json();

@@ -270,6 +270,7 @@ export function CarritoDetalle(props) {
               </span>
             )}
             {state.listaCotizacionDetalle.map((obj) => (
+              <>
               <div
                 className="producto-det-carrito-row"
                 key={obj.numcodCotizacionOnlinedet}
@@ -281,6 +282,7 @@ export function CarritoDetalle(props) {
                       alt={obj.producto.vchDescripcion}
                     ></img>
                   </Link>
+                  
                 </div>
                 <div className="producto-det-row-data">
                   <div className="producto-det-row-desc">
@@ -303,7 +305,7 @@ export function CarritoDetalle(props) {
                         : obj.numPrecioUnitarioSol}
                     </label>
                     <br />
-                    {obj.producto.numOutlet === 1 ? outlet : ""}
+                    {obj.producto.numOutlet === 1 ? <div className="producto-det-row-outlet"> {outlet} <span>Producto Outlet</span></div> : ""} 
                   </div>
                   <div className="producto-det-row-cantidad">
                     <input
@@ -337,8 +339,11 @@ export function CarritoDetalle(props) {
                     </button>
                   </div>
                 </div>
+                
                 <hr />
               </div>
+              
+              </>
             ))}
           </div>
 
@@ -366,7 +371,7 @@ export function CarritoDetalle(props) {
               </>
             )}
             <hr />
-            <div className="producto-det-row-data">{outlet} Productos de nuestro Outlet</div>
+            
           </div>
         </div>
         <div className="carrito-detalle-info">

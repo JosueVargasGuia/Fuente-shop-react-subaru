@@ -101,7 +101,18 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					cs.setString(9, productoRequets.getFilterOrder().toString());
 					cs.setString(10,  builderQuery.toString());
 				 
-					
+					 logger.info("Size : "+productos.size()+
+							 " I_CHRCODIGOFAMILIA:"+	(productoRequets.getChrCodigoFamilia() != null ? productoRequets.getChrCodigoFamilia()
+										: null)+" I_VCHDESCRIPCION:"+(productoRequets.getVchDescripcion() != null ? productoRequets.getVchDescripcion() : null)
+							  +" I_CHRCODIGOPRODUCTO:"+(productoRequets.getChrCodigoProducto() != null ? productoRequets.getChrCodigoProducto()
+										: null)
+							  +" I_PAGE:"+productoRequets.getPagina()
+							  +" I_LIMIT:"+productoRequets.getLimit()
+							  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
+							  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString()
+							  
+							  +" I_FILTERTYPELISTA:"+builderQuery.toString()
+							  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString());
 					 
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);
@@ -169,17 +180,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					
 					cs.close();
 					rs.close();
-					 logger.info("Size : "+productos.size()+
-							 " I_CHRCODIGOFAMILIA:"+productoRequets.getChrCodigoFamilia(
-							  ) +" I_VCHDESCRIPCION:"+productoRequets.getVchDescripcion()
-							  +" I_CHRCODIGOPRODUCTO:"+productoRequets.getChrCodigoProducto()
-							  +" I_PAGE:"+productoRequets.getPagina()
-							  +" I_LIMIT:"+productoRequets.getLimit()
-							  +" I_FILTERPRODUCTO:"+productoRequets.getFilterProducto().toString()
-							  +" I_FILTER_ORDER:"+productoRequets.getFilterOrder().toString()
-							  
-							  +" I_FILTER_QUERY:"+builderQuery.toString()
-							  +" I_FILTERSUBFAMILIA_LIST:"+builder.toString());
+					
 					return productos;
 				}
 			};

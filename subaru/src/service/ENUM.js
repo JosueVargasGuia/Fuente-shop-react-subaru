@@ -159,7 +159,7 @@ const MetodoEnvio = {
   RecojoAlmacen: {
     numTipoMetodoEnvio: 0,
     codigo: "RecojoAlmacen",
-    descripcion: "Recojo en Bodega",
+    descripcion: "Recojo en Tienda",
     direccion: "Av. Republica de Panama 4259",
     //direccion: "Próximamente habilitada",
     icons: "almacen.png",
@@ -277,7 +277,7 @@ const Empresa = {
   abreviaturaSucursal: "RP4259",
 };
 const APP_DEV= {
-    CONTEXT:"DESARROLLO",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
+    CONTEXT:"PRODUCCION",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
      
 };
 

@@ -36,7 +36,7 @@ const listaRepuesto = [
       { key: 3, discripcion: "Radiadores", srcimg: "/marcas/subaru/recambio/R3.png", url: "/shop",identificador:"Recambio-3",query:["radiador"]  },
       { key: 4, discripcion: "Suspensión", srcimg: "/marcas/subaru/recambio/R4.png",url: "/shop",identificador:"Recambio-4",query:["suspensión","suspension"]  },
       { key: 5, discripcion: "Limpiaparabrisas", srcimg: "/marcas/subaru/recambio/R5.png", url: "/shop",identificador:"Recambio-5",query:["limpiaparabrisas"]  },
-      { key: 6, discripcion: "Todas las categorías", srcimg: "/marcas/subaru/recambio/R6.png", url: "/shop",identificador:"Recambio-6",query:[""]  },
+      { key: 6, discripcion: "Todas las categorías", srcimg: "/marcas/subaru/recambio/R6.png", url: "/shop",identificador:"Recambio-6",query:["alternador","arrancador","radiador","suspensión","suspension","limpiaparabrisas"]  },
     ];
    
     const segmentoAccesorios = [

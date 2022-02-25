@@ -315,14 +315,14 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 
 					cs.setInt(1, metodoEnvioRequets.getNumCodigoCotizacionOnline());
 					cs.setInt(2, metodoEnvioRequets.getNumCodigoDireccion());
-					//cs.setString(3, metodoEnvioRequets.getMetodoEnvio().toString());
-					cs.registerOutParameter(3, OracleTypes.VARCHAR);
+					cs.setString(3, metodoEnvioRequets.getMetodoEnvio().toString());
 					cs.registerOutParameter(4, OracleTypes.VARCHAR);
 					cs.registerOutParameter(5, OracleTypes.VARCHAR);
+					cs.registerOutParameter(6, OracleTypes.VARCHAR);
 					cs.execute();
-					metodoEnvioRequets.setMensaje(cs.getString(3));
-					metodoEnvioRequets.setStatus(Status.valueOf(cs.getString(4)));
-					metodoEnvioRequets.setMetodoEnvio(MetodoEnvio.valueOf(cs.getString(5)));
+					metodoEnvioRequets.setMensaje(cs.getString(4));
+					metodoEnvioRequets.setStatus(Status.valueOf(cs.getString(5)));
+					metodoEnvioRequets.setMetodoEnvio(MetodoEnvio.valueOf(cs.getString(6)));
 					return metodoEnvioRequets;
 				}
 			};
@@ -331,7 +331,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_COTIZACION_DET_TRANS(?,?,?,?,?)";
+		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_COTIZACION_DET_TRANS(?,?,?,?,?,?)";
 		return jdbcTemplate.execute(sql, callback);
 	}
 
