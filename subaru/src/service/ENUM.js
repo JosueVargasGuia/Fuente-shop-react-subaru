@@ -95,17 +95,19 @@ const statusSyncCotizacion = {
 ADICIONAR=Que al valor registrado en la tabla le aumentamos el valor que estamos pasando[BD=1 Parametro=2--> Cantidad Final=3]
 ACTUALIZAR=Que el valor pasado como parametro sera el que se guarda[BD=5 Parametro=2--> Cantidad Final=2]
 */
+
 const tipoActualizacionCotizacionDetalle = {
   ADICIONAR: "ADICIONAR",
   ACTUALIZAR: "ACTUALIZAR",
 };
+/*una moneda diferente se */
 const InfoCondicionCompra = {
   EMISION:
-    <p><i className="fa fa-shield-p"></i>Emitimos facturas en dólares. Si paga en una moneda diferente se realizará la conversión a USD,según al tipo de cambio indicado en la parte superior de la página.</p>,
+    <p><i className="fa fa-shield fa-black" aria-hidden="true"></i>Emitimos facturas en dólares. Si paga en soles se realizará la conversión a USD, según al tipo de cambio indicado en la parte superior de la página.</p>,
   TRANSPORTE:
-    <p><i className="fa fa-truck" aria-hidden="true"></i>Envíos en los siguientes 10 días; verifica que tu calle no se encuentre en las zonas peligrosas.</p>,
+    <p><i className="fa fa-truck fa-black"  aria-hidden="true"></i>Envíos en los siguientes 10 días; verifica que tu calle no se encuentre en las zonas peligrosas.</p>,
   DEVOLUCIONES:
-    <p><i className="fa fa-exchange" aria-hidden="true"></i>No se aceptan devoluciones a menos que el producto tenga falla de fábrica.</p>,
+    <p><i className="fa fa-exchange fa-black"  aria-hidden="true"></i>No se aceptan devoluciones.</p>,/* a menos que el producto tenga falla de fábrica */
   STOCK: (
     <p>
       <i>
@@ -114,7 +116,7 @@ const InfoCondicionCompra = {
           focusable="false"
           data-prefix="fas"
           data-icon="box-open"
-          className="svg-inline--fa fa-box-open fa-w-20"
+          className="svg-inline--fa fa-box-open fa-w-20 fa-black"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 640 512"
@@ -128,8 +130,7 @@ const InfoCondicionCompra = {
       Mientras procesamos su pedido y/o compra, es posible que el stock
       publicado en nuestra página se puede agotar, de ser asi la operación será
       cancelada. De ocurrir esto y la transacción se efectuó, nos comprometemos
-      a realizar el extorno del dinero a su Tarjeta del Banco o emitir una Nota
-      de crédito para que Ud. pueda utilizarlo en compras futuras.
+      a emitir una Nota de crédito para que Ud. pueda utilizarlo en compras futuras o realizar el extorno del dinero a su Tarjeta del Banco.
       <br />
       Si alguno de los productos seleccionados por Ud. está en promoción
       (outlet) tenga presente que esta Campaña tiene un número muy limitado de
@@ -277,7 +278,7 @@ const Empresa = {
   abreviaturaSucursal: "RP4259",
 };
 const APP_DEV= {
-    CONTEXT:"PRODUCCION",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
+    CONTEXT:"DESARROLLODEV",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
      
 };
 

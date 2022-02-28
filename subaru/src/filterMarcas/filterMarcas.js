@@ -15,10 +15,10 @@ export default function
   const [srcLogo] = useState(window.location.origin + (homepage === undefined ? "" : "/" + homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
   let rowRepuesto = listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
-    <Link to={"/shop/" + rowRepu.identificador + "/filter/all"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
+    <Link to={"/shop/" + rowRepu.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
   </li>);
   let rowAccesorio = listaAcesorios.map((rowAcce) => <li key={rowAcce.codigo}>
-    <Link to={"/shop/" + rowAcce.identificador + "/filter/all"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
+    <Link to={"/shop/" + rowAcce.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
   </li>);
 
 

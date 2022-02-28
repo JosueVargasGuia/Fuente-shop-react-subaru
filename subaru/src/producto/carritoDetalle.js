@@ -310,7 +310,7 @@ console.log(_cotizacionResumen)
                         :   obj.numPrecioUnitarioSolIgv}
                     </label>
                     <br />
-                    {obj.producto.numOutlet === 1 ? <div className="producto-det-row-outlet"> {outlet} <span>Producto Outlet</span></div> : ""} 
+                    {obj.producto.numOutlet === 1 ? <div className="producto-det-row-outlet"> {outlet} <span>Producto en Outlet</span></div> : ""} 
                   </div>
                   <div className="producto-det-row-cantidad">
                     <input
