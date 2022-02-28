@@ -7,6 +7,7 @@ import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -169,6 +170,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 					cs.setInt(2, cotizacionOnlineDetalle.getNumCodigoCotizacionOnline());
 					cs.setInt(3, cotizacionOnlineDetalle.getNumcodCotizacionOnlinedet());
 					cs.execute();
+					DecimalFormat formatter = new DecimalFormat("###,###.00");
 					ResultSet rs = (ResultSet) cs.getObject(1);
 					while (rs.next()) {
 						CotizacionOnlineDetalle obj = new CotizacionOnlineDetalle();
@@ -193,16 +195,23 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 						 * obj.setNumCostoEnvioSol(rs.getBigDecimal("NUMCOSTOENVIOSOL").setScale(2,
 						 * RoundingMode.HALF_UP));
 						 */
-						obj.setNumIgvDol(rs.getBigDecimal("NUMIGVDOL").setScale(2, RoundingMode.HALF_UP));
-						obj.setNumIgvSol(rs.getBigDecimal("NUMIGVSOL").setScale(2, RoundingMode.HALF_UP));
-						obj.setNumPrecioUnitarioDol(
-								rs.getBigDecimal("NUMPRECIOUNITARIODOL").setScale(2, RoundingMode.HALF_UP));
-						obj.setNumPrecioUnitarioSol(
-								rs.getBigDecimal("NUMPRECIOUNITARIOSOL").setScale(2, RoundingMode.HALF_UP));
-						obj.setNumSubTotalDol(rs.getBigDecimal("NUMSUBTOTALDOL").setScale(2, RoundingMode.HALF_UP));
-						obj.setNumSubTotalSol(rs.getBigDecimal("NUMSUBTOTALSOL").setScale(2, RoundingMode.HALF_UP));
-						obj.setNumTotalDol(rs.getBigDecimal("NUMTOTALDOL").setScale(2, RoundingMode.HALF_UP));
-						obj.setNumTotalSol(rs.getBigDecimal("NUMTOTALSOL").setScale(2, RoundingMode.HALF_UP));
+						obj.setNumIgvDol(formatter.format(rs.getBigDecimal("NUMIGVDOL").setScale(2,RoundingMode.HALF_UP)));
+						obj.setNumIgvSol(formatter.format(rs.getBigDecimal("NUMIGVSOL").setScale(2,RoundingMode.HALF_UP)));
+						
+						obj.setNumPrecioUnitarioDol(formatter.format(rs.getBigDecimal("NUMPRECIOUNITARIODOL").setScale(2,RoundingMode.HALF_UP)));
+						obj.setNumPrecioUnitarioSol(formatter.format(rs.getBigDecimal("NUMPRECIOUNITARIOSOL").setScale(2,RoundingMode.HALF_UP)));
+						
+						obj.setNumPrecioUnitarioDolIgv(formatter.format(rs.getBigDecimal("NUMVALORVENTADOLARIGV").setScale(2,RoundingMode.HALF_UP)));
+						obj.setNumPrecioUnitarioSolIgv(formatter.format(rs.getBigDecimal("NUMPRECIOUNITARIOSOLIGV").setScale(2,RoundingMode.HALF_UP)));
+						
+						obj.setNumSubTotalDol(formatter.format(rs.getBigDecimal("NUMSUBTOTALDOL").setScale(2,RoundingMode.HALF_UP)));
+						obj.setNumSubTotalSol(formatter.format(rs.getBigDecimal("NUMSUBTOTALSOL").setScale(2,RoundingMode.HALF_UP)));
+						
+						obj.setNumSubTotalDolIgv(formatter.format(rs.getBigDecimal("NUMSUBTOTALDOLIGV").setScale(2,RoundingMode.HALF_UP)));
+						obj.setNumSubTotalSolIgv(formatter.format(rs.getBigDecimal("NUMSUBTOTALSOLIGV").setScale(2,RoundingMode.HALF_UP)));
+						
+						obj.setNumTotalDol(formatter.format(rs.getBigDecimal("NUMTOTALDOL").setScale(2,RoundingMode.HALF_UP)));
+						obj.setNumTotalSol(formatter.format(rs.getBigDecimal("NUMTOTALSOL").setScale(2,RoundingMode.HALF_UP)));
 
 						Blob imageBlob = rs.getBlob("CHRSRCIMAGEN");
 
@@ -241,32 +250,41 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 					cs.setInt(2, numCodigoCotizacionOnline);
 					cs.execute();
 					ResultSet rs = (ResultSet) cs.getObject(1);
+					DecimalFormat formatter = new DecimalFormat("###,###.00");
 					while (rs.next()) {
 						onlineResumen.setTotalRegistros(rs.getInt("TOTALREGISTROS"));
-
-						onlineResumen.setNumEnvioSol(rs.getString("NUMMETODOENVIOSOL") == null ? "00.00"
-								: rs.getString("NUMMETODOENVIOSOL"));
+						 
+						
+						onlineResumen.setNumEnvioSol(rs.getString("NUMMETODOENVIOSOL") == null || rs.getString("NUMMETODOENVIOSOL").trim().equalsIgnoreCase("0.00") ? "00.00"
+								: formatter.format(rs.getBigDecimal("NUMMETODOENVIOSOL").setScale(2,RoundingMode.HALF_UP)));
 
 						onlineResumen.setNumSubTotalSol(
-								rs.getString("NUMSUBTOTALSOL") == null ? "00.00" : rs.getString("NUMSUBTOTALSOL"));
+								rs.getString("NUMSUBTOTALSOL") == null ? "00.00" : 
+									formatter.format(rs.getBigDecimal("NUMSUBTOTALSOL").setScale(2,RoundingMode.HALF_UP)));
 
 						onlineResumen
-								.setNumIgvSol(rs.getString("NUMIGVSOL") == null ? "00.00" : rs.getString("NUMIGVSOL"));
+								.setNumIgvSol(rs.getString("NUMIGVSOL") == null ? "00.00" :
+									formatter.format( rs.getBigDecimal("NUMIGVSOL").setScale(2,RoundingMode.HALF_UP)));
 
 						onlineResumen.setNumTotalSol(
-								rs.getString("NUMTOTALSOL") == null ? "00.00" : rs.getString("NUMTOTALSOL"));
+								rs.getString("NUMTOTALSOL") == null ? "00.00" : 
+									formatter.format(rs.getBigDecimal("NUMTOTALSOL").setScale(2,RoundingMode.HALF_UP)));
 
-						onlineResumen.setNumEnvioDol(rs.getString("NUMMETODOENVIODOL") == null ? "00.00"
-								: rs.getString("NUMMETODOENVIODOL"));
+						onlineResumen.setNumEnvioDol(rs.getString("NUMMETODOENVIODOL") == null || rs.getString("NUMMETODOENVIODOL").trim().equalsIgnoreCase("0.00") ? "00.00"
+								: formatter.format(rs.getBigDecimal("NUMMETODOENVIODOL").setScale(2,RoundingMode.HALF_UP)));
 
 						onlineResumen.setNumSubTotalDol(
-								rs.getString("NUMSUBTOTALDOL") == null ? "00.00" : rs.getString("NUMSUBTOTALDOL"));
+								rs.getString("NUMSUBTOTALDOL") == null ? "00.00" : 
+									formatter.format(rs.getBigDecimal("NUMSUBTOTALDOL").setScale(2,RoundingMode.HALF_UP)));
 
 						onlineResumen
-								.setNumIgvDol(rs.getString("NUMIGVDOL") == null ? "00.00" : rs.getString("NUMIGVDOL"));
+								.setNumIgvDol(rs.getString("NUMIGVDOL") == null ? "00.00" : 
+									formatter.format(rs.getBigDecimal("NUMIGVDOL").setScale(2,RoundingMode.HALF_UP)));
 
 						onlineResumen.setNumTotalDol(
-								rs.getString("NUMTOTALDOL") == null ? "00.00" : rs.getString("NUMTOTALDOL"));
+								rs.getString("NUMTOTALDOL") == null ? "00.00" : 
+									formatter.format(rs.getBigDecimal("NUMTOTALDOL").setScale(2,RoundingMode.HALF_UP)));
+								
 						onlineResumen.setFlgnumCodigoDireccion(rs.getInt("FLGNUMCODIGODIRECCION"));
 
 					}
@@ -619,6 +637,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 					cs.setInt(2, cotizacionOnlineRequets.getNumCodigoCotizacionOnline());
 					cs.execute();
 					ResultSet rs = (ResultSet) cs.getObject(1);
+					DecimalFormat formatter = new DecimalFormat("###,###.00");
 					while (rs.next()) {
 						CotizacionOnlineDetalle cotizacionOnlineDetalle = new CotizacionOnlineDetalle();
 						Producto producto = new Producto();
@@ -626,8 +645,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 						producto.setVchDescripcion(rs.getString("VCHDESCRIPCION"));
 						cotizacionOnlineDetalle.setProducto(producto);
 						cotizacionOnlineDetalle.setNumCantidad(rs.getInt("NUMCANTIDAD"));
-						cotizacionOnlineDetalle.setNumTotalDisplay(
-								rs.getBigDecimal("NUMTOTALDISPLAY").setScale(2, RoundingMode.HALF_UP));
+						cotizacionOnlineDetalle.setNumTotalDisplay(formatter.format(rs.getBigDecimal("NUMTOTALDISPLAY").setScale(2, RoundingMode.HALF_UP)));
 						lista.add(cotizacionOnlineDetalle);
 					}
 					return lista;

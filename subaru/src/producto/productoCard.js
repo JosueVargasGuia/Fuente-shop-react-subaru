@@ -20,6 +20,8 @@ export default function ProductosCard(props) {
     chrCodigoProducto: props.producto.chrCodigoProducto,
     numValorVentaDolar: props.producto.numValorVentaDolar,
     numValorVentaSoles: props.producto.numValorVentaSoles,
+    numValorVentaDolarIgv: props.producto.numValorVentaDolarIgv,
+    numValorVentaSolesIgv: props.producto.numValorVentaSolesIgv,
     numCodigoMoneda: props.producto.numCodigoMoneda,
     vchDescripcion: props.producto.vchDescripcion,
     vchDescripcionSmall: props.producto.vchDescripcionSmall,
@@ -140,7 +142,7 @@ export default function ProductosCard(props) {
         if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
           const jsonDetalle = await rptDetalle.json();
           if (jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-            console.log(jsonDetalle);
+             
             cotizacionResumen.numSubTotalDol = jsonDetalle.numSubTotalDol;
             cotizacionResumen.numIgvDol = jsonDetalle.numIgvDol;
             cotizacionResumen.numEnvioDol = jsonDetalle.numEnvioDol;
@@ -257,8 +259,8 @@ export default function ProductosCard(props) {
             <span>
               {producto.moneda.numCodigoMoneda ===
               Moneda.DOLARES.numCodigoMoneda
-                ? producto.numValorVentaDolar
-                : producto.numValorVentaSoles}{" "}
+                ?  producto.numValorVentaDolarIgv
+                :  producto.numValorVentaSolesIgv}{" "}
             </span>
           </div>
 

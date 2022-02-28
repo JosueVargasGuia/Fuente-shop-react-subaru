@@ -30,6 +30,8 @@ export default function ProductoDetalle(props) {
     chrCodigoProducto: "",
     numValorVentaDolar: "",
     numValorVentaSoles: "",
+    numValorVentaDolarIgv: "",
+    numValorVentaSolesIgv: "",
     numCodigoMoneda: props.moneda.numCodigoMoneda,
     vchDescripcion: "",
     vchDescripcionSmall: "",
@@ -100,14 +102,7 @@ export default function ProductoDetalle(props) {
           let _listaProductoImagen = [];
           /*Lista de imagenes del producto */
           for (let i = 0; i < e.listaProductoImagen.length; i++) {
-            let obj = e.listaProductoImagen[i];
-            /* {
-              numCodigoProductoIimagen: obj.numCodigoProductoIimagen,
-              chrCodigoProducto: obj.chrCodigoProducto,
-              chrSrcImagen: obj.chrSrcImagen,
-              chrNombre: obj.chrNombre,
-              chrType: obj.chrType,
-            }*/
+            let obj = e.listaProductoImagen[i];            
             _listaProductoImagen.push(
               <img
                 className="detalle-img"
@@ -155,6 +150,8 @@ export default function ProductoDetalle(props) {
           producto.chrCodigoProducto = e.chrCodigoProducto;
           producto.numValorVentaDolar = e.numValorVentaDolar;
           producto.numValorVentaSoles = e.numValorVentaSoles;
+          producto.numValorVentaDolarIgv = e.numValorVentaDolarIgv;
+          producto.numValorVentaSolesIgv = e.numValorVentaSolesIgv;
           producto.numCodigoMoneda = props.moneda.numCodigoMoneda;
           producto.vchDescripcion = e.vchDescripcion;
           producto.vchDescripcionSmall = e.vchDescripcionSmall;
@@ -419,8 +416,8 @@ export default function ProductoDetalle(props) {
             </span>
             <span>
               {state.producto.numCodigoMoneda === Moneda.DOLARES.numCodigoMoneda
-                ? state.producto.numValorVentaDolar
-                : state.producto.numValorVentaSoles}
+                ?   state.producto.numValorVentaDolarIgv
+                :   state.producto.numValorVentaSolesIgv}
             </span>
           </div>
           <div className="producto-det-row2-shop">

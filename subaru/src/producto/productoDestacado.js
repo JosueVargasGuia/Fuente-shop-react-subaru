@@ -104,10 +104,13 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlef
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let index = 0; index < json.listaProductos.length; index++) {
           let e = json.listaProductos[index];
+          console.log(e);
           let producto = {
             chrCodigoProducto: e.chrCodigoProducto,
             numValorVentaDolar: e.numValorVentaDolar,
             numValorVentaSoles: e.numValorVentaSoles,
+            numValorVentaDolarIgv: e.numValorVentaDolarIgv,
+            numValorVentaSolesIgv: e.numValorVentaSolesIgv,
             numCodigoMoneda: e.numCodigoMoneda,
             vchDescripcion: e.vchDescripcion,
             vchDescripcionSmall: e.vchDescripcionSmall,
@@ -188,6 +191,8 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlef
           chrCodigoProducto: e.chrCodigoProducto,
           numValorVentaDolar: e.numValorVentaDolar,
           numValorVentaSoles: e.numValorVentaSoles,
+          numValorVentaDolarIgv: e.numValorVentaDolarIgv,
+          numValorVentaSolesIgv: e.numValorVentaSolesIgv,
           numCodigoMoneda: e.numCodigoMoneda,
           vchDescripcion: e.vchDescripcion,
           vchDescripcionSmall: e.vchDescripcionSmall,

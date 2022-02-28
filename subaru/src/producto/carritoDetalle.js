@@ -85,7 +85,7 @@ export function CarritoDetalle(props) {
         _cotizacionResumen.flgnumCodigoDireccion = json.flgnumCodigoDireccion;
         _cotizacionResumen.numCodigoCliente = cotizacion.numCodigoCliente;
         let _cantidadDetalleSeleccionado = 0;
-
+console.log(_cotizacionResumen)
         const jsonDetalle = await rptDetalle.json();
 
         if (jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
@@ -106,8 +106,12 @@ export function CarritoDetalle(props) {
               numCodigoCotizacionOnline: obj.numCodigoCotizacionOnline,
               numPrecioUnitarioDol: obj.numPrecioUnitarioDol,
               numPrecioUnitarioSol: obj.numPrecioUnitarioSol,
+              numPrecioUnitarioDolIgv: obj.numPrecioUnitarioDolIgv,
+              numPrecioUnitarioSolIgv: obj.numPrecioUnitarioSolIgv,
               numSubTotalDol: obj.numSubTotalDol,
               numSubTotalSol: obj.numSubTotalSol,
+              numSubTotalDolIgv: obj.numSubTotalDolIgv,
+              numSubTotalSolIgv: obj.numSubTotalSolIgv,
               numcodCotizacionOnlinedet: obj.numcodCotizacionOnlinedet,
               chrSrcImagen: obj.chrSrcImagen,
               chrType: obj.chrType,
@@ -194,7 +198,8 @@ export function CarritoDetalle(props) {
     }
   }
   async function handleEventChangeCantidad(e, data) {
-    if (e.target.value <= data.producto.numStock) {
+    console.log(data);
+    if (parseInt(e.target.value) <= parseInt(data.producto.numStock)) {
       /*Registro de cotizacion detalle */
       let cotizacionDetalleRequest = {
         numCodigoCotizacionOnline: data.numCodigoCotizacionOnline,
@@ -270,7 +275,7 @@ export function CarritoDetalle(props) {
               </span>
             )}
             {state.listaCotizacionDetalle.map((obj) => (
-              <>
+               
               <div
                 className="producto-det-carrito-row"
                 key={obj.numcodCotizacionOnlinedet}
@@ -301,8 +306,8 @@ export function CarritoDetalle(props) {
                     <label className="item-row-precio">
                       {props.moneda.numCodigoMoneda ===
                         Moneda.DOLARES.numCodigoMoneda
-                        ? obj.numPrecioUnitarioDol
-                        : obj.numPrecioUnitarioSol}
+                        ?   obj.numPrecioUnitarioDolIgv
+                        :   obj.numPrecioUnitarioSolIgv}
                     </label>
                     <br />
                     {obj.producto.numOutlet === 1 ? <div className="producto-det-row-outlet"> {outlet} <span>Producto Outlet</span></div> : ""} 
@@ -326,8 +331,8 @@ export function CarritoDetalle(props) {
                     <span className="item-row-precio">
                       {props.moneda.numCodigoMoneda ===
                         Moneda.DOLARES.numCodigoMoneda
-                        ? obj.numSubTotalDol
-                        : obj.numSubTotalSol}
+                        ? obj.numSubTotalDolIgv
+                        : obj.numSubTotalSolIgv}
                     </span>
                   </div>
                   <div className="producto-det-row-accion">
@@ -343,7 +348,7 @@ export function CarritoDetalle(props) {
                 <hr />
               </div>
               
-              </>
+               
             ))}
           </div>
 
@@ -351,7 +356,7 @@ export function CarritoDetalle(props) {
             {state.cotizacionResumen.flgnumCodigoDireccion === 1 ? (
               <>
                 El costo de envio ha sido calculado según la dirección de
-                facturación guarda en base de datos del cliente
+                facturación guardada en base de datos del cliente
               </>
             ) : (
               <>

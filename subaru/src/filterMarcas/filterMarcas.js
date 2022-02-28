@@ -40,9 +40,14 @@ export default function
   }
   function handleInputChangeDescripcion(e) {
     setDescripcion(e.target.value);
-    props.handleInputChangeDescripcion(e);
+    
+    //props.handleInputChangeDescripcion(e);
   }
-
+function handleOnKeyDown(e){   
+  if(e.key==='Enter'){   
+    handleClickBuscarProductos();
+  }
+}
 
   return (<>
     <div className="filter-marcas">
@@ -151,6 +156,7 @@ export default function
                 placeholder="Búscar por descripción "
                 value={props.decripcion}
                 onChange={(e) => handleInputChangeDescripcion(e)}
+                onKeyDown={(e)=>handleOnKeyDown(e)}
               ></input>
               <i
                 className="search-link fa fa-search"

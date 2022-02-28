@@ -243,9 +243,8 @@ function App() {
     });
   }
 
-  function handleInputChangeDescripcion(e) {
-    console.log("handleInputChangeDescripcion");
-    console.log(e);
+  function handleInputChangeDescripcion(e) {    
+     
     dispatch({
       type: actionType.INPUT_DESCRIPCION,
       descripcion: e.target.value,

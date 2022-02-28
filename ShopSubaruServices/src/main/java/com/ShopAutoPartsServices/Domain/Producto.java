@@ -8,6 +8,8 @@ public class Producto {
 	String chrCodigoProducto;// CHAR(20 BYTE) NOT NULL,
 	String numValorVentaDolar;// NUMBER,
 	String numValorVentaSoles;// NUMBER,
+	String numValorVentaDolarIgv;// NUMBER,
+	String numValorVentaSolesIgv;// NUMBER,
 	int numCodigoMoneda;// NUMBER,
 	String chrEstado;// CHAR(1 BYTE),
 	String vchDescripcion;// VARCHAR2(100 BYTE),
@@ -188,17 +190,36 @@ public class Producto {
 		this.numProductoVigencia = numProductoVigencia;	 
 	}
 
+	public String getNumValorVentaDolarIgv() {
+		return numValorVentaDolarIgv;
+	}
+
+	public void setNumValorVentaDolarIgv(String numValorVentaDolarIgv) {
+		this.numValorVentaDolarIgv = numValorVentaDolarIgv;
+	}
+
+	public String getNumValorVentaSolesIgv() {
+		return numValorVentaSolesIgv;
+	}
+
+	public void setNumValorVentaSolesIgv(String numValorVentaSolesIgv) {
+		this.numValorVentaSolesIgv = numValorVentaSolesIgv;
+	}
+
 	@Override
 	public String toString() {
 		return "Producto [chrCodigoProducto=" + chrCodigoProducto + ", numValorVentaDolar=" + numValorVentaDolar
-				+ ", numValorVentaSoles=" + numValorVentaSoles + ", numCodigoMoneda=" + numCodigoMoneda + ", chrEstado="
-				+ chrEstado + ", vchDescripcion=" + vchDescripcion + ", vchDescripcionSmall=" + vchDescripcionSmall
-				+ ", numStock=" + numStock + ", familia=" + familia + ", listaProductoImagen=" + listaProductoImagen
-				+ ", listaProductoDetalle=" + listaProductoDetalle + ", imagenDefault=" + imagenDefault
-				+ ", totalRegistros=" + totalRegistros + ", numOutlet=" + numOutlet + ", numProductoVigencia="
-				+ numProductoVigencia + ", numValorVentaRefDolar=" + numValorVentaRefDolar + ", numValorVentaRefSoles="
-				+ numValorVentaRefSoles + ", numValorDesc=" + numValorDesc + "]";
+				+ ", numValorVentaSoles=" + numValorVentaSoles + ", numValorVentaDolarIgv=" + numValorVentaDolarIgv
+				+ ", numValorVentaSolesIgv=" + numValorVentaSolesIgv + ", numCodigoMoneda=" + numCodigoMoneda
+				+ ", chrEstado=" + chrEstado + ", vchDescripcion=" + vchDescripcion + ", vchDescripcionSmall="
+				+ vchDescripcionSmall + ", numStock=" + numStock + ", familia=" + familia + ", listaProductoImagen="
+				+ listaProductoImagen + ", listaProductoDetalle=" + listaProductoDetalle + ", imagenDefault="
+				+ imagenDefault + ", totalRegistros=" + totalRegistros + ", numOutlet=" + numOutlet
+				+ ", numProductoVigencia=" + numProductoVigencia + ", numValorVentaRefDolar=" + numValorVentaRefDolar
+				+ ", numValorVentaRefSoles=" + numValorVentaRefSoles + ", numValorDesc=" + numValorDesc + "]";
 	}
+
+	 
  
 
 }

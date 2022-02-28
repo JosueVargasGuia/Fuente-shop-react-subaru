@@ -116,8 +116,13 @@
 }
 
 .thumb img {
-    min-width: 75px !important;
-    min-height: 75px !important;
+    min-width: 70px !important;
+    min-height: 64px !important;
+}
+
+.carousel .thumb {
+    padding: 0px!important;
+    margin-right: 0px !important;
 }
 
 .prod-det-carrousel .thumbs-wrapper ul {

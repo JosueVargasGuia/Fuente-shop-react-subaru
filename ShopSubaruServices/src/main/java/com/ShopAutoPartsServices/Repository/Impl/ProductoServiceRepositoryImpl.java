@@ -125,6 +125,10 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						producto.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));
 						producto.setNumValorVentaDolar(formatter.format(rs.getBigDecimal("NUMVALORVENTADOLAR")));
 						producto.setNumValorVentaSoles(formatter.format(rs.getBigDecimal("NUMVALORVENTASOLES")));
+						
+						producto.setNumValorVentaDolarIgv(formatter.format(rs.getBigDecimal("NUMVALORVENTADOLARIGV")));
+						producto.setNumValorVentaSolesIgv(formatter.format(rs.getBigDecimal("NUMVALORVENTASOLESIGV")));
+						
 						producto.setVchDescripcion(rs.getString("VCHDESCRIPCION"));
 						producto.setVchDescripcionSmall(rs.getString("VCHDESCRIPCIONSMALL"));
 						producto.setNumStock(rs.getInt("NUMSTOCK"));

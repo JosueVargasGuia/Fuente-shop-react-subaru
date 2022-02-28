@@ -216,7 +216,7 @@ public class IpnController {
 	}
 
 
-	 @Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+	// @Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
 	//PRODUCCUIN DESAHABILITADO
 	public void scheduledConfirmaCotizacion() {
 		//logger.info("${izipay.ipn.scheduled");

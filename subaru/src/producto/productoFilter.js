@@ -65,6 +65,21 @@ export default function ProductoFilter(props) {
     console.log("handleInitVariable 1");
     handleInitVariable(params.descripcion);
   }, [params.descripcion]);
+
+  useEffect(() => {
+    console.log("handleInitVariable 1 query");
+    handleInitVariable(params.descripcion).then((_object) => {
+      handleEventAddSubFamiliaSelect(
+        1,
+        filterOrder.FilterAscDescripcion,
+        params.descripcion,
+        _object.filter,
+        _object.listaQuery,
+      );
+    });
+
+    // eslint-disable-next-line
+  }, [props.query]);
   useEffect(() => {
     if (_marca.codigoMarca >= 0) {
       props.handleSelectMarcaChange(_marca.codigoMarca, "ProductoFilter");
@@ -624,6 +639,8 @@ export default function ProductoFilter(props) {
             chrCodigoProducto: e.chrCodigoProducto,
             numValorVentaDolar: e.numValorVentaDolar,
             numValorVentaSoles: e.numValorVentaSoles,
+            numValorVentaDolarIgv: e.numValorVentaDolarIgv,
+            numValorVentaSolesIgv: e.numValorVentaSolesIgv,
             numCodigoMoneda: e.numCodigoMoneda,
             vchDescripcion: e.vchDescripcion,
             vchDescripcionSmall: e.vchDescripcionSmall,
