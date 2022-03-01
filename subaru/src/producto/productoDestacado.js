@@ -116,6 +116,7 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlef
             vchDescripcionSmall: e.vchDescripcionSmall,
             numStock: e.numStock,
             totalRegistros: e.totalRegistros,
+            displayChrcodigoproducto:e.displayChrcodigoproducto,
             familia: {
               chrCodigoFamilia: e.familia.chrCodigoFamilia,
               vchDescripcion: e.familia.vchDescripcion,
@@ -198,6 +199,7 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlef
           vchDescripcionSmall: e.vchDescripcionSmall,
           numStock: e.numStock,
           totalRegistros: e.totalRegistros,
+          displayChrcodigoproducto:e.displayChrcodigoproducto,
           familia: {
             chrCodigoFamilia: e.familia.chrCodigoFamilia,
             vchDescripcion: e.familia.vchDescripcion,

@@ -54,7 +54,11 @@
         .filter-row-mobile-input {
             position: relative;
             flex-wrap: wrap;
-            width: calc(100% + 7px);
+            width: 100%;
+           .filter-input-search{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
             input {
                 width: 100%;
                 height: auto;
@@ -67,6 +71,22 @@
                     opacity: 1
                 }
             }
+            .btn-search{
+                color:var(--color-font);
+                background-color: var(--color-background-white);
+                padding: 0.025rem 0.2rem;
+                border-color: var(--color-background-white);
+                font-size: 15px;
+                &:focus{
+                    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+                }
+                .fa{
+                    margin:0em;
+                    font-size:20px;
+                }
+               
+            }
+        }
             .search-link {
                 position: absolute;
                 right: 10px;
@@ -159,10 +179,12 @@
             .filter-input {
                 width: 220px;
                 margin-left: 0.5rem;
-                position: relative;
+               .filter-input-search{
+                   display: flex;
+                   flex-direction: row;
                 input {
                     padding: 4px 10px;
-                    font-size: .875rem;
+                    font-size: 14px;
                     border-radius: 25px;
                     color: #7a7a7a;
                     border: 1px solid rgba(0, 0, 0, .25);
@@ -173,12 +195,23 @@
                         opacity: 1
                     }
                 }
-                .search-link {
-                    position: absolute;
-                    margin: 0;
-                    top: 7px;
-                    right: 14px;
+                .btn-search{
+                    color:var(--color-font);
+                    background-color: var(--color-background-white);
+                    padding: 0.025rem 0.2rem;
+                    border-color: var(--color-background-white);
+                    font-size: 15px;
+                    &:focus{
+                        box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+                    }
+                    .fa{
+                        margin:0em;
+                        font-size:20px;
+                    }
+                   
                 }
+            }
+               
             }
         }
         .filter-row-2 {

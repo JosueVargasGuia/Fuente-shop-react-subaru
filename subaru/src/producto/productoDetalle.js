@@ -121,7 +121,7 @@ export default function ProductoDetalle(props) {
               _listaProductoDetalle.push(
                 <div className="detalle" key={i}>
                   <div className="desc-label">{objDet.titulo}</div>
-                  <div className={objDet.titulo==='Código'?"desc-value desc-value-resaltar":"desc-value"}>{objDet.descripcion}</div>
+                  <div className={objDet.titulo==='Código'?"desc-value desc-value-resaltar":(objDet.titulo==='Marca'?"desc-value  desc-value-resaltar-codigo":"desc-value")}>{objDet.descripcion}</div>
                 </div>
               );
             }
@@ -132,6 +132,7 @@ export default function ProductoDetalle(props) {
             <div className="detalle" key={"-2"}>
               <div className="desc-label">Ficha técnica</div>
               <div className="desc-value"> </div>
+              
             </div>
           );
           for (let i = 0; i < e.listaProductoDetalle.length; i++) {
@@ -388,7 +389,7 @@ export default function ProductoDetalle(props) {
               showArrows={false}
               showStatus={false}
               showIndicators={false}
-              showThumbs={true}
+              showThumbs={false}
               autoPlay={false}
               infiniteLoop={false}
               stopOnHover={true}

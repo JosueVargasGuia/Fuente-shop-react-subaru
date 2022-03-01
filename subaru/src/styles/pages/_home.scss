@@ -135,6 +135,13 @@ body {
                         color: var(--color-arrow-active);
                         font-weight: bold;
                     }
+                    .producto-card-codigo {
+                        font-size: 15px;
+                        text-align: center;
+                        text-transform: capitalize;
+                        color: var(--color-font);
+                        font-weight: 400;
+                    }
                 }
             }
         }

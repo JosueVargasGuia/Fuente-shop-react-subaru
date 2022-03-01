@@ -27,6 +27,7 @@ public class Producto {
 	String numValorVentaRefDolar;// NUMBER,
 	String numValorVentaRefSoles;// NUMBER,
 	String numValorDesc;// NUMBER,
+	int displayChrcodigoproducto;
 	/*
 	 * TPRODUCTO.CHRCODIGOPRODUCTO,TPRODUCTO.NUMVALORVENTA AS
 	 * NUMVALORVENTADOLAR,TPRODUCTO.NUMVALORVENTA AS NUMVALORVENTASOLES,
@@ -204,6 +205,15 @@ public class Producto {
 
 	public void setNumValorVentaSolesIgv(String numValorVentaSolesIgv) {
 		this.numValorVentaSolesIgv = numValorVentaSolesIgv;
+	}
+
+	public int getDisplayChrcodigoproducto() {
+		return displayChrcodigoproducto;
+	}
+
+	public void setDisplayChrcodigoproducto(int displayChrcodigoproducto) {
+		this.displayChrcodigoproducto = displayChrcodigoproducto;
+		 
 	}
 
 	@Override

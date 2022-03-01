@@ -592,6 +592,8 @@ export default function ProductoFilter(props) {
       _vchDescripcion = props.query;         
     }
     console.log(_filterTypeLista);
+  
+
     if (_FILTER === MENU) {
       lstSubFamiliaFilter = [];
       // eslint-disable-next-line default-case
@@ -646,6 +648,7 @@ export default function ProductoFilter(props) {
             vchDescripcionSmall: e.vchDescripcionSmall,
             numStock: e.numStock,
             totalRegistros: e.totalRegistros,
+            displayChrcodigoproducto:e.displayChrcodigoproducto,
             familia: {
               chrCodigoFamilia: e.familia.chrCodigoFamilia,
               vchDescripcion: e.familia.vchDescripcion,

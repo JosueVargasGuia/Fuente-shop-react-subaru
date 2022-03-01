@@ -27,6 +27,7 @@ export default function ProductosCard(props) {
     vchDescripcionSmall: props.producto.vchDescripcionSmall,
     numStock: props.producto.numStock,
     moneda: props.moneda,
+    displayChrcodigoproducto:props.producto.displayChrcodigoproducto,
     familia: {
       chrCodigoFamilia: props.producto.familia.chrCodigoFamilia,
       vchDescripcion: props.producto.familia.vchDescripcion,
@@ -247,9 +248,12 @@ export default function ProductosCard(props) {
             className="producto-card-nombre"
             onClick={handleEventShowDetalle}
           >
-            <span>{props.producto.vchDescripcion}</span>
+            <span>{props.producto.vchDescripcionSmall}</span>
           </div>
-        
+          {props.producto.displayChrcodigoproducto === 1 ? <div className="producto-card-codigo">
+            {props.producto.chrCodigoProducto}
+          </div> : <></>}
+
           <div className="producto-card-stock">
             Stock Disponible:&nbsp;{props.producto.numStock}
           </div>
@@ -301,16 +305,22 @@ export default function ProductosCard(props) {
               </div>
             </div>
             <div className="producto-card-modal-column2">
+          
               <span className="producto-card-modal-nombre">
                 {producto.vchDescripcion}
               </span>
+              
+              {producto.displayChrcodigoproducto === 1 ? <span className="producto-card-modal-nombre">
+                {producto.chrCodigoProducto}
+              </span>: <></>}
+              
               <span className="producto-card-modal-precio">
                 {" "}
                 {producto.moneda.vchSimbolo}{" "}
                 {producto.moneda.numCodigoMoneda ===
                 Moneda.DOLARES.numCodigoMoneda
-                  ? producto.numValorVentaDolar
-                  : producto.numValorVentaSoles}{" "}
+                  ? producto.numValorVentaDolarIgv
+                  : producto.numValorVentaSolesIgv}{" "}
               </span>
               <span className="producto-card-modal-cantidad">Cantidad</span>
               <div className="producto-card-modal-accion">

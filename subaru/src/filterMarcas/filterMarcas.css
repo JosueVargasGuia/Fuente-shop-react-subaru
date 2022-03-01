@@ -79,16 +79,16 @@
     border-radius: 10px;
     width: 80%;
 }
-
+/*
 .filter-row-mobile-input .filter-input-search {
     width: 100%;
     border-top: solid 2px var(--color-font-disable);
     padding-top: 2px;
 }
-
+ 
 .filter-input-search {
     position: relative;
-}
+}*/
 
 .filter-row-mobile .header-link {
     width: 60%;

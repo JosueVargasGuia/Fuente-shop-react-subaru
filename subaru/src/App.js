@@ -243,8 +243,7 @@ function App() {
     });
   }
 
-  function handleInputChangeDescripcion(e) {    
-     
+  function handleInputChangeDescripcion(e) {  
     dispatch({
       type: actionType.INPUT_DESCRIPCION,
       descripcion: e.target.value,
@@ -348,6 +347,7 @@ function App() {
                 moneda={state.moneda}
                 handleSelectMarcaChange={handleSelectMarcaChange}
                 query={state.descripcion}
+                handleInputChangeDescripcion={handleInputChangeDescripcion}
               ></ProductoFilter>
             </Route>
 
