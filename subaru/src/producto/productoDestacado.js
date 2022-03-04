@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import {  listaCategoria, segmentoAccesorios, segmentoLifeStyle, segmentoMantenimiento, segmentoRecambio } from "../service/EnumMenu";
+import {  listaCategoria, listaMenu,  _CodigoGrupo, _IndentificadorMenu } from "../service/EnumMenu";
 import { findProductos } from "../service/producto.service";
 import { displayLista,FilterProducto, homepage, HttpStatus,SUCCESS_SERVER } from "../service/ENUM";
 import ProductosCard from "./productoCard";
@@ -20,36 +20,79 @@ export default function ProductoDestacado(props) {
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
 
-  let rowSegmentoMantenimiento = segmentoMantenimiento.map((rowRep) => <div key={rowRep.key}>
-    <Link to={rowRep.url+"/"+rowRep.identificador+"/filter/all"} key={rowRep.key} >
+  let rowSegmentoMantenimiento = [];/*segmentoMantenimiento.map((rowRep) => <div key={rowRep.identificador}>
+    <Link to={"shop/"+rowRep.identificador+"/filter/all"} key={rowRep.identificador} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowRep.srcimg} alt={rowRep.srcimg} loading='lazy'></img>
       <span className="produc-link-title">{rowRep.discripcion}</span>
     </Link>
-  </div>);
-  let rowsegmentoRecambio = segmentoRecambio.map((rowReca) => 
-  <div key={rowReca.key}>
-    <Link to={rowReca.url+"/"+rowReca.identificador+"/filter/all"} key={rowReca.key} >
+  </div>);*/
+  let rowsegmentoRecambio = [];/*segmentoRecambio.map((rowReca) => 
+  <div key={rowReca.identificador}>
+    <Link to={"shop/"+rowReca.identificador+"/filter/all"} key={rowReca.identificador} >
       <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowReca.srcimg} alt={rowReca.srcimg} loading='lazy'></img>
       <span className="produc-link-title">{rowReca.discripcion}</span>
     </Link>
-  </div>);
+  </div>);*/
 
-let rowSegmentoAccesorios = segmentoAccesorios.map((rowAcce) => 
-<div key={rowAcce.key}>
-  <Link to={rowAcce.url+"/"+rowAcce.identificador+"/filter/all"} key={rowAcce.key} >
+let rowSegmentoAccesorios = [];/*segmentoAccesorios.map((rowAcce) => 
+<div key={rowAcce.identificador}>
+  <Link to={"shop/"+rowAcce.identificador+"/filter/all"} key={rowAcce.identificador} >
     <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowAcce.srcimg} alt={rowAcce.srcimg} loading='lazy'></img>
     <span className="produc-link-title">{rowAcce.discripcion}</span>
   </Link>
-</div>);
+</div>);*/
 
 
-let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlefSty.key}>
-<Link to={rowlefSty.url+"/"+rowlefSty.identificador+"/filter/all"} key={rowlefSty.key} >
+let rowSegmentoLifeStyle =[];/* segmentoLifeStyle.map((rowlefSty) => <div key={rowlefSty.identificador}>
+<Link to={"shop/"+rowlefSty.identificador+"/filter/all"} key={rowlefSty.identificador} >
   <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowlefSty.srcimg} alt={rowlefSty.srcimg} loading='lazy'></img>
   <span className="produc-link-title">{rowlefSty.discripcion}</span>
 </Link>
-</div>);
+</div>);*/
 
+for (let index = 0; index < listaMenu.length; index++) {
+  const menu = listaMenu[index];
+  if(menu.codigoGrupo===_CodigoGrupo.Mantenimiento){
+    rowSegmentoMantenimiento.push(
+     <div key={menu.identificador}>
+        <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
+          <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
+          <span className="produc-link-title">{menu.identificador}-{menu.discripcion}</span>
+        </Link>
+      </div>);
+  }
+  if(menu.codigoGrupo===_CodigoGrupo.Recambio){
+    rowsegmentoRecambio.push(
+      <div key={menu.identificador}>
+         <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
+           <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
+           <span className="produc-link-title">{menu.identificador}-{menu.discripcion}</span>
+         </Link>
+       </div>);
+  }
+  if(menu.codigoGrupo===_CodigoGrupo.Accesorios){
+    rowSegmentoAccesorios.push(
+      <div key={menu.identificador}>
+         <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
+           <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
+           <span className="produc-link-title">{menu.identificador}-{menu.discripcion}</span>
+         </Link>
+       </div>);
+  }
+  if(menu.codigoGrupo===_CodigoGrupo.LifeStyle){
+    rowSegmentoLifeStyle.push(
+      <div key={menu.identificador}>
+         <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
+           <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
+           <span className="produc-link-title">{menu.identificador}-{menu.discripcion}</span>
+         </Link>
+       </div>);
+  }
+}
+  
+
+
+  
   let rowCategoria = listaCategoria.map((rowCate) =>
     <div key={rowCate.key}  className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
       <div className="produc-link-accesorio-left">
@@ -230,24 +273,59 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlef
   return (
     <div key={props.marcaSelect.chrCodigoFamilia}>
       <div className="produc-destacado">
+       
+      
+        
+     
+      
+        {state.rowProducto !== undefined ? <>
+        {state.rowProducto.length <= 0 ?<></>:<>
+          <div className={("produc-destacado-title produc-destacado-header "+(state.rowProducto !== undefined?(state.rowProducto.length <= 0?"background1":"background2"):"background1"))}>
+          <div className="produc-destacado-title-text">
+            {(state.rowProducto !== undefined?(state.rowProducto.length <= 0?"":"DESTACADOS"):"")}
+          </div>          
+          <div className="produc-destacado-item-link link-href ">
+            <Link to={"/shop/"+_IndentificadorMenu.TodoDestacado+"/filter/all"}>
+              Ver todos los Destacado &raquo;
+            </Link>
+          </div>
+        </div>
+          <div className={ "produc-destacado-wrapper"  }>   
+          <div className="produc-destacado-item">
+            {state.rowProducto === null ? (
+              <LoadingClassic></LoadingClassic>
+            ) : (
+              state.rowProducto
+            )}
+          </div> 
+        </div></>}
+        </>:<></>}         
+      
+
+
+        
+
         {state.rowProductoOferta !== undefined ? (
           <>
             {state.rowProductoOferta.length <= 0 ? (
               <></>
             ) : (
               <>
-                <div className="produc-destacado-title">
-                  <h4>OFERTAS</h4>
-                </div>
+              <div className={("produc-destacado-title produc-destacado-header "+(state.rowProductoOferta !== undefined?(state.rowProductoOferta.length <= 0?"background1":"background2"):"background1"))}>
+                <div className="produc-destacado-title-text">
+                  {(state.rowProductoOferta !== undefined?(state.rowProductoOferta.length <= 0?"":"OFERTAS"):"")}
+                </div>  
+                {(state.rowProductoOferta !== undefined?(state.rowProductoOferta.length <= 0?<></>: 
+                <div className="produc-destacado-item-link link-href ">
+                    <Link to={"/shop/"+_IndentificadorMenu.TodoOferta+"/filter/all"}>
+                          Ver todos en Oferta &raquo;
+                    </Link>
+                </div>):<></>)} 
+              </div>
                 <div className="produc-destacado-wrapper">
                   <div className="produc-destacado-item">
                     {state.rowProductoOferta}
-                  </div>
-                  <div className="produc-destacado-item produc-destacado-item-right link-href">
-                    <Link to={"/shop/oferta/filter/all"}>
-                     Ver todos en Oferta &raquo;
-                    </Link>
-                  </div>
+                  </div>                 
                 </div>
               </>
             )}
@@ -255,54 +333,47 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlef
         ) : (
           <></>
         )}
-        {state.rowProducto !== undefined ? <>
-        {state.rowProducto.length <= 0 ?<></>:<>
-        <div className="produc-destacado-title">
-          <h4>DESTACADOS</h4>
-        </div>
-        </>}
-        </>:<></>}
-        <div className="produc-destacado-wrapper">
-          
-        {state.rowProducto !== undefined ? <>
-        {state.rowProducto.length <= 0 ?<></>:<>
-          <div className="produc-destacado-item">
-            {state.rowProducto === null ? (
-              <LoadingClassic></LoadingClassic>
-            ) : (
-              state.rowProducto
-            )}
-          </div></>}
-        </>:<></>}
-          
-
-          <div className="produc-destacado-item produc-destacado-item-right link-href">
-            <Link to={"/shop/" + props.marcaSelect.decripcion + "/filter/all"}>
-              Ver todos los productos &raquo;
-            </Link>
-          </div>
-        </div>
-
         <div className="produc-destacado-links">
-          <h3 className="produc-destacado-links-title">Partes de Mantenimiento</h3>
+         <div className="produc-destacado-links-header">  
+            <div className="produc-destacado-links-title"> </div>
+            <div className="produc-destacado-item-link link-href ">
+              <Link to={"/shop/"+_IndentificadorMenu.TodoProducto+"/filter/all"}>
+                      Ver todos los productos  &raquo;
+                      </Link>
+              </div>
+          </div> 
+        </div>
+        <div className="produc-destacado-links">
+         <div className="produc-destacado-links-header">  
+            <div className="produc-destacado-links-title">Partes de Mantenimiento</div>            
+          </div>
           <hr />
           <div className="produc-link">{rowSegmentoMantenimiento}</div>
         </div>
         
         <div className="produc-destacado-links">
-          <h3 className="produc-destacado-links-title">Partes de Recambio</h3>
+          <div className="produc-destacado-links-header">  
+            <div className="produc-destacado-links-title">Partes de Recambio</div>            
+          </div>
+         
           <hr />
           <div className="produc-link">{rowsegmentoRecambio}</div>
         </div>
 
         <div className="produc-destacado-links">
-          <h3 className="produc-destacado-links-title">Accesorios</h3>
+          <div className="produc-destacado-links-header">  
+            <div className="produc-destacado-links-title">Accesorios</div>            
+          </div>
+       
           <hr />
           <div className="produc-link">{rowSegmentoAccesorios}</div>
         </div>
         
         <div className="produc-destacado-links">
-          <h3 className="produc-destacado-links-title">LifeStyle</h3>
+          <div className="produc-destacado-links-header">  
+            <div className="produc-destacado-links-title">LifeStyle</div>            
+          </div>
+         
           <hr />
           <div className="produc-link">{rowSegmentoLifeStyle}</div>
         </div>
@@ -311,9 +382,9 @@ let rowSegmentoLifeStyle = segmentoLifeStyle.map((rowlefSty) => <div key={rowlef
           &nbsp;Imagen referencial. El producto podrá variar según modelo, versión y año.
         </div>      
         <div className="produc-destacado-links">
-          <h3 className="produc-destacado-links-title">
+          <div className="produc-destacado-links-title">
             Accesorios Subaru por modelo
-          </h3>
+          </div>
           <hr />
           <div className="produc-link-accesorio">{rowCategoria}</div>
         </div>

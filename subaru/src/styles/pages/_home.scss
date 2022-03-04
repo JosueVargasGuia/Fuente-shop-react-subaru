@@ -30,7 +30,7 @@ body {
     .produc-destacado {
         padding-bottom: 1rem;
         .produc-destacado-title {
-            padding: 10px;
+            padding: 0.4em;
             h4 {
                 font-size: 1.25rem;
                 text-align: left;
@@ -46,6 +46,36 @@ body {
             h5 {
                 margin: 0;
                 font-size: 18px;
+            }
+        }
+        .produc-destacado-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            color: red;
+            font-size: 1.25em;
+            .produc-destacado-title-text {
+                padding: 0.25em 0em 0.25em 0em;
+                font-weight: bold;
+            }
+            .produc-destacado-item-link {
+                padding: 0.25em 0em 0.25em 0em;
+                a {
+                    font-size: 1.25rem;
+                }
+            }
+        }
+        .background1 {
+            background-color: var(--color-background-white);
+            color: var(--color-background-Gray);
+        }
+        .background2 {
+            background-color: var(--color-background-Gray);
+            color: var(--color-background-white);
+            .produc-destacado-item-link {
+                a {
+                    color: var(--color-background-white);
+                }
             }
         }
         .produc-destacado-wrapper {

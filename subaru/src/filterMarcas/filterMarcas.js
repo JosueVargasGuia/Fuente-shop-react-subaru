@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import TipoCambio from "../producto/tipoCambio";
 import { homepage,  LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
-import {  listaAcesorios, listaRepuesto} from "../service/EnumMenu";
+import {  listaMenu, _CodigoGrupo, _IndentificadorMenu} from "../service/EnumMenu";
 import BottonCarrito from "../utils/bottonCarrito";
 import { } from "../service/ENUM";
 export default function
@@ -14,13 +14,34 @@ export default function
 
   const [srcLogo] = useState(window.location.origin + (homepage === undefined ? "" : "/" + homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
-  let rowRepuesto = listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
-    <Link to={"/shop/" + rowRepu.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
-  </li>);
-  let rowAccesorio = listaAcesorios.map((rowAcce) => <li key={rowAcce.codigo}>
-    <Link to={"/shop/" + rowAcce.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
-  </li>);
 
+  let rowRepuesto =[];/* listaRepuesto.map((rowRepu) =>
+  <li key={rowRepu.identificador}>
+    <Link to={"/shop/" + rowRepu.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
+  </li>);*/
+  let rowAccesorio =[];
+  
+  /*listaAcesorios.map((rowAcce) => <li key={rowAcce.identificador}>
+    <Link to={"/shop/" + rowAcce.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
+  </li>);*/
+for (let index = 0; index < listaMenu.length; index++) {
+    const menu = listaMenu[index];
+    if(menu.codigoGrupo===_CodigoGrupo.Repuesto){
+       
+      rowRepuesto.push(
+        <li key={menu.identificador}>
+          <Link to={"/shop/" + menu.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{menu.descripcion}</span></Link>
+        </li>);
+    }
+    if(menu.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle){
+    
+      rowAccesorio.push(
+      <li key={menu.identificador}>
+        <Link to={"/shop/" + menu.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{menu.descripcion}</span></Link>
+      </li>);
+    }
+  
+}
 
   let history = useHistory();
   const onClickImage = () => {    
@@ -36,7 +57,7 @@ export default function
     props.handleInputChangeDescripcion({target:{value:descripcion}});
     //history.push("/shop/search/filter/" + descripcion);
     handleInputChangeDescripcion({target:{value:''}});
-    history.push("/shop/search/filter/search");
+    history.push("/shop/"+_IndentificadorMenu.Busqueda+"/filter/search");
    
     
     
@@ -282,11 +303,12 @@ function handleOnKeyDown(e){
        
         <div className="filter-input-search">
 
-          <input
-            placeholder="Búscar por descripción"
-            value={descripcion}
-            onChange={(e) => props.handleInputChangeDescripcion(e)}
-          ></input>
+        <input
+                placeholder="Búscar por descripción"
+                value={descripcion}
+                onChange={(e) => handleInputChangeDescripcion(e)}
+                onKeyDown={(e)=>handleOnKeyDown(e)}
+              ></input>
           <button className="btn btn-primary btn-search" onClick={handleClickBuscarProductos}>
                 <i className="fa fa-search "></i> 
           </button>

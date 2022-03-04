@@ -104,12 +104,14 @@ export default function ProductoDetalle(props) {
           for (let i = 0; i < e.listaProductoImagen.length; i++) {
             let obj = e.listaProductoImagen[i];            
             _listaProductoImagen.push(
-              <img
+               <img
                 className="detalle-img"
                 key={i}
                 src={"data:image/png;base64," + obj.chrSrcImagen}
                 alt={obj.chrNombre}
+                title={obj.chrNombre}
               ></img>
+              
             );
           }
           /*Lista de detalles del producto */
@@ -127,14 +129,18 @@ export default function ProductoDetalle(props) {
             }
           }
           /*Ficha Tecnica */
-         
           _listaProductoDetalle.push(
-            <div className="detalle" key={"-2"}>
-              <div className="desc-label">Ficha técnica</div>
-              <div className="desc-value"> </div>
-              
+            <div className="detalle detalle-space" key={"-3"}>
+                          
             </div>
           );
+        /*  _listaProductoDetalle.push(
+            <div className="detalle" key={"-2"}>
+              <div className="desc-label">Características del producto</div>
+              <div className="desc-value"> </div>              
+            </div>
+          );
+          
           for (let i = 0; i < e.listaProductoDetalle.length; i++) {
             let objDet = e.listaProductoDetalle[i];
             if (objDet.rowTipo === 0) {
@@ -147,7 +153,7 @@ export default function ProductoDetalle(props) {
                 </div>
               );
             }
-          }
+          }*/
           producto.chrCodigoProducto = e.chrCodigoProducto;
           producto.numValorVentaDolar = e.numValorVentaDolar;
           producto.numValorVentaSoles = e.numValorVentaSoles;
@@ -379,26 +385,22 @@ export default function ProductoDetalle(props) {
         </Link>
         <span className="producto-det-link-span">/</span>
         <span className="producto-det-link-nombre">
-          {state.producto.vchDescripcion}
+          {state.producto.familia.vchDescripcion}
         </span>
       </div>
       <div className="producto-det-row">
         <div className="producto-det-row1 ">
           <div className="prod-det-carrousel">
             <Carousel
-              showArrows={false}
-              showStatus={false}
-              showIndicators={false}
-              showThumbs={false}
-              autoPlay={false}
-              infiniteLoop={false}
-              stopOnHover={true}
-              swipeable={true}
-              dynamicHeight={false}
-              emulateTouch={true}
-              autoFocus={true}
-              thumbWidth={75}
-              selectedItem={0}
+            autoPlay={true}
+            infiniteLoop={true}
+            interval={4000}
+            showThumbs={false}            
+            showStatus={false}
+            
+            autoFocus={true}
+            showIndicators={false}
+            dynamicHeight={true} 
             >
               {state.producto.listaProductoImagen}
             </Carousel>

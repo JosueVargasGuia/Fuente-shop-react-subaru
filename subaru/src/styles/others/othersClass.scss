@@ -625,16 +625,6 @@
     }
 }
 
-.produc-destacado-links-title {
-    //font-family: "Lato", sans-serif;
-    font-family: Arial, Helvetica, ArialTFF, sans-serif;
-    font-size: 17pt;
-    font-weight: bold;
-    margin-left: 0.5em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-}
-
 .produc-link-accesorio {
     display: flex;
     flex-wrap: wrap;
@@ -733,15 +723,22 @@
     }
 }
 
-.prod-det-carrousel .carousel .slide img {
-    width: 80%;
-    object-fit: contain;
+.prod-det-carrousel .carousel .slide {
+    min-height: 268px !important;
+    img {
+        width: 100%;
+        object-fit: contain;
+        background-color: var(--color-background-white);
+    }
 }
+
+
 /*
 .carousel .slide img {
     height: 100%;
 }
 */
+
 .tbl-rpt-display {
     min-height: 360px;
     overflow-x: auto;

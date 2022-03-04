@@ -102,12 +102,30 @@ const tipoActualizacionCotizacionDetalle = {
 };
 /*una moneda diferente se */
 const InfoCondicionCompra = {
-  EMISION:
-    <p><i className="fa fa-shield fa-black" aria-hidden="true"></i>Emitimos facturas en dólares. Si paga en soles se realizará la conversión a USD, según al tipo de cambio indicado en la parte superior de la página.</p>,
-  TRANSPORTE:
-    <p><i className="fa fa-truck fa-black"  aria-hidden="true"></i>Envíos en los siguientes 10 días; verifica que tu calle no se encuentre en las zonas peligrosas.</p>,
-  DEVOLUCIONES:
-    <p><i className="fa fa-exchange fa-black"  aria-hidden="true"></i>No se aceptan devoluciones.</p>,/* a menos que el producto tenga falla de fábrica */
+  EMISION: (
+    <p>
+      <i className="fa fa-shield fa-black" aria-hidden="true"></i>Emitimos
+      facturas en dólares. Si paga en soles se realizará la conversión a USD
+      según el tipo de cambio indicado en la parte superior de la página.
+    </p>
+  ),
+  TRANSPORTE: (
+    <p>
+      <i className="fa fa-truck fa-black" aria-hidden="true"></i>Envíos en los
+      siguientes 5 días; verifica que su calle no se encuentre en las zonas
+      peligrosas las cuales se detallan en el siguiente link{" "}
+      <a href=" https://chazki.com/zonaspeligrosas" target={"_blank"}>
+        https://chazki.com/zonaspeligrosas
+      </a>
+      .
+    </p>
+  ),
+  DEVOLUCIONES: (
+    <p>
+      <i className="fa fa-exchange fa-black" aria-hidden="true"></i>No se
+      aceptan devoluciones.
+    </p>
+  ) /* a menos que el producto tenga falla de fábrica */,
   STOCK: (
     <p>
       <i>
@@ -127,23 +145,28 @@ const InfoCondicionCompra = {
           ></path>
         </svg>
       </i>
-      Mientras procesamos su pedido y/o compra, es posible que el stock
-      publicado en nuestra página se puede agotar, de ser asi la operación será
-      cancelada. De ocurrir esto y la transacción se efectuó, nos comprometemos
-      a emitir una Nota de crédito para que Ud. pueda utilizarlo en compras futuras o realizar el extorno del dinero a su Tarjeta del Banco.
-      <br />
-      Si alguno de los productos seleccionados por Ud. está en promoción
-      (outlet) tenga presente que esta Campaña tiene un número muy limitado de
-      productos en stock y un tiempo determinado de vigencia.
-      <br />
-      Se dá por entendido que reconoce y acepta estar debidamente informado de
+    
+        Mientras procesamos su pedido y/o compra, es posible que el stock
+        publicado en nuestra página se puede agotar, de ser así la operación
+        será cancelada. Cuando ocurra esto y la transacción se efectuó, a su
+        solicitud nos comprometemos a emitir una Nota de crédito para que Ud.
+        pueda utilizarlo en compras futuras o realizar el extorno del dinero a
+        su Tarjeta del Banco.
+         <br></br>
+      
+        Si alguno de los productos seleccionados por Ud. está en promoción
+        (outlet) tenga presente que esta Campaña tiene un número muy limitado de
+        productos en stock y un tiempo determinado de vigencia.
+        <br></br>
+      Se da por entendido que reconoce y acepta estar debidamente informado de
       los alcances y limitaciones de las transacciones que realice por nuestro
       portal de comercio electrónico, no existiendo lugar a reclamo si las
       condiciones descritas se presentan durante el procesamiento de su compra.
+     
     </p>
   ),
 };
-/* Secuencia de pago */
+/* Secuencia de pago */ /*De ocurrir*/
 const PagoMenu = {
   PERSONALES: { index: 1 },
   ENVIO: { index: 2 },
@@ -245,7 +268,7 @@ const filterOrder = {
   FilterConImagen: "FilterConImagen",
   FilterOutlet: "FilterOutlet",
 };
-const FilterTypeLista={FilterNormal:"FilterNormal",FilterQuery:"FilterQuery"};
+//const FilterTypeLista={FilterNormal:"FilterNormal",FilterQuery:"FilterQuery"};
 const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */
   status: 1,
@@ -278,7 +301,7 @@ const Empresa = {
   abreviaturaSucursal: "RP4259",
 };
 const APP_DEV= {
-    CONTEXT:"DESARROLLO",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
+    CONTEXT:"DESARROLLODEV",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
      
 };
 
@@ -310,7 +333,7 @@ export {
   FilterCorreo,
   Empresa,
  
-  FilterTypeLista,
+  //FilterTypeLista,
   APP_DEV,
   
 };
