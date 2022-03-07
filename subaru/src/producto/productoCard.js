@@ -219,9 +219,15 @@ export default function ProductosCard(props) {
     });
     
   }
+  // Acá se debe setear el valor del color
+  const styleBgSticker = {
+    background: '#ff0000',
+  };
   return (
     <>
       <div className="producto-card">
+        {/* Se puede validar con un paránmetro si lleva o no el sticker */}
+        <div className="sticker-label" style={styleBgSticker}>Oferta</div>
         <div className="producto-card-img">
           <img
             src={"data:image/png;base64," + producto.imagenDefault.chrSrcImagen}

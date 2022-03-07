@@ -2079,6 +2079,34 @@ h4 {
 .produc-destacado-item {
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+    .producto-card{
+        overflow: hidden;
+        position: relative;
+    }
+    .sticker-label{
+        background-color: coral;
+        width: 26px;
+        height: 160px;
+        position: absolute;
+        top: -39px;
+        left: 13px;
+        z-index: 2;
+        transform: rotate(30deg);
+        word-wrap: break-word;
+        color: white;
+        padding: 0px 7px 0;
+        text-align: center;
+        line-height: 1;
+        letter-spacing: -4px;
+        font-size: 12px;
+        text-orientation: upright;
+        writing-mode: vertical-rl;
+        direction: rtl;
+        unicode-bidi: bidi-override;
+        text-transform: uppercase;
+        font-weight: bold;
+    }    
 }
 
 .produc-destacado-item-right {
