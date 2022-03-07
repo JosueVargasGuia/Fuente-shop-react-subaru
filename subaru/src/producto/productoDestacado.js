@@ -57,7 +57,7 @@ for (let index = 0; index < listaMenu.length; index++) {
      <div key={menu.identificador}>
         <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
           <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
-          <span className="produc-link-title">{menu.identificador}-{menu.discripcion}</span>
+          <span className="produc-link-title">{menu.descripcion}</span>
         </Link>
       </div>);
   }
@@ -66,7 +66,7 @@ for (let index = 0; index < listaMenu.length; index++) {
       <div key={menu.identificador}>
          <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
            <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
-           <span className="produc-link-title">{menu.identificador}-{menu.discripcion}</span>
+           <span className="produc-link-title">{menu.descripcion}</span>
          </Link>
        </div>);
   }
@@ -75,7 +75,7 @@ for (let index = 0; index < listaMenu.length; index++) {
       <div key={menu.identificador}>
          <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
            <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
-           <span className="produc-link-title">{menu.identificador}-{menu.discripcion}</span>
+           <span className="produc-link-title">{menu.descripcion}</span>
          </Link>
        </div>);
   }
@@ -84,7 +84,7 @@ for (let index = 0; index < listaMenu.length; index++) {
       <div key={menu.identificador}>
          <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
            <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
-           <span className="produc-link-title">{menu.identificador}-{menu.discripcion}</span>
+           <span className="produc-link-title">{menu.descripcion}</span>
          </Link>
        </div>);
   }
@@ -345,7 +345,7 @@ for (let index = 0; index < listaMenu.length; index++) {
         </div>
         <div className="produc-destacado-links">
          <div className="produc-destacado-links-header">  
-            <div className="produc-destacado-links-title">Partes de Mantenimiento</div>            
+            <div className="produc-destacado-links-title">Partes de Mantenimiento (Preventivo - Correctivo)</div>            
           </div>
           <hr />
           <div className="produc-link">{rowSegmentoMantenimiento}</div>

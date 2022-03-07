@@ -61,16 +61,15 @@ const _IndentificadorMenu={
   Busqueda:"busqueda",
   TodoDestacado:"destacado",
   TodoOferta:"oferta",
-  TodoProducto:"Productos",
-  Default:"Default",
+  TodoProducto:"productos",
+  TodoRepuesto:"repuesto",
+  TodoAccesorioLyfeStyle:"accesoriolyfestyle",
+  Default:"default",
+
   MenuPadreRepuestos:"MenuPadreRepuestos",
   MenuPadreAccesoriosLifeStyle:"MenuPadreAccesoriosLifeStyle",
 }
-const TARGET={
-  INIT:"INIT",
-  VERTICAL:"VERTICAL",
-  LOAD:"LOAD",
-}
+ 
 
 const listaMenu = [
   {
@@ -82,8 +81,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,  
-    target:TARGET.INIT
-     
+    
   },
   {
     descripcion: "Sistema Enfriamiento del Motor", 
@@ -94,7 +92,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0, 
     select:0, 
-    target:TARGET.INIT,  
+    
   },
   {
     descripcion: "Sistema de Combustible",  
@@ -105,7 +103,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Sistema Eléctrico del Motor",
@@ -116,7 +115,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Suspensión (Amortiguación)",    
@@ -127,7 +127,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Dirección, Ejes y Ruedas",   
@@ -138,7 +139,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Transmisión AT, MT y Diferencial",
@@ -149,7 +151,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Frenos",
@@ -160,7 +163,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Puertas y Paneles Exterior",     
@@ -171,7 +175,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Faros, Iluminación y Eléctricos",
@@ -182,7 +187,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Parabrisas, Vidrios de Puertas",
@@ -193,7 +199,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Aire Acondicionado",
@@ -204,7 +211,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Fluidos Subaru",
@@ -214,7 +222,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   }, 
   {
     descripcion: "Accesorios Subaru",
@@ -225,7 +234,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorio_LyfeStyle,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Subaru Lifestyle",
@@ -236,7 +246,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorio_LyfeStyle,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {
     descripcion: "Accesorios STI", 
@@ -247,7 +258,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorio_LyfeStyle,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   }, 
   {    
     descripcion: "Filtros de Aire",
@@ -258,7 +270,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Mantenimiento,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+   
   },
   {    
     descripcion: "Filtros de Aceite",
@@ -269,7 +282,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Mantenimiento,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   },
   {    
     descripcion: "Pastillas de Freno",
@@ -280,7 +294,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Mantenimiento,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   },
   {     
     descripcion: "Discos de Freno",
@@ -291,7 +306,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Mantenimiento,
     display: 0,
     select:0,
-    target:TARGET.INIT, 
+    
+    
   },
   {     
     descripcion: "Bujías",
@@ -302,7 +318,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Mantenimiento,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   },
   {    
     descripcion: "Fajas, correas y templadores",
@@ -313,7 +330,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Mantenimiento,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   }, 
   {
     
@@ -325,7 +343,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Recambio,
     display: 0,
     select:0,
-    target:TARGET.INIT, 
+    
+    
   },
   {
      
@@ -337,7 +356,8 @@ const listaMenu = [
     codigoGrupo:  _CodigoGrupo.Recambio,
     display: 0,
     select:0,
-    target:TARGET.INIT,  
+    
+     
   },
   {    
     descripcion: "Radiadores",
@@ -348,7 +368,8 @@ const listaMenu = [
     codigoGrupo:  _CodigoGrupo.Recambio,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   },
   {     
     descripcion: "Suspensión",
@@ -359,7 +380,8 @@ const listaMenu = [
     codigoGrupo:  _CodigoGrupo.Recambio,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   },
   {    
     descripcion: "Limpiaparabrisas",
@@ -370,11 +392,12 @@ const listaMenu = [
     codigoGrupo:  _CodigoGrupo.Recambio,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   },
   {     
-    descripcion: "Todas las categorías",
-    srcimg: "/marcas/subaru/recambio/R6.png",    
+    descripcion: "Lubricantes y Fluidos",
+    srcimg: "/marcas/subaru/recambio/R6.gif",    
     identificador: _IndentificadorMenu.Recambio_6,
     subFamilia: [],
     query: [
@@ -388,7 +411,8 @@ const listaMenu = [
     codigoGrupo:  _CodigoGrupo.Recambio,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   }, 
   {   
     descripcion: "Carga",
@@ -399,7 +423,8 @@ const listaMenu = [
     codigoGrupo:  _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+    
   },
   {
     descripcion: "Embellecedor de Estribo",
@@ -410,7 +435,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+    
   },
   {
     descripcion: "Cargomat y Pisos de Alfombra",
@@ -421,7 +447,8 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
+     
   },
   {
     descripcion: "Perillas de cambio",
@@ -432,7 +459,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+       
   },
   {
     descripcion: "Parrillas y Riel de Techo",
@@ -443,7 +470,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+        
   },
   {
     descripcion: "Spoiler Post. y Estribo ",
@@ -454,7 +481,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
   },
   { 
     descripcion: "Kit de Seguros de Ruedas",
@@ -465,7 +492,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
   },
   {   
     descripcion: "Sistema de Remolque",
@@ -476,7 +503,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
   },
   {
     descripcion: "Interior",
@@ -487,7 +514,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Accesorios,
     display: 0,
     select:0,
-    target:TARGET.INIT,
+    
   }, 
   {
     descripcion: "Llaveros",
@@ -498,7 +525,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.LifeStyle,
     display: 0,  
     select:0,
-    target:TARGET.INIT, 
+    
   },
   {
     descripcion: "Accesorios STI",
@@ -509,8 +536,7 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.LifeStyle,
     display: 0,
     select:0,
-    target:TARGET.INIT,
-     
+         
   },
 /*###################################*/
 {
@@ -522,7 +548,8 @@ const listaMenu = [
   codigoGrupo: _CodigoGrupo.Personalizado,
   display: 0,
   select:0,
-  target:TARGET.INIT,
+  
+   
 },
 {
   descripcion: "Destacado",
@@ -533,7 +560,7 @@ const listaMenu = [
   codigoGrupo: _CodigoGrupo.Personalizado,
   display: 0,
   select:0,
-  target:TARGET.INIT,
+     
 },
 {
   descripcion: "Oferta",
@@ -544,7 +571,7 @@ const listaMenu = [
   codigoGrupo: _CodigoGrupo.Personalizado,
   display: 0,
   select:0,
-  target:TARGET.INIT,
+    
 },
 {
   descripcion: "Todos los Productos",
@@ -553,8 +580,29 @@ const listaMenu = [
   subFamilia: [],
   query: [],    
   codigoGrupo: _CodigoGrupo.Personalizado,
+  display: 0,  
+  
+},
+
+{
+  descripcion: "Repuestos",
+  srcimg: "",   
+  identificador: _IndentificadorMenu.TodoRepuesto,
+  subFamilia: [],
+  query: [],    
+  codigoGrupo: _CodigoGrupo.Personalizado,
   display: 0,
-  target:TARGET.INIT,
+    
+},
+{
+  descripcion: "Accesorios y LifeStyle",
+  srcimg: "",   
+  identificador: _IndentificadorMenu.TodoAccesorioLyfeStyle,
+  subFamilia: [],
+  query: [],    
+  codigoGrupo: _CodigoGrupo.Personalizado,
+  display: 0, 
+   
 },
 ];
 
@@ -633,5 +681,5 @@ export {
   listaCategoria,
   _IndentificadorMenu,
   _CodigoGrupo,
-  TARGET
+   
 };

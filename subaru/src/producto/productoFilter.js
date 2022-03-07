@@ -11,21 +11,14 @@ import {
   //FilterTypeLista,
 } from "../service/ENUM";
 import {
-  listaMenu,  TARGET,  _CodigoGrupo, _IndentificadorMenu
+  listaMenu,_CodigoGrupo, _IndentificadorMenu
 } from "../service/EnumMenu";
 import { findProductos } from "../service/producto.service";
 import Loading from "../utils/loading";
 
 import ProductosCard from "./productoCard";
 const LIMITE = 9;
-const RECOMENDADO = "RECOMENDADO";
-const OFERTA = "OFERTA";
-const REMATE = "REMATE";
-const DEFAULT = "DEFAULT";
-const SEARCH = "SEARCH";
-const MENU = "MENU";
-const TODOS = "TODOS";
-const ATAJOS = "ATAJOS";
+ 
 
 
 
@@ -38,6 +31,7 @@ const MENU_Repuestos={
   codigoGrupo: _CodigoGrupo.Personalizado,
   display: 1,
   select:0,
+  
  
 };
 const MENU_Accesorios_LifeStyle={
@@ -49,6 +43,7 @@ const MENU_Accesorios_LifeStyle={
     codigoGrupo: _CodigoGrupo.Personalizado,
     display: 1,
     select:0,
+   
      
   };
  
@@ -71,6 +66,7 @@ export default function ProductoFilter(props) {
     listaQuery:[],
     listaQuerySubFamilia:[],
     lstMenuVertical: [],
+    lstMenuVerticalData: [],
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
   
@@ -83,16 +79,16 @@ export default function ProductoFilter(props) {
 
     console.log("handleInitVariable 1 props.moneda, params.query, params.descripcion");
 
-    handleInitVariable(params.descripcion,TARGET.LOAD).then((_object) => {
-      console.log(state)
+    handleInitVariable(params.descripcion ).then((_object) => {
+     
       handleEventAddSubFamiliaSelect(
         1,
         filterOrder.FilterAscDescripcion,
-        _object.menu,
-        _object.filter,
+        _object.menu, 
         _object.listaQuery,
         _object.listaQuerySubFamilia,
-        _object.lstMenuVertical
+        _object.lstMenuVertical,
+        _object.lstMenuVerticalData
       );
        
     });
@@ -102,7 +98,7 @@ export default function ProductoFilter(props) {
  
   async function handleInitVariable(_identificador,target) {
     let _MENU= {
-      descripcion: "Default",  
+      descripcion: "Todos los Productos",  
       srcimg:"",  
       identificador:  _IndentificadorMenu.Default,
       subFamilia: [],
@@ -111,62 +107,82 @@ export default function ProductoFilter(props) {
       display: 0,
       select:0,
       
-    };
-    let _FILTER;
-   
+    };   
     let _lstMenuVertical = [];
     let _lstMenuVerticalState=[];
     let _listaQuery=[];
     let _listaQuerySubFamilia=[];
     for (let index = 0; index < listaMenu.length; index++) {
       const objMenu = listaMenu[index];
-      if(objMenu.identificador===_identificador){
-        _FILTER=objMenu.codigoGrupo;
+      if(objMenu.identificador===_identificador){ 
         _MENU=objMenu;
       }
-    }
-   
-      if(_MENU.identificador===_IndentificadorMenu.TodoProducto || _MENU.identificador===_IndentificadorMenu.Default){   
-        MENU_Repuestos.select===0? MENU_Repuestos.select=1: MENU_Repuestos.select=0; 
-        MENU_Repuestos.target=target;
+    }   
+      if(_MENU.identificador===_IndentificadorMenu.TodoProducto || _MENU.identificador===_IndentificadorMenu.Default){           
         _lstMenuVerticalState.push(MENU_Repuestos);
         for (let index = 0; index < listaMenu.length; index++) {
           const _objMenu = listaMenu[index];
           if(_objMenu.codigoGrupo===_CodigoGrupo.Repuesto){
-            _objMenu.target=target;
+           
             _objMenu.display=0;
             _lstMenuVerticalState.push(_objMenu);
           }
-        }
-        MENU_Accesorios_LifeStyle.select===0? MENU_Accesorios_LifeStyle.select=1: MENU_Accesorios_LifeStyle.select=0; 
-        MENU_Repuestos.target=target;
+        }         
         _lstMenuVerticalState.push(MENU_Accesorios_LifeStyle);
         for (let index = 0; index < listaMenu.length; index++) {
           const _objMenu_ = listaMenu[index];
           if(_objMenu_.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle){   
-            _objMenu_.target=target; 
+            
             _objMenu_.display=0;               
             _lstMenuVerticalState.push(_objMenu_);
           }
         }
-      }else{     
-        for (let index = 0; index < listaMenu.length; index++) {
-          let _objMenu1 = listaMenu[index];
-          if(_objMenu1.identificador===_MENU.identificador){
-            _objMenu1.target=target;
-            _objMenu1.display=1;
-            _lstMenuVerticalState.push(_objMenu1);
+      }else{   
+        if (
+          _MENU.codigoGrupo === _CodigoGrupo.Personalizado &&
+          (_MENU.identificador === _IndentificadorMenu.TodoRepuesto ||
+            _MENU.identificador === _IndentificadorMenu.TodoAccesorioLyfeStyle)
+        ) {
+          if(_MENU.identificador === _IndentificadorMenu.TodoRepuesto){             
+            _lstMenuVerticalState.push(MENU_Repuestos);           
+            for (let index = 0; index < listaMenu.length; index++) {
+              let _objMenu1 = listaMenu[index];
+              if (_objMenu1.identificador ===_CodigoGrupo.Repuesto) {            
+                _objMenu1.display =0;                 
+                _lstMenuVerticalState.push(_objMenu1);
+              }
+            }
+          }
+          if(_MENU.identificador === _IndentificadorMenu.TodoAccesorioLyfeStyle){            
+            _lstMenuVerticalState.push(MENU_Accesorios_LifeStyle);           
+            for (let index = 0; index < listaMenu.length; index++) {
+              let _objMenu1 = listaMenu[index];
+              if (_objMenu1.codigoGrupo === _CodigoGrupo.Accesorio_LyfeStyle) {                 
+                _objMenu1.display = 0;                
+                _lstMenuVerticalState.push(_objMenu1);
+              }
+            }
+          }
+           
+        } else {
+          for (let index = 0; index < listaMenu.length; index++) {
+            let _objMenu1 = listaMenu[index];
+            if (_objMenu1.identificador === _MENU.identificador) {             
+              _objMenu1.display = 1;
+              _lstMenuVerticalState.push(_objMenu1);
+            }
           }
         }
       }
       /* */
       _lstMenuVertical=handleBuiltMenu(_lstMenuVerticalState);
- 
- 
-    return { menu: _MENU, filter: _FILTER, lstMenuVertical: _lstMenuVertical,listaQuery:_listaQuery,listaQuerySubFamilia:_listaQuerySubFamilia };
+      MENU_Accesorios_LifeStyle.isFiltroHistorial=0;
+      MENU_Repuestos.isFiltroHistorial=0;
+    return { menu: _MENU, lstMenuVertical: _lstMenuVertical,lstMenuVerticalData:_lstMenuVerticalState,listaQuery:_listaQuery,listaQuerySubFamilia:_listaQuerySubFamilia };
   }
  function handleBuiltMenu(_listaMenu){
    let _listaMenuVertical=[];
+ 
    for (let index = 0; index < _listaMenu.length; index++) {
     const element = _listaMenu[index];
     _listaMenuVertical.push(
@@ -181,11 +197,11 @@ export default function ProductoFilter(props) {
         }
         key={element.identificador}
         onClick={(e) => {
-           handleEventChangeMenu(element);
+           handleEventChangeMenu(element,_listaMenu);
         }}
       >
         
-         {element.descripcion}-{element.select}
+         {element.descripcion}  
        
       </li>
     );
@@ -195,92 +211,98 @@ export default function ProductoFilter(props) {
   async function handleEventAddSubFamiliaSelect(
     _currentPage,
     _filterOrder,
-    _MENU,
-    _FILTER,
+    _MENU,  
     _listaQuery,
     _listaQuerySubFamilia,
-    _lstMenuVertical
-  ) {
- 
+    _lstMenuVertical,
+    _lstMenuVerticalData
+  ) {  
+    dispatch({
+      type: actionType.LOAD_CHANGE_MENU_LOAD, 
+      lstMenuVertical: _lstMenuVertical,
+      menu:_MENU
+    });
     let _totalRegistros = 0;
-
     let lstSubFamiliaFilter = [];
     /*Listado de Producto */
     let _filterProducto = FilterProducto.FILTER_ALL_FIND;
     let _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
     let _vchDescripcion = null;
-    //let _filterTypeLista = FilterTypeLista.FilterNormal;
-    if (_FILTER === DEFAULT) {
-      _filterProducto = FilterProducto.FILTER_ALL_FIND;
-      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
-      //_filterTypeLista = FilterTypeLista.FilterNormal;
-    }
-    if (_FILTER === RECOMENDADO) {
-      _filterProducto = FilterProducto.FILTER_RECOMENDADO;
-      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      //_filterTypeLista = FilterTypeLista.FilterNormal;
-    }
-    if (_FILTER === REMATE) {
-      _filterProducto = FilterProducto.FILTER_REMATE;
-      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      //_filterTypeLista = FilterTypeLista.FilterNormal;
-    }
-    if (_FILTER === OFERTA) {
-      _filterProducto = FilterProducto.FILTER_OFERTA;
-      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      //_filterTypeLista = FilterTypeLista.FilterNormal;
-    }
-    if (_FILTER === ATAJOS) {
+    if(_MENU.codigoGrupo=== _CodigoGrupo.Personalizado){
+    if(_MENU.identificador===_IndentificadorMenu.TodoProducto){
       _filterProducto = FilterProducto.FILTER_ALL;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      //_filterTypeLista = FilterTypeLista.FilterQuery;
     }
-    if (_FILTER === SEARCH) {
-      _filterProducto = FilterProducto.FILTER_SEARCH;
+    
+    if(_MENU.identificador===_IndentificadorMenu.TodoOferta){
+      _filterProducto = FilterProducto.FILTER_OFERTA;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      //_filterTypeLista = FilterTypeLista.FilterNormal;
-      _vchDescripcion = props.query;         
     }
-     
-  
 
-    if (_FILTER === MENU || _FILTER===TODOS) {
-      lstSubFamiliaFilter = [];
-      // eslint-disable-next-line default-case
-     /* for (let index = 0; index < listaRepuesto.length; index++) {
-        const row = listaRepuesto[index];
-        if (row.identificador === __MENU) {
-          for (let j = 0; j < row.subFamilia.length; j++) {
-            const _e = row.subFamilia[j];
-            lstSubFamiliaFilter.push({ chrCodigoSubFamilia: _e });
-          }
-        }
-      }
-      for (let index = 0; index < listaAcesorios.length; index++) {
-        const row = listaAcesorios[index];
-        if (row.identificador === __MENU) {
-          for (let j = 0; j < row.subFamilia.length; j++) {
-            const _e = row.subFamilia[j];
-            lstSubFamiliaFilter.push({ chrCodigoSubFamilia: _e });
-          }
-        }
-      }*/
+    if(_MENU.identificador===_IndentificadorMenu.TodoDestacado){
+      _filterProducto = FilterProducto.FILTER_DESTACADO_MARCA;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
     }
-    if (_FILTER === ATAJOS) {
-      console.log(_listaQuerySubFamilia);
-      for (let index = 0; index < _listaQuerySubFamilia.length; index++) {
-        _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
-        let _obj = _listaQuerySubFamilia[index];
-        lstSubFamiliaFilter.push({ chrCodigoSubFamilia: _obj});
+
+    if(_MENU.identificador===_IndentificadorMenu.Default){
+      _filterProducto = FilterProducto.FILTER_ALL;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
+    }
+    if(_MENU.identificador===_IndentificadorMenu.Busqueda){
+      _filterProducto = FilterProducto.FILTER_SEARCH;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL; 
+      _vchDescripcion = props.query;   
+    }
+
+    if(_MENU.identificador===_IndentificadorMenu.TodoRepuesto){
+      _filterProducto = FilterProducto.FILTER_ALL;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
+      for (let index = 0; index < listaMenu.length; index++) {
+        const element = listaMenu[index];
+          if(element.codigoGrupo===_CodigoGrupo.Repuesto){            
+            for (let x = 0; x < element.subFamilia.length; x++) {
+              const elementFamilia = element.subFamilia[x];  
+        
+              lstSubFamiliaFilter.push({ chrCodigoSubFamilia: elementFamilia});
+            }
+          }
       }
     }
-
-
+    if(_MENU.identificador===_IndentificadorMenu.TodoAccesorioLyfeStyle){
+      _filterProducto = FilterProducto.FILTER_ALL;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
+      for (let index = 0; index < listaMenu.length; index++) {
+        const element = listaMenu[index];
+          if(element.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle){
+            for (let x = 0; x < element.subFamilia.length; x++) {
+              const elementFamilia = element.subFamilia[x];  
+              lstSubFamiliaFilter.push({ chrCodigoSubFamilia: elementFamilia});
+            }
+          }
+      }
+    }
+   
+  }else{
+    for (let index = 0; index < _MENU.subFamilia.length; index++) {
+      const element = _MENU.subFamilia[index];  
+      lstSubFamiliaFilter.push({ chrCodigoSubFamilia: element});
+    }
+    if (
+      _MENU.codigoGrupo === _CodigoGrupo.Mantenimiento ||
+      _MENU.codigoGrupo === _CodigoGrupo.Recambio ||
+      _MENU.codigoGrupo === _CodigoGrupo.Accesorios ||
+      _MENU.codigoGrupo === _CodigoGrupo.LifeStyle
+    ) {
+      for (let index = 0; index < _MENU.query.length; index++) {
+        const element = _MENU.query[index];  
+        _listaQuery.push(element);
+      }
+    }
+  }
     let lstProducto = [];
     const rpt = await findProductos({
       chrCodigoFamilia: _marca.chrcodigofamilia,
-      vchDescripcion: _vchDescripcion,
-      chrCodigoProducto: null,
+      vchDescripcion: _vchDescripcion, 
       filterProducto: _filterProducto,
       listaSubFamilia: lstSubFamiliaFilter,
       filterSubFamilia: _filterSubFamilia,
@@ -333,26 +355,28 @@ export default function ProductoFilter(props) {
         }
 
       }
-    }    
-    dispatch({
-      type: actionType.LOAD_PRODUCTO,
-      lstProducto: lstProducto,
-      totalRegistros: _totalRegistros,
-      isLoandingProductos: false,
-      currentPage: _currentPage,
-      lstMenuVertical:_lstMenuVertical,
-      menu:_MENU
-    });
+    } 
+      dispatch({
+        type: actionType.LOAD_PRODUCTO,
+        lstProducto: lstProducto,
+        totalRegistros: _totalRegistros,
+        isLoandingProductos: false,
+        currentPage: _currentPage,
+        lstMenuVertical:_lstMenuVertical,
+        lstMenuVerticalData:_lstMenuVerticalData,
+        menu:_MENU
+      });
+ 
   }
   function handleEventToPage(_currentPage) {
     handleEventAddSubFamiliaSelect(
       _currentPage,
       state.filterOrder,
-      state.MenuConext,
-      state.filter,
+      state.menu, 
       state.listaQuery,
-      state.listaQuerySubFamilia,
-      state.lstMenuVertical
+      state.lstSubFamilia,
+      state.lstMenuVertical,
+      state.lstMenuVerticalData,
     );
   }
   function handleEventChangeFilterOrder(e) {
@@ -363,85 +387,133 @@ export default function ProductoFilter(props) {
     handleEventAddSubFamiliaSelect(
       1,
       e.target.value,
-      state.MenuConext,
-      state.filter,
+      state.menu, 
       state.listaQuery,
-      state.listaQuerySubFamilia,
-      state.lstMenuVertical
-      
+      state.lstSubFamilia,
+      state.lstMenuVertical,
+      state.lstMenuVerticalData,
     );
+/*           1,
+            state.filterOrder,
+            _object,        
+            state.listaQuery,
+            state.lstSubFamilia,
+            _lstMenuVertical,
+            _lstMenuVerticalData */
+
+
   }
-async  function handleEventChangeMenu(_object) {
-    
+async  function handleEventChangeMenu(_object,_listaMenu) {
+  
+ 
+  let _lstMenuVertical=[]; 
+  let _lstMenuVerticalData=[]; 
+
     if (_object.identificador === _IndentificadorMenu.MenuPadreRepuestos ||
-      _object.identificador === _IndentificadorMenu.MenuPadreAccesoriosLifeStyle ) {
-         
-        let _lstMenuVerticalState=[]; 
-       
+        _object.identificador === _IndentificadorMenu.MenuPadreAccesoriosLifeStyle ) {       
           MENU_Repuestos.select===0? MENU_Repuestos.select=1: MENU_Repuestos.select=0; 
           MENU_Accesorios_LifeStyle.select===0? MENU_Accesorios_LifeStyle.select=1: MENU_Accesorios_LifeStyle.select=0; 
-        _lstMenuVerticalState.push(MENU_Repuestos); 
-             
+                      
           if(_object.identificador === _IndentificadorMenu.MenuPadreRepuestos){
-            
+            _lstMenuVerticalData.push(MENU_Repuestos);  
            for (let index = 0; index < listaMenu.length; index++) {
             let element = listaMenu[index];
               if(element.codigoGrupo===_CodigoGrupo.Repuesto){
-                element.display=_object.select===1?0:1;
-                _lstMenuVerticalState.push(element);
+                element.display=MENU_Repuestos.select;
+                _lstMenuVerticalData.push(element);
               }
             }       
-          }    
-          _lstMenuVerticalState.push(MENU_Accesorios_LifeStyle); 
+          }else{
+            if(params.descripcion ===_IndentificadorMenu.TodoProducto){
+              _lstMenuVerticalData.push(MENU_Repuestos); 
+            }
+          }     
+         
           if(_object.identificador === _IndentificadorMenu.MenuPadreAccesoriosLifeStyle){
+            _lstMenuVerticalData.push(MENU_Accesorios_LifeStyle); 
             for (let index = 0; index < listaMenu.length; index++) {             
               let element = listaMenu[index];
               if(element.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle){
-                element.display=_object.select===1?0:1;
-                _lstMenuVerticalState.push(element);
+                element.display= MENU_Accesorios_LifeStyle.select;
+                _lstMenuVerticalData.push(element);
               }
+            }            
+          }else{
+            if(params.descripcion ===_IndentificadorMenu.TodoProducto){
+              _lstMenuVerticalData.push(MENU_Accesorios_LifeStyle); 
             }
-            
           }  
-         let _lstMenuVertical=handleBuiltMenu(_lstMenuVerticalState)      
+           _lstMenuVertical=handleBuiltMenu(_lstMenuVerticalData)      
         dispatch({
           type: actionType.LOAD_CHANGE_MENU, 
           lstMenuVertical: _lstMenuVertical,
         });    
   
-    }else{      
-        let _obj= await handleInitVariable(_object.identificador ,TARGET.LOAD) ;
-         
-          handleEventAddSubFamiliaSelect(
+    }else{ 
+      let flgChangeDisplay = false;
+      for (let index = 0; index < _listaMenu.length; index++) {
+        let element = _listaMenu[index];
+        if (
+          element.identificador === _IndentificadorMenu.MenuPadreRepuestos ||
+          element.identificador ===
+            _IndentificadorMenu.MenuPadreAccesoriosLifeStyle
+        ) {
+          flgChangeDisplay = true;
+        }
+      }
+
+      if (flgChangeDisplay === true) {
+        MENU_Repuestos.select === 0
+          ? (MENU_Repuestos.select = 1)
+          : (MENU_Repuestos.select = 0);
+        MENU_Accesorios_LifeStyle.select === 0
+          ? (MENU_Accesorios_LifeStyle.select = 1)
+          : (MENU_Accesorios_LifeStyle.select = 0);
+      }
+      for (let index = 0; index < _listaMenu.length; index++) {
+        let element = _listaMenu[index];
+        if (flgChangeDisplay === true) {
+          if (
+            element.identificador === _IndentificadorMenu.MenuPadreRepuestos ||
+            element.identificador ===
+              _IndentificadorMenu.MenuPadreAccesoriosLifeStyle
+          ) {
+            element.display = 1;
+          } else {
+            element.display = 0;
+          }
+        } else {
+          element.display = 1;
+        }
+        _lstMenuVerticalData.push(element);
+      }
+      _lstMenuVertical=handleBuiltMenu(_lstMenuVerticalData);       
+      handleEventAddSubFamiliaSelect(
             1,
             state.filterOrder,
-            _object,
-            state.filter,
+            _object,        
             state.listaQuery,
             state.lstSubFamilia,
-            _obj.lstMenuVertical
+            _lstMenuVertical,
+            _lstMenuVerticalData
           ); 
-          
-  
-               
-      
-    }
-    /*
-      dispatch({
-        type: actionType.LOAD_CHANGE_MENU, 
-        lstMenuVertical: _lstMenuVertical,
-      });
-   */
+    }  
  
   }
   return (
     <div className="produc-destacado prod-filter-form">
       {state.isLoandingProductos ? <Loading></Loading> : ""}
       <div className="prod-filter-header">
-      <div className="link-href">
-            <Link to="/shop">Inicio</Link>&nbsp;/
-            <span className="link-href-span">{state.menu.descripcion}</span>
-          </div>
+      <div className="link-href-historial">
+            <Link to="/shop" ><i className="fa fa-home"></i>Home&nbsp;</Link>
+            {state.menu.codigoGrupo===_CodigoGrupo.Repuesto ?
+             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoRepuesto + "/filter/all"} target={"_parent"}>Repuestos&nbsp;</Link></>:""}
+            
+             {state.menu.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle ?
+             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoAccesorioLyfeStyle+ "/filter/all"} target={"_parent"}>Accesorios y LifeStyle</Link></>:""}
+            &raquo;
+            <span className="link-href-span">&nbsp;{state.menu.descripcion}</span>
+        </div>
           <div className="prod-filter-page ">
             <span>Ordenar por: &nbsp;&nbsp;</span>
             <select
@@ -523,6 +595,7 @@ let actionType = {
   CHANGE_FILTER_ORDERBY: "CHANGE_FILTER_ORDERBY",
   LOAD_MENU: "LOAD_MENU",
   LOAD_CHANGE_MENU:"LOAD_CHANGE_MENU",
+  LOAD_CHANGE_MENU_LOAD:"LOAD_CHANGE_MENU_LOAD"
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -550,9 +623,11 @@ const reducer = (state, action) => {
         totalRegistros: action.totalRegistros,
         isLoandingProductos: action.isLoandingProductos,
         currentPage: action.currentPage,
-        lstMenuVertical:action.lstMenuVertical,
-        menu:action.menu
+        lstMenuVertical: action.lstMenuVertical,
+        lstMenuVerticalData: action.lstMenuVerticalData,
+        menu: action.menu,
       };
+
     case actionType.CHANGE_FILTER_ORDERBY:
       return {
         ...state,
@@ -560,19 +635,24 @@ const reducer = (state, action) => {
       };
     case actionType.LOAD_MENU:
       return {
-        ...state,        
-        Menu: action.Menu,
+        ...state,
+        menu: action.menu,
         filter: action.filter,
         lstMenuVertical: action.lstMenuVertical,
-        listaQuery:action.listaQuery,
-        listaQuerySubFamilia:action.listaQuerySubFamilia,
+        listaQuery: action.listaQuery,
+        listaQuerySubFamilia: action.listaQuerySubFamilia,
       };
-      case actionType.LOAD_CHANGE_MENU:
-        return {
-          ...state,           
-          lstMenuVertical: action.lstMenuVertical,
-     
-        };
+    case actionType.LOAD_CHANGE_MENU:
+      return {
+        ...state,
+        lstMenuVertical: action.lstMenuVertical,
+      };
+    case actionType.LOAD_CHANGE_MENU_LOAD:
+      return {
+        ...state,
+        lstMenuVertical: action.lstMenuVertical,
+        menu: action.menu,
+      };
     default:
       return state;
   }

@@ -84,8 +84,7 @@ export function CarritoDetalle(props) {
         _cotizacionResumen.numTotalSol = json.numTotalSol;
         _cotizacionResumen.flgnumCodigoDireccion = json.flgnumCodigoDireccion;
         _cotizacionResumen.numCodigoCliente = cotizacion.numCodigoCliente;
-        let _cantidadDetalleSeleccionado = 0;
-console.log(_cotizacionResumen)
+        let _cantidadDetalleSeleccionado = 0; 
         const jsonDetalle = await rptDetalle.json();
 
         if (jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
