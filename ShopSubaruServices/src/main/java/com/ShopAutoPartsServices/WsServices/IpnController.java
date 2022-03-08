@@ -130,7 +130,7 @@ public class IpnController {
 	 * 
 	 * 
 	 */
-	@Scheduled(cron = "${shop.mail.smtp.to.oc.scheduled}")
+	//@Scheduled(cron = "${shop.mail.smtp.to.oc.scheduled}")
 	public void scheduledMailOcConsolidado() {
 		/*
 		 * JOB: Envio de correo de ordenes de compra consolidado
@@ -201,11 +201,25 @@ public class IpnController {
 			e.printStackTrace();
 		}
 	}
+	
+	public void archivoExcel() {
+		try {
+
+			 
+			ScheduledProceso scheduledProcesoStatus = new ScheduledProceso();
+			scheduledProcesoStatus.setChrCodigoOc("OCO202239");
+			File file = facturacionService.obtenerFileReporteOcOnline(scheduledProcesoStatus);
+			 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	// @Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
 	//PRODUCCUIN DESAHABILITADO
 	public void scheduledConfirmaCotizacion() {
-		logger.info("${izipay.ipn.scheduled");
+		//logger.info("${izipay.ipn.scheduled");
 		boolean correoStatusTipoCambioTomado = false;
 		String asuntoTipoCambioTomado = "Alerta de tipo de cambio tomado";
 		boolean correoStatus = false;

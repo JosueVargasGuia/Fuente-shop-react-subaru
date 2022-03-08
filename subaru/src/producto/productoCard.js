@@ -20,11 +20,14 @@ export default function ProductosCard(props) {
     chrCodigoProducto: props.producto.chrCodigoProducto,
     numValorVentaDolar: props.producto.numValorVentaDolar,
     numValorVentaSoles: props.producto.numValorVentaSoles,
+    numValorVentaDolarIgv: props.producto.numValorVentaDolarIgv,
+    numValorVentaSolesIgv: props.producto.numValorVentaSolesIgv,
     numCodigoMoneda: props.producto.numCodigoMoneda,
     vchDescripcion: props.producto.vchDescripcion,
     vchDescripcionSmall: props.producto.vchDescripcionSmall,
     numStock: props.producto.numStock,
     moneda: props.moneda,
+    displayChrcodigoproducto:props.producto.displayChrcodigoproducto,
     familia: {
       chrCodigoFamilia: props.producto.familia.chrCodigoFamilia,
       vchDescripcion: props.producto.familia.vchDescripcion,
@@ -70,14 +73,14 @@ export default function ProductosCard(props) {
   });
 
   function handleEventShowDetalle() {
-    history.push(
+    window.open(
       "/detalle/" +
       producto.familia.chrCodigoFamilia +
       "/" +
       producto.familia.vchDescripcion +
       "/" +
       producto.chrCodigoProducto
-    );
+    ,'_parent');
   }
   async function handleEventModal(_status) {
     dispatch({type: actionType.PRODUCTO,producto:producto});
@@ -108,7 +111,7 @@ export default function ProductosCard(props) {
         }
       }
     }
-   console.log(state.producto)
+    
     dispatch({ type: actionType.SET_IMAGEN, showModal: _status, listaProductoImagen: _listaProductoImagen });
   }
   async function handleEventClieckregistrarCotizacion() {
@@ -140,7 +143,7 @@ export default function ProductosCard(props) {
         if (rptDetalle.status === HttpStatus.HttpStatus_OK) {
           const jsonDetalle = await rptDetalle.json();
           if (jsonDetalle.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-            console.log(jsonDetalle);
+             
             cotizacionResumen.numSubTotalDol = jsonDetalle.numSubTotalDol;
             cotizacionResumen.numIgvDol = jsonDetalle.numIgvDol;
             cotizacionResumen.numEnvioDol = jsonDetalle.numEnvioDol;
@@ -223,6 +226,7 @@ export default function ProductosCard(props) {
     <>
       <div className="producto-card">
         <div className="producto-card-img">
+          
           <img
             src={"data:image/png;base64," + producto.imagenDefault.chrSrcImagen}
             onClick={handleEventShowDetalle}
@@ -244,11 +248,14 @@ export default function ProductosCard(props) {
             className="producto-card-nombre"
             onClick={handleEventShowDetalle}
           >
-            <span>{props.producto.vchDescripcion}</span>
+            <span>{props.producto.vchDescripcionSmall}</span>
           </div>
-        
+          {props.producto.displayChrcodigoproducto === 1 ? <div className="producto-card-codigo">
+            {props.producto.chrCodigoProducto}
+          </div> : <></>}
+
           <div className="producto-card-stock">
-            Stock Disponible:&nbsp;{props.producto.numStock}
+            Stock Disponible {props.isAdmin==="SI"?<>:&nbsp;{props.producto.numStock}</>:""}
           </div>
           
           <div className="producto-card-precio">
@@ -256,8 +263,8 @@ export default function ProductosCard(props) {
             <span>
               {producto.moneda.numCodigoMoneda ===
               Moneda.DOLARES.numCodigoMoneda
-                ? producto.numValorVentaDolar
-                : producto.numValorVentaSoles}{" "}
+                ?  producto.numValorVentaDolarIgv
+                :  producto.numValorVentaSolesIgv}{" "}
             </span>
           </div>
 
@@ -298,16 +305,22 @@ export default function ProductosCard(props) {
               </div>
             </div>
             <div className="producto-card-modal-column2">
+          
               <span className="producto-card-modal-nombre">
                 {producto.vchDescripcion}
               </span>
+              
+              {producto.displayChrcodigoproducto === 1 ? <span className="producto-card-modal-nombre">
+                {producto.chrCodigoProducto}
+              </span>: <></>}
+              
               <span className="producto-card-modal-precio">
                 {" "}
                 {producto.moneda.vchSimbolo}{" "}
                 {producto.moneda.numCodigoMoneda ===
                 Moneda.DOLARES.numCodigoMoneda
-                  ? producto.numValorVentaDolar
-                  : producto.numValorVentaSoles}{" "}
+                  ? producto.numValorVentaDolarIgv
+                  : producto.numValorVentaSolesIgv}{" "}
               </span>
               <span className="producto-card-modal-cantidad">Cantidad</span>
               <div className="producto-card-modal-accion">

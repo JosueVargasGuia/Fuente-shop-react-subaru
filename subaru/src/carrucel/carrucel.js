@@ -27,14 +27,14 @@ const reducer = (state, action) => {
 export default function Carrucel(props) {   
  
   let rowItem = props.marca.lstCarrucel.map((objImagen) => (
-    <picture>     
-      <source srcset={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + objImagen.srcImage} media="((min-width: 803px) and (max-width: 1500px))" />     
-      <source srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 10px) and (max-width: 802px)"/>
+    <picture key={objImagen.codigoCarrucel}>     
+      <source srcSet={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + objImagen.srcImage} media="((min-width: 803px) and (max-width: 1500px))" />     
+      <source srcSet={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 10px) and (max-width: 802px)"/>
       <img
         className="container-Carousel-im22"
         key={objImagen.codigoCarrucel}
         alt={ objImagen.srcImage}
-        srcset={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
+        srcSet={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
       ></img>   
     </picture>
   ));

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import TipoCambio from "../producto/tipoCambio";
 import { homepage,  LOGGIN, lstMarcas, Moneda } from "../service/ENUM";
-import {  listaAcesorios, listaRepuesto} from "../service/EnumMenu";
+import {  listaMenu, _CodigoGrupo, _IndentificadorMenu} from "../service/EnumMenu";
 import BottonCarrito from "../utils/bottonCarrito";
 import { } from "../service/ENUM";
 export default function
@@ -14,17 +14,37 @@ export default function
 
   const [srcLogo] = useState(window.location.origin + (homepage === undefined ? "" : "/" + homepage) + "/marcas/logo.png");
   const [descripcion, setDescripcion] = useState(props.decripcion);
-  let rowRepuesto = listaRepuesto.map((rowRepu) => <li key={rowRepu.codigo}>
-    <Link to={"/shop/" + rowRepu.identificador + "/filter/all"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
-  </li>);
-  let rowAccesorio = listaAcesorios.map((rowAcce) => <li key={rowAcce.codigo}>
-    <Link to={"/shop/" + rowAcce.identificador + "/filter/all"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
-  </li>);
 
+  let rowRepuesto =[];/* listaRepuesto.map((rowRepu) =>
+  <li key={rowRepu.identificador}>
+    <Link to={"/shop/" + rowRepu.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{rowRepu.descripcion}</span></Link>
+  </li>);*/
+  let rowAccesorio =[];
+  
+  /*listaAcesorios.map((rowAcce) => <li key={rowAcce.identificador}>
+    <Link to={"/shop/" + rowAcce.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{rowAcce.descripcion}</span></Link>
+  </li>);*/
+for (let index = 0; index < listaMenu.length; index++) {
+    const menu = listaMenu[index];
+    if(menu.codigoGrupo===_CodigoGrupo.Repuesto){
+       
+      rowRepuesto.push(
+        <li key={menu.identificador}>
+          <Link to={"/shop/" + menu.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{menu.descripcion}</span></Link>
+        </li>);
+    }
+    if(menu.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle){
+    
+      rowAccesorio.push(
+      <li key={menu.identificador}>
+        <Link to={"/shop/" + menu.identificador + "/filter/all"} target={"_parent"}>&nbsp;&nbsp;<span>{menu.descripcion}</span></Link>
+      </li>);
+    }
+  
+}
 
   let history = useHistory();
-  const onClickImage = () => {
-    console.log(props.marcaSelec);
+  const onClickImage = () => {    
     //props.handleSelectMarcaChange(props.marcaSelect.codigoMarca, 'FilterMarcas');
     props.handleSelectMarcaChange(lstMarcas[0].codigoMarca, 'FilterMarcas');
     history.push("/shop");
@@ -33,14 +53,25 @@ export default function
      props.handleSelectMarcaChange(0, 'FilterMarcas');
    };*/
   async function handleClickBuscarProductos() {
-    console.log(descripcion);
-    history.push("/shop/search/filter/" + descripcion);
+   
+    props.handleInputChangeDescripcion({target:{value:descripcion}});
+    //history.push("/shop/search/filter/" + descripcion);
+    handleInputChangeDescripcion({target:{value:''}});
+    history.push("/shop/"+_IndentificadorMenu.Busqueda+"/filter/search");
+   
+    
+    
   }
   function handleInputChangeDescripcion(e) {
     setDescripcion(e.target.value);
-    props.handleInputChangeDescripcion(e);
+    
+    //props.handleInputChangeDescripcion(e);
   }
-
+function handleOnKeyDown(e){   
+  if(e.key==='Enter'){   
+    handleClickBuscarProductos();
+  }
+}
 
   return (<>
     <div className="filter-marcas">
@@ -146,15 +177,15 @@ export default function
           <div className="filter-input">
             <div className="filter-input-search">
               <input
-                placeholder="Búscar por descripción "
-                value={props.decripcion}
+                placeholder="Búscar por descripción"
+                value={descripcion}
                 onChange={(e) => handleInputChangeDescripcion(e)}
+                onKeyDown={(e)=>handleOnKeyDown(e)}
               ></input>
-              <i
-                className="search-link fa fa-search"
-                aria-hidden="true"
-                onClick={handleClickBuscarProductos}
-              ></i>
+               <button className="btn btn-primary btn-search" onClick={handleClickBuscarProductos}>
+                <i className="fa fa-search "></i> 
+              </button>
+             
             </div>
           </div>
         </div>
@@ -272,16 +303,15 @@ export default function
        
         <div className="filter-input-search">
 
-          <input
-            placeholder="Búsqueda en Catálogo"
-            value={props.decripcion}
-            onChange={(e) => props.handleInputChangeDescripcion(e)}
-          ></input>
-          <i
-            className="search-link fa fa-search"
-            aria-hidden="true"
-            onClick={props.handleFindProducto}
-          ></i>
+        <input
+                placeholder="Búscar por descripción"
+                value={descripcion}
+                onChange={(e) => handleInputChangeDescripcion(e)}
+                onKeyDown={(e)=>handleOnKeyDown(e)}
+              ></input>
+          <button className="btn btn-primary btn-search" onClick={handleClickBuscarProductos}>
+                <i className="fa fa-search "></i> 
+          </button>
         </div>
       </div>
     </div></>

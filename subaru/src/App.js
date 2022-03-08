@@ -228,6 +228,7 @@ function App() {
       islogin: LOGGIN.LOGOUT,
       usuario: "",
     });
+    window.location.href ="/shop"
   }
 
   function handleSelectMarcaForDetalleProducto(chrCodigoFamilia) {
@@ -243,9 +244,7 @@ function App() {
     });
   }
 
-  function handleInputChangeDescripcion(e) {
-    console.log("handleInputChangeDescripcion");
-    console.log(e);
+  function handleInputChangeDescripcion(e) {  
     dispatch({
       type: actionType.INPUT_DESCRIPCION,
       descripcion: e.target.value,
@@ -333,6 +332,7 @@ function App() {
                   marcaSelect={state.marca}
                   displayLista={state.displayLista}
                   moneda={state.moneda}
+                  numCodigoCliente={state.usuario.numCodigoCliente}
                 ></ProductoDestacado>
                 
               </div>
@@ -348,6 +348,9 @@ function App() {
               <ProductoFilter
                 moneda={state.moneda}
                 handleSelectMarcaChange={handleSelectMarcaChange}
+                query={state.descripcion}
+                handleInputChangeDescripcion={handleInputChangeDescripcion}
+                numCodigoCliente={state.usuario.numCodigoCliente}
               ></ProductoFilter>
             </Route>
 

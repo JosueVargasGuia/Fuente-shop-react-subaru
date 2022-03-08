@@ -95,17 +95,37 @@ const statusSyncCotizacion = {
 ADICIONAR=Que al valor registrado en la tabla le aumentamos el valor que estamos pasando[BD=1 Parametro=2--> Cantidad Final=3]
 ACTUALIZAR=Que el valor pasado como parametro sera el que se guarda[BD=5 Parametro=2--> Cantidad Final=2]
 */
+
 const tipoActualizacionCotizacionDetalle = {
   ADICIONAR: "ADICIONAR",
   ACTUALIZAR: "ACTUALIZAR",
 };
+/*una moneda diferente se */
 const InfoCondicionCompra = {
-  EMISION:
-    <p><i className="fa fa-shield-p"></i>Emitimos facturas en dólares. Si paga en una moneda diferente se realizará la conversión a USD,según al tipo de cambio indicado en la parte superior de la página.</p>,
-  TRANSPORTE:
-    <p><i className="fa fa-truck" aria-hidden="true"></i>Envíos en los siguientes 10 días; verifica que tu calle no se encuentre en las zonas peligrosas.</p>,
-  DEVOLUCIONES:
-    <p><i className="fa fa-exchange" aria-hidden="true"></i>No se aceptan devoluciones a menos que el producto tenga falla de fábrica.</p>,
+  EMISION: (
+    <p>
+      <i className="fa fa-shield fa-black" aria-hidden="true"></i>Emitimos
+      facturas en dólares. Si paga en soles se realizará la conversión a USD
+      según el tipo de cambio indicado en la parte superior de la página.
+    </p>
+  ),
+  TRANSPORTE: (
+    <p>
+      <i className="fa fa-truck fa-black" aria-hidden="true"></i>Envíos en los
+      siguientes 5 días; verifica que su calle no se encuentre en las zonas
+      peligrosas las cuales se detallan en el siguiente link{" "}
+      <a href=" https://chazki.com/zonaspeligrosas" target={"_blank"}>
+        https://chazki.com/zonaspeligrosas
+      </a>
+      .
+    </p>
+  ),
+  DEVOLUCIONES: (
+    <p>
+      <i className="fa fa-exchange fa-black" aria-hidden="true"></i>No se
+      aceptan devoluciones.
+    </p>
+  ) /* a menos que el producto tenga falla de fábrica */,
   STOCK: (
     <p>
       <i>
@@ -114,7 +134,7 @@ const InfoCondicionCompra = {
           focusable="false"
           data-prefix="fas"
           data-icon="box-open"
-          className="svg-inline--fa fa-box-open fa-w-20"
+          className="svg-inline--fa fa-box-open fa-w-20 fa-black"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 640 512"
@@ -125,24 +145,28 @@ const InfoCondicionCompra = {
           ></path>
         </svg>
       </i>
-      Mientras procesamos su pedido y/o compra, es posible que el stock
-      publicado en nuestra página se puede agotar, de ser asi la operación será
-      cancelada. De ocurrir esto y la transacción se efectuó, nos comprometemos
-      a realizar el extorno del dinero a su Tarjeta del Banco o emitir una Nota
-      de crédito para que Ud. pueda utilizarlo en compras futuras.
-      <br />
-      Si alguno de los productos seleccionados por Ud. está en promoción
-      (outlet) tenga presente que esta Campaña tiene un número muy limitado de
-      productos en stock y un tiempo determinado de vigencia.
-      <br />
-      Se dá por entendido que reconoce y acepta estar debidamente informado de
+    
+        Mientras procesamos su pedido y/o compra, es posible que el stock
+        publicado en nuestra página se puede agotar, de ser así la operación
+        será cancelada. Cuando ocurra esto y la transacción se efectuó, a su
+        solicitud nos comprometemos a emitir una Nota de crédito para que Ud.
+        pueda utilizarlo en compras futuras o realizar el extorno del dinero a
+        su Tarjeta del Banco.
+         <br></br>
+      
+        Si alguno de los productos seleccionados por Ud. está en promoción
+        (outlet) tenga presente que esta Campaña tiene un número muy limitado de
+        productos en stock y un tiempo determinado de vigencia.
+        <br></br>
+      Se da por entendido que reconoce y acepta estar debidamente informado de
       los alcances y limitaciones de las transacciones que realice por nuestro
       portal de comercio electrónico, no existiendo lugar a reclamo si las
       condiciones descritas se presentan durante el procesamiento de su compra.
+     
     </p>
   ),
 };
-/* Secuencia de pago */
+/* Secuencia de pago */ /*De ocurrir*/
 const PagoMenu = {
   PERSONALES: { index: 1 },
   ENVIO: { index: 2 },
@@ -159,7 +183,7 @@ const MetodoEnvio = {
   RecojoAlmacen: {
     numTipoMetodoEnvio: 0,
     codigo: "RecojoAlmacen",
-    descripcion: "Recojo en Bodega",
+    descripcion: "Recojo en Tienda",
     direccion: "Av. Republica de Panama 4259",
     //direccion: "Próximamente habilitada",
     icons: "almacen.png",
@@ -244,7 +268,7 @@ const filterOrder = {
   FilterConImagen: "FilterConImagen",
   FilterOutlet: "FilterOutlet",
 };
-const FilterTypeLista={FilterNormal:"FilterNormal",FilterQuery:"FilterQuery"};
+//const FilterTypeLista={FilterNormal:"FilterNormal",FilterQuery:"FilterQuery"};
 const nav_banner = {
   /* 1:Se visualizara 0:No se mostrara */
   status: 1,
@@ -276,6 +300,10 @@ const Empresa = {
   correo: "repuestos.subaru@eacorp.pe",
   abreviaturaSucursal: "RP4259",
 };
+const APP_DEV= {
+    CONTEXT:"PRODUCCION",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
+     
+};
 
 export {
   SUCCESS_SERVER,
@@ -305,6 +333,7 @@ export {
   FilterCorreo,
   Empresa,
  
-  FilterTypeLista,
+  //FilterTypeLista,
+  APP_DEV,
   
 };

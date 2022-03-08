@@ -714,7 +714,7 @@ export default function RegistrarCliente(props) {
               };
               rowDireccionData.push(_direccion);
               rowDireccion.push(
-                <CardDireccion direccion={_direccion} handleEventShow={handleEventShowModalDireccion}></CardDireccion>
+                <CardDireccion key={index} direccion={_direccion} handleEventShow={handleEventShowModalDireccion}></CardDireccion>
               );
 
             }
@@ -1188,7 +1188,7 @@ export default function RegistrarCliente(props) {
           nsecuenciaDespacho = nsecuenciaDespacho + 1;
           _direccion.nsecuencia = nsecuenciaDespacho;
         }
-        rowDireccion.push(<CardDireccion direccion={_direccion}
+        rowDireccion.push(<CardDireccion key={j} direccion={_direccion}
           handleEventShow={handleEventShowModalDireccion}></CardDireccion>);
       }
       dispatch({
@@ -1305,7 +1305,7 @@ export default function RegistrarCliente(props) {
             element.nsecuencia = nsecuenciaDespacho;
           }
           rowDireccion.push(
-            <CardDireccion direccion={element}
+            <CardDireccion direccion={element} key={j}
               handleEventShow={handleEventShowModalDireccion}></CardDireccion>
           );
         }

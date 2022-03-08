@@ -30,6 +30,7 @@ const reducer = (state, action) => {
         ...state,
         isloading: action.isloading,
         rowDireccion: action.rowDireccion,
+        flgIsDespacho:action.flgIsDespacho,
       };
     case actionType.REQUETS:
       return {
@@ -71,6 +72,7 @@ export default function DireccionCliente() {
     vchrAlias: "",
     numTipoDocumento: 0,
     vchDocumento: "",
+    flgFacturacion:0,
 
     departamento: {
       chrCodigoDepartamento: "00",
@@ -93,6 +95,7 @@ export default function DireccionCliente() {
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
     isloading: true,
     rowDireccion: [],
+    flgIsDespacho:false,
   });
 
   useEffect(() => {
@@ -122,6 +125,7 @@ export default function DireccionCliente() {
     });
 
     let rowDireccion = [];
+    let _flgIsDespacho=false;
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
 
@@ -163,7 +167,9 @@ export default function DireccionCliente() {
             accion: CRUD.UPDATE,
             rowDepartamento: rowDepartamento,
           };
-
+          if(_direccion.flgFacturacion==='1'){
+            _flgIsDespacho=true;
+          }
           rowDireccion.push(
             <DireccionCard
               key={_direccion.numCodigoDireccion}
@@ -173,10 +179,12 @@ export default function DireccionCliente() {
             ></DireccionCard>
           );
         }
+         
         dispatch({
           type: actionType.LOAD_DIRECCION,
           isloading: false,
           rowDireccion: rowDireccion,
+          flgIsDespacho:_flgIsDespacho,
         });
       }
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
@@ -207,7 +215,8 @@ export default function DireccionCliente() {
     direccion.chrCodigoProvincia="01";    
     direccion.provincia.chrCodigoProvincia="01";
     direccion.numCodigoCliente = _numCodigoCliente;    
-    console.log("DireccionCardModal");
+    direccion.flgFacturacion=(state.flgIsDespacho===true?'0':'1');
+    console.log( state);
     setModalShow(true);
     setRegistroNuevo(direccion);
   }
@@ -241,7 +250,7 @@ export default function DireccionCliente() {
         )}
       </div>
 
-      <h4>Sus direcciones</h4>
+      <h4>Sus direcciones </h4>
       <div className="direccion-content">{state.rowDireccion}</div>
       <div className="direccion-footer">
         <button className="btn btn-primary" onClick={handleEventNuevaDireccion}>
@@ -448,6 +457,7 @@ function DireccionCard(props) {
   }
   return (
     <div className="direccion-card">
+    <div className="row-direccion-row-1">
       <div className="row-direccion card-row-flex">
 
         <span className={direccion.vchrAlias === tipoDireccion.FACTURACION ? 'direcion-tipo' : " direcion-tipo"} >
@@ -493,7 +503,9 @@ function DireccionCard(props) {
           {direccion.distrito.vchDescripcion}
         </span>
       </div>
+      </div>
       <hr />
+      <div className="row-direccion">
       <button className="btn btn-primary" onClick={handleEventShowModal}>
         {" "}
         <i className="fa fa-pencil" aria-hidden="true"></i>Editar
@@ -505,7 +517,7 @@ function DireccionCard(props) {
         {" "}
         <i className="fa fa-trash" aria-hidden="true"></i>Eliminar
       </button>
-
+      </div>
       {modalConfirmarShow ? (
         <ModalConfirmar
           show={modalConfirmarShow.show}
@@ -739,7 +751,7 @@ let actionTypeCard = {
 };
 function DireccionCardModal(props) {
   let direccion = props.direccion;
-  
+  (direccion.flgFacturacion==='1'? console.log('false'): console.log('true'));
   const [state, dispatch] = useReducer(reducerCard, {
     numCodigoDireccion: direccion.numCodigoDireccion,
     numCodigoCliente: direccion.numCodigoCliente,
@@ -757,7 +769,8 @@ function DireccionCardModal(props) {
     vchDocumento: direccion.vchDocumento,
     numTipoDocumento: direccion.numTipoDocumento,
     flgFacturacion: direccion.flgFacturacion,
-    flgDespacho: (parseInt(direccion.numTipoDocumento,10) >=1? true : false),
+    flgDespacho: (direccion.flgFacturacion==='1'? (parseInt(direccion.numTipoDocumento)>=1?true:false) : true),
+    //flgDespacho:direccion.flgDespacho,
     nsecuencia: direccion.nsecuencia,
     error: {
       vchDireccion: { mensaje: "", isValidado: false },
@@ -988,13 +1001,11 @@ function DireccionCardModal(props) {
         </Modal.Header>
         <Modal.Body>
           <div className="form-body-direccion">
-            {state.accion === CRUD.UPDATE && state.vchrAlias === tipoDireccion.DESPACHO  ? <><div className="form-row-direccion form-row-direccion-center">
-              <span className="direcion-tipo">{state.vchrAlias + " " + state.nsecuencia}</span>
-            </div></> : ''}
+        
 
 
             <div className="form-row-direccion">
-              <label htmlFor="vchDireccion">Dirección Facturación</label>
+              <label htmlFor="vchDireccion">{state.flgFacturacion==='1'?tipoDireccion.FACTURACION:tipoDireccion.DESPACHO} </label>
               <input
                 type="text"
                 name="vchDireccion"

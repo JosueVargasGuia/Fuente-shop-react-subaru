@@ -422,7 +422,7 @@
 
 .carrito-detalle-msg {
     font-weight: bold;
-    margin-left: 0.5em;
+    margin-left: 0.0em;
     margin-right: 0.5em;
 }
 
@@ -534,7 +534,7 @@
         @media (min-width: 0px) and (max-width: 830px) {
             margin-left: 0.1em;
             margin-right: 0.5em;
-            font-size: 15px;
+            font-size: 0.8em;
         }
     }
 }
@@ -614,6 +614,7 @@
             .produc-link-title {
                 font-size: 1.2em;
                 font-family: Arial, Helvetica, ArialTFF, sans-serif;
+                color: var( --color-font);
             }
         }
         img {
@@ -623,16 +624,6 @@
             object-fit: contain;
         }
     }
-}
-
-.produc-destacado-links-title {
-    //font-family: "Lato", sans-serif;
-    font-family: Arial, Helvetica, ArialTFF, sans-serif;
-    font-size: 17pt;
-    font-weight: bold;
-    margin-left: 0.5em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
 }
 
 .produc-link-accesorio {
@@ -733,14 +724,21 @@
     }
 }
 
-.prod-det-carrousel .carousel .slide img {
-    width: 80%;
-    object-fit: contain;
+.prod-det-carrousel .carousel .slide {
+    min-height: 268px !important;
+    img {
+        width: 100%;
+        object-fit: contain;
+        background-color: var(--color-background-white);
+    }
 }
 
+
+/*
 .carousel .slide img {
     height: 100%;
 }
+*/
 
 .tbl-rpt-display {
     min-height: 360px;
@@ -772,7 +770,7 @@
         z-index: 2;
         position: absolute;
         right: -1;
-        width: 20%;
+        width: 25%;
         height: auto;
     }
     .outlet img {
