@@ -8,38 +8,47 @@ import {
   lstMarcas,
   SUCCESS_SERVER,
   filterOrder,
-  FilterTypeLista,
+  chrRol,
+  localStoreEnum,
+  //FilterTypeLista,
 } from "../service/ENUM";
 import {
-  listaRepuesto,
-  listaAcesorios,
-  segmentoMantenimiento,
-  segmentoRecambio,
-  segmentoAccesorios,
-  segmentoLifeStyle,
+  listaMenu,_CodigoGrupo, _IndentificadorMenu
 } from "../service/EnumMenu";
 import { findProductos } from "../service/producto.service";
 import Loading from "../utils/loading";
 
 import ProductosCard from "./productoCard";
 const LIMITE = 9;
-const RECOMENDADO = "RECOMENDADO";
-const OFERTA = "OFERTA";
-const REMATE = "REMATE";
-const DEFAULT = "DEFAULT";
-const SEARCH = "SEARCH";
-const MENU = "MENU";
-const ATAJOS = "ATAJOS";
-const filterTypeMenu = {
-  searchInput: "",
-  todosLosProductos: "todosLosProductos",
-  todosLasOfertas: "todosLasOfertas",
-  searchMenu: "searchMenu",
-  searchParteMantenimiento: "searchParteMantenimiento",
-  searchParteRecanbio: "searchParteRecanbio",
-  searchAccesorios: "searchAccesorios",
-  searchLifeStyle: "searchLifeStyle",
+ 
+
+
+
+const MENU_Repuestos={
+  descripcion: "Repuestos",  
+  srcimg:"",  
+  identificador:  _IndentificadorMenu.MenuPadreRepuestos,
+  subFamilia: [],
+  query:[],
+  codigoGrupo: _CodigoGrupo.Personalizado,
+  display: 1,
+  select:0,
+  
+ 
 };
+const MENU_Accesorios_LifeStyle={
+  descripcion: "Accesorios y LifeStyle",  
+    srcimg:"",  
+    identificador:  _IndentificadorMenu.MenuPadreAccesoriosLifeStyle,
+    subFamilia: [],
+    query:[],
+    codigoGrupo: _CodigoGrupo.Personalizado,
+    display: 1,
+    select:0,
+   
+     
+  };
+ 
 export default function ProductoFilter(props) {
   let params = useParams();
   let _marca = lstMarcas[0];
@@ -54,557 +63,268 @@ export default function ProductoFilter(props) {
     currentPage: 1,
     filterOrder: filterOrder.FilterAscDescripcion,
     isLoandingProductos: false,
-    MenuDescripcion: "",
-    MenuConext: "",
+    menu: "", 
     filter: "",
     listaQuery:[],
+    listaQuerySubFamilia:[],
     lstMenuVertical: [],
+    lstMenuVerticalData: [],
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
   });
-  useEffect(() => {
-    console.log("handleInitVariable 1");
-    handleInitVariable(params.descripcion);
-  }, [params.descripcion]);
+  
+ 
   useEffect(() => {
     if (_marca.codigoMarca >= 0) {
       props.handleSelectMarcaChange(_marca.codigoMarca, "ProductoFilter");
     }
     //handleEventCargarSubFamilia(_marca.chrcodigofamilia);
 
-    console.log("useEffect 1");
+    console.log("handleInitVariable 1 props.moneda, params.query, params.descripcion");
 
-    handleInitVariable(params.descripcion).then((_object) => {
+    handleInitVariable(params.descripcion ).then((_object) => {
+     
       handleEventAddSubFamiliaSelect(
         1,
         filterOrder.FilterAscDescripcion,
-        params.descripcion,
-        _object.filter,
+        _object.menu, 
         _object.listaQuery,
+        _object.listaQuerySubFamilia,
+        _object.lstMenuVertical,
+        _object.lstMenuVerticalData
       );
+       
     });
 
     //eslint-disable-next-line
   }, [props.moneda, params.query, params.descripcion]);
- 
-  async function handleInitVariable(_var) {
-    let _INDEN_MENU;
-    let _FILTER;
-    let _MENU;
-    let _lstMenuVertical = [];
-    let _listaQuery=[];
-    let _filterTypeMenu;
-    // eslint-disable-next-line
-    switch (_var) {
-      case "Subaru":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Subaru";
-        _filterTypeMenu = filterTypeMenu.todosLosProductos;
-        _lstMenuVertical.push({
-          descripcion: "Repuestos",
-          codigo: 1,
-          identificador: "TITULO",
-          subFamilia: [],
-        });
-        for (let index = 0; index < listaRepuesto.length; index++) {
-          const row = listaRepuesto[index];
-          _lstMenuVertical.push(row);
-        }
-        _lstMenuVertical.push({
-          descripcion: "Accesorios y LifeStyle",
-          codigo: 2,
-          identificador: "TITULO",
-          subFamilia: [],
-        });
-        for (let index = 0; index < listaAcesorios.length; index++) {
-          const row = listaAcesorios[index];
-          _lstMenuVertical.push(row);
-        }
-        break;
-      case "recomendado":
-        _MENU = _var;
-        _FILTER = RECOMENDADO;
-        _INDEN_MENU = "Recomendado";
-        _filterTypeMenu = filterTypeMenu.todosLosProductos;
-        _lstMenuVertical.push({
-          descripcion: _INDEN_MENU,
-          codigo: 0,
-          identificador: _var,
-          subFamilia: [],
-        });
-        break;
-      case "remate":
-        _MENU = _var;
-        _FILTER = REMATE;
-        _INDEN_MENU = "Remate";
-        _filterTypeMenu = filterTypeMenu.todosLosProductos;
-        _lstMenuVertical.push({
-          descripcion: _INDEN_MENU,
-          codigo: 0,
-          identificador: _var,
-          subFamilia: [],
-        });
-        break;
-      case "oferta":
-        _MENU = _var;
-        _FILTER = OFERTA;
-        _INDEN_MENU = "Oferta";
-        _filterTypeMenu = filterTypeMenu.todosLasOfertas;
-        _lstMenuVertical.push({
-          descripcion: _INDEN_MENU,
-          codigo: 0,
-          identificador: _var,
-          subFamilia: [],
-        });
-        break;
-      case "search":
-        _MENU = _var;
-        _FILTER = SEARCH;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchInput;
-        _lstMenuVertical.push({
-          descripcion: _INDEN_MENU,
-          codigo: 0,
-          identificador: _var,
-          subFamilia: [],
-        });
-        break;
-      case "Repuesto-1-1":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-2":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-3":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-4":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-5":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-6":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-7":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-8":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-9":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-10":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-11":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Repuesto-1-12":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Accesorio-2-1":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Accesorio-2-2":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Accesorio-2-3":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-      case "Accesorio-2-4":
-        _MENU = _var;
-        _FILTER = MENU;
-        _INDEN_MENU = "Búsqueda";
-        _filterTypeMenu = filterTypeMenu.searchMenu;
-        break;
-
-      /* */
-      case "Mantenimiento-1":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteMantenimiento;
-        break;
-      case "Mantenimiento-2":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteMantenimiento;
-        break;
-      case "Mantenimiento-3":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteMantenimiento;
-        break;
-      case "Mantenimiento-4":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteMantenimiento;
-        break;
-      case "Mantenimiento-5":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteMantenimiento;
-        break;
-      case "Mantenimiento-6":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteMantenimiento;
-        break;
-      case "Recambio-1":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteRecanbio;
-        break;
-      case "Recambio-2":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteRecanbio;
-        break;
-      case "Recambio-3":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteRecanbio;
-        break;
-      case "Recambio-4":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteRecanbio;
-        break;
-      case "Recambio-5":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteRecanbio;
-        break;
-      case "Recambio-6":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchParteRecanbio;
-        break;
-      case "Accesorios-1":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-      case "Accesorios-2":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-      case "Accesorios-3":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-      case "Accesorios-4":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-      case "Accesorios-5":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-      case "Accesorios-6":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-      case "Accesorios-7":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-      case "Accesorios-8":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-      case "Accesorios-9":
-        _MENU = _var;
-        _FILTER = ATAJOS;
-        _INDEN_MENU = _var;
-        _filterTypeMenu = filterTypeMenu.searchAccesorios;
-        break;
-        case "LifeStyle-1":
-          _MENU = _var;
-          _FILTER = ATAJOS;
-          _INDEN_MENU = _var;
-          _filterTypeMenu = filterTypeMenu.searchLifeStyle;
-          break;
-  
-      default:
-        _MENU = "Subaru";
-        _FILTER = MENU;
-        _INDEN_MENU = "Subaru";
-        _filterTypeMenu = filterTypeMenu.todosLosProductos;
-        _lstMenuVertical.push({
-          descripcion: "Repuestos",
-          codigo: 1,
-          identificador: "TITULO",
-          subFamilia: [],
-        });
-        for (let index = 0; index < listaRepuesto.length; index++) {
-          const row = listaRepuesto[index];
-          _lstMenuVertical.push(row);
-        }
-        _lstMenuVertical.push({
-          descripcion: "Accesorios y LifeStyle",
-          codigo: 2,
-          identificador: "TITULO",
-          subFamilia: [],
-        });
-        for (let index = 0; index < listaAcesorios.length; index++) {
-          const row = listaAcesorios[index];
-          _lstMenuVertical.push(row);
-        }
-        break;
+  async function handleValidarCliente(_numCodigoCliente) {
+    if (
+      JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)) !== undefined &&
+      JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)) !== null
+    ) {
+      return JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)).chrRol ===
+        chrRol.ROLE_ADMIN
+        ? "SI"
+        : "NO";
+    } else {
+      return "NO";
     }
-
-    if (_MENU !== MENU && _FILTER === MENU) {
-      for (let index = 0; index < listaRepuesto.length; index++) {
-        const row = listaRepuesto[index];
-        if (row.identificador === _MENU) {
-          _lstMenuVertical.push(row);
-        }
-      }
-      for (let index = 0; index < listaAcesorios.length; index++) {
-        const row = listaAcesorios[index];
-        if (row.identificador === _MENU) {
-          _lstMenuVertical.push(row);
-        }
-      }
-    }
-
-    if (_MENU !== MENU && _FILTER === ATAJOS) {
-      if (_filterTypeMenu === filterTypeMenu.searchParteMantenimiento) {
-        for (let index = 0; index < segmentoMantenimiento.length; index++) {
-          const row = segmentoMantenimiento[index];
-          if (row.identificador === _MENU) {
-            _lstMenuVertical.push({
-              descripcion: row.discripcion,
-              codigo: 0,
-              identificador: _MENU,
-              subFamilia: [],
-            });
-            
-            for(let j=0;j<row.query.length;j++){
-              const query = row.query[j];           
-              _listaQuery.push(query);
-            }
-          }
-        }
-      }
-
-      if (_filterTypeMenu === filterTypeMenu.searchParteRecanbio) {
-        for (let index = 0; index < segmentoRecambio.length; index++) {
-          const row = segmentoRecambio[index];
-          if (row.identificador === _MENU) {
-            _lstMenuVertical.push({
-              descripcion: row.discripcion,
-              codigo: 0,
-              identificador: _MENU,
-              subFamilia: [],
-            });
-            for(let j=0;j<row.query.length;j++){
-              const query = row.query[j];
-              _listaQuery.push(query);
-            }
-          }
-        }
-      }
-
-      if (_filterTypeMenu === filterTypeMenu.searchAccesorios) {
-        for (let index = 0; index < segmentoAccesorios.length; index++) {
-          const row = segmentoAccesorios[index];
-          if (row.identificador === _MENU) {
-            _lstMenuVertical.push({
-              descripcion: row.discripcion,
-              codigo: 0,
-              identificador: _MENU,
-              subFamilia: [],
-            });
-            for(let j=0;j<row.query.length;j++){
-              const query = row.query[j];
-              _listaQuery.push(query);
-            }
-          }
-
-        }
-      }
-
-      if (_filterTypeMenu === filterTypeMenu.searchLifeStyle) {
-        for (let index = 0; index < segmentoLifeStyle.length; index++) {
-          const row = segmentoLifeStyle[index];
-          if (row.identificador === _MENU) {
-            _lstMenuVertical.push({
-              descripcion: row.discripcion,
-              codigo: 0,
-              identificador: _MENU,
-              subFamilia: [],
-            });
-            for(let j=0;j<row.query.length;j++){
-              const query = row.query[j];
-              _listaQuery.push(query[0]);
-            }
-          }
-        }
-      }
-    }
-     
-    dispatch({
-      type: actionType.LOAD_MENU,
-      MenuDescripcion: _INDEN_MENU,
-      MenuConext: _MENU,
-      filter: _FILTER,
-      listaQuery:_listaQuery,
-      lstMenuVertical: _lstMenuVertical,
-    });
-    return { MenuDescripcion: _INDEN_MENU, MenuConext: _MENU, filter: _FILTER,listaQuery:_listaQuery };
   }
-
+  async function handleInitVariable(_identificador,target) {
+    let _MENU= {
+      descripcion: "Todos los Productos",  
+      srcimg:"",  
+      identificador:  _IndentificadorMenu.Default,
+      subFamilia: [],
+      query:[],
+      codigoGrupo: _CodigoGrupo.Personalizado,
+      display: 0,
+      select:0,
+      
+    };   
+    let _lstMenuVertical = [];
+    let _lstMenuVerticalState=[];
+    let _listaQuery=[];
+    let _listaQuerySubFamilia=[];
+    for (let index = 0; index < listaMenu.length; index++) {
+      const objMenu = listaMenu[index];
+      if(objMenu.identificador===_identificador){ 
+        _MENU=objMenu;
+      }
+    }   
+      if(_MENU.identificador===_IndentificadorMenu.TodoProducto || _MENU.identificador===_IndentificadorMenu.Default){  
+        MENU_Repuestos.select=0; 
+        MENU_Accesorios_LifeStyle.select=0;           
+        _lstMenuVerticalState.push(MENU_Repuestos);
+        for (let index = 0; index < listaMenu.length; index++) {
+          const _objMenu = listaMenu[index];
+          if(_objMenu.codigoGrupo===_CodigoGrupo.Repuesto){
+           
+            _objMenu.display=0;
+            _lstMenuVerticalState.push(_objMenu);
+          }
+        }         
+        _lstMenuVerticalState.push(MENU_Accesorios_LifeStyle);
+        for (let index = 0; index < listaMenu.length; index++) {
+          const _objMenu_ = listaMenu[index];
+          if(_objMenu_.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle){   
+            
+            _objMenu_.display=0;               
+            _lstMenuVerticalState.push(_objMenu_);
+          }
+        }
+     
+      }else{   
+        if (
+          _MENU.codigoGrupo === _CodigoGrupo.Personalizado &&
+          (_MENU.identificador === _IndentificadorMenu.TodoRepuesto ||
+            _MENU.identificador === _IndentificadorMenu.TodoAccesorioLyfeStyle)
+        ) {
+          
+          if(_MENU.identificador === _IndentificadorMenu.TodoRepuesto){             
+            _lstMenuVerticalState.push(MENU_Repuestos);    
+            MENU_Repuestos.select===0? MENU_Repuestos.select=1: MENU_Repuestos.select=0;                   
+            for (let index = 0; index < listaMenu.length; index++) {
+              let _objMenu1 = listaMenu[index];
+              if (_objMenu1.codigoGrupo ===_CodigoGrupo.Repuesto) {            
+                _objMenu1.display =1;                 
+                _lstMenuVerticalState.push(_objMenu1);
+              }
+            }
+          }
+          if(_MENU.identificador === _IndentificadorMenu.TodoAccesorioLyfeStyle){            
+            _lstMenuVerticalState.push(MENU_Accesorios_LifeStyle);  
+            MENU_Accesorios_LifeStyle.select===0? MENU_Accesorios_LifeStyle.select=1: MENU_Accesorios_LifeStyle.select=0;          
+            for (let index = 0; index < listaMenu.length; index++) {
+              let _objMenu1 = listaMenu[index];
+              if (_objMenu1.codigoGrupo === _CodigoGrupo.Accesorio_LyfeStyle) {                 
+                _objMenu1.display = 1;                
+                _lstMenuVerticalState.push(_objMenu1);
+              }
+            }
+          }
+           
+        } else {
+          for (let index = 0; index < listaMenu.length; index++) {
+            let _objMenu1 = listaMenu[index];
+            if (_objMenu1.identificador === _MENU.identificador) {             
+              _objMenu1.display = 1;
+              _lstMenuVerticalState.push(_objMenu1);
+            }
+          }
+        }
+      }
+      /* */
+      _lstMenuVertical=handleBuiltMenu(_lstMenuVerticalState);
+      MENU_Accesorios_LifeStyle.isFiltroHistorial=0;
+      MENU_Repuestos.isFiltroHistorial=0;
+    return { menu: _MENU, lstMenuVertical: _lstMenuVertical,lstMenuVerticalData:_lstMenuVerticalState,listaQuery:_listaQuery,listaQuerySubFamilia:_listaQuerySubFamilia };
+  }
+ function handleBuiltMenu(_listaMenu){
+   let _listaMenuVertical=[];
+ 
+   for (let index = 0; index < _listaMenu.length; index++) {
+    const element = _listaMenu[index];
+    _listaMenuVertical.push(
+      <li
+        className={
+         element.identificador === _IndentificadorMenu.MenuPadreRepuestos || 
+         element.identificador === _IndentificadorMenu.MenuPadreAccesoriosLifeStyle 
+            ? "prod-filter-menu-titulo"
+            : element.display === 1
+            ? "menu-active"
+            : "menu-inactive" 
+        }
+        key={element.identificador}
+        onClick={(e) => {
+           handleEventChangeMenu(element,_listaMenu);
+        }}
+      >
+        
+         {element.descripcion} 
+       
+      </li>
+    );
+  }
+   return _listaMenuVertical;
+ }
   async function handleEventAddSubFamiliaSelect(
     _currentPage,
     _filterOrder,
-    __MENU,
-    _FILTER,
-    _listaQuery
-  ) {
+    _MENU,  
+    _listaQuery,
+    _listaQuerySubFamilia,
+    _lstMenuVertical,
+    _lstMenuVerticalData
+  ) {  
+    
+    dispatch({
+      type: actionType.LOAD_CHANGE_MENU_LOAD, 
+      lstMenuVertical: _lstMenuVertical,
+      menu:_MENU
+    });
+    let _isAdmin=await handleValidarCliente();
     let _totalRegistros = 0;
-
     let lstSubFamiliaFilter = [];
     /*Listado de Producto */
     let _filterProducto = FilterProducto.FILTER_ALL_FIND;
     let _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
     let _vchDescripcion = null;
-    let _filterTypeLista = FilterTypeLista.FilterNormal;
-    if (_FILTER === DEFAULT) {
-      _filterProducto = FilterProducto.FILTER_ALL_FIND;
-      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
-      _filterTypeLista = FilterTypeLista.FilterNormal;
-    }
-    if (_FILTER === RECOMENDADO) {
-      _filterProducto = FilterProducto.FILTER_RECOMENDADO;
-      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      _filterTypeLista = FilterTypeLista.FilterNormal;
-    }
-    if (_FILTER === REMATE) {
-      _filterProducto = FilterProducto.FILTER_REMATE;
-      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      _filterTypeLista = FilterTypeLista.FilterNormal;
-    }
-    if (_FILTER === OFERTA) {
-      _filterProducto = FilterProducto.FILTER_OFERTA;
-      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      _filterTypeLista = FilterTypeLista.FilterNormal;
-    }
-    if (_FILTER === ATAJOS) {
+    if(_MENU.codigoGrupo=== _CodigoGrupo.Personalizado){
+    if(_MENU.identificador===_IndentificadorMenu.TodoProducto){
       _filterProducto = FilterProducto.FILTER_ALL;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      _filterTypeLista = FilterTypeLista.FilterQuery;
     }
-    if (_FILTER === SEARCH) {
-      _filterProducto = FilterProducto.FILTER_SEARCH;
+    
+    if(_MENU.identificador===_IndentificadorMenu.TodoOferta){
+      _filterProducto = FilterProducto.FILTER_OFERTA;
       _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
-      _filterTypeLista = FilterTypeLista.FilterNormal;
-      _vchDescripcion = params.query;
-    }
-    console.log(_filterTypeLista);
-    if (_FILTER === MENU) {
-      lstSubFamiliaFilter = [];
-      // eslint-disable-next-line default-case
-      for (let index = 0; index < listaRepuesto.length; index++) {
-        const row = listaRepuesto[index];
-        if (row.identificador === __MENU) {
-          for (let j = 0; j < row.subFamilia.length; j++) {
-            const _e = row.subFamilia[j];
-            lstSubFamiliaFilter.push({ chrCodigoSubFamilia: _e });
-          }
-        }
-      }
-      for (let index = 0; index < listaAcesorios.length; index++) {
-        const row = listaAcesorios[index];
-        if (row.identificador === __MENU) {
-          for (let j = 0; j < row.subFamilia.length; j++) {
-            const _e = row.subFamilia[j];
-            lstSubFamiliaFilter.push({ chrCodigoSubFamilia: _e });
-          }
-        }
-      }
     }
 
+    if(_MENU.identificador===_IndentificadorMenu.TodoDestacado){
+      _filterProducto = FilterProducto.FILTER_DESTACADO_MARCA;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
+    }
+
+    if(_MENU.identificador===_IndentificadorMenu.Default){
+      _filterProducto = FilterProducto.FILTER_ALL;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL;
+    }
+    if(_MENU.identificador===_IndentificadorMenu.Busqueda){
+      _filterProducto = FilterProducto.FILTER_SEARCH;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_ALL; 
+      _vchDescripcion = props.query;   
+    }
+
+    if(_MENU.identificador===_IndentificadorMenu.TodoRepuesto){
+      _filterProducto = FilterProducto.FILTER_ALL;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
+      for (let index = 0; index < listaMenu.length; index++) {
+        const element = listaMenu[index];
+          if(element.codigoGrupo===_CodigoGrupo.Repuesto){            
+            for (let x = 0; x < element.subFamilia.length; x++) {
+              const elementFamilia = element.subFamilia[x];  
+        
+              lstSubFamiliaFilter.push({ chrCodigoSubFamilia: elementFamilia});
+            }
+          }
+      }
+    }
+    if(_MENU.identificador===_IndentificadorMenu.TodoAccesorioLyfeStyle){
+      _filterProducto = FilterProducto.FILTER_ALL;
+      _filterSubFamilia = FilterSubFamilia.FILTER_SUBFAMILIA_LIST;
+      for (let index = 0; index < listaMenu.length; index++) {
+        const element = listaMenu[index];
+          if(element.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle){
+            for (let x = 0; x < element.subFamilia.length; x++) {
+              const elementFamilia = element.subFamilia[x];  
+              lstSubFamiliaFilter.push({ chrCodigoSubFamilia: elementFamilia});
+            }
+          }
+      }
+    }
+   
+  }else{
+    for (let index = 0; index < _MENU.subFamilia.length; index++) {
+      const element = _MENU.subFamilia[index];  
+      lstSubFamiliaFilter.push({ chrCodigoSubFamilia: element});
+    }
+    if (
+      _MENU.codigoGrupo === _CodigoGrupo.Mantenimiento ||
+      _MENU.codigoGrupo === _CodigoGrupo.Recambio ||
+      _MENU.codigoGrupo === _CodigoGrupo.Accesorios ||
+      _MENU.codigoGrupo === _CodigoGrupo.LifeStyle
+    ) {
+      for (let index = 0; index < _MENU.query.length; index++) {
+        const element = _MENU.query[index];  
+        _listaQuery.push(element);
+      }
+    }
+  }
     let lstProducto = [];
     const rpt = await findProductos({
       chrCodigoFamilia: _marca.chrcodigofamilia,
-      vchDescripcion: _vchDescripcion,
-      chrCodigoProducto: null,
+      vchDescripcion: _vchDescripcion, 
       filterProducto: _filterProducto,
       listaSubFamilia: lstSubFamiliaFilter,
       filterSubFamilia: _filterSubFamilia,
@@ -624,11 +344,14 @@ export default function ProductoFilter(props) {
             chrCodigoProducto: e.chrCodigoProducto,
             numValorVentaDolar: e.numValorVentaDolar,
             numValorVentaSoles: e.numValorVentaSoles,
+            numValorVentaDolarIgv: e.numValorVentaDolarIgv,
+            numValorVentaSolesIgv: e.numValorVentaSolesIgv,
             numCodigoMoneda: e.numCodigoMoneda,
             vchDescripcion: e.vchDescripcion,
             vchDescripcionSmall: e.vchDescripcionSmall,
             numStock: e.numStock,
             totalRegistros: e.totalRegistros,
+            displayChrcodigoproducto:e.displayChrcodigoproducto,
             familia: {
               chrCodigoFamilia: e.familia.chrCodigoFamilia,
               vchDescripcion: e.familia.vchDescripcion,
@@ -649,27 +372,34 @@ export default function ProductoFilter(props) {
               moneda={props.moneda}
               producto={producto}
               key={producto.chrCodigoProducto}
+              isAdmin={_isAdmin}
             ></ProductosCard>
           );
         }
 
-        dispatch({
-          type: actionType.LOAD_PRODUCTO,
-          lstProducto: lstProducto,
-          totalRegistros: _totalRegistros,
-          isLoandingProductos: false,
-          currentPage: _currentPage,
-        });
       }
-    }
+    } 
+      dispatch({
+        type: actionType.LOAD_PRODUCTO,
+        lstProducto: lstProducto,
+        totalRegistros: _totalRegistros,
+        isLoandingProductos: false,
+        currentPage: _currentPage,
+        lstMenuVertical:_lstMenuVertical,
+        lstMenuVerticalData:_lstMenuVerticalData,
+        menu:_MENU
+      });
+ 
   }
   function handleEventToPage(_currentPage) {
     handleEventAddSubFamiliaSelect(
       _currentPage,
       state.filterOrder,
-      state.MenuConext,
-      state.filter,
-      state.listaQuery
+      state.menu, 
+      state.listaQuery,
+      state.lstSubFamilia,
+      state.lstMenuVertical,
+      state.lstMenuVerticalData,
     );
   }
   function handleEventChangeFilterOrder(e) {
@@ -680,56 +410,135 @@ export default function ProductoFilter(props) {
     handleEventAddSubFamiliaSelect(
       1,
       e.target.value,
-      state.MenuConext,
-      state.filter,
-      state.listaQuery
+      state.menu, 
+      state.listaQuery,
+      state.lstSubFamilia,
+      state.lstMenuVertical,
+      state.lstMenuVerticalData,
     );
+/*           1,
+            state.filterOrder,
+            _object,        
+            state.listaQuery,
+            state.lstSubFamilia,
+            _lstMenuVertical,
+            _lstMenuVerticalData */
+
+
   }
-  function handleEventChangeMenu(_param) {
-    if (_param.identificador !== "TITULO") {
+async  function handleEventChangeMenu(_object,_listaMenu) {
+  
+ 
+  let _lstMenuVertical=[]; 
+  let _lstMenuVerticalData=[]; 
+
+    if (_object.identificador === _IndentificadorMenu.MenuPadreRepuestos ||
+        _object.identificador === _IndentificadorMenu.MenuPadreAccesoriosLifeStyle ) {       
+          MENU_Repuestos.select===0? MENU_Repuestos.select=1: MENU_Repuestos.select=0; 
+          MENU_Accesorios_LifeStyle.select===0? MENU_Accesorios_LifeStyle.select=1: MENU_Accesorios_LifeStyle.select=0; 
+                      
+          if(_object.identificador === _IndentificadorMenu.MenuPadreRepuestos){
+            _lstMenuVerticalData.push(MENU_Repuestos);  
+           for (let index = 0; index < listaMenu.length; index++) {
+            let element = listaMenu[index];
+              if(element.codigoGrupo===_CodigoGrupo.Repuesto){
+                element.display=MENU_Repuestos.select;
+                _lstMenuVerticalData.push(element);
+              }
+            }       
+          }else{
+            if(params.descripcion ===_IndentificadorMenu.TodoProducto){
+              _lstMenuVerticalData.push(MENU_Repuestos); 
+            }
+          }     
+         
+          if(_object.identificador === _IndentificadorMenu.MenuPadreAccesoriosLifeStyle){
+            _lstMenuVerticalData.push(MENU_Accesorios_LifeStyle); 
+            for (let index = 0; index < listaMenu.length; index++) {             
+              let element = listaMenu[index];
+              if(element.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle){
+                element.display= MENU_Accesorios_LifeStyle.select;
+                _lstMenuVerticalData.push(element);
+              }
+            }            
+          }else{
+            if(params.descripcion ===_IndentificadorMenu.TodoProducto){
+              _lstMenuVerticalData.push(MENU_Accesorios_LifeStyle); 
+            }
+          }  
+           _lstMenuVertical=handleBuiltMenu(_lstMenuVerticalData)      
+        dispatch({
+          type: actionType.LOAD_CHANGE_MENU, 
+          lstMenuVertical: _lstMenuVertical,
+        });    
+  
+    }else{ 
+      let flgChangeDisplay = false;
+      for (let index = 0; index < _listaMenu.length; index++) {
+        let element = _listaMenu[index];
+        if (
+          element.identificador === _IndentificadorMenu.MenuPadreRepuestos ||
+          element.identificador ===
+            _IndentificadorMenu.MenuPadreAccesoriosLifeStyle
+        ) {
+          flgChangeDisplay = true;
+        }
+      }
+
+      if (flgChangeDisplay === true) {
+        MENU_Repuestos.select === 0
+          ? (MENU_Repuestos.select = 1)
+          : (MENU_Repuestos.select = 0);
+        MENU_Accesorios_LifeStyle.select === 0
+          ? (MENU_Accesorios_LifeStyle.select = 1)
+          : (MENU_Accesorios_LifeStyle.select = 0);
+      }
+      for (let index = 0; index < _listaMenu.length; index++) {
+        let element = _listaMenu[index];
+        if (flgChangeDisplay === true) {
+          if (
+            element.identificador === _IndentificadorMenu.MenuPadreRepuestos ||
+            element.identificador ===
+              _IndentificadorMenu.MenuPadreAccesoriosLifeStyle
+          ) {
+            element.display = 1;
+          } else {
+            element.display = 0;
+          }
+        } else {
+          element.display = 1;
+        }
+        _lstMenuVerticalData.push(element);
+      }
+      _lstMenuVertical=handleBuiltMenu(_lstMenuVerticalData);       
       handleEventAddSubFamiliaSelect(
-        1,
-        state.filterOrder,
-        _param.identificador,
-        state.filter,
-        state.listaQuery
-      );
-    }
+            1,
+            state.filterOrder,
+            _object,        
+            state.listaQuery,
+            state.lstSubFamilia,
+            _lstMenuVertical,
+            _lstMenuVerticalData
+          ); 
+    }  
+ 
   }
-
   return (
-    <div className="produc-destacado">
+    <div className="produc-destacado prod-filter-form">
       {state.isLoandingProductos ? <Loading></Loading> : ""}
-
-      <div className="prod-filter-content">
-        <div className="prod-filter-column1">
-          <div className="link-href">
-            <Link to="/shop">Inicio</Link> &nbsp;&nbsp;/
-            <span className="link-href-span">{_marca.decripcion}</span>
-          </div>
-          <ul className="prod-filter-menu">
-            {state.lstMenuVertical.map((_objeto) => (
-              <li
-                className={
-                  _objeto.identificador === "TITULO"
-                    ? "prod-filter-menu-titulo"
-                    : ""
-                }
-                key={_objeto.codigo + _objeto.identificador}
-              >
-                <span
-                  onClick={(e) => {
-                    handleEventChangeMenu(_objeto);
-                  }}
-                >
-                  {_objeto.descripcion}
-                </span>
-              </li>
-            ))}
-          </ul>
+      <div className="prod-filter-header">
+      <div className="link-href-historial">
+            <Link to="/shop" ><i className="fa fa-home"></i>Home</Link>
+            {state.menu.codigoGrupo===_CodigoGrupo.Repuesto ?
+             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoRepuesto + "/filter/all"} target={"_parent"}>&nbsp;Repuestos&nbsp;</Link></>:""}
+            
+             {state.menu.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle ?
+             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoAccesorioLyfeStyle+ "/filter/all"} target={"_parent"}>&nbsp;Accesorios y LifeStyle</Link></>:""}
+            
+            {state.menu.identificador===_IndentificadorMenu.TodoRepuesto || 
+              state.menu.identificador===_IndentificadorMenu.TodoAccesorioLyfeStyle?"": <span className="link-href-span">&raquo;&nbsp;{state.menu.descripcion}</span>}
+            
         </div>
-
-        <div className="prod-filter-column2 ">
           <div className="prod-filter-page ">
             <span>Ordenar por: &nbsp;&nbsp;</span>
             <select
@@ -755,6 +564,17 @@ export default function ProductoFilter(props) {
               </option>
             </select>
           </div>
+      </div>
+      <div className="prod-filter-content">
+        <div className="prod-filter-column1">  
+             
+          <ul className="prod-filter-menu">
+           {state.lstMenuVertical}
+          </ul>
+        </div>
+
+        <div className="prod-filter-column2 ">
+          
           {state.lstProducto}
           <div className="prod-filter-page">
             <Paginacion
@@ -799,6 +619,8 @@ let actionType = {
   LOAD_PRODUCTO: "LOAD_PRODUCTO",
   CHANGE_FILTER_ORDERBY: "CHANGE_FILTER_ORDERBY",
   LOAD_MENU: "LOAD_MENU",
+  LOAD_CHANGE_MENU:"LOAD_CHANGE_MENU",
+  LOAD_CHANGE_MENU_LOAD:"LOAD_CHANGE_MENU_LOAD"
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -826,7 +648,11 @@ const reducer = (state, action) => {
         totalRegistros: action.totalRegistros,
         isLoandingProductos: action.isLoandingProductos,
         currentPage: action.currentPage,
+        lstMenuVertical: action.lstMenuVertical,
+        lstMenuVerticalData: action.lstMenuVerticalData,
+        menu: action.menu,
       };
+
     case actionType.CHANGE_FILTER_ORDERBY:
       return {
         ...state,
@@ -835,11 +661,22 @@ const reducer = (state, action) => {
     case actionType.LOAD_MENU:
       return {
         ...state,
-        MenuDescripcion: action.MenuDescripcion,
-        MenuConext: action.MenuConext,
+        menu: action.menu,
         filter: action.filter,
         lstMenuVertical: action.lstMenuVertical,
-        listaQuery:action.listaQuery
+        listaQuery: action.listaQuery,
+        listaQuerySubFamilia: action.listaQuerySubFamilia,
+      };
+    case actionType.LOAD_CHANGE_MENU:
+      return {
+        ...state,
+        lstMenuVertical: action.lstMenuVertical,
+      };
+    case actionType.LOAD_CHANGE_MENU_LOAD:
+      return {
+        ...state,
+        lstMenuVertical: action.lstMenuVertical,
+        menu: action.menu,
       };
     default:
       return state;

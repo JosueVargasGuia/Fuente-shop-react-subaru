@@ -291,9 +291,9 @@ public class ClienteServiceRepositoryImpl implements ClienteServiceRepository {
 					while (rs.next()) {
 						tipoCambio.setFecha(rs.getDate("FECHA"));
 						tipoCambio.setTipoCambioCompra(
-								rs.getBigDecimal("NUMTIPOCAMBIOCONTCOMPRA").setScale(2, RoundingMode.HALF_UP));
+								rs.getBigDecimal("NUMTIPOCAMBIOADMCOMPRA").setScale(2, RoundingMode.HALF_UP));
 						tipoCambio.setTipoCambioVenta(
-								rs.getBigDecimal("NUMTIPOCAMBIOCONTVENTA").setScale(2, RoundingMode.HALF_UP));
+								rs.getBigDecimal("NUMTIPOCAMBIOADMVENTA").setScale(2, RoundingMode.HALF_UP));
 					}
 					return tipoCambio;
 				}

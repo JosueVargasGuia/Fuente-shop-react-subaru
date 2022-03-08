@@ -25,6 +25,9 @@ https://docs.lyra.com/es/rest/V4.0/api/kb/ipn_usage.html
 
 https://docs.lyra.com/es/rest/V4.0/api/kb/status_reference.html
 
+autorizacion de rutas privadas publimatCardSubtitle
+https://lemoncode.net/lemoncode-blog/2020/12/20/react-router-y-rutas-autorizadas-i
+
 jvelasquez0 
 Adminglobal202111
 
