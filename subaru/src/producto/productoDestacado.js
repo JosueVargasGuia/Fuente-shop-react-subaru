@@ -177,6 +177,7 @@ for (let index = 0; index < listaMenu.length; index++) {
             numStock: e.numStock,
             totalRegistros: e.totalRegistros,
             displayChrcodigoproducto:e.displayChrcodigoproducto,
+            filterProducto:_FilterProducto,
             familia: {
               chrCodigoFamilia: e.familia.chrCodigoFamilia,
               vchDescripcion: e.familia.vchDescripcion,
@@ -262,6 +263,7 @@ for (let index = 0; index < listaMenu.length; index++) {
           numStock: e.numStock,
           totalRegistros: e.totalRegistros,
           displayChrcodigoproducto:e.displayChrcodigoproducto,
+          filterProducto:_FilterProducto,
           familia: {
             chrCodigoFamilia: e.familia.chrCodigoFamilia,
             vchDescripcion: e.familia.vchDescripcion,

@@ -352,6 +352,7 @@ export default function ProductoFilter(props) {
             numStock: e.numStock,
             totalRegistros: e.totalRegistros,
             displayChrcodigoproducto:e.displayChrcodigoproducto,
+            filterProducto:_filterProducto,
             familia: {
               chrCodigoFamilia: e.familia.chrCodigoFamilia,
               vchDescripcion: e.familia.vchDescripcion,

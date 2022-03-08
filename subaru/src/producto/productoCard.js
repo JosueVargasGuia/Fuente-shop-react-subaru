@@ -28,6 +28,7 @@ export default function ProductosCard(props) {
     numStock: props.producto.numStock,
     moneda: props.moneda,
     displayChrcodigoproducto:props.producto.displayChrcodigoproducto,
+    filterProducto:props.producto.filterProducto,
     familia: {
       chrCodigoFamilia: props.producto.familia.chrCodigoFamilia,
       vchDescripcion: props.producto.familia.vchDescripcion,
@@ -46,6 +47,11 @@ export default function ProductosCard(props) {
   };
   let shareFacebook='https://www.facebook.com/sharer/sharer.php?u=https://subaruparts.eanet.pe/subaruparts/detalle/'+producto.familia.chrCodigoFamilia+'/'+producto.familia.vchDescripcion+'/'+producto.chrCodigoProducto+'&quote='+producto.vchDescripcion;
   let shareTwitter='https://twitter.com/intent/tweet?url=https://subaruparts.eanet.pe/subaruparts/detalle/'+producto.familia.chrCodigoFamilia+'/'+producto.familia.vchDescripcion+'/'+producto.chrCodigoProducto+'&text='+producto.vchDescripcion;
+ 
+    // Acá se debe setear el valor del color
+    const styleBgSticker = {
+      background: (producto.filterProducto===FilterProducto.FILTER_OFERTA?"#f50000":"#2fb5d2")
+    };
 
   const cotizacionResumen = {
     totalRegistros: 0,
@@ -222,15 +228,15 @@ export default function ProductosCard(props) {
     });
     
   }
-  // Acá se debe setear el valor del color
-  const styleBgSticker = {
-    background: '#ff0000',
-  };
+  
   return (
     <>
       <div className="producto-card">
-        {/* Se puede validar con un paránmetro si lleva o no el sticker */}
-        <div className="sticker-label" style={styleBgSticker}>Oferta</div>
+      {(producto.filterProducto===FilterProducto.FILTER_OFERTA?<div className="sticker-label" style={styleBgSticker}>Oferta</div>:"")}
+      {(producto.filterProducto===FilterProducto.FILTER_DESTACADO_MARCA?<div className="sticker-label" style={styleBgSticker}>Destacado</div>:"")}
+        
+
+
         <div className="producto-card-img">
           
           <img
