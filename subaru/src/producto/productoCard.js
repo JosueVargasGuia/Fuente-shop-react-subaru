@@ -111,7 +111,7 @@ export default function ProductosCard(props) {
         }
       }
     }
-   console.log(state.producto)
+    
     dispatch({ type: actionType.SET_IMAGEN, showModal: _status, listaProductoImagen: _listaProductoImagen });
   }
   async function handleEventClieckregistrarCotizacion() {
@@ -255,7 +255,7 @@ export default function ProductosCard(props) {
           </div> : <></>}
 
           <div className="producto-card-stock">
-            Stock Disponible:&nbsp;{props.producto.numStock}
+            Stock Disponible {props.isAdmin==="SI"?<>:&nbsp;{props.producto.numStock}</>:""}
           </div>
           
           <div className="producto-card-precio">

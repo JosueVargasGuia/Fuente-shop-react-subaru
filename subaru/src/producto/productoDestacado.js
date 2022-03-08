@@ -1,11 +1,12 @@
 import { useEffect, useReducer } from "react";
 import {  listaCategoria, listaMenu,  _CodigoGrupo, _IndentificadorMenu } from "../service/EnumMenu";
 import { findProductos } from "../service/producto.service";
-import { displayLista,FilterProducto, homepage, HttpStatus,SUCCESS_SERVER } from "../service/ENUM";
+import { chrRol, displayLista,FilterProducto, homepage, HttpStatus,localStoreEnum,LOGGIN,SUCCESS_SERVER } from "../service/ENUM";
 import ProductosCard from "./productoCard";
 import { Link } from "react-router-dom";
 import ServerException from "../utils/serverException";
 import { LoadingClassic } from "../utils/loading"
+ 
 const LIMITE = 8;
 
 
@@ -114,6 +115,22 @@ for (let index = 0; index < listaMenu.length; index++) {
   }, [props.marcaSelect, props.moneda]);
 
 
+  async function handleValidarCliente() {
+    if (
+      JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)) !== undefined &&
+      JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)) !== null
+    ) {
+      return JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)).chrRol ===
+        chrRol.ROLE_ADMIN
+        ? "SI"
+        : "NO";
+    } else {
+      return "NO";
+    }
+  }
+
+
+
   //eslint-disable-next-line
   async function handleServicioBuscarProductos(
     _pagina,
@@ -121,7 +138,7 @@ for (let index = 0; index < listaMenu.length; index++) {
     chrCodigoFamilia,
     vchDescripcion
   ) {
-   
+    let _isAdmin=await handleValidarCliente();
     let rowProducto = [];
     //let rowProductoRecomendado = [];
     let rowProductoOferta = [];
@@ -131,7 +148,8 @@ for (let index = 0; index < listaMenu.length; index++) {
     rowProductoOferta = await handleServicioBuscarProductoFilter(
       _pagina,
       _limit,
-      FilterProducto.FILTER_OFERTA
+      FilterProducto.FILTER_OFERTA,
+      _isAdmin
     );
     const rpt = await findProductos({
       chrCodigoFamilia: chrCodigoFamilia,
@@ -140,14 +158,13 @@ for (let index = 0; index < listaMenu.length; index++) {
       limit: _limit,
       filterProducto: _FilterProducto,
     });
-    console.log(rowProductoOferta);
+    
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
 
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let index = 0; index < json.listaProductos.length; index++) {
-          let e = json.listaProductos[index];
-          console.log(e);
+          let e = json.listaProductos[index];          
           let producto = {
             chrCodigoProducto: e.chrCodigoProducto,
             numValorVentaDolar: e.numValorVentaDolar,
@@ -180,6 +197,7 @@ for (let index = 0; index < listaMenu.length; index++) {
               moneda={props.moneda}
               producto={producto}
               key={producto.chrCodigoProducto}
+              isAdmin={_isAdmin}
             ></ProductosCard>
           );
         }
@@ -217,7 +235,8 @@ for (let index = 0; index < listaMenu.length; index++) {
   async function handleServicioBuscarProductoFilter(
     _pagina,
     _limit,
-    _FilterProducto
+    _FilterProducto,
+    _isAdmin
   ) {
     let row = [];
     const rpt = await findProductos({
@@ -262,6 +281,7 @@ for (let index = 0; index < listaMenu.length; index++) {
             moneda={props.moneda}
             producto={producto}
             key={producto.chrCodigoProducto}
+            isAdmin={_isAdmin}
           ></ProductosCard>
         );
       }

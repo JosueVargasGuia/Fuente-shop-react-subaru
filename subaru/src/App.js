@@ -228,6 +228,7 @@ function App() {
       islogin: LOGGIN.LOGOUT,
       usuario: "",
     });
+    window.location.href ="/shop"
   }
 
   function handleSelectMarcaForDetalleProducto(chrCodigoFamilia) {
@@ -331,6 +332,7 @@ function App() {
                   marcaSelect={state.marca}
                   displayLista={state.displayLista}
                   moneda={state.moneda}
+                  numCodigoCliente={state.usuario.numCodigoCliente}
                 ></ProductoDestacado>
                 
               </div>
@@ -348,6 +350,7 @@ function App() {
                 handleSelectMarcaChange={handleSelectMarcaChange}
                 query={state.descripcion}
                 handleInputChangeDescripcion={handleInputChangeDescripcion}
+                numCodigoCliente={state.usuario.numCodigoCliente}
               ></ProductoFilter>
             </Route>
 

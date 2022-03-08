@@ -8,6 +8,8 @@ import {
   lstMarcas,
   SUCCESS_SERVER,
   filterOrder,
+  chrRol,
+  localStoreEnum,
   //FilterTypeLista,
 } from "../service/ENUM";
 import {
@@ -95,7 +97,19 @@ export default function ProductoFilter(props) {
 
     //eslint-disable-next-line
   }, [props.moneda, params.query, params.descripcion]);
- 
+  async function handleValidarCliente(_numCodigoCliente) {
+    if (
+      JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)) !== undefined &&
+      JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)) !== null
+    ) {
+      return JSON.parse(localStorage.getItem(localStoreEnum.USUARIO)).chrRol ===
+        chrRol.ROLE_ADMIN
+        ? "SI"
+        : "NO";
+    } else {
+      return "NO";
+    }
+  }
   async function handleInitVariable(_identificador,target) {
     let _MENU= {
       descripcion: "Todos los Productos",  
@@ -118,7 +132,9 @@ export default function ProductoFilter(props) {
         _MENU=objMenu;
       }
     }   
-      if(_MENU.identificador===_IndentificadorMenu.TodoProducto || _MENU.identificador===_IndentificadorMenu.Default){           
+      if(_MENU.identificador===_IndentificadorMenu.TodoProducto || _MENU.identificador===_IndentificadorMenu.Default){  
+        MENU_Repuestos.select=0; 
+        MENU_Accesorios_LifeStyle.select=0;           
         _lstMenuVerticalState.push(MENU_Repuestos);
         for (let index = 0; index < listaMenu.length; index++) {
           const _objMenu = listaMenu[index];
@@ -137,28 +153,32 @@ export default function ProductoFilter(props) {
             _lstMenuVerticalState.push(_objMenu_);
           }
         }
+     
       }else{   
         if (
           _MENU.codigoGrupo === _CodigoGrupo.Personalizado &&
           (_MENU.identificador === _IndentificadorMenu.TodoRepuesto ||
             _MENU.identificador === _IndentificadorMenu.TodoAccesorioLyfeStyle)
         ) {
+          
           if(_MENU.identificador === _IndentificadorMenu.TodoRepuesto){             
-            _lstMenuVerticalState.push(MENU_Repuestos);           
+            _lstMenuVerticalState.push(MENU_Repuestos);    
+            MENU_Repuestos.select===0? MENU_Repuestos.select=1: MENU_Repuestos.select=0;                   
             for (let index = 0; index < listaMenu.length; index++) {
               let _objMenu1 = listaMenu[index];
-              if (_objMenu1.identificador ===_CodigoGrupo.Repuesto) {            
-                _objMenu1.display =0;                 
+              if (_objMenu1.codigoGrupo ===_CodigoGrupo.Repuesto) {            
+                _objMenu1.display =1;                 
                 _lstMenuVerticalState.push(_objMenu1);
               }
             }
           }
           if(_MENU.identificador === _IndentificadorMenu.TodoAccesorioLyfeStyle){            
-            _lstMenuVerticalState.push(MENU_Accesorios_LifeStyle);           
+            _lstMenuVerticalState.push(MENU_Accesorios_LifeStyle);  
+            MENU_Accesorios_LifeStyle.select===0? MENU_Accesorios_LifeStyle.select=1: MENU_Accesorios_LifeStyle.select=0;          
             for (let index = 0; index < listaMenu.length; index++) {
               let _objMenu1 = listaMenu[index];
               if (_objMenu1.codigoGrupo === _CodigoGrupo.Accesorio_LyfeStyle) {                 
-                _objMenu1.display = 0;                
+                _objMenu1.display = 1;                
                 _lstMenuVerticalState.push(_objMenu1);
               }
             }
@@ -201,7 +221,7 @@ export default function ProductoFilter(props) {
         }}
       >
         
-         {element.descripcion}  
+         {element.descripcion} 
        
       </li>
     );
@@ -217,11 +237,13 @@ export default function ProductoFilter(props) {
     _lstMenuVertical,
     _lstMenuVerticalData
   ) {  
+    
     dispatch({
       type: actionType.LOAD_CHANGE_MENU_LOAD, 
       lstMenuVertical: _lstMenuVertical,
       menu:_MENU
     });
+    let _isAdmin=await handleValidarCliente();
     let _totalRegistros = 0;
     let lstSubFamiliaFilter = [];
     /*Listado de Producto */
@@ -350,6 +372,7 @@ export default function ProductoFilter(props) {
               moneda={props.moneda}
               producto={producto}
               key={producto.chrCodigoProducto}
+              isAdmin={_isAdmin}
             ></ProductosCard>
           );
         }
@@ -505,14 +528,16 @@ async  function handleEventChangeMenu(_object,_listaMenu) {
       {state.isLoandingProductos ? <Loading></Loading> : ""}
       <div className="prod-filter-header">
       <div className="link-href-historial">
-            <Link to="/shop" ><i className="fa fa-home"></i>Home&nbsp;</Link>
+            <Link to="/shop" ><i className="fa fa-home"></i>Home</Link>
             {state.menu.codigoGrupo===_CodigoGrupo.Repuesto ?
-             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoRepuesto + "/filter/all"} target={"_parent"}>Repuestos&nbsp;</Link></>:""}
+             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoRepuesto + "/filter/all"} target={"_parent"}>&nbsp;Repuestos&nbsp;</Link></>:""}
             
              {state.menu.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle ?
-             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoAccesorioLyfeStyle+ "/filter/all"} target={"_parent"}>Accesorios y LifeStyle</Link></>:""}
-            &raquo;
-            <span className="link-href-span">&nbsp;{state.menu.descripcion}</span>
+             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoAccesorioLyfeStyle+ "/filter/all"} target={"_parent"}>&nbsp;Accesorios y LifeStyle</Link></>:""}
+            
+            {state.menu.identificador===_IndentificadorMenu.TodoRepuesto || 
+              state.menu.identificador===_IndentificadorMenu.TodoAccesorioLyfeStyle?"": <span className="link-href-span">&raquo;&nbsp;{state.menu.descripcion}</span>}
+            
         </div>
           <div className="prod-filter-page ">
             <span>Ordenar por: &nbsp;&nbsp;</span>
