@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import {  listaCategoria, listaMenu,  _CodigoGrupo, _IndentificadorMenu } from "../service/EnumMenu";
 import { findProductos } from "../service/producto.service";
-import { chrRol, displayLista,FilterProducto, homepage, HttpStatus,localStoreEnum,LOGGIN,SUCCESS_SERVER } from "../service/ENUM";
+import { chrRol, displayLista,FilterProducto, homepage, HttpStatus,localStoreEnum,SUCCESS_SERVER } from "../service/ENUM";
 import ProductosCard from "./productoCard";
 import { Link } from "react-router-dom";
 import ServerException from "../utils/serverException";
@@ -177,7 +177,10 @@ for (let index = 0; index < listaMenu.length; index++) {
             numStock: e.numStock,
             totalRegistros: e.totalRegistros,
             displayChrcodigoproducto:e.displayChrcodigoproducto,
-            filterProducto:_FilterProducto,
+            typePresentacion:e.typePresentacion,
+            numValorBaseDolar:e.numValorBaseDolar,
+            numValorBaseSoles:e.numValorBaseSoles,
+            numValorDescBase:e.numValorDescBase,
             familia: {
               chrCodigoFamilia: e.familia.chrCodigoFamilia,
               vchDescripcion: e.familia.vchDescripcion,
@@ -263,7 +266,10 @@ for (let index = 0; index < listaMenu.length; index++) {
           numStock: e.numStock,
           totalRegistros: e.totalRegistros,
           displayChrcodigoproducto:e.displayChrcodigoproducto,
-          filterProducto:_FilterProducto,
+          typePresentacion:e.typePresentacion,
+          numValorBaseDolar:e.numValorBaseDolar,
+          numValorBaseSoles:e.numValorBaseSoles,
+          numValorDescBase:e.numValorDescBase,
           familia: {
             chrCodigoFamilia: e.familia.chrCodigoFamilia,
             vchDescripcion: e.familia.vchDescripcion,
@@ -308,7 +314,7 @@ for (let index = 0; index < listaMenu.length; index++) {
           </div>          
           <div className="produc-destacado-item-link link-href ">
             <Link to={"/shop/"+_IndentificadorMenu.TodoDestacado+"/filter/all"}>
-              Ver todos los Destacado &raquo;
+              Todos los Destacados &raquo;
             </Link>
           </div>
         </div>
@@ -340,7 +346,7 @@ for (let index = 0; index < listaMenu.length; index++) {
                 {(state.rowProductoOferta !== undefined?(state.rowProductoOferta.length <= 0?<></>: 
                 <div className="produc-destacado-item-link link-href ">
                     <Link to={"/shop/"+_IndentificadorMenu.TodoOferta+"/filter/all"}>
-                          Ver todos en Oferta &raquo;
+                          Todas las Ofertas &raquo;
                     </Link>
                 </div>):<></>)} 
               </div>
@@ -360,12 +366,13 @@ for (let index = 0; index < listaMenu.length; index++) {
             <div className="produc-destacado-links-title"> </div>
             <div className="produc-destacado-item-link link-href ">
               <Link to={"/shop/"+_IndentificadorMenu.TodoProducto+"/filter/all"}>
-                      Ver todos los productos  &raquo;
+                      Todos los productos  &raquo;
                       </Link>
               </div>
           </div> 
         </div>
         <div className="produc-destacado-links">
+          
          <div className="produc-destacado-links-header">  
             <div className="produc-destacado-links-title">Partes de Mantenimiento (Preventivo - Correctivo)</div>            
           </div>

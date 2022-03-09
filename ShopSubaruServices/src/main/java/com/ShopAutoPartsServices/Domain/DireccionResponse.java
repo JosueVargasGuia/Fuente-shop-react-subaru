@@ -6,7 +6,7 @@ import java.util.List;
 public class DireccionResponse {
 	List<Direccion> lista = new ArrayList<Direccion>();
 	Response response=new Response();
-	Cliente cliente=new Cliente();
+	ClienteUsuario clienteUsuario=new ClienteUsuario();
 	public List<Direccion> getLista() {
 		return lista;
 	}
@@ -25,12 +25,13 @@ public class DireccionResponse {
 		return this;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public ClienteUsuario getClienteUsuario() {
+		return clienteUsuario;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setClienteUsuario(ClienteUsuario clienteUsuario) {
+		this.clienteUsuario = clienteUsuario;
 	}
 
+	 
 }

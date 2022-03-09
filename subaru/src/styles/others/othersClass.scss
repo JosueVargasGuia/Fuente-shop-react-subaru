@@ -361,7 +361,11 @@
 
 .modal-title-span {
     font-size: 0.7em;
-    font-weight: bold;
+}
+
+.modal-title,
+.h4 {
+    font-size: 1.4rem;
 }
 
 .action-cliente-button {
@@ -580,6 +584,7 @@
 
 .produc-destacado-links {
     background-color: var( --color-background-white);
+    padding-top: 1em;
     hr {
         margin-top: 0em !important;
         margin-bottom: 0em !important;

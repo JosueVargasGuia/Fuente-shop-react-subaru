@@ -36,13 +36,15 @@ const _IndentificadorMenu={
   Mantenimiento_4:"Mantenimiento_4",
   Mantenimiento_5:"Mantenimiento_5",
   Mantenimiento_6:"Mantenimiento_6",
+  Mantenimiento_7:"Mantenimiento_7",
+  Mantenimiento_8:"Mantenimiento_8",
 
   Recambio_1:"Recambio_1",
   Recambio_2:"Recambio_2",
   Recambio_3:"Recambio_3",
   Recambio_4:"Recambio_4",
   Recambio_5:"Recambio_5",
-  Recambio_6:"Recambio_6", 
+  //Recambio_6:"Recambio_6", 
 
   Accesorios_1:"Accesorios_1", 
   Accesorios_2:"Accesorios_2",
@@ -333,8 +335,29 @@ const listaMenu = [
     
      
   }, 
-  {
-    
+  {     
+    descripcion: "Lubricantes y Fluidos",
+    srcimg: "/marcas/subaru/mantenimiento/M7.gif",    
+    identificador: _IndentificadorMenu.Mantenimiento_7,
+    subFamilia: [],
+    query: [],
+    codigoGrupo:  _CodigoGrupo.Mantenimiento,
+    display: 0,
+    select:0,   
+     
+  }, 
+  {     
+    descripcion: "Aditivos",
+    srcimg: "/marcas/subaru/mantenimiento/M8.png",    
+    identificador: _IndentificadorMenu.Mantenimiento_8,
+    subFamilia: ['112A9'],
+    query: [],
+    codigoGrupo:  _CodigoGrupo.Mantenimiento,
+    display: 0,
+    select:0,   
+     
+  }, 
+  {    
     descripcion: "Alternadores",
     srcimg: "/marcas/subaru/recambio/R1.png",     
     identificador: _IndentificadorMenu.Recambio_1,
@@ -342,8 +365,7 @@ const listaMenu = [
     query: ["alternador"],
     codigoGrupo: _CodigoGrupo.Recambio,
     display: 0,
-    select:0,
-    
+    select:0,   
     
   },
   {
@@ -395,25 +417,7 @@ const listaMenu = [
     
      
   },
-  {     
-    descripcion: "Lubricantes y Fluidos",
-    srcimg: "/marcas/subaru/recambio/R6.gif",    
-    identificador: _IndentificadorMenu.Recambio_6,
-    subFamilia: [],
-    query: [
-      "alternador",
-      "arrancador",
-      "radiador",
-      "suspensión",
-      "suspension",
-      "limpiaparabrisas",
-    ],
-    codigoGrupo:  _CodigoGrupo.Recambio,
-    display: 0,
-    select:0,
-    
-     
-  }, 
+ 
   {   
     descripcion: "Carga",
     srcimg: "/marcas/subaru/accesorios/A1.png",

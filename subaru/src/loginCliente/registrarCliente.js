@@ -1834,9 +1834,7 @@ export default function RegistrarCliente(props) {
                   autoComplete="false"
                   autoSave="false"
                   checked={state.direccion.flgMismoRecepciona}
-                  onChange={(e) => handleEventMismoRecepciona(e.target.checked)
-
-                  }
+                  onChange={(e) => handleEventMismoRecepciona(e.target.checked)}
                 ></input>
               </div>
             </> : ""}

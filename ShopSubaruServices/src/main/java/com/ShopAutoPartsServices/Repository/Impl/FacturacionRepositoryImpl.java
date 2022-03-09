@@ -549,17 +549,18 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 			Statement stat = connection.createStatement();
 			stat.execute("alter session set NLS_DATE_FORMAT='dd/mm/yyyy'");
 			connection.setAutoCommit(false);
-			cstmt = connection.prepareCall("{call " + PKG_METODOS + "." + Constantes.SET_BODY_OC + "}");
+			cstmt = connection.prepareCall("{call " + PKG_METODOS + "." + Constantes.SET_BODY_ORDENCOMPRA + "}");
 			cstmt.setString(1, reportePdfRequets.getChrCodigoOc());
+			cstmt.setString(2, "");/*Variable sin uso en SP jv 09/03/2022*/
 			cstmt.execute();
 
 			@SuppressWarnings("rawtypes")
 			HashMap parametros = new HashMap();
-			parametros.put("numoc", reportePdfRequets.getChrCodigoOc() + "");
+			//parametros.put("numoc", reportePdfRequets.getChrCodigoOc() + "");
 			parametros.put("pathReport", path);
 			parametros.put("REPORT_LOCALE", new Locale("en", "US"));
 
-			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/rpt_OrdenCompra.jasper");
+			InputStream inputStream = (InputStream) this.getClass().getResourceAsStream("/rpt_OC5.jasper");
 			byte[] bytes = JasperRunManager.runReportToPdf(inputStream, parametros, connection);
 			String pdfBase64 = Base64.getEncoder().encodeToString(bytes);
 			connection.close();

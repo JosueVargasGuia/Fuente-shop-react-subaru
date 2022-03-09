@@ -54,7 +54,7 @@ public class Constantes {
 	public static final String SET_BODY_FACTURAPSSALES = "SET_BODY_FACTURAPSSALES(?)";
 	public static final String SET_BODY_FACTURAOS = "SET_BODY_FACTURAOS(?)";
 	public static final String LISTAR_FACTURACION_ELECTRONICA_DETALLE = "LISTAR_FACT_ELECT_DETALLE";
-	public static final String SET_BODY_OC = "SET_BODY_OC(?)";
+	public static final String SET_BODY_ORDENCOMPRA = "SET_BODY_ORDENCOMPRA(?,?)";
 	public static String formatDecimalMiles(double number) {
 		DecimalFormat df;
 		DecimalFormatSymbols misimbolo;

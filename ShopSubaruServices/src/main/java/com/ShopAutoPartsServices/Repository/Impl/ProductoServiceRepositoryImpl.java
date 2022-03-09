@@ -39,6 +39,7 @@ import com.ShopAutoPartsServices.Domain.SubFamilia;
 import com.ShopAutoPartsServices.Domain.SubirImagen;
 import com.ShopAutoPartsServices.Domain.Vigencia;
 import com.ShopAutoPartsServices.Enums.FilterProducto;
+import com.ShopAutoPartsServices.Enums.TypePresentacion;
 import com.ShopAutoPartsServices.Repository.ProductoServiceRepository;
  
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
@@ -142,8 +143,13 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						producto.setNumValorVentaRefDolar(formatter.format(rs.getBigDecimal("NUMVALORVENTAREFDOLAR")));
 						producto.setNumValorVentaRefSoles(formatter.format(rs.getBigDecimal("NUMVALORVENTAREFSOLES")));
 						 
-						producto.setNumValorDesc(rs.getString("NUMVALORDESC"));
+						producto.setNumValorDesc(rs.getDouble("NUMVALORDESC"));
 						producto.setDisplayChrcodigoproducto(rs.getInt("DISPLAY_CHRCODIGOPRODUCTO"));
+						producto.setTypePresentacion(TypePresentacion.valueOf(rs.getString("TYPEPRESENTACION")));
+						
+						producto.setNumValorBaseDolar(formatter.format(rs.getBigDecimal("NUMVALORBASE")));
+						producto.setNumValorBaseSoles(formatter.format(rs.getBigDecimal("NUMVALORBASESOLES")));
+						producto.setNumValorDescBase(rs.getDouble("NUMVALORDESCBASE"));
 						
 						imagenDefault.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));
 						imagenDefault.setChrNombre(rs.getString("CHRNOMBRE"));

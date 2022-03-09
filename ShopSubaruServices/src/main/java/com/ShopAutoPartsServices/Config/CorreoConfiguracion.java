@@ -3,6 +3,8 @@ package com.ShopAutoPartsServices.Config;
  
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
+import com.ShopAutoPartsServices.Enums.DeployApp;
  
  
 
@@ -55,6 +57,22 @@ public class CorreoConfiguracion {
 	
 	@Value("${shop.mail.smtp.No_SSL.port}")
 	private String portNoSSL;
+	
+	@Value("${spring.datasource.username}")
+	private String username;
+	
+	private DeployApp deployApp;
+	
+	
+	 
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public String getHost() {
 		return host;
@@ -191,6 +209,19 @@ public class CorreoConfiguracion {
 	public CorreoConfiguracion setPortNoSSL(String portNoSSL) {
 		this.portNoSSL = portNoSSL;
 		return this;
+	}
+
+	public DeployApp getDeployApp() {
+		if (getUsername().equalsIgnoreCase("EACORP")) {
+			setDeployApp(DeployApp.DeployProduccion);
+		} else {
+			setDeployApp(DeployApp.DeployDesarrollo);
+		}
+		return deployApp;
+	}
+
+	public void setDeployApp(DeployApp deployApp) {
+		this.deployApp = deployApp;
 	}
 	
 }

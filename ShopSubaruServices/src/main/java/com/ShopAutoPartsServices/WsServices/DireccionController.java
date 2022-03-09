@@ -17,6 +17,7 @@ import com.ShopAutoPartsServices.Domain.ClienteUsuario;
 import com.ShopAutoPartsServices.Domain.Direccion;
 import com.ShopAutoPartsServices.Domain.DireccionResponse; 
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
+import com.ShopAutoPartsServices.Service.Impl.ClienteServiceImpl;
 import com.ShopAutoPartsServices.Service.Impl.DireccionServiceImpl;
 
 @RestController
@@ -25,7 +26,9 @@ public class DireccionController {
 	Logger logger = LoggerFactory.getLogger(DireccionController.class);
 	@Autowired
 	DireccionServiceImpl direccionServiceImpl;
-
+	@Autowired
+	ClienteServiceImpl clienteService;
+	
 	@PostMapping(value = "/lstdireccion", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DireccionResponse> listarDirecciones(@RequestBody ClienteUsuario clienteUsuario) {
 		ResponseEntity<DireccionResponse> responseEntity = null;
@@ -34,6 +37,7 @@ public class DireccionController {
 		try {
 			direccionResponse.setLista(direccionServiceImpl.obtenerDirecciones(clienteUsuario));
 			direccionResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK);
+			direccionResponse.setClienteUsuario(clienteService.obtenerCliente(clienteUsuario));
 			responseEntity = new ResponseEntity<DireccionResponse>(direccionResponse, HttpStatus.OK);
 		} catch (Exception e) {
 			logger.info(e.getMessage());

@@ -4,6 +4,8 @@ package com.ShopAutoPartsServices.Domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ShopAutoPartsServices.Enums.TypePresentacion;
+
 public class Producto {
 	String chrCodigoProducto;// CHAR(20 BYTE) NOT NULL,
 	String numValorVentaDolar;// NUMBER,
@@ -26,8 +28,16 @@ public class Producto {
 	/*Valores de solo vizualizacion*/
 	String numValorVentaRefDolar;// NUMBER,
 	String numValorVentaRefSoles;// NUMBER,
-	String numValorDesc;// NUMBER,
+	double numValorDesc;// NUMBER,
 	int displayChrcodigoproducto;
+	
+	TypePresentacion typePresentacion;
+	String numValorBaseDolar;// NUMBER,
+	String numValorBaseSoles;// NUMBER,
+	double numValorDescBase=0.00;
+	
+	
+	
 	/*
 	 * TPRODUCTO.CHRCODIGOPRODUCTO,TPRODUCTO.NUMVALORVENTA AS
 	 * NUMVALORVENTADOLAR,TPRODUCTO.NUMVALORVENTA AS NUMVALORVENTASOLES,
@@ -175,11 +185,11 @@ public class Producto {
 		this.numValorVentaRefSoles = numValorVentaRefSoles;
 	}
 
-	public String getNumValorDesc() {
+	public double getNumValorDesc() {
 		return numValorDesc;
 	}
 
-	public void setNumValorDesc(String numValorDesc) {
+	public void setNumValorDesc(double numValorDesc) {
 		this.numValorDesc = numValorDesc;
 	}
 
@@ -214,6 +224,39 @@ public class Producto {
 	public void setDisplayChrcodigoproducto(int displayChrcodigoproducto) {
 		this.displayChrcodigoproducto = displayChrcodigoproducto;
 		 
+	}
+
+	public TypePresentacion getTypePresentacion() {
+		return typePresentacion;
+	}
+
+	public void setTypePresentacion(TypePresentacion typePresentacion) {
+		this.typePresentacion = typePresentacion;
+	}
+
+	
+	public String getNumValorBaseDolar() {
+		return numValorBaseDolar;
+	}
+
+	public void setNumValorBaseDolar(String numValorBaseDolar) {
+		this.numValorBaseDolar = numValorBaseDolar;
+	}
+
+	public String getNumValorBaseSoles() {
+		return numValorBaseSoles;
+	}
+
+	public void setNumValorBaseSoles(String numValorBaseSoles) {
+		this.numValorBaseSoles = numValorBaseSoles;
+	}
+
+	public double getNumValorDescBase() {
+		return numValorDescBase;
+	}
+
+	public void setNumValorDescBase(double numValorDescBase) {
+		this.numValorDescBase = numValorDescBase;
 	}
 
 	@Override

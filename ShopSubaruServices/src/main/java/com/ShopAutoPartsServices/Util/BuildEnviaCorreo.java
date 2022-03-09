@@ -21,6 +21,7 @@ import com.ShopAutoPartsServices.Config.CorreoConfiguracion;
 import com.ShopAutoPartsServices.Domain.CorreoJobsOnline;
 import com.ShopAutoPartsServices.Domain.CorreoRequest;
 import com.ShopAutoPartsServices.Enums.AccountsEmail;
+import com.ShopAutoPartsServices.Enums.DeployApp;
 import com.ShopAutoPartsServices.WsServices.CotizacionController;
 
 public class BuildEnviaCorreo {
@@ -79,7 +80,7 @@ public class BuildEnviaCorreo {
 				mails.append(jobsOnline.getVchCorreo());
 				mails.append(" ");				
 			}
-			message.setSubject(subject);
+			message.setSubject((correoConfiguracion.getDeployApp()==DeployApp.DeployDesarrollo?"[MODO PRUEBA]":"")+subject);
 			message.setContent(multiParte, "UTF-8");
 			if (adjuntar != null) {
 				BodyPart adjunto = new MimeBodyPart();
@@ -89,7 +90,7 @@ public class BuildEnviaCorreo {
 			}
 			Transport.send(message);
 			envio = true;
-			logger.info("Correo enviado a:" + mails.toString());
+			logger.info("Correo enviado a:["+(correoConfiguracion.getDeployApp()==DeployApp.DeployDesarrollo?"[MODO PRUEBA]":"")+subject+"]" + mails.toString());
 		} catch (Exception e) {
 			envio = false;
 			logger.info(e.getMessage());

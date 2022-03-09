@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import { useHistory } from "react-router-dom";
-import { FilterProducto, HttpStatus, localStoreEnum, Moneda, SUCCESS_SERVER, tipoActualizacionCotizacionDetalle } from "../service/ENUM";
+import { FilterProducto, HttpStatus, localStoreEnum, Moneda, SUCCESS_SERVER, tipoActualizacionCotizacionDetalle, TypePresentacion } from "../service/ENUM";
 import { Modal } from "react-bootstrap";
 import { useReducer } from "react";
 import { findProductos } from "../service/producto.service";
@@ -28,7 +28,10 @@ export default function ProductosCard(props) {
     numStock: props.producto.numStock,
     moneda: props.moneda,
     displayChrcodigoproducto:props.producto.displayChrcodigoproducto,
-    filterProducto:props.producto.filterProducto,
+    typePresentacion:props.producto.typePresentacion,
+    numValorBaseDolar:props.producto.numValorBaseDolar,
+    numValorBaseSoles:props.producto.numValorBaseSoles,
+    numValorDescBase:props.producto.numValorDescBase,
     familia: {
       chrCodigoFamilia: props.producto.familia.chrCodigoFamilia,
       vchDescripcion: props.producto.familia.vchDescripcion,
@@ -50,7 +53,7 @@ export default function ProductosCard(props) {
  
     // Acá se debe setear el valor del color
     const styleBgSticker = {
-      background: (producto.filterProducto===FilterProducto.FILTER_OFERTA?"#f50000":"#2fb5d2")
+      background: (producto.typePresentacion===TypePresentacion.TypeOferta?"#f50000":"#25d366")
     };
 
   const cotizacionResumen = {
@@ -232,8 +235,8 @@ export default function ProductosCard(props) {
   return (
     <>
       <div className="producto-card">
-      {(producto.filterProducto===FilterProducto.FILTER_OFERTA?<div className="sticker-label" style={styleBgSticker}>Oferta</div>:"")}
-      {(producto.filterProducto===FilterProducto.FILTER_DESTACADO_MARCA?<div className="sticker-label" style={styleBgSticker}>Destacado</div>:"")}
+      {(producto.typePresentacion===TypePresentacion.TypeOferta?<div className="sticker-label" style={styleBgSticker}>Oferta</div>:"")}
+      {(producto.typePresentacion===TypePresentacion.TypeDestacadoMarca?<div className="sticker-label" style={styleBgSticker}>Destacado</div>:"")}
         
 
 
@@ -276,10 +279,19 @@ export default function ProductosCard(props) {
               {producto.moneda.numCodigoMoneda ===
               Moneda.DOLARES.numCodigoMoneda
                 ?  producto.numValorVentaDolarIgv
-                :  producto.numValorVentaSolesIgv}{" "}
+                :  producto.numValorVentaSolesIgv} 
             </span>
+            {parseInt(producto.numValorDescBase)>=1 && producto.typePresentacion===TypePresentacion.TypeOferta?
+            <span className="producto-card-precio-old">
+            {producto.moneda.numCodigoMoneda ===
+              Moneda.DOLARES.numCodigoMoneda
+                ? producto.moneda.codigoIso4217+" "+ producto.numValorBaseDolar
+                : producto.moneda.codigoIso4217+" "+ producto.numValorBaseSoles }
+                </span>
+            :""}
+            
           </div>
-
+ 
         </div>
       </div>
       <Modal

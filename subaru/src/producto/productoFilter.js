@@ -352,7 +352,10 @@ export default function ProductoFilter(props) {
             numStock: e.numStock,
             totalRegistros: e.totalRegistros,
             displayChrcodigoproducto:e.displayChrcodigoproducto,
-            filterProducto:_filterProducto,
+            typePresentacion:e.typePresentacion,
+            numValorBaseDolar:e.numValorBaseDolar,
+            numValorBaseSoles:e.numValorBaseSoles,
+            numValorDescBase:e.numValorDescBase,
             familia: {
               chrCodigoFamilia: e.familia.chrCodigoFamilia,
               vchDescripcion: e.familia.vchDescripcion,
@@ -525,58 +528,96 @@ async  function handleEventChangeMenu(_object,_listaMenu) {
  
   }
   return (
-    <div className="produc-destacado prod-filter-form">
+    <div className="prod-filter-form ">
       {state.isLoandingProductos ? <Loading></Loading> : ""}
       <div className="prod-filter-header">
-      <div className="link-href-historial">
-            <Link to="/shop" ><i className="fa fa-home"></i>Home</Link>
-            {state.menu.codigoGrupo===_CodigoGrupo.Repuesto ?
-             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoRepuesto + "/filter/all"} target={"_parent"}>&nbsp;Repuestos&nbsp;</Link></>:""}
-            
-             {state.menu.codigoGrupo===_CodigoGrupo.Accesorio_LyfeStyle ?
-             <>&raquo;<Link to={"/shop/" + _IndentificadorMenu.TodoAccesorioLyfeStyle+ "/filter/all"} target={"_parent"}>&nbsp;Accesorios y LifeStyle</Link></>:""}
-            
-            {state.menu.identificador===_IndentificadorMenu.TodoRepuesto || 
-              state.menu.identificador===_IndentificadorMenu.TodoAccesorioLyfeStyle?"": <span className="link-href-span">&raquo;&nbsp;{state.menu.descripcion}</span>}
-            
+        <div className="link-href-historial">
+          <Link to="/shop">
+            <i className="fa fa-home"></i>Home
+          </Link>
+          {state.menu.codigoGrupo === _CodigoGrupo.Repuesto ? (
+            <>
+              &raquo;
+              <Link
+                to={"/shop/" + _IndentificadorMenu.TodoRepuesto + "/filter/all"}
+                target={"_parent"}
+              >
+                &nbsp;Repuestos&nbsp;
+              </Link>
+            </>
+          ) : (
+            ""
+          )}
+
+          {state.menu.codigoGrupo === _CodigoGrupo.Accesorio_LyfeStyle ? (
+            <>
+              &raquo;
+              <Link
+                to={
+                  "/shop/" +
+                  _IndentificadorMenu.TodoAccesorioLyfeStyle +
+                  "/filter/all"
+                }
+                target={"_parent"}
+              >
+                &nbsp;Accesorios y LifeStyle
+              </Link>
+            </>
+          ) : (
+            ""
+          )}
+
+          {state.menu.identificador === _IndentificadorMenu.TodoRepuesto ||
+          state.menu.identificador ===
+            _IndentificadorMenu.TodoAccesorioLyfeStyle ? (
+            ""
+          ) : (
+            <span className="link-href-span">
+              &raquo;&nbsp;{state.menu.descripcion}
+            </span>
+          )}
         </div>
-          <div className="prod-filter-page ">
-            <span>Ordenar por: &nbsp;&nbsp;</span>
-            <select
-              className="form-control"
-              name="filterOrder"
-              value={state.filterOrder}
-              onChange={handleEventChangeFilterOrder}
-            >
-              <option value={filterOrder.FilterAscDescripcion}>
-                Nombre, A a Z
-              </option>
-              <option value={filterOrder.FilterDescDescripcion}>
-                Nombre, Z a A
-              </option>
-              <option value={filterOrder.FilterAscPrecio}>
-                Precio: de más bajo a más alto
-              </option>
-              <option value={filterOrder.FilterDescPrecio}>
-                Precio: de más alto a más bajo
-              </option>
-              <option value={filterOrder.FilterConImagen}>
-                Producto con imagenes
-              </option>
-            </select>
-          </div>
+        <div className="prod-filter-page ">
+          <span>Ordenar por: &nbsp;&nbsp;</span>
+          <select
+            className="form-control"
+            name="filterOrder"
+            value={state.filterOrder}
+            onChange={handleEventChangeFilterOrder}
+          >
+            <option value={filterOrder.FilterAscDescripcion}>
+              Nombre, A a Z
+            </option>
+            <option value={filterOrder.FilterDescDescripcion}>
+              Nombre, Z a A
+            </option>
+            <option value={filterOrder.FilterAscPrecio}>
+              Precio: de más bajo a más alto
+            </option>
+            <option value={filterOrder.FilterDescPrecio}>
+              Precio: de más alto a más bajo
+            </option>
+            <option value={filterOrder.FilterConImagen}>
+              Producto con imagenes
+            </option>
+          </select>
+        </div>
       </div>
       <div className="prod-filter-content">
-        <div className="prod-filter-column1">  
-             
-          <ul className="prod-filter-menu">
-           {state.lstMenuVertical}
-          </ul>
+        <div className="prod-filter-column1">
+          <ul className="prod-filter-menu">{state.lstMenuVertical}</ul>
         </div>
 
         <div className="prod-filter-column2 ">
-          
-          {state.lstProducto}
+          <div className="produc-destacado">
+            <div className={"produc-destacado-wrapper"}>
+              <div className="produc-destacado-item">
+              {state.lstProducto}
+              </div>
+            </div>
+          </div>
+         
+
           <div className="prod-filter-page">
             <Paginacion
               totalRecords={state.totalRegistros}

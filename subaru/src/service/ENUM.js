@@ -155,7 +155,7 @@ const InfoCondicionCompra = {
          <br></br>
       
         Si alguno de los productos seleccionados por Ud. está en promoción
-        (outlet) tenga presente que esta Campaña tiene un número muy limitado de
+        (Outlet) tenga presente que esta Campaña tiene un número muy limitado de
         productos en stock y un tiempo determinado de vigencia.
         <br></br>
       Se da por entendido que reconoce y acepta estar debidamente informado de
@@ -300,8 +300,12 @@ const Empresa = {
   correo: "repuestos.subaru@eacorp.pe",
   abreviaturaSucursal: "RP4259",
 };
+const TypePresentacion={
+  TypeOferta:"TypeOferta",TypeDestacadoMarca:"TypeDestacadoMarca",TypeDefault:"TypeDefault"
+}
+
 const APP_DEV= {
-    CONTEXT:"PRODUCCION",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
+    CONTEXT:"DESARROLLO",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
      
 };
 
@@ -335,5 +339,6 @@ export {
  
   //FilterTypeLista,
   APP_DEV,
+  TypePresentacion
   
 };
