@@ -599,13 +599,7 @@ export default function RegistrarUsuario(props) {
       </div>
 
 
-      <div className="link-href">
-        <Link to="/listaUsuarioAdmin">
-          <i className="fa fa-home" aria-hidden="true"></i>
-          Volver
-        </Link>
-
-      </div>
+      
       <ServerException server={state.server}></ServerException>
 
 

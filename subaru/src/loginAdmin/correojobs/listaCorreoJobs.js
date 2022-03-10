@@ -349,12 +349,7 @@ export default function ListaCorreoJobs(props) {
 
 
             </div>
-            <div className="link-href">
-                <Link to="/dashboardAdmin">
-                    <i className="fa fa-home" aria-hidden="true"></i>
-                    Panel de Control
-                </Link>
-            </div>
+          
 
             <Modal
                 className="modal-direccion"

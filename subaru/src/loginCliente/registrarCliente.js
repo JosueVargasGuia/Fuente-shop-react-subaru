@@ -1684,30 +1684,7 @@ export default function RegistrarCliente(props) {
       </div>
 
 
-      <div className="link-href">
-        <Link to="/shop">
-          <i className="fa fa-home" aria-hidden="true"></i>
-          Inicio
-        </Link>
-        {state.accion === CRUD.UPDATE ? <span>/</span> : ""}
-        {state.accion === CRUD.UPDATE ? (
-          <Link to="/dashboard">
-            <i className="fa fa-user"></i>Su cuenta
-          </Link>
-        ) : (
-          ""
-        )}
-        {params.linkNavegacion === "CarritoPayment" ? (
-          <>
-            <span>/</span>
-            <Link to="/pedidoCarrito">
-              <i className="fa fa-arrow-left"></i>Volver
-            </Link>
-          </>
-        ) : (
-          ""
-        )}
-      </div>
+       
       <ServerException server={state.server}></ServerException>
 
       <Modal

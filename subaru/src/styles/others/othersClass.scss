@@ -58,6 +58,26 @@
     margin-left: 0.8em !important;
 }
 
+.direccion-card {
+    @media (min-width: 0px) and (max-width: 992px) {
+        width: 47%;
+    }
+    .row-direccion-row-1 {
+        min-height: 195px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .row-direccion {
+            display: flex;
+            flex-direction: row;
+            .row-direccion-etiqueta {
+                min-width: 90px;
+                width: 90px;
+            }
+        }
+    }
+}
+
 @media (min-width: 200px) and (max-width: 1000px) {
     .registrar-direccion-card {
         width: 92% !important;
@@ -359,13 +379,19 @@
     margin-bottom: 0.5em;
 }
 
+@media (min-width: 576px) {
+    .modal-sm {
+        max-width: 340px;
+    }
+}
+
 .modal-title-span {
     font-size: 0.7em;
 }
 
 .modal-title,
 .h4 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 }
 
 .action-cliente-button {
@@ -398,7 +424,7 @@
     margin: 0em !important;
     padding: 0em !important;
     margin-right: 1em !important;
-    border: solid 2px var(--color-font-default);
+    border: solid 2px var(--color-arrow-active);
     display: flex;
     border-radius: 100%;
     width: 23px;

@@ -242,12 +242,7 @@ export default function ListaUsuario(props) {
                 </div>
             
             </div>
-            <div className="link-href">
-                <Link to="/dashboardAdmin">
-                    <i className="fa fa-home" aria-hidden="true"></i>
-                    Panel de Control
-                </Link>
-            </div>
+        
 
             {state.showModal === true ? (
                 <ModalConfirmar

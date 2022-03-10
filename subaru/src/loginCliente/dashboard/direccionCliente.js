@@ -176,6 +176,7 @@ export default function DireccionCliente() {
             vchDocumento: direccion.vchDocumento,
             flgFacturacion: direccion.flgFacturacion,
             nsecuencia: direccion.nsecuencia,
+            cliente:_cliente,
             departamento: {
               chrCodigoDepartamento:
                 direccion.departamento.chrCodigoDepartamento,
@@ -297,26 +298,7 @@ export default function DireccionCliente() {
       )}
 
       <ServerException server={state.server}></ServerException>
-      <div className="link-href">
-        <Link to="/shop">
-          <i className="fa fa-home" aria-hidden="true"></i>
-          Inicio
-        </Link>
-        <span>/</span>
-        <Link to="/dashboard">
-          <i className="fa fa-user"></i>Su cuenta
-        </Link>
-        {params.linkNavegacion === "CarritoPayment" ? (
-          <>
-            <span>/</span>
-            <Link to="/pedidoCarrito">
-              <i className="fa fa-arrow-left"></i>Volver
-            </Link>
-          </>
-        ) : (
-          ""
-        )}
-      </div>
+    
     </div>
   );
 }
@@ -393,6 +375,7 @@ function DireccionCard(props) {
     vchDocumento: props.direccion.vchDocumento,
     flgFacturacion: props.direccion.flgFacturacion,
     nsecuencia: props.direccion.nsecuencia,
+    cliente:props.direccion.cliente,
     departamento: {
       chrCodigoDepartamento: direccion.departamento.chrCodigoDepartamento,
       vchDescripcion: direccion.departamento.vchDescripcion,
@@ -408,8 +391,9 @@ function DireccionCard(props) {
     estado: props.direccion.estado,
     accion: props.direccion.accion,
   };
-
+ 
   function handleEventShowModal() {
+    
     setDireccion(_direccion);
     setModalShow(true);
   }
@@ -499,26 +483,30 @@ function DireccionCard(props) {
         )}
       </div>
       <div className="row-direccion">
+      <div className="row-direccion-etiqueta">Dirección</div>:&nbsp;
         <span>{direccion.vchDireccion}</span>
       </div>
       <div className="row-direccion">
+      <div className="row-direccion-etiqueta">Referencia</div>:&nbsp;
         <span>
           {direccion.vchreferencia === null ? "-" : direccion.vchreferencia}
         </span>
       </div>
       <div className="row-direccion">
+      <div className="row-direccion-etiqueta">Documento</div>:&nbsp;
         <span>
           {direccion.vchDocumento}
         </span>
       </div>
       <div className="row-direccion">
-        <span>
-          
+      <div className="row-direccion-etiqueta">Nombre</div>:&nbsp;
+        <span>          
           {direccion.vchNombre}
         </span>
       </div>
 
       <div className="row-direccion">
+      <div className="row-direccion-etiqueta">Teléfono</div>:&nbsp;
         <span>{direccion.vchTelefono}</span>
       </div>
       <div className="row-direccion">
@@ -532,17 +520,23 @@ function DireccionCard(props) {
       </div>
       <hr />
       <div className="row-direccion">
-      <button className="btn btn-primary" onClick={handleEventShowModal}>
+      <button className="btn btn-primary row-direccion-button" onClick={handleEventShowModal}>
         {" "}
         <i className="fa fa-pencil" aria-hidden="true"></i>Editar
       </button>
-      <button
-        className="btn btn-primary"
+    
+      {direccion.flgPredeterminado ? (
+        ""
+        ) : (
+          <button
+        className="btn btn-primary row-direccion-button"
         onClick={handleEventModalConfirmarShow}
       >
         {" "}
         <i className="fa fa-trash" aria-hidden="true"></i>Eliminar
       </button>
+        )}
+     
       </div>
       {modalConfirmarShow ? (
         <ModalConfirmar
@@ -786,7 +780,7 @@ let actionTypeCard = {
 };
 function DireccionCardModal(props) {
   let direccion = props.direccion;
-  (direccion.flgFacturacion==='1'? console.log('false'): console.log('true'));
+  
   const [state, dispatch] = useReducer(reducerCard, {
     numCodigoDireccion: direccion.numCodigoDireccion,
     numCodigoCliente: direccion.numCodigoCliente,
@@ -804,7 +798,7 @@ function DireccionCardModal(props) {
     vchDocumento: direccion.vchDocumento,
     numTipoDocumento: direccion.numTipoDocumento,
     flgFacturacion: direccion.flgFacturacion,
-    flgDespacho: (direccion.flgFacturacion==='1'? (parseInt(direccion.numTipoDocumento)>=1?true:false) : true),
+    flgDespacho: (direccion.vchDocumento!==null && direccion.vchDocumento!==undefined?(direccion.vchDocumento.length>=1?true:false):false),
     cliente:direccion.cliente,
     //flgDespacho:direccion.flgDespacho,
     nsecuencia: direccion.nsecuencia,
@@ -829,7 +823,7 @@ function DireccionCardModal(props) {
     isloadingDistrito: false,
     flgMismoRecepciona:false,
   });
-  console.log(direccion.cliente);
+  console.log(props);
   //eslint-disable-next-line
   useEffect(() => {
     console.log("useEffect _Init");
@@ -1024,7 +1018,7 @@ function DireccionCardModal(props) {
   function handleEventMismoRecepciona(value) {
     console.log(state);
 
-    if (value === true) {
+    if (value === true && state.cliente!==undefined ) {
      
       dispatch({
         type: actionTypeCard.flgMismoRecepciona_DIRECCION,
@@ -1109,7 +1103,7 @@ function handleEnventFlagDespacho(value){
             </div>
 
             <div className="form-row-direccion">
-              <label htmlFor="vchreferencia">Punto de Referencia(Cruce con avenida o calle,inglesia,comisaría y etc)</label>
+              <label htmlFor="vchreferencia">Punto de Referencia&nbsp;(Cruce con Av. o calle,Iglesia y etc)</label>
               <input
                 type="text"
                 name="vchreferencia"
@@ -1167,7 +1161,7 @@ function handleEnventFlagDespacho(value){
 
             </div>
             <div className="form-row-direccion  row-direccion-center">
-              <label className="form-row-direccion-title">¿Persona que recepciona  es diferente al comprador?</label>
+              <label className="form-row-direccion-title">¿Datos de la persona que recepciona?</label>
               <input
                 type="checkbox"
                 name="flgDespacho"

@@ -661,12 +661,7 @@ async function handleEventAsociarOcToCotizacion() {
 
         <ServerException server={state.server}></ServerException>
 
-        <div className="link-href">
-          <Link to="/dashboardAdmin">
-            <i className="fa fa-home" aria-hidden="true"></i>
-            Panel de Control
-          </Link>
-        </div>
+       
       </div>
       <Modal
         className="modal-direccion"

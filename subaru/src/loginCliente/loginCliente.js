@@ -142,6 +142,11 @@ export default function LoginCliente(props) {
       }
     }
   }
+  function handleOnKeyDown(e){
+    if(e.key==='Enter'){   
+      handleClickLogeoCliente();
+    }
+  }
   return (<div>
     <div className="login-form">
       <h1>Iniciar sesión con su cuenta</h1>
@@ -190,6 +195,7 @@ export default function LoginCliente(props) {
                 success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT,
               });
             }}
+            onKeyDown={(e)=>handleOnKeyDown(e)}
           ></input>
         </div>
         <div className="login-data">

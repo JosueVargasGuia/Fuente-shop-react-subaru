@@ -175,15 +175,6 @@ export default function TusCompras() {
       {state.rowTusCompras}
     </div>
 
-    <div className="link-href">
-      <Link to="/shop">
-        <i className="fa fa-home" aria-hidden="true"></i>
-          Inicio
-        </Link>
-      <span>/</span>
-      <Link to="/dashboard">
-        <i className="fa fa-user"></i>Su cuenta
-        </Link>
-    </div>
+    
   </div>)
 }

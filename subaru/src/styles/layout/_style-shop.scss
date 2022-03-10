@@ -780,15 +780,15 @@ h4 {
 }
 
 .form-row-direccion label {
-    width: 48%;
+    width: 37%;
 }
 
 .form-control {
     display: block;
     width: 100%;
-    height: calc(1.5em + .75rem + 2px);
+    height: calc(1em + .75rem + 2px);
     padding: 0.2rem 0.2rem;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .form-row-direccion .form-control {
@@ -937,7 +937,7 @@ h4 {
 
 .direccion-card {
     text-align: left;
-    width: 30%;
+    width: 48%;
     height: auto;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -973,6 +973,10 @@ h4 {
 .direccion-content button {
     margin-right: 0.5em;
     padding: 0.2em;
+}
+
+.row-direccion-button {
+    min-width: 100px;
 }
 
 .direccion-footer button {
@@ -2216,6 +2220,25 @@ h4 {
 
 .filter-marca-categoria a:hover {
     color: var(--color-font-hover);
+}
+
+.filter-row-mobile {
+    .nav-marcas {
+        ul {
+            li {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                .header-link-tipcambio {
+                    margin-left: 0em;
+                    .tip-cambio-select {
+                        padding: 0.175rem 0.55rem;
+                        width: 86px !important;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .filter-row-mobile .filter-marca-categoria {

@@ -877,12 +877,7 @@ export default function OutletCargaProducto(props) {
             </div>
             <ServerException server={state.server}></ServerException>
 
-            <div className="link-href">
-                <Link to="/listaProductosOutlet">
-                    <i className="fa fa-home" aria-hidden="true"></i>
-                    Volver
-                </Link>
-            </div>
+          
         </div>
     </>)
 }
