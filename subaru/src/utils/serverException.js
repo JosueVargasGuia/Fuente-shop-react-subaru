@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { HttpStatus, localStoreEnum, SUCCESS_SERVER } from "../service/ENUM";
+import { HttpStatus, localStoreEnum, SUCCESS_SERVER,Empresa } from "../service/ENUM";
 import { validacionToken } from "../service/loginCliente.service";
 import { useHistory } from "react-router-dom";
 const actionType = { LOAD: "LOAD" };
@@ -69,7 +69,7 @@ export default function ServerException(props) {
   }
   async function handleEventValidaExcepcion() {
     let _status = await _validacionToken();
-    console.log(_status);
+   
     if (_status === "REDIRECT") {
       localStorage.removeItem(localStoreEnum.ISLOGIN);
       localStorage.removeItem(localStoreEnum.USUARIO);
@@ -111,7 +111,7 @@ export default function ServerException(props) {
         success !== SUCCESS_SERVER.SUCCES_SERVER_DEFAULT ? (
         <div className={state.className}>
           <div className="server-exception-title">
-            Mensaje de eanet auto parts
+            Mensaje de {Empresa.nombreComercial}
           </div>
           {success === SUCCESS_SERVER.SUCCES_SERVER_INFO ? (
             <div className="server-exception-body">

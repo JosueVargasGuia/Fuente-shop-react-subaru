@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.CallableStatementCallback;
@@ -20,7 +22,9 @@ import com.ShopAutoPartsServices.Domain.Distrito;
 import com.ShopAutoPartsServices.Domain.Provincia;
  
 import com.ShopAutoPartsServices.Repository.DireccionServiceRepository;
+import com.ShopAutoPartsServices.WsServices.IpnController;
 
+ 
 import oracle.jdbc.OracleTypes;
 
 @Repository
@@ -28,7 +32,7 @@ public class DireccionServiceRepositoryImpl implements DireccionServiceRepositor
 	final private String PKG_TIENDA = "PKG_TIENDA";
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-
+	Logger logger = LoggerFactory.getLogger(IpnController.class);
 	@Override
 	public List<Direccion> obtenerDirecciones(ClienteUsuario clienteUsuario) throws Exception {
 		CallableStatementCallback<List<Direccion>> callback = null;
@@ -84,6 +88,7 @@ public class DireccionServiceRepositoryImpl implements DireccionServiceRepositor
 	}
 
 	public Direccion registrarDireccion(Direccion direccion) throws Exception  {
+		logger.info(direccion.toString());
 		CallableStatementCallback<Direccion> callback = null;
 		try {
 			callback = new CallableStatementCallback<Direccion>() {

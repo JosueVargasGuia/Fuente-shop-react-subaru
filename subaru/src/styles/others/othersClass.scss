@@ -33,12 +33,6 @@
     text-align: right;
 }
 
-.row-body-lista {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .registrar-direccion-card {
     margin-left: 0em;
     margin-right: 0em;
@@ -75,12 +69,6 @@
                 width: 90px;
             }
         }
-    }
-}
-
-@media (min-width: 200px) and (max-width: 1000px) {
-    .registrar-direccion-card {
-        width: 92% !important;
     }
 }
 
@@ -239,12 +227,6 @@
     color: var(--color-font-hover);
 }
 
-.label-registro {
-    width: 35% !important;
-    margin-right: 0.2em;
-    margin-bottom: 0;
-}
-
 .label-flex {
     display: flex;
     justify-content: space-around;
@@ -299,21 +281,7 @@
     color: #fc828c;
 }
 
-.row-body-registro-row {
-    margin-right: 0em !important;
-    margin-left: 0em !important;
-    margin-top: 0em !important;
-    margin-bottom: 0.5em !important;
-    width: 50%;
-}
-
 @media (min-width: 0px) and (max-width: 1100px) {
-    .row-body {
-        flex-direction: column;
-    }
-    .row-body-registro-row {
-        width: 100%;
-    }
     .row-label-flex-right {
         text-align: left !important;
     }
@@ -335,48 +303,10 @@
 }
 
 @media (min-width: 200px) and (max-width: 769px) {
-    .row-body-registro-row {
-        flex-direction: column;
-    }
-}
-
-.action-row {
-    width: 100% !important;
-    margin: 0em !important;
-    padding: 0em !important;
-}
-
-.action-cliente {
-    width: 100% !important;
-    margin: 0em !important;
-    padding: 0em !important;
-    margin-left: 0.7em !important;
-}
-
-.action-cliente label {
-    min-width: 120px;
-    margin: 0em !important;
-}
-
-@media (min-width: 200px) and (max-width: 769px) {
     .action-row {
         flex-direction: column;
         text-align: left;
     }
-    .action-cliente label {
-        margin-bottom: 1em !important;
-    }
-    .action-cliente button {
-        margin-right: 0em !important;
-        margin-left: 0em !important;
-        margin-bottom: 1em !important;
-        width: 180px;
-    }
-}
-
-.row-body-lista {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
 }
 
 @media (min-width: 576px) {
@@ -392,27 +322,6 @@
 .modal-title,
 .h4 {
     font-size: 1.3rem;
-}
-
-.action-cliente-button {
-    width: 84%;
-    justify-content: space-between;
-}
-
-.action-cliente-button button {
-    margin-right: 1em;
-    margin-left: 1em;
-}
-
-@media (min-width: 0px) and (max-width: 800px) {
-    .action-cliente-button {
-        width: 84%;
-        justify-content: space-between;
-    }
-    .action-cliente-button button {
-        width: 40% !important;
-        margin-bottom: 0.5em !important;
-    }
 }
 
 .card-row-flex {
@@ -834,9 +743,9 @@
 
 .progres-container {
     flex-direction: column;
-    width: 70%;
+    width: 66%;
     input {
-        width: 100% !important;
+        width: 99% !important;
     }
     .progres-ui {
         height: 2px;

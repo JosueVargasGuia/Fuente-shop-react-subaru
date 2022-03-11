@@ -129,6 +129,7 @@ public class ClienteAuthorizationController {
 		List<String> error = new ArrayList<String>();
 		// logger.info(clienteUsuario.toString());
 		try {
+		 
 			if (clienteUsuario != null) {
 				if (clienteUsuario.getChrEmail() == null || clienteUsuario.getChrEmail().equalsIgnoreCase("")) {
 					error.add(" El correo es requerido ");

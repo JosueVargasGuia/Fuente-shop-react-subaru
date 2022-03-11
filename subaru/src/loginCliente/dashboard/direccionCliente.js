@@ -798,7 +798,7 @@ function DireccionCardModal(props) {
     vchDocumento: direccion.vchDocumento,
     numTipoDocumento: direccion.numTipoDocumento,
     flgFacturacion: direccion.flgFacturacion,
-    flgDespacho: (direccion.vchDocumento!==null && direccion.vchDocumento!==undefined?(direccion.vchDocumento.length>=1?true:false):false),
+    flgDespacho: (direccion.vchNombre!==null && direccion.vchNombre!==undefined?(direccion.vchNombre.length>=1?true:false):false),
     cliente:direccion.cliente,
     //flgDespacho:direccion.flgDespacho,
     nsecuencia: direccion.nsecuencia,
@@ -1025,7 +1025,7 @@ function DireccionCardModal(props) {
         flgMismoRecepciona: value,
         //numTipoDocumento: state.cliente.numTipoCliente,
         vchDocumento: state.cliente.vchDocumento,
-        vchNombre: state.cliente.vchNombre+" " +state.cliente.vchApellidoPaterno + " " + state.cliente.vchApellidoMaterno,
+        vchNombre: state.cliente.vchApellidoPaterno + " " + state.cliente.vchApellidoMaterno+" "+ state.cliente.vchNombre,
         //vchApellido: state.cliente.vchApellidoPaterno + " " + state.cliente.vchApellidoMaterno,
         vchTelefono:state.cliente.vchTelefonoMovil
       });

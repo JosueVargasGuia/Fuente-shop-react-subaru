@@ -188,8 +188,10 @@ public class Direccion {
 				+ numTipoDocumento + ", departamento=" + departamento + ", provincia=" + provincia + ", distrito="
 				+ distrito + ", dteCreacion=" + dteCreacion + ", dteModificacion=" + dteModificacion
 				+ ", clienteDireccion=" + clienteDireccion + ", flgPredeterminado=" + flgPredeterminado + ", response="
-				+ response + ", crud=" + crud + "]";
+				+ response + ", crud=" + crud + ", flgFacturacion=" + flgFacturacion + ", nsecuencia=" + nsecuencia
+				+ "]";
 	}
+ 
  
 	
 	
