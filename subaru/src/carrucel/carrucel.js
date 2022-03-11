@@ -29,7 +29,7 @@ export default function Carrucel(props) {
   let rowItem = props.marca.lstCarrucel.map((objImagen) => (
     <picture key={objImagen.codigoCarrucel}>     
       <source srcSet={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + objImagen.srcImage} media="((min-width: 803px) and (max-width: 1500px))" />     
-      <source srcSet={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 10px) and (max-width: 802px)"/>
+      <source srcSet={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImageMobile} media="(min-width: 10px) and (max-width: 800px)"/>
       <img
         className="container-Carousel-im22"
         key={objImagen.codigoCarrucel}

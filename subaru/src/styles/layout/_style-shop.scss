@@ -1207,7 +1207,23 @@ h4 {
 }
 
 .container-Carousel-list-root .carousel .slider-wrapper {
-    height: 255px !important;
+    height: auto !important;
+    min-height: 300px;
+    @media (min-width: 0px) and (max-width: 800px) {
+        height: 225px !important;
+        min-height: 225px;
+    }
+    .slide {
+        img {
+            min-height: 300px;
+            max-height: 300px;
+            @media (min-width: 0px) and (max-width: 800px) {
+                object-fit: fill;
+                min-height: 225px;
+                max-height: 225px;
+            }
+        }
+    }
 }
 
 .producto-det-row2-shop input {
