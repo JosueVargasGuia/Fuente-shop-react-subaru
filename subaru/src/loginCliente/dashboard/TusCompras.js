@@ -1,11 +1,16 @@
-import React, { useEffect, useReducer } from 'react';
-import { useHistory, useParams } from 'react-router';
-import { Link } from 'react-router-dom';
-import { HttpStatus, localStoreEnum, LOGGIN,  Moneda, SUCCESS_SERVER } from '../../service/ENUM';
+import React, { useEffect, useReducer } from "react";
+import { useHistory, useParams } from "react-router";
+import { Link } from "react-router-dom";
 import {
-  obtenerTusCompras
-} from "../../service/cotizacion.service";
+  HttpStatus,
+  localStoreEnum,
+  LOGGIN,
+  Moneda,
+  SUCCESS_SERVER,
+} from "../../service/ENUM";
+import { obtenerTusCompras } from "../../service/cotizacion.service";
 import ComprasDetalle from "./ComprasDetalle";
+import { Paginacion } from "../../producto/productoFilter";
 
 let actionType = {
   LOAD: "LOAD",
@@ -18,13 +23,15 @@ const reducer = (state, action) => {
         ...state,
         isloading: action.isloading,
         rowTusCompras: action.rowTusCompras,
+        totalRecords:action.totalRecords,
+        currentPage:action.currentPage
       };
 
     default:
       return state;
   }
 };
-
+const LIMIT=10;
 export default function TusCompras() {
   let params = useParams();
   let history = useHistory();
@@ -32,6 +39,8 @@ export default function TusCompras() {
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
     isloading: true,
     rowTusCompras: [],
+    totalRecords:0,
+    currentPage:0,
   });
   useEffect(() => {
     // eslint-disable-next-line
@@ -46,25 +55,28 @@ export default function TusCompras() {
 
     // eslint-disable-next-line
     if (state.isloading) {
-      loadTusCompras();
+      loadTusCompras(1);
     }
     console.log("useEffect TusCompras");
   });
 
-
-
-  async function loadTusCompras() {
-    let usuarioLogeado = JSON.parse(localStorage.getItem(localStoreEnum.USUARIO));
+  async function loadTusCompras(_currentPage) {
+    let usuarioLogeado = JSON.parse(
+      localStorage.getItem(localStoreEnum.USUARIO)
+    );
     let _numCodigoCliente = usuarioLogeado.numCodigoCliente;
     let _numCodigoClienteUsuario = usuarioLogeado.numCodigoClienteUsuario;
+    let _totalRecords=0;
     const rpt = await obtenerTusCompras({
       numCodigoCliente: _numCodigoCliente,
-      numCodigoClienteUsuario: _numCodigoClienteUsuario
+      numCodigoClienteUsuario: _numCodigoClienteUsuario,      
+      currentPage:_currentPage,
+      limit:LIMIT,
     });
     let _rowTusCompras = [];
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
-      console.log(json);
+      
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         _rowTusCompras = [];
         for (let index = 0; index < json.lista.length; index++) {
@@ -82,48 +94,110 @@ export default function TusCompras() {
             moneda: (compras.moneda === 'SOLES' ? Moneda.SOLES : Moneda.DOLARES)
           }
           */
-          _rowTusCompras.push(<div  className="tuscompras-row-content" key={compras.numCodigoCotizacionOnline}><div className="tuscompras-row">
-            <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title">Fecha de Pedido</label>
-              <label className="tuscompras-row-value">{compras.dteCreacion}</label>
+          _totalRecords=compras.totalRecords;
+          _rowTusCompras.push(
+            <div
+              className="tuscompras-row-content"
+              key={compras.numCodigoCotizacionOnline}
+            >
+              <div className="tuscompras-row">
+                <div className="tuscompras-row-g">
+                  <label className="tuscompras-row-title">
+                    Fecha de Pedido
+                  </label>
+                  <label className="tuscompras-row-value">
+                    {compras.dteCreacion}
+                  </label>
+                </div>
+                <div className="tuscompras-row-g">
+                  <label className="tuscompras-row-title">Costo de Envío</label>
+                  <label className="tuscompras-row-value">
+                    {compras.moneda === "SOLES"
+                      ? Moneda.SOLES.codigoIso4217
+                      : Moneda.DOLARES.codigoIso4217}
+                    {" " + compras.costoFlete.toFixed(2)}
+                  </label>
+                </div>
+                <div className="tuscompras-row-g">
+                  <label className="tuscompras-row-title">Total</label>
+                  <label className="tuscompras-row-value">
+                    {compras.moneda === "SOLES"
+                      ? Moneda.SOLES.codigoIso4217
+                      : Moneda.DOLARES.codigoIso4217}
+                    {" " + compras.costoTotal.toFixed(2)}
+                  </label>
+                </div>
+                <div className="tuscompras-row-g">
+                  <label className="tuscompras-row-title">Nro.Pedido</label>
+                  <label className="tuscompras-row-value">
+                    {compras.numCodigoCotizacionOnline}
+                  </label>
+                </div>
+                <div className="tuscompras-row-g">
+                  <label className="tuscompras-row-title">Estado</label>
+                  <label
+                    className={`tuscompras-row-value ${
+                      compras.estado === "Confirmado"
+                        ? "row-confirmado"
+                        : compras.estado === "Cancelado"
+                        ? "row-cancelado"
+                        : compras.estado === "Procesando"
+                        ? "row-procesando"
+                        : "row-pendiente"
+                    }`}
+                  >
+                    <div>
+                      {compras.estado === "Confirmado"
+                        ? "Compra Realizada"
+                        : compras.estado}
+                    </div>
+                  </label>
+                </div>
+                <div className="tuscompras-row-g">
+                  <label className="tuscompras-row-title">Condicion</label>
+                  <label className="tuscompras-row-value">
+                    {compras.condicion}
+                  </label>
+                </div>
+                <div className="tuscompras-row-g">
+                  <label
+                    className="tuscompras-row-title"
+                    title="Referencia Documento"
+                  >
+                    Ref. Documento
+                  </label>
+                  <label className="tuscompras-row-value">
+                    {compras.numFacturas}
+                  </label>
+                </div>
+                <div className="tuscompras-row-g">
+                  <label
+                    className="tuscompras-row-title"
+                    title="Referencia Pago"
+                  >
+                    Ref. Pago
+                  </label>
+                  <label className="tuscompras-row-value">
+                    {compras.chrRegLegacyTransId}
+                  </label>
+                </div>
+              </div>
+              <div
+                className="tuscompras-row-detalle"
+                key={compras.numCodigoCotizacionOnline}
+              >
+                <ComprasDetalle cotizacion={compras}></ComprasDetalle>
+              </div>
             </div>
-            <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title">Costo de Envío</label>
-              <label className="tuscompras-row-value">{(compras.moneda === 'SOLES' ? Moneda.SOLES.codigoIso4217 : Moneda.DOLARES.codigoIso4217)}{' ' + (compras.costoFlete).toFixed(2)}</label>
-            </div>
-            <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title">Total</label>
-              <label className="tuscompras-row-value">{(compras.moneda === 'SOLES' ? Moneda.SOLES.codigoIso4217 : Moneda.DOLARES.codigoIso4217)}{' ' + (compras.costoTotal).toFixed(2)}</label>
-            </div>
-            <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title">Nro.Pedido</label>
-              <label className="tuscompras-row-value">{compras.numCodigoCotizacionOnline}</label>
-            </div>
-            <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title">Estado</label>
-              <label className={`tuscompras-row-value ${compras.estado === 'Confirmado' ? "row-confirmado" : compras.estado === 'Cancelado' ? "row-cancelado" : compras.estado === 'Procesando' ? "row-procesando" : "row-pendiente"}`}><div>{compras.estado === 'Confirmado' ?'Compra Realizada':compras.estado}</div></label>
-            </div>
-            <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title">Condicion</label>
-              <label className="tuscompras-row-value">{compras.condicion}</label>
-            </div>
-            <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title" title="Referencia Documento">Ref. Documento</label>
-              <label className="tuscompras-row-value">{compras.numFacturas}</label>
-            </div>
-            <div className="tuscompras-row-g">
-              <label className="tuscompras-row-title" title="Referencia Pago">Ref. Pago</label>
-              <label className="tuscompras-row-value">{compras.chrRegLegacyTransId}</label>
-            </div>
-           
-
-          </div>
-            <div className="tuscompras-row-detalle" key={compras.numCodigoCotizacionOnline}>
-              <ComprasDetalle cotizacion={compras}  ></ComprasDetalle>
-            </div>
-          </div>);
+          );
         }
-        dispatch({ type: actionType.LOAD, isloading: false, rowTusCompras: _rowTusCompras });
+        dispatch({
+          type: actionType.LOAD,
+          isloading: false,
+          rowTusCompras: _rowTusCompras,
+          totalRecords:_totalRecords,
+          currentPage:_currentPage
+        });
       }
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
         dispatch({
@@ -143,38 +217,54 @@ export default function TusCompras() {
       });
     }
   }
-
-
-
-  return (<div className="tusCompras">
-    <div className="link-href">
-      <Link to="/shop">
-        <i className="fa fa-home" aria-hidden="true"></i>
+  function handleEventToPage(_currentPage) {
+    loadTusCompras(_currentPage);    
+  }
+  return (
+    <div className="tusCompras">
+      <div className="link-href">
+        <Link to="/shop">
+          <i className="fa fa-home" aria-hidden="true"></i>
           Inicio
         </Link>
-      <span>/</span>
-      <Link to="/dashboard">
-        <i className="fa fa-user"></i>Su cuenta
+        <span>/</span>
+        <Link to="/dashboard">
+          <i className="fa fa-user"></i>Su cuenta
         </Link>
-      {params.linkNavegacion === "CarritoPayment" ? (
-        <>
-          <span>/</span>
-          <Link to="/pedidoCarrito">
-            <i className="fa fa-arrow-left"></i>Volver
+        {params.linkNavegacion === "CarritoPayment" ? (
+          <>
+            <span>/</span>
+            <Link to="/pedidoCarrito">
+              <i className="fa fa-arrow-left"></i>Volver
             </Link>
-        </>
-      ) : (
-        ""
-      )}
-    </div>
-    <h4>Tus Movimientos</h4>
-    <div className="form-body-compras">
-      <div className="form-body-accion">
-        <button type="button" onClick={(e)=>loadTusCompras()} className=" btn btn-primary fa fa-refresh" > Actualizar</button>
+          </>
+        ) : (
+          ""
+        )}
       </div>
-      {state.rowTusCompras}
+      <h4>Tus Movimientos</h4>
+      <div className="form-body-compras">
+        <div className="form-body-accion">
+          <button
+            type="button"
+            onClick={(e) => loadTusCompras()}
+            className=" btn btn-primary fa fa-refresh"
+          >
+            {" "}
+            Actualizar
+          </button>
+        </div>
+        {state.rowTusCompras}
+      </div>
+      <div className="prod-filter-page">
+        <Paginacion
+          totalRecords={state.totalRecords}
+          pageLimit={LIMIT}
+          pageNeighbours={1}
+          currentPage={state.currentPage}
+          handleEventToPage={handleEventToPage}
+        ></Paginacion>
+      </div>
     </div>
-
-    
-  </div>)
+  );
 }

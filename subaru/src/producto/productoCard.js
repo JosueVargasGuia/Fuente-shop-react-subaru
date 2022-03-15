@@ -313,7 +313,7 @@ export default function ProductosCard(props) {
                   showArrows={false}
                   showStatus={false}
                   showIndicators={false}
-                  showThumbs={true}
+                  showThumbs={false}
                   autoPlay={false}
                   infiniteLoop={false}
                   stopOnHover={true}

@@ -595,6 +595,8 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 					cs.registerOutParameter(1, OracleTypes.CURSOR);
 					cs.setInt(2, cotizacionOnline.getNumCodigoCliente());
 					cs.setInt(3, cotizacionOnline.getNumCodigoClienteUsuario());
+					cs.setInt(4, cotizacionOnline.getCurrentPage());
+					cs.setInt(5, cotizacionOnline.getLimit());
 					cs.execute();
 					ResultSet rs = (ResultSet) cs.getObject(1);
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd   MMMMM 'de' yyyy");
@@ -612,6 +614,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 						compras.setMetodoEnvio(rs.getInt("NUMTIPOMETODOENVIO") == 1 ? MetodoEnvio.EnvioRegular
 								: MetodoEnvio.RecojoAlmacen);
 						compras.setNumFacturas(rs.getString("NUMFACTURAS"));
+						compras.setTotalRecords(rs.getInt("TOTALRECORDS"));
 						lista.add(compras);
 					}
 					return lista;
@@ -621,7 +624,7 @@ public class CotizacionOnlineServiceRepositoryImpl implements CotizacionOnlineSe
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{? =call " + PKG_TIENDA + ".OBT_TUS_COMPRAS(?,?)}";
+		String sql = "{? =call " + PKG_TIENDA + ".OBT_TUS_COMPRAS(?,?,?,?)}";
 		return jdbcTemplate.execute(sql, callback);
 	}
 

@@ -337,7 +337,7 @@ export default function RegistrarUsuario(props) {
 
 
   return (
-    <div className="registrar-cliente">
+    <div className="registrar-admin">
       <div className="link-href">
         <Link to="/listaUsuarioAdmin">
           <i className="fa fa-home" aria-hidden="true"></i>
@@ -475,6 +475,7 @@ export default function RegistrarUsuario(props) {
                 })
               }
             ></input></div>
+          
           <div className="row-body-registro-row" >
             <label htmlFor="vchApellidoPaterno" className="label-registro row-label-flex-center">
               Materno
@@ -587,7 +588,7 @@ export default function RegistrarUsuario(props) {
         </div>
         <div className="action-cliente">
           <div className="action-row" >
-            <div className="action-cliente-button row-label-flex-left">
+            <div className="action-cliente-button ">
 
               <button className="btn btn-primary" onClick={handleEventRegistrar}>
                 <i className="fa fa-save "></i>{state.estado}

@@ -14,7 +14,7 @@ public class TusCompras {
 	double costoFlete;
 	double costoTotal;
 	String numFacturas;
-
+	int totalRecords;
 	public String getEstado() {
 		return estado;
 	}
@@ -112,6 +112,14 @@ public class TusCompras {
 	public TusCompras setNumFacturas(String numFacturas) {
 		this.numFacturas = numFacturas;
 		return this;
+	}
+
+	public int getTotalRecords() {
+		return totalRecords;
+	}
+
+	public void setTotalRecords(int totalRecords) {
+		this.totalRecords = totalRecords;
 	}
 
 }

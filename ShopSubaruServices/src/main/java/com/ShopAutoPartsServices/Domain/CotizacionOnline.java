@@ -20,6 +20,8 @@ public class CotizacionOnline {
 	String vchObservacion;
 	Response response=new Response();
 	StatusAction statusAction=StatusAction.ARMANDO_COMPRA;
+int limit;
+int currentPage;
 	public int getNumCodigoCotizacionOnline() {
 		return numCodigoCotizacionOnline;
 	}
@@ -111,6 +113,20 @@ public class CotizacionOnline {
 	public CotizacionOnline setStatusAction(StatusAction statusAction) {
 		this.statusAction = statusAction;
 		return this;
+	}
+	
+	
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 	@Override
 	public String toString() {

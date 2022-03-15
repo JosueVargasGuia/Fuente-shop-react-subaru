@@ -185,6 +185,7 @@
     width: 75%;
     height: 315px;
     margin: 0em;
+    object-fit: scale-down;
 }
 
 .btn-social {

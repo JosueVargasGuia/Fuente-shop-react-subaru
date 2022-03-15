@@ -94,11 +94,19 @@
     font-size: .875rem;
     min-height: 180px;
     padding-top: 0.2em;
+    padding-bottom: 0.2em;
     .form-body-accion {
         width: 100%;
         padding-top: 0.2em;
         padding-right: 0.5em;
         text-align: right;
+    }
+}
+
+.tusCompras {
+    .prod-filter-page {
+        width: 98%;
+        padding-top: 0.2em;
     }
 }
 
@@ -120,6 +128,9 @@
     border: solid 1px var(--color-background-contenido);
     margin: 0.5em;
     background-color: #f1f0f0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-radius: 5px 5px 5px 5px;
     .tuscompras-row {
         border-radius: 5px 5px 5px 5px;
         display: flex;

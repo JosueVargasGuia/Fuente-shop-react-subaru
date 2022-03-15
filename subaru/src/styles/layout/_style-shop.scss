@@ -388,10 +388,6 @@ a {
     .header {
         height: 15%;
     }
-    .dashboard-card {
-        width: 40% !important;
-        height: 120px !important;
-    }
     .direccion-card {
         width: 98% !important;
     }
@@ -791,6 +787,41 @@ a {
     }
 }
 
+.registrar-admin {
+    .form-body-cliente {
+        width: 97%;
+        margin: auto;
+        background: var(--color-background-white);
+        padding-bottom: 1em;
+        box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+        padding: 1rem;
+        font-size: 15px;
+        background-color: var(--color-background-white);
+        .row-body {
+            display: flex;
+            flex-direction: row;
+            .row-body-registro-row {
+                display: flex;
+                flex-direction: row;
+                label {
+                    width: 200px;
+                }
+                select {
+                    width: 200px;
+                }
+            }
+        }
+        .action-cliente {
+            .action-row {
+                .action-cliente-button {
+                    display: flex;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}
+
 h3,
 h4 {
     font-weight: bold;
@@ -983,7 +1014,7 @@ h4 {
 .dashboard-card {
     text-align: center;
     width: 30%;
-    height: 100px;
+    height: 85px;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     margin-right: 0.5em;
@@ -993,12 +1024,20 @@ h4 {
     padding-top: 0.4em;
     background: var(--color-background-white);
     box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
-    ;
+    border-radius: 15px;
     cursor: pointer;
     svg {
         width: 106px;
         height: 55px;
         margin-left: 8px;
+    }
+    @media (min-width: 550px) and (max-width: 800px) {
+        width: 40% !important;
+        height: 120px !important;
+    }
+    @media (min-width: 0px) and (max-width: 549px) {
+        width: 80% !important;
+        height: 120px !important;
     }
 }
 
@@ -1313,15 +1352,16 @@ h4 {
 
 .container-Carousel-list-root .carousel .slider-wrapper {
     height: auto !important;
-    min-height: 300px;
+    min-height: 345px;
     @media (min-width: 0px) and (max-width: 800px) {
         height: 225px !important;
         min-height: 225px;
     }
     .slide {
         img {
-            min-height: 300px;
-            max-height: 300px;
+            min-height: 345px;
+            max-height: 345px;
+            object-fit: fill;
             @media (min-width: 0px) and (max-width: 800px) {
                 object-fit: fill;
                 min-height: 225px;
@@ -2221,7 +2261,7 @@ h4 {
 }
 
 .produc-destacado {
-    margin-top: 1em;
+    margin-top: 0.3em;
     width: 100%;
 }
 

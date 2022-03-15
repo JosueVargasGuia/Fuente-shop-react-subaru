@@ -1057,7 +1057,15 @@ function handleEnventFlagDespacho(value){
     vchTelefono:""
   });
 }
-  
+function handleOnKeyDownNumeros(e) {
+  if (e.keyCode === 8) {
+    console.log(e.keyCode);
+  } else {
+    if (e.keyCode < "48" || e.keyCode > "57") {
+      e.preventDefault();
+    }
+  }
+}
   return (
     <>
       <Modal
@@ -1261,8 +1269,9 @@ function handleEnventFlagDespacho(value){
                   title={state.error.vchDocumento.isValidado ? state.error.vchDocumento.mensaje : ""}
                   autoComplete="false"
                   autoSave="false"
-                  maxLength={128}
+                  maxLength={30}
                   value={state.vchDocumento}
+                  onKeyDown={handleOnKeyDownNumeros}
                   onChange={(e) =>
                     dispatch({
                       type: actionTypeCard.vchDocumento,

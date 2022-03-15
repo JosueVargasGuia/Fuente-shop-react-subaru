@@ -7,7 +7,6 @@ import Carrucel from "./carrucel/carrucel";
 import {
   displayLista,
   Empresa,
-   
   HttpStatus,
   localStoreEnum,
   LOGGIN,
@@ -64,8 +63,8 @@ import StockProducto from "./loginAdmin/producto/stockProducto";
 import ListaCorreoJobs from "./loginAdmin/correojobs/listaCorreoJobs";
 import ReporteCotizacion from "./loginAdmin/reporte/reporteCotizacion";
 import { ProductoOutlet } from "./producto/productoOutlet";
-import OutletCargaProducto  from "./loginAdmin/producto/outletCargaProducto";
-import ListadoProductoOutlet  from "./loginAdmin/producto/listadoProductoOutlet";
+import OutletCargaProducto from "./loginAdmin/producto/outletCargaProducto";
+import ListadoProductoOutlet from "./loginAdmin/producto/listadoProductoOutlet";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -79,7 +78,6 @@ let actionType = {
 const reducer = (state, action) => {
   switch (action.type) {
     case actionType.SELECT_MARCAS:
-       
       return {
         ...state,
         marca: action.marca,
@@ -88,7 +86,6 @@ const reducer = (state, action) => {
         indexCarrucel: 0,
       };
     case actionType.SELECT_MARCAS_FORDETALLE:
-       
       return {
         ...state,
         marca: action.marca,
@@ -228,7 +225,7 @@ function App() {
       islogin: LOGGIN.LOGOUT,
       usuario: "",
     });
-    window.location.href ="/shop"
+    window.location.href = "/shop";
   }
 
   function handleSelectMarcaForDetalleProducto(chrCodigoFamilia) {
@@ -244,7 +241,7 @@ function App() {
     });
   }
 
-  function handleInputChangeDescripcion(e) {  
+  function handleInputChangeDescripcion(e) {
     dispatch({
       type: actionType.INPUT_DESCRIPCION,
       descripcion: e.target.value,
@@ -253,10 +250,9 @@ function App() {
 
   /*Al seleccionar la marca del producto */
   async function handleSelectMarcaChange(e, invoke) {
-    
     let marca = lstMarcas.find((marca) => marca.codigoMarca === e);
-    if(marca===undefined){
-      marca=lstMarcas[0];
+    if (marca === undefined) {
+      marca = lstMarcas[0];
     }
     dispatch({
       type: actionType.SELECT_MARCAS,
@@ -298,7 +294,7 @@ function App() {
 
   return (
     <div className="App" style={{ height: height }}>
-      <BrowserRouter  >
+      <BrowserRouter>
         <BannerHeader></BannerHeader>
         <div className="header-top">
           <div className="container">
@@ -317,14 +313,15 @@ function App() {
             ></FilterMarcas>
           </div>
         </div>
-        <div className="container">
-          <Switch>
-            <Route path={"/shop"} exact={true}>
-              <div className="container-Carousel">
-                <Carrucel
-                  marca={state.marca}
-                  indexCarrucel={state.indexCarrucel}
-                ></Carrucel>
+
+        <Switch>
+          <Route path={"/shop"} exact={true}>
+            <div className="container-Carousel">
+              <Carrucel
+                marca={state.marca}
+                indexCarrucel={state.indexCarrucel}
+              ></Carrucel>
+              <div className="container">
                 <ProductoMarcaResumen
                   marcaSelect={state.marca}
                 ></ProductoMarcaResumen>
@@ -334,17 +331,20 @@ function App() {
                   moneda={state.moneda}
                   numCodigoCliente={state.usuario.numCodigoCliente}
                 ></ProductoDestacado>
-                
               </div>
-            </Route>
-            <Route path={"/outlet"} exact={true}>
+            </div>
+          </Route>
+          <Route path={"/outlet"} exact={true}>
+            <div className="container">
               <ProductoOutlet
                 marcaSelect={state.marca}
                 displayLista={state.displayLista}
                 moneda={state.moneda}
               ></ProductoOutlet>
-            </Route>
-            <Route path={"/shop/:descripcion/filter/:query"} exact={true}>
+            </div>
+          </Route>
+          <Route path={"/shop/:descripcion/filter/:query"} exact={true}>
+            <div className="container">
               <ProductoFilter
                 moneda={state.moneda}
                 handleSelectMarcaChange={handleSelectMarcaChange}
@@ -352,132 +352,195 @@ function App() {
                 handleInputChangeDescripcion={handleInputChangeDescripcion}
                 numCodigoCliente={state.usuario.numCodigoCliente}
               ></ProductoFilter>
-            </Route>
+            </div>
+          </Route>
 
-            <Route path={"/succesPayment"} exact={true}>
+          <Route path={"/succesPayment"} exact={true}>
+            <div className="container">
               <SuccesPayment></SuccesPayment>
-            </Route>
-            <Route path={"/succesNopayment"} exact={true}>
+            </div>
+          </Route>
+          <Route path={"/succesNopayment"} exact={true}>
+            <div className="container">
               <SuccesNoPayment></SuccesNoPayment>
-            </Route>
+            </div>
+          </Route>
 
-            <Route path="/tusCompras/:numCodigoCliente">
+          <Route path="/tusCompras/:numCodigoCliente">
+            <div className="container">
               <TusCompras />
-            </Route>
-            <Route path="/direccion/:numCodigoCliente/:linkNavegacion">
+            </div>
+          </Route>
+          <Route path="/direccion/:numCodigoCliente/:linkNavegacion">
+            <div className="container">
               <DireccionCliente />
-            </Route>
+            </div>
+          </Route>
 
-            <Route path="/envio">
+          <Route path="/envio">
+            <div className="container">
               <EnvioEstatico />
-            </Route>
-            <Route path="/lugarRecojo">
+            </div>
+          </Route>
+          <Route path="/lugarRecojo">
+            <div className="container">
               <LugarRecojoEstatico />
-            </Route>
-            <Route path="/pagoSeguro">
+            </div>
+          </Route>
+          <Route path="/pagoSeguro">
+            <div className="container">
               <PagoSeguroEstatico />
-            </Route>
+            </div>
+          </Route>
 
-            <Route path="/terminoCondicion">
+          <Route path="/terminoCondicion">
+            <div className="container">
               <TerminoCondicionEstatico linkNavegacion="App" />
-            </Route>
-            <Route path="/loginCliente">
+            </div>
+          </Route>
+          <Route path="/loginCliente">
+            <div className="container">
               <LoginCliente islogin={handleIsLoggin} />
-            </Route>
-            <Route
-              path={"/Admin/" + Empresa.ruc + "/" + Empresa.abreviaturaSucursal}
-            >
+            </div>
+          </Route>
+          <Route
+            path={"/Admin/" + Empresa.ruc + "/" + Empresa.abreviaturaSucursal}
+          >
+            <div className="container">
               <LoginAdmin islogin={handleIsLoggin} />
-            </Route>
-            <Route path="/registrarCliente">
+            </div>
+          </Route>
+          <Route path="/registrarCliente">
+            <div className="container">
               <RegistrarCliente invocacion="R" />
-            </Route>
-            <Route path="/informacion/:numCodigoCliente/:linkNavegacion">
+            </div>
+          </Route>
+          <Route path="/informacion/:numCodigoCliente/:linkNavegacion">
+            <div className="container">
               <RegistrarCliente invocacion="I" />
-            </Route>
-            <Route path="/dashboard" exact={true}>
+            </div>
+          </Route>
+          <Route path="/dashboard" exact={true}>
+            <div className="container">
               <DashboardCliente
                 numCodigoCliente={state.usuario.numCodigoCliente}
               />
-            </Route>
-            <Route path="/dashboardAdmin" exact={true}>
+            </div>
+          </Route>
+          <Route path="/dashboardAdmin" exact={true}>
+            <div className="container">
               <DashboardAdmin
                 numCodigoCliente={state.usuario.numCodigoCliente}
               />
-            </Route>
-            <Route path="/detalle/:chrCodigoFamilia/:vchDescripcion/:chrCodigoProducto">
+            </div>
+          </Route>
+          <Route path="/detalle/:chrCodigoFamilia/:vchDescripcion/:chrCodigoProducto">
+            <div className="container">
               <ProductoDetalle
                 eventSelectMarca={handleSelectMarcaForDetalleProducto}
                 moneda={state.moneda}
               />
-            </Route>
-            <Route path="/carrito">
+            </div>
+          </Route>
+          <Route path="/carrito">
+            <div className="container">
               <CarritoDetalle moneda={state.moneda}></CarritoDetalle>
-            </Route>
-            <Route path="/pedidoCarrito">
+            </div>
+          </Route>
+          <Route path="/pedidoCarrito">
+            <div className="container">
               <CarritoPayment moneda={state.moneda}></CarritoPayment>
-            </Route>
+            </div>
+          </Route>
 
-            <Route path="/recuperarContraseña">
+          <Route path="/recuperarContraseña">
+            <div className="container">
               <RecuperarPassword></RecuperarPassword>
-            </Route>
-            <Route path="/cambiarContraseña">
+            </div>
+          </Route>
+          <Route path="/cambiarContraseña">
+            <div className="container">
               <CambiarPasswod></CambiarPasswod>
-            </Route>
-            <Route path="/productoImagen">
+            </div>
+          </Route>
+          <Route path="/productoImagen">
+            <div className="container">
               <ImagenProducto />
-            </Route>
-            <Route path="/listaProductosOutlet">
-              <ListadoProductoOutlet numCodigoCliente={state.usuario.numCodigoCliente}></ListadoProductoOutlet>
-            </Route>
-            <Route path="/outletCarga/:numProductoVigencia/:crud">
-              <OutletCargaProducto numCodigoCliente={state.usuario.numCodigoCliente}></OutletCargaProducto>
-            </Route>
-            <Route path="/stock">
+            </div>
+          </Route>
+          <Route path="/listaProductosOutlet">
+            <div className="container">
+              <ListadoProductoOutlet
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              ></ListadoProductoOutlet>
+            </div>
+          </Route>
+          <Route path="/outletCarga/:numProductoVigencia/:crud">
+            <div className="container">
+              <OutletCargaProducto
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              ></OutletCargaProducto>
+            </div>
+          </Route>
+          <Route path="/stock">
+            <div className="container">
               <StockProducto
                 numCodigoCliente={state.usuario.numCodigoCliente}
               />
-            </Route>
+            </div>
+          </Route>
 
-            <Route path="/usuarioAdmin/:numCodigoCliente/:numCodigoClienteUsuario">
+          <Route path="/usuarioAdmin/:numCodigoCliente/:numCodigoClienteUsuario">
+            <div className="container">
               <RegistrarUsuario
                 numCodigoCliente={state.usuario.numCodigoCliente}
               ></RegistrarUsuario>
-            </Route>
-            <Route path="/listaCorreoJobs">
+            </div>
+          </Route>
+          <Route path="/listaCorreoJobs">
+            <div className="container">
               <ListaCorreoJobs
                 numCodigoCliente={state.usuario.numCodigoCliente}
               ></ListaCorreoJobs>
-            </Route>
-            <Route path="/reporteCotizacion">
+            </div>
+          </Route>
+          <Route path="/reporteCotizacion">
+            <div className="container">
               <ReporteCotizacion
                 numCodigoCliente={state.usuario.numCodigoCliente}
               ></ReporteCotizacion>
-            </Route>
-            <Route path="/listaUsuarioAdmin">
+            </div>
+          </Route>
+          <Route path="/listaUsuarioAdmin">
+            <div className="container">
               <ListaUsuario
                 numCodigoCliente={state.usuario.numCodigoCliente}
               ></ListaUsuario>
-            </Route>
-            <Route path="/">
+            </div>
+          </Route>
+          <Route path="/">
+            <div className="container-Carousel">
               <Carrucel
                 marca={lstMarcas[0]}
                 indexCarrucel={state.indexCarrucel}
               ></Carrucel>
-              <ProductoMarcaResumen
-                marcaSelect={state.marca}
-                displayLista={state.displayLista}
-                moneda={state.moneda}
-              ></ProductoMarcaResumen>
-              <ProductoDestacado
-                marcaSelect={state.marca}
-                displayLista={state.displayLista}
-                moneda={state.moneda}
-              ></ProductoDestacado>
-            </Route>
-          </Switch>
-          <br />
-        </div>
+              <div className="container">
+                <ProductoMarcaResumen
+                  marcaSelect={state.marca}
+                  displayLista={state.displayLista}
+                  moneda={state.moneda}
+                ></ProductoMarcaResumen>
+                <ProductoDestacado
+                  marcaSelect={state.marca}
+                  displayLista={state.displayLista}
+                  moneda={state.moneda}
+                ></ProductoDestacado>
+              </div>
+            </div>
+          </Route>
+        </Switch>
+        <br />
+
         <div className="suscripcion">
           <Suscripcion></Suscripcion>
         </div>
@@ -582,7 +645,7 @@ function App() {
                     >
                       {" "}
                       <span className="text-break">
-                      repuestos.subaru@eacorp.pe
+                        repuestos.subaru@eacorp.pe
                       </span>
                     </a>
                   </p>

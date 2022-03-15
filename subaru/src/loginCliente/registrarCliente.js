@@ -1521,6 +1521,7 @@ export default function RegistrarCliente(props) {
                   className={`form-control imput-registro-width ${state.error.vchNombreCompleto.isValidado ? 'imput-registro-error' : ''}`}
                   autoComplete="false"
                   autoSave="false"
+                  maxLength={255}
                   value={state.vchNombreCompleto}
                   placeholder={state.error.vchNombreCompleto.isValidado ? state.error.vchNombreCompleto.mensaje : ""}
                   title={state.error.vchNombreCompleto.isValidado ? state.error.vchNombreCompleto.mensaje : ""}
@@ -1544,6 +1545,7 @@ export default function RegistrarCliente(props) {
                 className={`form-control imput-registro-width ${state.error.vchNombre.isValidado ? 'imput-registro-error' : ''}`}
                 autoComplete="false"
                 autoSave="false"
+                maxLength={128}
                 value={state.vchNombre}
                 placeholder={state.error.vchNombre.isValidado ? state.error.vchNombre.mensaje : ""}
                 title={state.error.vchNombre.isValidado ? state.error.vchNombre.mensaje : ""}
@@ -1569,6 +1571,7 @@ export default function RegistrarCliente(props) {
                 className={`form-control imput-registro-width ${state.error.vchApellidoPaterno.isValidado ? 'imput-registro-error' : ''}`}
                 autoComplete="false"
                 autoSave="false"
+                maxLength={128}
                 value={state.vchApellidoPaterno}
                 placeholder={state.error.vchApellidoPaterno.isValidado ? state.error.vchApellidoPaterno.mensaje : ""}
                 title={state.error.vchApellidoPaterno.isValidado ? state.error.vchApellidoPaterno.mensaje : ""}
@@ -1591,6 +1594,7 @@ export default function RegistrarCliente(props) {
                 className={`form-control imput-registro-width ${state.error.vchApellidoMaterno.isValidado ? 'imput-registro-error' : ''}`}
                 autoComplete="false"
                 autoSave="false"
+                maxLength={128}
                 value={state.vchApellidoMaterno}
                 placeholder={state.error.vchApellidoMaterno.isValidado ? state.error.vchApellidoMaterno.mensaje : ""}
                 title={state.error.vchApellidoMaterno.isValidado ? state.error.vchApellidoMaterno.mensaje : ""}
@@ -1617,6 +1621,7 @@ export default function RegistrarCliente(props) {
                 className={`form-control imput-registro-width ${state.error.vchTelefonoMovil.isValidado ? 'imput-registro-error' : ''}`}
                 autoComplete="false"
                 autoSave="false"
+                maxLength={20}
                 value={state.vchTelefonoMovil}
                 placeholder={state.error.vchTelefonoMovil.isValidado ? state.error.vchTelefonoMovil.mensaje : ""}
                 title={state.error.vchTelefonoMovil.isValidado ? state.error.vchTelefonoMovil.mensaje : ""}
@@ -1639,6 +1644,7 @@ export default function RegistrarCliente(props) {
                 className={`form-control imput-registro-width ${state.error.vchTelefonoFijo.isValidado ? 'imput-registro-error' : ''}`}
                 autoComplete="false"
                 autoSave="false"
+                maxLength={20}
                 value={state.vchTelefonoFijo}
                 placeholder={state.error.vchTelefonoFijo.isValidado ? state.error.vchTelefonoFijo.mensaje : ""}
                 title={state.error.vchTelefonoFijo.isValidado ? state.error.vchTelefonoFijo.mensaje : ""}
@@ -1661,6 +1667,7 @@ export default function RegistrarCliente(props) {
                 className={`form-control imput-registro-width ${state.error.chrEmail.isValidado ? 'imput-registro-error' : ''}`}
                 autoComplete="false"
                 autoSave="false"
+                maxLength={128}
                 disabled={state.accion === CRUD.UPDATE ? true : false}
                 value={state.chrEmail}
                 placeholder={state.error.chrEmail.isValidado ? state.error.chrEmail.mensaje : ""}
@@ -1682,6 +1689,7 @@ export default function RegistrarCliente(props) {
                   name="chrPassword"
                   autoComplete="false"
                   autoSave="false"
+                  maxLength={50}
                   value={state.chrPassword}
                   placeholder={state.error.chrPassword.isValidado ? state.error.chrPassword.mensaje : ""}
                   title={state.error.chrPassword.isValidado ? state.error.chrPassword.mensaje : ""}
@@ -1858,7 +1866,8 @@ export default function RegistrarCliente(props) {
                 title={state.direccion.error.vchDocumento.isValidado ? state.direccion.error.vchDocumento.mensaje : ""}
                 autoComplete="false"
                 autoSave="false"
-                maxLength={128}
+                maxLength={30}
+                onKeyDown={handleOnKeyDownNumeros}                
                 value={state.direccion.vchDocumento}
                 onChange={(e) =>
                   dispatch({
