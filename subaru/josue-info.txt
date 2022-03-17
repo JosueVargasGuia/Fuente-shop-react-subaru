@@ -50,3 +50,11 @@ https://payzen.io/in/form-payment/quick-start-guide/example-of-implementation-wi
 javateams
 
 josue.vargas2021
+
+
+Microservicios
+https://docs.oracle.com/es/solutions/develop-microservice-java-app/explore-more-solutions.html#GUID-C3728ABB-58CA-4F32-A5E3-C0BC58866CA1
+
+https://www.adictosaltrabajo.com/2020/12/22/como-crear-y-desplegar-microservicios-con-spring-boot-spring-cloud-netflix-y-docker/
+
+https://www.youtube.com/watch?v=czWbpqC1fLY&list=PL4bT56Uw3S4yTSw5Cg1-mhgoS85fVeFkT
