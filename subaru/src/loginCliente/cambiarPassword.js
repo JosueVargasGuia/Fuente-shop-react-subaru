@@ -256,17 +256,17 @@ export default function CambiarPasswod() {
           )}
           {state.server.success === SUCCESS_SERVER.SUCCES_SERVER_OK &&
           state.changeOk === true ? (
-            <div>
-              <br />
+            <div className="restabl-password-body-message">
+              
               <span className="alert alert-success" role="alert">
                 {state.server.error}
               </span>
-              <br></br>
-              <span className="link-app">
+              
+              <div className="link-app">
                 <Link aria-hidden="true" to="/loginCliente">
                   ¡Inicie sesión aquí!
                 </Link>
-              </span>
+              </div>
             </div>
           ) : (
             ""

@@ -34,6 +34,7 @@ export default function Carrucel(props) {
         className="container-Carousel-im22"
         key={objImagen.codigoCarrucel}
         alt={ objImagen.srcImage}
+        style={objImagen.style}
         srcSet={window.location.origin +(homepage===undefined?"":"/"+homepage) + objImagen.srcImage}
       ></img>   
     </picture>

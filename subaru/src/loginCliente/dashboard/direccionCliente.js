@@ -1,6 +1,14 @@
 import React, { useReducer, useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
-import { LOGGIN, SUCCESS_SERVER, HttpStatus, CRUD, localStoreEnum, TipoDocumento, tipoDireccion } from "../../service/ENUM";
+import {
+  LOGGIN,
+  SUCCESS_SERVER,
+  HttpStatus,
+  CRUD,
+  localStoreEnum,
+  TipoDocumento,
+  tipoDireccion,
+} from "../../service/ENUM";
 import {
   obtenerDirecciones,
   registrarDireccion,
@@ -30,8 +38,8 @@ const reducer = (state, action) => {
         ...state,
         isloading: action.isloading,
         rowDireccion: action.rowDireccion,
-        flgIsDespacho:action.flgIsDespacho,
-        cliente:action.cliente,
+        flgIsDespacho: action.flgIsDespacho,
+        cliente: action.cliente,
       };
     case actionType.REQUETS:
       return {
@@ -73,7 +81,7 @@ export default function DireccionCliente() {
     vchrAlias: "",
     numTipoDocumento: 0,
     vchDocumento: "",
-    flgFacturacion:0,
+    flgFacturacion: 0,
 
     departamento: {
       chrCodigoDepartamento: "00",
@@ -96,7 +104,7 @@ export default function DireccionCliente() {
       vchNombre: "",
       vchApellidoPaterno: "",
       vchApellidoMaterno: "",
-      vchTelefonoMovil:""
+      vchTelefonoMovil: "",
     },
   };
   const [registroNuevo, setRegistroNuevo] = useState(direccion);
@@ -111,7 +119,7 @@ export default function DireccionCliente() {
       vchNombre: "",
       vchApellidoPaterno: "",
       vchApellidoMaterno: "",
-      vchTelefonoMovil:""
+      vchTelefonoMovil: "",
     },
   });
 
@@ -135,29 +143,31 @@ export default function DireccionCliente() {
 
   async function cargarDirecciones() {
     console.log("cargarDirecciones");
-    let usuarioLogeado = JSON.parse(localStorage.getItem(localStoreEnum.USUARIO));
+    let usuarioLogeado = JSON.parse(
+      localStorage.getItem(localStoreEnum.USUARIO)
+    );
     let _numCodigoCliente = usuarioLogeado.numCodigoCliente;
     const rpt = await obtenerDirecciones({
       numCodigoCliente: _numCodigoCliente,
     });
 
     let rowDireccion = [];
-    let _flgIsDespacho=false;
+    let _flgIsDespacho = false;
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
 
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         let rowDepartamento = await handleObtenerDepartamento();
         rowDireccion = [];
-        let _cliente= {
+        let _cliente = {
           numTipoCliente: json.clienteUsuario.cliente.numTipoCliente,
           vchDocumento: json.clienteUsuario.cliente.vchDocumento,
           vchNombre: json.clienteUsuario.cliente.vchNombre,
           vchApellidoPaterno: json.clienteUsuario.cliente.vchApellidoPaterno,
           vchApellidoMaterno: json.clienteUsuario.cliente.vchApellidoMaterno,
-          vchTelefonoMovil:json.clienteUsuario.cliente.vchTelefonoMovil
-        }
-         
+          vchTelefonoMovil: json.clienteUsuario.cliente.vchTelefonoMovil,
+        };
+
         for (let index = 0; index < json.lista.length; index++) {
           const direccion = json.lista[index];
           let _direccion = {
@@ -176,7 +186,7 @@ export default function DireccionCliente() {
             vchDocumento: direccion.vchDocumento,
             flgFacturacion: direccion.flgFacturacion,
             nsecuencia: direccion.nsecuencia,
-            cliente:_cliente,
+            cliente: _cliente,
             departamento: {
               chrCodigoDepartamento:
                 direccion.departamento.chrCodigoDepartamento,
@@ -194,8 +204,8 @@ export default function DireccionCliente() {
             accion: CRUD.UPDATE,
             rowDepartamento: rowDepartamento,
           };
-          if(_direccion.flgFacturacion==='1'){
-            _flgIsDespacho=true;
+          if (_direccion.flgFacturacion === "1") {
+            _flgIsDespacho = true;
           }
           rowDireccion.push(
             <DireccionCard
@@ -206,13 +216,13 @@ export default function DireccionCliente() {
             ></DireccionCard>
           );
         }
-         
+
         dispatch({
           type: actionType.LOAD_DIRECCION,
           isloading: false,
           rowDireccion: rowDireccion,
-          flgIsDespacho:_flgIsDespacho,
-          cliente:_cliente
+          flgIsDespacho: _flgIsDespacho,
+          cliente: _cliente,
         });
       }
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
@@ -235,16 +245,17 @@ export default function DireccionCliente() {
   }
 
   async function handleEventNuevaDireccion() {
-    
-    let usuarioLogeado = JSON.parse(localStorage.getItem(localStoreEnum.USUARIO));
+    let usuarioLogeado = JSON.parse(
+      localStorage.getItem(localStoreEnum.USUARIO)
+    );
     let _numCodigoCliente = usuarioLogeado.numCodigoCliente;
-    direccion.chrCodigoDepartamento="15";
-    direccion.departamento.chrCodigoDepartamento="15";
-    direccion.chrCodigoProvincia="01";    
-    direccion.provincia.chrCodigoProvincia="01";
-    direccion.numCodigoCliente = _numCodigoCliente;    
-    direccion.flgFacturacion=(state.flgIsDespacho===true?'0':'1');
-    direccion.cliente=state.cliente;
+    direccion.chrCodigoDepartamento = "15";
+    direccion.departamento.chrCodigoDepartamento = "15";
+    direccion.chrCodigoProvincia = "01";
+    direccion.provincia.chrCodigoProvincia = "01";
+    direccion.numCodigoCliente = _numCodigoCliente;
+    direccion.flgFacturacion = state.flgIsDespacho === true ? "0" : "1";
+    direccion.cliente = state.cliente;
     setModalShow(true);
     setRegistroNuevo(direccion);
   }
@@ -298,7 +309,6 @@ export default function DireccionCliente() {
       )}
 
       <ServerException server={state.server}></ServerException>
-    
     </div>
   );
 }
@@ -375,7 +385,7 @@ function DireccionCard(props) {
     vchDocumento: props.direccion.vchDocumento,
     flgFacturacion: props.direccion.flgFacturacion,
     nsecuencia: props.direccion.nsecuencia,
-    cliente:props.direccion.cliente,
+    cliente: props.direccion.cliente,
     departamento: {
       chrCodigoDepartamento: direccion.departamento.chrCodigoDepartamento,
       vchDescripcion: direccion.departamento.vchDescripcion,
@@ -391,9 +401,8 @@ function DireccionCard(props) {
     estado: props.direccion.estado,
     accion: props.direccion.accion,
   };
- 
+
   function handleEventShowModal() {
-    
     setDireccion(_direccion);
     setModalShow(true);
   }
@@ -468,75 +477,85 @@ function DireccionCard(props) {
   }
   return (
     <div className="direccion-card">
-    <div className="row-direccion-row-1">
-      <div className="row-direccion card-row-flex">
+      <div className="row-direccion-row-1">
+        <div className="row-direccion card-row-flex">
+          <span
+            className={
+              direccion.vchrAlias === tipoDireccion.FACTURACION
+                ? "direcion-tipo"
+                : " direcion-tipo"
+            }
+          >
+            {direccion.vchrAlias === tipoDireccion.FACTURACION
+              ? direccion.vchrAlias
+              : direccion.vchrAlias + " " + direccion.nsecuencia}
+          </span>
 
-        <span className={direccion.vchrAlias === tipoDireccion.FACTURACION ? 'direcion-tipo' : " direcion-tipo"} >
-          {direccion.vchrAlias === tipoDireccion.FACTURACION ?direccion.vchrAlias:direccion.vchrAlias + " " + direccion.nsecuencia}</span>
+          {direccion.flgPredeterminado ? (
+            <div className="fa-direccion-circulo">
+              <div className="fa-direccion-circulo-interno">&nbsp;</div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="row-direccion">
+          <div className="row-direccion-etiqueta">Dirección</div>:&nbsp;
+          <span>{direccion.vchDireccion}</span>
+        </div>
+        <div className="row-direccion">
+          <div className="row-direccion-etiqueta">Referencia</div>:&nbsp;
+          <span>
+            {direccion.vchreferencia === null ? "-" : direccion.vchreferencia}
+          </span>
+        </div>
+        <div className="row-direccion row-title">
+          Persona que Recepciona
+          <hr />
+        </div>
+        <div className="row-direccion">
+          <div className="row-direccion-etiqueta">Documento</div>:&nbsp;
+          <span>{direccion.vchDocumento}</span>
+        </div>
+        <div className="row-direccion">
+          <div className="row-direccion-etiqueta">Nombre</div>:&nbsp;
+          <span>{direccion.vchNombre}</span>
+        </div>
 
-        {direccion.flgPredeterminado ? (
-          <div className="fa-direccion-circulo" >
-            <div className="fa-direccion-circulo-interno" >&nbsp;</div>
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-      <div className="row-direccion">
-      <div className="row-direccion-etiqueta">Dirección</div>:&nbsp;
-        <span>{direccion.vchDireccion}</span>
-      </div>
-      <div className="row-direccion">
-      <div className="row-direccion-etiqueta">Referencia</div>:&nbsp;
-        <span>
-          {direccion.vchreferencia === null ? "-" : direccion.vchreferencia}
-        </span>
-      </div>
-      <div className="row-direccion">
-      <div className="row-direccion-etiqueta">Documento</div>:&nbsp;
-        <span>
-          {direccion.vchDocumento}
-        </span>
-      </div>
-      <div className="row-direccion">
-      <div className="row-direccion-etiqueta">Nombre</div>:&nbsp;
-        <span>          
-          {direccion.vchNombre}
-        </span>
-      </div>
-
-      <div className="row-direccion">
-      <div className="row-direccion-etiqueta">Teléfono</div>:&nbsp;
-        <span>{direccion.vchTelefono}</span>
-      </div>
-      <div className="row-direccion">
-        <span>
-          {" "}
-          {direccion.departamento.vchDescripcion} /{" "}
-          {direccion.provincia.vchDescripcion} /{" "}
-          {direccion.distrito.vchDescripcion}
-        </span>
-      </div>
+        <div className="row-direccion">
+          <div className="row-direccion-etiqueta">Teléfono</div>:&nbsp;
+          <span>{direccion.vchTelefono}</span>
+        </div>
+        <div className="row-direccion">
+          <span>
+            {" "}
+            {direccion.departamento.vchDescripcion} /{" "}
+            {direccion.provincia.vchDescripcion} /{" "}
+            {direccion.distrito.vchDescripcion}
+          </span>
+        </div>
       </div>
       <hr />
       <div className="row-direccion">
-      <button className="btn btn-primary row-direccion-button" onClick={handleEventShowModal}>
-        {" "}
-        <i className="fa fa-pencil" aria-hidden="true"></i>Editar
-      </button>
-    
-      {direccion.flgPredeterminado ? (
-        ""
+        <button
+          className="btn btn-primary row-direccion-button"
+          onClick={handleEventShowModal}
+        >
+          {" "}
+          <i className="fa fa-pencil" aria-hidden="true"></i>Editar
+        </button>
+
+        {direccion.flgPredeterminado ? (
+          ""
         ) : (
           <button
-        className="btn btn-primary row-direccion-button"
-        onClick={handleEventModalConfirmarShow}
-      >
-        {" "}
-        <i className="fa fa-trash" aria-hidden="true"></i>Eliminar
-      </button>
+            className="btn btn-primary row-direccion-button"
+            onClick={handleEventModalConfirmarShow}
+          >
+            {" "}
+            <i className="fa fa-trash" aria-hidden="true"></i>Eliminar
+          </button>
         )}
-     
       </div>
       {modalConfirmarShow ? (
         <ModalConfirmar
@@ -731,13 +750,13 @@ const reducerCard = (state, action) => {
 
     case actionTypeCard.flgMismoRecepciona_DIRECCION:
       return {
-        ...state,        
+        ...state,
         numTipoDocumento: action.numTipoDocumento,
         vchDocumento: action.vchDocumento,
         vchNombre: action.vchNombre,
         vchApellido: action.vchApellido,
         vchTelefono: action.vchTelefono,
-        flgMismoRecepciona:action.flgMismoRecepciona
+        flgMismoRecepciona: action.flgMismoRecepciona,
       };
     case actionTypeCard.ERROR:
       return {
@@ -776,11 +795,11 @@ let actionTypeCard = {
   REQUETS: "REQUETS",
   flgFacturacion: "flgFacturacion",
   flgDespacho: "flgDespacho",
-  flgMismoRecepciona_DIRECCION:"flgMismoRecepciona_DIRECCION"
+  flgMismoRecepciona_DIRECCION: "flgMismoRecepciona_DIRECCION",
 };
 function DireccionCardModal(props) {
   let direccion = props.direccion;
-  
+
   const [state, dispatch] = useReducer(reducerCard, {
     numCodigoDireccion: direccion.numCodigoDireccion,
     numCodigoCliente: direccion.numCodigoCliente,
@@ -798,8 +817,13 @@ function DireccionCardModal(props) {
     vchDocumento: direccion.vchDocumento,
     numTipoDocumento: direccion.numTipoDocumento,
     flgFacturacion: direccion.flgFacturacion,
-    flgDespacho: (direccion.vchNombre!==null && direccion.vchNombre!==undefined?(direccion.vchNombre.length>=1?true:false):false),
-    cliente:direccion.cliente,
+    flgDespacho:
+      direccion.vchNombre !== null && direccion.vchNombre !== undefined
+        ? direccion.vchNombre.length >= 1
+          ? true
+          : false
+        : false,
+    cliente: direccion.cliente,
     //flgDespacho:direccion.flgDespacho,
     nsecuencia: direccion.nsecuencia,
     error: {
@@ -821,7 +845,7 @@ function DireccionCardModal(props) {
     lstDistrito: [],
     isloadingProvincia: false,
     isloadingDistrito: false,
-    flgMismoRecepciona:false,
+    flgMismoRecepciona: false,
   });
   console.log(props);
   //eslint-disable-next-line
@@ -832,11 +856,10 @@ function DireccionCardModal(props) {
       console.log("useEffect _Init Departamento");
     }
     if (
-      (state.accion === CRUD.UPDATE || state.accion===CRUD.INSERT) &&
+      (state.accion === CRUD.UPDATE || state.accion === CRUD.INSERT) &&
       state.lstProvincia.length === 0 &&
       state.lstDistrito.length === 0
     ) {
-
       handleLoadDistritoProvincia();
       console.log("useEffect _Init Provincia");
     }
@@ -884,19 +907,19 @@ function DireccionCardModal(props) {
       let direccionRequest = {
         clienteDireccion: { numCodigoCliente: direccion.numCodigoCliente },
         numCodigoDireccion: state.numCodigoDireccion,
-        vchrAlias: '',
+        vchrAlias: "",
         vchDireccion: state.vchDireccion,
         vchreferencia: state.vchreferencia,
         vchNombre: state.vchNombre,
         vchApellido: state.vchApellido,
         vchTelefono: state.vchTelefono,
         //flgPredeterminado: state.flgPredeterminado,
-        flgFacturacion:false,
+        flgFacturacion: false,
         departamento: { chrCodigoDepartamento: state.chrCodigoDepartamento },
         provincia: { chrCodigoProvincia: state.chrCodigoProvincia },
         distrito: { chrCodigoDistrito: state.chrCodigoDistrito },
         vchDocumento: state.vchDocumento,
-        numTipoDocumento: state.numTipoDocumento
+        numTipoDocumento: state.numTipoDocumento,
       };
       const rpt = await registrarDireccion(direccionRequest);
       if (rpt.status === HttpStatus.HttpStatus_OK) {
@@ -1018,19 +1041,22 @@ function DireccionCardModal(props) {
   function handleEventMismoRecepciona(value) {
     console.log(state);
 
-    if (value === true && state.cliente!==undefined ) {
-     
+    if (value === true && state.cliente !== undefined) {
       dispatch({
         type: actionTypeCard.flgMismoRecepciona_DIRECCION,
         flgMismoRecepciona: value,
         //numTipoDocumento: state.cliente.numTipoCliente,
         vchDocumento: state.cliente.vchDocumento,
-        vchNombre: state.cliente.vchApellidoPaterno + " " + state.cliente.vchApellidoMaterno+" "+ state.cliente.vchNombre,
+        vchNombre:
+          state.cliente.vchApellidoPaterno +
+          " " +
+          state.cliente.vchApellidoMaterno +
+          " " +
+          state.cliente.vchNombre,
         //vchApellido: state.cliente.vchApellidoPaterno + " " + state.cliente.vchApellidoMaterno,
-        vchTelefono:state.cliente.vchTelefonoMovil
+        vchTelefono: state.cliente.vchTelefonoMovil,
       });
     } else {
-     
       dispatch({
         type: actionTypeCard.flgMismoRecepciona_DIRECCION,
         flgMismoRecepciona: value,
@@ -1038,34 +1064,34 @@ function DireccionCardModal(props) {
         vchDocumento: "",
         vchNombre: "",
         vchApellido: "",
-        vchTelefono:""
+        vchTelefono: "",
       });
     }
   }
-function handleEnventFlagDespacho(value){
-  dispatch({
-    type: actionTypeCard.flgDespacho,
-    flgDespacho: value,
-  });
-  dispatch({
-    type: actionTypeCard.flgMismoRecepciona_DIRECCION,
-    flgMismoRecepciona: false,
-    numTipoDocumento: TipoDocumento.DEFAULT.numtipocliente,
-    vchDocumento: "",
-    vchNombre: "",
-    vchApellido: "",
-    vchTelefono:""
-  });
-}
-function handleOnKeyDownNumeros(e) {
-  if (e.keyCode === 8) {
-    console.log(e.keyCode);
-  } else {
-    if (e.keyCode < "48" || e.keyCode > "57") {
-      e.preventDefault();
+  function handleEnventFlagDespacho(value) {
+    dispatch({
+      type: actionTypeCard.flgDespacho,
+      flgDespacho: value,
+    });
+    dispatch({
+      type: actionTypeCard.flgMismoRecepciona_DIRECCION,
+      flgMismoRecepciona: false,
+      numTipoDocumento: TipoDocumento.DEFAULT.numtipocliente,
+      vchDocumento: "",
+      vchNombre: "",
+      vchApellido: "",
+      vchTelefono: "",
+    });
+  }
+  function handleOnKeyDownNumeros(e) {
+    if (e.keyCode === 8) {
+      console.log(e.keyCode);
+    } else {
+      if (e.keyCode < "48" || e.keyCode > "57") {
+        e.preventDefault();
+      }
     }
   }
-}
   return (
     <>
       <Modal
@@ -1079,39 +1105,59 @@ function handleOnKeyDownNumeros(e) {
           <Modal.Title id="contained-modal-title-vcenter">
             {direccion.accion.codigoCrud === CRUD.UPDATE.codigoCrud
               ? "Actualizar dirección de "
-              : "Registrar dirección  de "}{state.flgFacturacion==='1'?"facturación":"despacho"}<span className="modal-title-span"> (Si su domicilio de facturación es igual al domicilio de despacho,no necesita llenar mas datos)</span>
+              : "Registrar dirección  de "}
+            {state.flgFacturacion === "1" ? "facturación" : "despacho"}
+            <span className="modal-title-span">
+              {" "}
+              (Si su domicilio de facturación es igual al domicilio de
+              despacho,no necesita llenar mas datos)
+            </span>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-body-direccion">
-        
-
-
             <div className="form-row-direccion">
-              <label htmlFor="vchDireccion">{state.flgFacturacion==='1'?tipoDireccion.FACTURACION:tipoDireccion.DESPACHO} </label>
+              <label htmlFor="vchDireccion">
+                {state.flgFacturacion === "1"
+                  ? tipoDireccion.FACTURACION
+                  : tipoDireccion.DESPACHO}{" "}
+              </label>
               <input
                 type="text"
                 name="vchDireccion"
-                className={`form-control ${state.error.vchDireccion.isValidado ? 'imput-registro-error' : ''}`}
+                className={`form-control ${
+                  state.error.vchDireccion.isValidado
+                    ? "imput-registro-error"
+                    : ""
+                }`}
                 autoComplete="false"
                 autoSave="false"
                 maxLength={128}
                 value={state.vchDireccion}
-                placeholder={state.error.vchDireccion.isValidado ? state.error.vchDireccion.mensaje : ""}
-                title={state.error.vchDireccion.isValidado ? state.error.vchDireccion.mensaje : ""}
-                onChange={(e) =>
+                placeholder={
+                  state.error.vchDireccion.isValidado
+                    ? state.error.vchDireccion.mensaje
+                    : ""
+                }
+                title={
+                  state.error.vchDireccion.isValidado
+                    ? state.error.vchDireccion.mensaje
+                    : ""
+                }
+                onChange={(e) => {
                   dispatch({
                     type: actionTypeCard.vchDireccion,
                     vchDireccion: e.target.value,
-                  })
-                }
+                  });
+                  e.target.className = "form-control";
+                }}
               ></input>
-
-
             </div>
 
             <div className="form-row-direccion">
-              <label htmlFor="vchreferencia">Punto de Referencia&nbsp;(Cruce con Av. o calle,Iglesia y etc)</label>
+              <label htmlFor="vchreferencia">
+                Punto de Referencia&nbsp;(Cruce con Av. o calle,Iglesia y etc)
+              </label>
               <input
                 type="text"
                 name="vchreferencia"
@@ -1128,48 +1174,67 @@ function handleOnKeyDownNumeros(e) {
                 }
               ></input>
             </div>
-            
+
             <div className="form-row-direccion">
               <label htmlFor="chrCodigoDepartamento">Departamento</label>
               <select
-                className={`form-control ${state.error.chrCodigoDepartamento.isValidado ? 'imput-registro-error' : ''}`}
+                className={`form-control ${
+                  state.error.chrCodigoDepartamento.isValidado
+                    ? "imput-registro-error"
+                    : ""
+                }`}
                 name="chrCodigoDepartamento"
                 value={state.chrCodigoDepartamento}
-                onChange={handleEventChangeDepartamento}
+                onChange={(e) => {
+                  handleEventChangeDepartamento(e);
+                  e.target.className = "form-control";
+                }}
               >
                 <option value="00">-- -- Seleccione ----</option>
                 {state.lstDepartamento}
               </select>
-
             </div>
             <div className="form-row-direccion">
               <label htmlFor="chrCodigoProvincia">Provincia</label>
               <select
-                className={`form-control ${state.error.chrCodigoProvincia.isValidado ? 'imput-registro-error' : ''}`}
+                className={`form-control ${
+                  state.error.chrCodigoProvincia.isValidado
+                    ? "imput-registro-error"
+                    : ""
+                }`}
                 name="chrCodigoProvincia"
                 value={state.chrCodigoProvincia}
-                onChange={handleEventChangeProvincia}
+                onChange={(e) => {
+                  handleEventChangeProvincia(e);
+                  e.target.className = "form-control";
+                }}
               >
                 <option value="00">-- -- Seleccione ----</option>
                 {state.lstProvincia}
               </select>
-
             </div>
             <div className="form-row-direccion">
               <label htmlFor="chrCodigoDistrito">Distrito</label>
               <select
-                className={`form-control ${state.error.chrCodigoDistrito.isValidado ? 'imput-registro-error' : ''}`}
+                className={`form-control ${
+                  state.error.chrCodigoDistrito.isValidado
+                    ? "imput-registro-error"
+                    : ""
+                }`}
                 name="chrCodigoDistrito"
                 value={state.chrCodigoDistrito}
-                onChange={handleEventChangeDistrito}
+                onChange={(e)=>{handleEventChangeDistrito(e);
+                  e.target.className = "form-control";
+                }}
               >
                 <option value="00">-- -- Seleccione ----</option>
                 {state.lstDistrito}
               </select>
-
             </div>
             <div className="form-row-direccion  row-direccion-center">
-              <label className="form-row-direccion-title">¿Datos de la persona que recepciona?</label>
+              <label className="form-row-direccion-title">
+                ¿Datos de la persona que recepciona?
+              </label>
               <input
                 type="checkbox"
                 name="flgDespacho"
@@ -1177,29 +1242,34 @@ function handleOnKeyDownNumeros(e) {
                 autoComplete="false"
                 autoSave="false"
                 checked={state.flgDespacho}
-                onChange={(e) =>handleEnventFlagDespacho(e.target.checked)
-                 
-                }
+                onChange={(e) => handleEnventFlagDespacho(e.target.checked)}
               ></input>
-              {state.flgDespacho ? <>
-              <div className="form-row-option">
-                <label className="span-opcion" >¿Yo mismo voy a recepcionar?</label>
-                <input
-                  type="checkbox"
-                  name="flgMismo"
-                  className="form-control span-opcion"
-                  autoComplete="false"
-                  autoSave="false"
-                  checked={state.flgMismoRecepciona}
-                  onChange={(e) =>  handleEventMismoRecepciona(e.target.checked)}
-                ></input>
-              </div>
-            </> : ""}
-
-
+              {state.flgDespacho ? (
+                <>
+                  <div className="form-row-option">
+                    <label className="span-opcion">
+                      ¿Yo mismo voy a recepcionar?
+                    </label>
+                    <input
+                      type="checkbox"
+                      name="flgMismo"
+                      className="form-control span-opcion"
+                      autoComplete="false"
+                      autoSave="false"
+                      checked={state.flgMismoRecepciona}
+                      onChange={(e) =>
+                        handleEventMismoRecepciona(e.target.checked)
+                      }
+                    ></input>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
             </div>
-            {state.flgDespacho ? <>
-               {/*
+            {state.flgDespacho ? (
+              <>
+                {/*
               <div className="form-row-direccion">
                 <label htmlFor="numTipoDocumento">Tipo Documento</label>
                 <select
@@ -1257,74 +1327,119 @@ function handleOnKeyDownNumeros(e) {
 
               </div>
               */}
-              
-             
-              <div className="form-row-direccion">
-                <label htmlFor="vchNombre">Documento de quien recepciona</label>
-                <input
-                  type="text"
-                  name="vchDocumento"
-                  className={`form-control ${state.error.vchDocumento.isValidado ? 'imput-registro-error' : ''}`}
-                  placeholder={state.error.vchDocumento.isValidado ? state.error.vchDocumento.mensaje : ""}
-                  title={state.error.vchDocumento.isValidado ? state.error.vchDocumento.mensaje : ""}
-                  autoComplete="false"
-                  autoSave="false"
-                  maxLength={30}
-                  value={state.vchDocumento}
-                  onKeyDown={handleOnKeyDownNumeros}
-                  onChange={(e) =>
-                    dispatch({
-                      type: actionTypeCard.vchDocumento,
-                      vchDocumento: e.target.value,
-                    })
-                  }
-                ></input>
 
-              </div>
+                <div className="form-row-direccion">
+                  <label htmlFor="vchNombre">
+                    Documento de quien recepciona
+                  </label>
+                  <input
+                    type="text"
+                    name="vchDocumento"
+                    className={`form-control ${
+                      state.error.vchDocumento.isValidado
+                        ? "imput-registro-error"
+                        : ""
+                    }`}
+                    placeholder={
+                      state.error.vchDocumento.isValidado
+                        ? state.error.vchDocumento.mensaje
+                        : ""
+                    }
+                    title={
+                      state.error.vchDocumento.isValidado
+                        ? state.error.vchDocumento.mensaje
+                        : ""
+                    }
+                    autoComplete="false"
+                    autoSave="false"
+                    maxLength={30}
+                    value={state.vchDocumento}
+                    onKeyDown={handleOnKeyDownNumeros}
+                    onChange={(e) =>{ 
+                      dispatch({
+                        type: actionTypeCard.vchDocumento,
+                        vchDocumento: e.target.value,
+                      });
+                      e.target.className = "form-control";
+                      }
+                    }
+                  ></input>
+                </div>
 
-              <div className="form-row-direccion">
-                <label htmlFor="vchNombre">Nombres y Apellidos de quien recepciona</label>
-                <input
-                  type="text"
-                  name="vchNombre"
-                  className={`form-control ${state.error.vchNombre.isValidado ? 'imput-registro-error' : ''}`}
-                  placeholder={state.error.vchNombre.isValidado ? state.error.vchNombre.mensaje : ""}
-                  title={state.error.vchNombre.isValidado ? state.error.vchNombre.mensaje : ""}
-                  autoComplete="false"
-                  autoSave="false"
-                  maxLength={128}
-                  value={state.vchNombre}
-                  onChange={(e) =>
-                    dispatch({
-                      type: actionTypeCard.vchNombre,
-                      vchNombre: e.target.value,
-                    })
-                  }
-                ></input>
+                <div className="form-row-direccion">
+                  <label htmlFor="vchNombre">
+                    Nombres y Apellidos de quien recepciona
+                  </label>
+                  <input
+                    type="text"
+                    name="vchNombre"
+                    className={`form-control ${
+                      state.error.vchNombre.isValidado
+                        ? "imput-registro-error"
+                        : ""
+                    }`}
+                    placeholder={
+                      state.error.vchNombre.isValidado
+                        ? state.error.vchNombre.mensaje
+                        : ""
+                    }
+                    title={
+                      state.error.vchNombre.isValidado
+                        ? state.error.vchNombre.mensaje
+                        : ""
+                    }
+                    autoComplete="false"
+                    autoSave="false"
+                    maxLength={128}
+                    value={state.vchNombre}
+                    onChange={(e) =>
+                      {
+                        dispatch({
+                        type: actionTypeCard.vchNombre,
+                        vchNombre: e.target.value,
+                      });
+                      e.target.className = "form-control";
+                      }
+                    }
+                  ></input>
+                </div>
 
-              </div>
-             
-              <div className="form-row-direccion">
-                <label htmlFor="vchTelefono">Teléfono  de quien recepciona<span>&nbsp;(No es obligatorio)</span></label>
-                <input
-                  type="text"
-                  name="vchTelefono"
-                  className={`form-control ${state.error.vchTelefono.isValidado ? 'imput-registro-error' : ''}`}
-                  placeholder={state.error.vchTelefono.isValidado ? state.error.vchTelefono.mensaje : ""}
-                  title={state.error.vchTelefono.isValidado ? state.error.vchTelefono.mensaje : ""}
-                  autoComplete="false"
-                  autoSave="false"
-                  maxLength={15}
-                  value={state.vchTelefono}
-                  onChange={handleEnventOnChangeTelefono}
-                ></input>
-              </div>
-            </> : ""}
+                <div className="form-row-direccion">
+                  <label htmlFor="vchTelefono">
+                    Teléfono de quien recepciona
+                    <span>&nbsp;(No es obligatorio)</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="vchTelefono"
+                    className={`form-control ${
+                      state.error.vchTelefono.isValidado
+                        ? "imput-registro-error"
+                        : ""
+                    }`}
+                    placeholder={
+                      state.error.vchTelefono.isValidado
+                        ? state.error.vchTelefono.mensaje
+                        : ""
+                    }
+                    title={
+                      state.error.vchTelefono.isValidado
+                        ? state.error.vchTelefono.mensaje
+                        : ""
+                    }
+                    autoComplete="false"
+                    autoSave="false"
+                    maxLength={15}
+                    value={state.vchTelefono}
+                    onChange={handleEnventOnChangeTelefono}
+                  ></input>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
 
-         
-            <div className="form-row-direccion">
-
-            </div>
+            <div className="form-row-direccion"></div>
             <ServerException server={state.server}></ServerException>
           </div>
         </Modal.Body>
@@ -1362,7 +1477,6 @@ function handleValidarForm(state) {
   /*Criterios de validaciones */
   let isValido = true;
 
-
   if (!state.vchDireccion) {
     _error.vchDireccion.mensaje = "Ingrese la dirección";
     _error.vchDireccion.isValidado = true;
@@ -1384,7 +1498,6 @@ function handleValidarForm(state) {
     isValido = false;
   }
   if (state.flgDespacho === true) {
-
     /*if (state.numTipoDocumento === 0) {
       _error.numTipoDocumento.mensaje = "Seleccione el tipo de documento";
       _error.numTipoDocumento.isValidado = true;
@@ -1431,8 +1544,6 @@ function handleValidarForm(state) {
     }
 */
 
-
-
     if (!state.vchNombre) {
       _error.vchNombre.mensaje = "Ingrese su nombre y apellidos";
       _error.vchNombre.isValidado = true;
@@ -1449,10 +1560,7 @@ function handleValidarForm(state) {
       isValido = false;
     }
 */
-
   }
-
-
 
   _error.isValido = isValido;
   /*Registrando los mensajes  */

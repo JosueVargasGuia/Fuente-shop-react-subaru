@@ -2,24 +2,22 @@ package com.ShopAutoPartsServices.WsServices;
 
 import java.io.File;
 import java.math.BigDecimal;
- 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
- 
- 
+
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
- 
+
 import javax.servlet.http.HttpServletRequest;
 
- 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
- 
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -79,7 +77,7 @@ public class IpnController {
 
 	@PostMapping(value = "/confirmar")
 	public ResponseEntity<String> confirmacionIziPay(HttpServletRequest httpServletRequest) {
-		try {			
+		try {
 
 			IpnRequets ipnRequets = new IpnRequets();
 			Gson g = new Gson();
@@ -130,7 +128,7 @@ public class IpnController {
 	 * 
 	 * 
 	 */
-	//@Scheduled(cron = "${shop.mail.smtp.to.oc.scheduled}")
+	// @Scheduled(cron = "${shop.mail.smtp.to.oc.scheduled}")
 	public void scheduledMailOcConsolidado() {
 		/*
 		 * JOB: Envio de correo de ordenes de compra consolidado
@@ -145,7 +143,7 @@ public class IpnController {
 		Date fecIni = new Date(new Date().getTime() - (86400000 * 1));// Menos un dia
 		boolean correoOcStatus = false;
 		try {
-			BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion);
+			BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion, empresa);
 			scheduledProceso.setFechaIni(sdf.format(fecIni));
 			scheduledProceso.setFechaFin(sdf.format(new Date()));
 			scheduledProceso.setFechaIniHHmm(sdf.format(fecIni) + "14:01");
@@ -177,49 +175,39 @@ public class IpnController {
 		}
 
 	}
-
-	  
-	public void archivo() {
-		try {
-
-			BeanFacturacion fac = new BeanFacturacion();
-			fac.setCodigo("B002-00000021");/* NUMFACTURAS */
-			fac.setCodigoOrigenFactura(2);/* NUMCODIGOORIGENFACTURA */
-			/* probar cada uno de los SP */
-			ScheduledProceso scheduledProcesoStatus = new ScheduledProceso();
-			scheduledProcesoStatus.setNumTipoCambio(new BigDecimal(3.90));
-			scheduledProcesoStatus.setIcbFec(new BigDecimal(3.90));
-			logger.info("Codigo:" + fac.getCodigo().trim() + " codigoOrigenFactura:" + fac.getCodigoOrigenFactura());
-			BeanFacturacion beanFactura = facturacionService.ObtenerFacturaElectronicaCabecera(fac,
-					scheduledProcesoStatus);
-			ArrayList<BeanFacturacion> facturaDetalle = facturacionService.ListarFacturaElectronicaDetalle(fac);
-			BeanEmpresa empresaFe = facturacionService
-					.obtenerEmpresa(Integer.parseInt(Constantes.TIPE_PAGE_APLICATIVO));
-			/* Generacion de FE, archivo .txt */
-			Archivo.interfazFacturaElectronicaV3(empresaFe, beanFactura, facturaDetalle);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void archivoExcel() {
-		try {
-
-			 
-			ScheduledProceso scheduledProcesoStatus = new ScheduledProceso();
-			scheduledProcesoStatus.setChrCodigoOc("OCO202239");
-			File file = facturacionService.obtenerFileReporteOcOnline(scheduledProcesoStatus);
-			 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	/*
+	 * public void archivo() { try {
+	 * 
+	 * BeanFacturacion fac = new BeanFacturacion(); fac.setCodigo("B002-00000021");
+	 * NUMFACTURAS fac.setCodigoOrigenFactura(2); NUMCODIGOORIGENFACTURA probar cada
+	 * uno de los SP ScheduledProceso scheduledProcesoStatus = new
+	 * ScheduledProceso(); scheduledProcesoStatus.setNumTipoCambio(new
+	 * BigDecimal(3.90)); scheduledProcesoStatus.setIcbFec(new BigDecimal(3.90));
+	 * logger.info("Codigo:" + fac.getCodigo().trim() + " codigoOrigenFactura:" +
+	 * fac.getCodigoOrigenFactura()); BeanFacturacion beanFactura =
+	 * facturacionService.ObtenerFacturaElectronicaCabecera(fac,
+	 * scheduledProcesoStatus); ArrayList<BeanFacturacion> facturaDetalle =
+	 * facturacionService.ListarFacturaElectronicaDetalle(fac); BeanEmpresa
+	 * empresaFe = facturacionService
+	 * .obtenerEmpresa(Integer.parseInt(Constantes.TIPE_PAGE_APLICATIVO));
+	 * Generacion de FE, archivo .txt
+	 * Archivo.interfazFacturaElectronicaV3(empresaFe, beanFactura, facturaDetalle);
+	 * } catch (Exception e) { e.printStackTrace(); } }
+	 * 
+	 * public void archivoExcel() { try {
+	 * 
+	 * 
+	 * ScheduledProceso scheduledProcesoStatus = new ScheduledProceso();
+	 * scheduledProcesoStatus.setChrCodigoOc("OCO202239"); File file =
+	 * facturacionService.obtenerFileReporteOcOnline(scheduledProcesoStatus);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); } }
+	 */
 
 	// @Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
-	//PRODUCCUIN DESAHABILITADO
+	// PRODUCCUIN DESAHABILITADO
 	public void scheduledConfirmaCotizacion() {
-		//logger.info( correoConfiguracion.getDeployApp().toString());
+		// logger.info( correoConfiguracion.getDeployApp().toString());
 		boolean correoStatusTipoCambioTomado = false;
 		String asuntoTipoCambioTomado = "Alerta de tipo de cambio tomado";
 		boolean correoStatus = false;
@@ -230,17 +218,18 @@ public class IpnController {
 		String asunto = "";
 		String asuntoOc = "";
 		CorreoRequest correoRequest = new CorreoRequest();
-		BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion);
+		BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion, empresa);
 		try {
 			List<ClienteFactura> lista = cotizacionOnlineService.obtenerCotizacionFactura();
-			//logger.info(new Date().getTime() + " Iniciando Cantidad:"+lista.size());
+			// logger.info(new Date().getTime() + " Iniciando Cantidad:"+lista.size());
 			for (ClienteFactura clienteFactura : lista) {
 				ScheduledProceso scheduledProceso = new ScheduledProceso();
 				scheduledProceso.setEstadoCotizacion(clienteFactura.getEstadoCotizacion());
 				scheduledProceso.setNumCodigoCotizacionOnline(clienteFactura.getNumCodigoCotizacionOnline());
 				scheduledProceso.setStatusAction(clienteFactura.getStatusAction());
 				scheduledProceso.setStatus(clienteFactura.getStatusIziPay().toString());
-				scheduledProceso.setTotalLetras(new NumeroLetras(clienteFactura.getMoneda()).Convertir(clienteFactura.getTotal() + "", false).toUpperCase());
+				scheduledProceso.setTotalLetras(new NumeroLetras(clienteFactura.getMoneda())
+						.Convertir(clienteFactura.getTotal() + "", false).toUpperCase());
 				correoStatus = false;
 				feStatus = false;
 				correoOcStatus = false;
@@ -255,8 +244,7 @@ public class IpnController {
 				 * clienteFactura.setStatusAction(StatusAction.FACTURAR.toString());
 				 * scheduledProceso.setStatus(StatusIziPay.PAID.toString());
 				 */
-				
-				
+
 				try {
 					scheduledProceso.setProceso("SCHEDULED");
 					if (clienteFactura.getStatusIziPay() == StatusIziPay.PAID
@@ -327,14 +315,18 @@ public class IpnController {
 								listaCorreo.add(new CorreoJobsOnline(empresa.getToOrdenCompra()));
 								correoFERequest.setListaCorreo(listaCorreo);
 								// correoFERequest.setCorreoCliente(empresa.getToOrdenCompra());
-								/*OC Originl File file = facturacionService.obtenerFileReporteOc(scheduledProceso);*/
+								/*
+								 * OC Originl File file =
+								 * facturacionService.obtenerFileReporteOc(scheduledProceso);
+								 */
 								File file = facturacionService.obtenerFileReporteOcOnline(scheduledProceso);
 								if (file != null) {
-									asuntoOc = "Orden de Compra Online por registrar " + scheduledProcesoStatus.getChrCodigoOc()
-											+ " generada por Venta On-line(" + empresa.getAlias() + ")";
+									asuntoOc = "Orden de Compra Online por registrar "
+											+ scheduledProcesoStatus.getChrCodigoOc() + " generada por Venta On-line("
+											+ empresa.getAlias() + ")";
 									correoOcStatus = buildEnviaCorreo.buildCorreoSSL(correoFERequest,
-											HTML_OC_(clienteFactura,scheduledProcesoStatus, OcEmail.OrdenCompra), asuntoOc,
-											AccountsEmail.Compras, file);
+											HTML_OC_(clienteFactura, scheduledProcesoStatus, OcEmail.OrdenCompra),
+											asuntoOc, AccountsEmail.Compras, file);
 									file.deleteOnExit();
 								}
 							}
@@ -370,17 +362,17 @@ public class IpnController {
 			logger.info("Error en @Schedule[scheduledConfirmaCotizacion]:" + e.getMessage());
 			e.printStackTrace();
 		}
-		//logger.info(new Date().getTime() + " Finalizando");
+		// logger.info(new Date().getTime() + " Finalizando");
 	}
 
 	public String HTML_(ClienteFactura clienteFactura) throws Exception {
 		SimpleDateFormat dmy = new SimpleDateFormat("dd-MM-yyyy");
 		// Tu pedido fue confirmado
 		String titulo = "", nombre = "";
-		//String urlDocumentoFE = "";
+		// String urlDocumentoFE = "";
 		if (clienteFactura.getStatusIziPay() == StatusIziPay.PAID) {
 			titulo = "Tu pedido fue confirmado";
-			//urlDocumentoFE = "";
+			// urlDocumentoFE = "";
 		}
 		if (clienteFactura.getStatusIziPay() == StatusIziPay.UNPAID) {
 			titulo = "Tu pedido ha sido cancelado!";
@@ -522,13 +514,17 @@ public class IpnController {
 		return html.toString();
 	}
 
-	public String HTML_OC_(ClienteFactura clienteFactura,ScheduledProceso scheduledProcesoStatus , OcEmail ocEmail) throws Exception {
+	public String HTML_OC_(ClienteFactura clienteFactura, ScheduledProceso scheduledProcesoStatus, OcEmail ocEmail)
+			throws Exception {
 		StringBuilder html = new StringBuilder();
 		html.append("<!DOCTYPE html>" + "<html lang='en'>" + "<body>");
-		html.append("Estimados, <br> Se adjunta la orden de Compra que debe ser generada para el documento Nro:<span style='font-weight: bold;'>"+scheduledProcesoStatus.getNumFacturas()+"</span>.");
+		html.append(
+				"Estimados, <br> Se adjunta la orden de Compra que debe ser generada para el documento Nro:<span style='font-weight: bold;'>"
+						+ scheduledProcesoStatus.getNumFacturas() + "</span>.");
 		html.append("</body>" + "</html>");
 		return html.toString();
 	}
+
 	public String HTML_FE_(ClienteFactura clienteFactura, OcEmail ocEmail) throws Exception {
 		StringBuilder html = new StringBuilder();
 		html.append("<!DOCTYPE html>" + "<html lang='en'>" + "<body>");

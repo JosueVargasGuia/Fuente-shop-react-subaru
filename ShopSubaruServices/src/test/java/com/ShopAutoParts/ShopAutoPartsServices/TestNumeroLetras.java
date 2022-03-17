@@ -11,5 +11,6 @@ public class TestNumeroLetras {
 		NumeroLetras s=new NumeroLetras(Moneda.DOLARES);
 		System.out.println(s.Convertir(".55", false));
 		System.out.println(s.Convertir("2588,25", false));
+		 
 	}
 }

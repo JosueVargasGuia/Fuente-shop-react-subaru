@@ -574,7 +574,7 @@ public class ClienteAuthorizationController {
 						correoRequest.getClienteUsuario().getCliente().getVchNombreCompleto());
 				subject = "[" + empresa.getAlias() + "]" + "Su nueva contraseña";
 			}
-			BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion);
+			BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion,empresa);
 			if (buildEnviaCorreo.buildCorreoSSL(correoRequest, html, subject, AccountsEmail.ServicioAlCliente, null)) {
 				correoResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK);
 				responseEntity = new ResponseEntity<CorreoResponse>(correoResponse, HttpStatus.OK);

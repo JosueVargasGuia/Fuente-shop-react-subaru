@@ -23,7 +23,7 @@ import ServerException from "../utils/serverException";
 import { Modal } from "react-bootstrap";
 import { ModalConfirmar } from "../utils/modal";
 
-import zxcvbn from 'zxcvbn';
+import zxcvbn from "zxcvbn";
 let actionType = {
   DEPARTAMENTO: "DEPARTAMENTO",
   PROVINCIA: "PROVINCIA",
@@ -73,7 +73,7 @@ let actionType = {
   vchDocumento_DIRECCION: "vchDocumento_DIRECCION",
   DIRECCION_GUARDAR: "DIRECCION_GUARDAR",
   DIRECCION_ERROR: "DIRECCION_ERROR",
-
+  setType: "setType",
 };
 /*Funcion reducer */
 const reducer = (state, action) => {
@@ -109,15 +109,16 @@ const reducer = (state, action) => {
         isloadingProvincia: action.isloadingProvincia,
       };
     case actionType.DEPARTAMENTO_DIRECCION:
-
-      _direccion.departamento.chrCodigoDepartamento = action.chrCodigoDepartamento;
-      _direccion.departamento.vchDescripcion = action.vchDescripcionDepartamento;
+      _direccion.departamento.chrCodigoDepartamento =
+        action.chrCodigoDepartamento;
+      _direccion.departamento.vchDescripcion =
+        action.vchDescripcionDepartamento;
       _direccion.provincia.chrCodigoProvincia = action.chrCodigoProvincia;
       _direccion.distrito.chrCodigoDistrito = action.chrCodigoDistrito;
       return {
         ...state,
         direccion: _direccion,
-        lstProvinciaD: action.lstProvinciaD
+        lstProvinciaD: action.lstProvinciaD,
       };
     case actionType.PROVINCIA_DIRECCION:
       _direccion.provincia.chrCodigoProvincia = action.chrCodigoProvincia;
@@ -126,59 +127,58 @@ const reducer = (state, action) => {
       return {
         ...state,
         direccion: _direccion,
-        lstDistritoD: action.lstDistritoD
+        lstDistritoD: action.lstDistritoD,
       };
     case actionType.DISTRITO_DIRECCION:
       _direccion.distrito.chrCodigoDistrito = action.chrCodigoDistrito;
       _direccion.distrito.vchDescripcion = action.vchDescripcionDistrito;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     /** */
-
 
     case actionType.vchDireccion_DIRECCION:
       _direccion.vchDireccion = action.vchDireccion;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.vchreferencia_DIRECCION:
       _direccion.vchreferencia = action.vchreferencia;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.vchNombre_DIRECCION:
       _direccion.vchNombre = action.vchNombre;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.vchApellido_DIRECCION:
       _direccion.vchApellido = action.vchApellido;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.vchTelefono_DIRECCION:
       _direccion.vchTelefono = action.vchTelefono;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.flgPredeterminado_DIRECCION:
       _direccion.flgPredeterminado = action.flgPredeterminado;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.flgDespacho_DIRECCION:
       _direccion.flgDespacho = action.flgDespacho;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.flgMismoRecepciona_DIRECCION:
       _direccion.flgMismoRecepciona = action.flgMismoRecepciona;
@@ -186,28 +186,29 @@ const reducer = (state, action) => {
       _direccion.vchDocumento = action.vchDocumento;
       _direccion.vchNombre = action.vchNombre;
       _direccion.vchApellido = action.vchApellido;
+      _direccion.vchTelefono = action.vchTelefono;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
 
     case actionType.vchrAlias_DIRECCION:
       _direccion.vchrAlias = action.vchrAlias;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.numTipoDocumento_DIRECCION:
       _direccion.numTipoDocumento = action.numTipoDocumento;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     case actionType.vchDocumento_DIRECCION:
       _direccion.vchDocumento = action.vchDocumento;
       return {
         ...state,
-        direccion: _direccion
+        direccion: _direccion,
       };
     /** */
     case actionType.PROVINCIA:
@@ -282,7 +283,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         chrPassword: action.chrPassword,
-        statusPassword:action.statusPassword
+        statusPassword: action.statusPassword,
       };
     case actionType.flgOfertas:
       return {
@@ -340,24 +341,31 @@ const reducer = (state, action) => {
         estado: action.estado,
       };
     case actionType.MODAL_SHOW_DIRECCION:
-      state.error.chrCodigoDepartamento.mensaje = action.error.chrCodigoDepartamento.mensaje;
-      state.error.chrCodigoDepartamento.isValidado = action.error.chrCodigoDepartamento.isValidado;
+      state.error.chrCodigoDepartamento.mensaje =
+        action.error.chrCodigoDepartamento.mensaje;
+      state.error.chrCodigoDepartamento.isValidado =
+        action.error.chrCodigoDepartamento.isValidado;
 
-      state.error.chrCodigoProvincia.mensaje = action.error.chrCodigoProvincia.mensaje;
-      state.error.chrCodigoProvincia.isValidado = action.error.chrCodigoProvincia.isValidado;
+      state.error.chrCodigoProvincia.mensaje =
+        action.error.chrCodigoProvincia.mensaje;
+      state.error.chrCodigoProvincia.isValidado =
+        action.error.chrCodigoProvincia.isValidado;
 
-      state.error.chrCodigoDistrito.mensaje = action.error.chrCodigoDistrito.mensaje;
-      state.error.chrCodigoDistrito.isValidado = action.error.chrCodigoDistrito.isValidado;
+      state.error.chrCodigoDistrito.mensaje =
+        action.error.chrCodigoDistrito.mensaje;
+      state.error.chrCodigoDistrito.isValidado =
+        action.error.chrCodigoDistrito.isValidado;
 
       state.error.vchDireccion.mensaje = action.error.vchDireccion.mensaje;
-      state.error.vchDireccion.isValidado = action.error.vchDireccion.isValidado;
+      state.error.vchDireccion.isValidado =
+        action.error.vchDireccion.isValidado;
       return {
         ...state,
         showDireccion: action.showDireccion,
         direccion: action.direccion,
         lstProvinciaD: action.lstProvinciaD,
         lstDistritoD: action.lstDistritoD,
-        error: state.error
+        error: state.error,
       };
     case actionType.MODAL_SET_DIRECCION:
       return {
@@ -372,29 +380,41 @@ const reducer = (state, action) => {
         lstDireccionData: action.lstDireccionData,
       };
     case actionType.DIRECCION_ERROR:
+      state.error.chrCodigoDepartamento.mensaje =
+        action.error.chrCodigoDepartamentoCliente.mensaje;
+      state.error.chrCodigoDepartamento.isValidado =
+        action.error.chrCodigoDepartamentoCliente.isValidado;
 
-      state.error.chrCodigoDepartamento.mensaje = action.error.chrCodigoDepartamentoCliente.mensaje;
-      state.error.chrCodigoDepartamento.isValidado = action.error.chrCodigoDepartamentoCliente.isValidado;
+      state.error.chrCodigoProvincia.mensaje =
+        action.error.chrCodigoProvinciaCliente.mensaje;
+      state.error.chrCodigoProvincia.isValidado =
+        action.error.chrCodigoProvinciaCliente.isValidado;
 
-      state.error.chrCodigoProvincia.mensaje = action.error.chrCodigoProvinciaCliente.mensaje;
-      state.error.chrCodigoProvincia.isValidado = action.error.chrCodigoProvinciaCliente.isValidado;
+      state.error.chrCodigoDistrito.mensaje =
+        action.error.chrCodigoDistritoCliente.mensaje;
+      state.error.chrCodigoDistrito.isValidado =
+        action.error.chrCodigoDistritoCliente.isValidado;
 
-      state.error.chrCodigoDistrito.mensaje = action.error.chrCodigoDistritoCliente.mensaje;
-      state.error.chrCodigoDistrito.isValidado = action.error.chrCodigoDistritoCliente.isValidado;
-
-      state.error.vchDireccion.mensaje = action.error.vchDireccionCliente.mensaje;
-      state.error.vchDireccion.isValidado = action.error.vchDireccionCliente.isValidado;
+      state.error.vchDireccion.mensaje =
+        action.error.vchDireccionCliente.mensaje;
+      state.error.vchDireccion.isValidado =
+        action.error.vchDireccionCliente.isValidado;
 
       _direccion.error = action.error;
       return {
         ...state,
         direccion: _direccion,
-        error: state.error
+        error: state.error,
       };
     case actionType.MODAL_SHOW:
       return {
         ...state,
         showDireccion: action.showDireccion,
+      };
+    case actionType.setType:
+      return {
+        ...state,
+        _type: action._type,
       };
     default:
       return state;
@@ -418,7 +438,7 @@ const reducerModal = (state, action) => {
       return state;
   }
 };
-
+const _type = { typeText: "text", typePassword: "password" };
 export default function RegistrarCliente(props) {
   let params = useParams();
   let history = useHistory();
@@ -519,7 +539,6 @@ export default function RegistrarCliente(props) {
     lstProvincia: [],
     lstDistrito: [],
 
-
     lstProvinciaD: [],
     lstDistritoD: [],
 
@@ -552,12 +571,13 @@ export default function RegistrarCliente(props) {
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
     estado: CRUD.INSERT.estado,
     accion: CRUD.INSERT,
+    _type: _type.typePassword,
   });
 
   const [modalConfirmarShow, dispatchModal] = useReducer(reducerModal, {
     show: false,
     mensaje: "",
-    title: ""
+    title: "",
   });
 
   useEffect(() => {
@@ -662,7 +682,6 @@ export default function RegistrarCliente(props) {
           const jsonD = await rptD.json();
 
           if (jsonD.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-
             rowDireccion = [];
             for (let index = 0; index < jsonD.lista.length; index++) {
               const direccion = jsonD.lista[index];
@@ -714,15 +733,16 @@ export default function RegistrarCliente(props) {
               };
               rowDireccionData.push(_direccion);
               rowDireccion.push(
-                <CardDireccion key={index} direccion={_direccion} handleEventShow={handleEventShowModalDireccion}></CardDireccion>
+                <CardDireccion
+                  key={index}
+                  direccion={_direccion}
+                  handleEventShow={handleEventShowModalDireccion}
+                ></CardDireccion>
               );
-
             }
-
           }
         }
         /*Mis Direcciones */
-
 
         dispatch({
           type: actionType.LOAD_CLIENTE,
@@ -787,7 +807,7 @@ export default function RegistrarCliente(props) {
       lstDistrito: [],
       isloadingDepartamento: false,
     });
-  }/*
+  } /*
   async function handleEventChangeDepartamento(e) {
     isloadingProvincia:true que cargue los provincias al renderizar en el Hook useEffect 
     dispatch({
@@ -811,16 +831,14 @@ export default function RegistrarCliente(props) {
         _vchDescripcionDepartamento = element.props.children;
       }
     }
-    let rowProvincia = await handleObtenerProvincia(
-      _chrCodigoDepartamento
-    );
+    let rowProvincia = await handleObtenerProvincia(_chrCodigoDepartamento);
     dispatch({
       type: actionType.DEPARTAMENTO_DIRECCION,
       chrCodigoDepartamento: _chrCodigoDepartamento,
       vchDescripcionDepartamento: _vchDescripcionDepartamento,
       chrCodigoProvincia: "00",
       chrCodigoDistrito: "00",
-      lstProvinciaD: rowProvincia
+      lstProvinciaD: rowProvincia,
     });
   }
 
@@ -851,7 +869,7 @@ export default function RegistrarCliente(props) {
   */
   async function handleEventChangeProvinciaDireccion(e) {
     /* isloadingDistrito:true que cargue los distritos al renderizar en el Hook useEffect*/
-    let _chrCodigoProvincia = e.target.value
+    let _chrCodigoProvincia = e.target.value;
     let _vchDescripcionProvincia = "";
     for (let x = 0; x < state.lstProvinciaD.length; x++) {
       const element = state.lstProvinciaD[x];
@@ -908,7 +926,7 @@ export default function RegistrarCliente(props) {
     dispatch({
       type: actionType.DISTRITO_DIRECCION,
       chrCodigoDistrito: _chrCodigoDistrito,
-      vchDescripcionDistrito: _vchDescripcionDistrito
+      vchDescripcionDistrito: _vchDescripcionDistrito,
     });
   }
 
@@ -923,7 +941,7 @@ export default function RegistrarCliente(props) {
     });
 
     const valError = await handleValidarForm(state);
-     
+
     if (valError.isValido) {
       let rowDireccion = [];
       for (let i = 0; i < state.lstDireccionData.length; i++) {
@@ -941,12 +959,16 @@ export default function RegistrarCliente(props) {
           flgFacturacion: element.flgFacturacion,
           flgMismoRecepciona: element.flgMismoRecepciona,
           nsecuencia: element.nsecuencia,
-          departamento: { chrCodigoDepartamento: element.departamento.chrCodigoDepartamento },
-          provincia: { chrCodigoProvincia: element.provincia.chrCodigoProvincia },
+          departamento: {
+            chrCodigoDepartamento: element.departamento.chrCodigoDepartamento,
+          },
+          provincia: {
+            chrCodigoProvincia: element.provincia.chrCodigoProvincia,
+          },
           distrito: { chrCodigoDistrito: element.distrito.chrCodigoDistrito },
           vchDocumento: element.vchDocumento,
           numTipoDocumento: element.numTipoDocumento,
-          crud: element.accion.descripcion
+          crud: element.accion.descripcion,
         };
         rowDireccion.push(direccionRequest);
       }
@@ -974,7 +996,7 @@ export default function RegistrarCliente(props) {
             chrCodigoDistrito: state.chrCodigoDistrito,
           },
         },
-        listaDireccion: rowDireccion
+        listaDireccion: rowDireccion,
       };
 
       const rpt = await registrarCliente(clienteRequets);
@@ -1004,7 +1026,6 @@ export default function RegistrarCliente(props) {
           });
         }
       } else {
-         
         dispatch({
           type: actionType.REQUETS,
           server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
@@ -1027,7 +1048,6 @@ export default function RegistrarCliente(props) {
   }
 
   async function handleEventShowModalDireccion(_direccion, accion) {
- 
     let direccion = {
       indice: _direccion.indice,
       numCodigoDireccion: _direccion.numCodigoDireccion,
@@ -1040,7 +1060,12 @@ export default function RegistrarCliente(props) {
       vchTelefono: _direccion.vchTelefono,
       flgRegistro: _direccion.flgRegistro,
       flgPredeterminado: _direccion.flgPredeterminado,
-      flgDespacho: (_direccion.vchNombre!==null && _direccion.vchNombre!==undefined?(_direccion.vchNombre.length>=1?true:false):false),
+      flgDespacho:
+        _direccion.vchNombre !== null && _direccion.vchNombre !== undefined
+          ? _direccion.vchNombre.length >= 1
+            ? true
+            : false
+          : false,
       flgFacturacion: _direccion.flgFacturacion,
       flgMismoRecepciona: _direccion.flgMismoRecepciona,
       vchrAlias: _direccion.vchrAlias,
@@ -1076,10 +1101,9 @@ export default function RegistrarCliente(props) {
     };
     if (accion === CRUD.UPDATE) {
       /*Request de provincia */
-      let _chrCodigoDepartamento = _direccion.departamento.chrCodigoDepartamento;
-      let rowProvincia = await handleObtenerProvincia(
-        _chrCodigoDepartamento
-      );
+      let _chrCodigoDepartamento =
+        _direccion.departamento.chrCodigoDepartamento;
+      let rowProvincia = await handleObtenerProvincia(_chrCodigoDepartamento);
       /*Request de distrito */
       let _chrCodigoProvincia = _direccion.provincia.chrCodigoProvincia;
       let rowDistrito = await handleObtenerDistrito({
@@ -1091,7 +1115,7 @@ export default function RegistrarCliente(props) {
         chrCodigoDepartamento: { mensaje: "", isValidado: false },
         chrCodigoProvincia: { mensaje: "", isValidado: false },
         chrCodigoDistrito: { mensaje: "", isValidado: false },
-        vchDireccion: { mensaje: "", isValidado: false }
+        vchDireccion: { mensaje: "", isValidado: false },
       };
       console.log(direccion);
       dispatch({
@@ -1100,7 +1124,7 @@ export default function RegistrarCliente(props) {
         direccion: direccion,
         lstProvinciaD: rowProvincia,
         lstDistritoD: rowDistrito,
-        error: _error
+        error: _error,
       });
     }
     if (accion === CRUD.DELETE) {
@@ -1120,7 +1144,6 @@ export default function RegistrarCliente(props) {
     const valError = await handleValidarFormDireccion(state);
 
     if (valError.isValido) {
-
       let rowDireccion = [];
       let rowDireccionTmp = [];
       let rowDireccionData = [];
@@ -1129,52 +1152,60 @@ export default function RegistrarCliente(props) {
       let count = 0;
       for (let j = 0; j < state.lstDireccionData.length; j++) {
         const element = state.lstDireccionData[j];
-        if (element.accion === CRUD.INSERT || element.accion === CRUD.UPDATE || element.accion === CRUD.SELECT) {
+        if (
+          element.accion === CRUD.INSERT ||
+          element.accion === CRUD.UPDATE ||
+          element.accion === CRUD.SELECT
+        ) {
           if (element.vchrAlias === tipoDireccion.FACTURACION) {
             count = count + 1;
           }
         }
       }
-      console.log("--->"+count);
+      console.log("--->" + count);
       if (state.direccion.accion !== CRUD.UPDATE) {
         if (count === 0) {
           state.direccion.vchrAlias = tipoDireccion.FACTURACION;
-          state.direccion.flgFacturacion = '1';
+          state.direccion.flgFacturacion = "1";
           state.direccion.flgPredeterminado = true;
         } else {
           state.direccion.vchrAlias = tipoDireccion.DESPACHO;
-          state.direccion.flgFacturacion = '0';
+          state.direccion.flgFacturacion = "0";
         }
       }
       let _direccionTemp;
       let nsecuenciaDespacho = 0;
       let nsecuenciaFacturacion = 0;
-     
+
       for (let j = 0; j < state.lstDireccionData.length; j++) {
         const element = state.lstDireccionData[j];
         console.log(element);
-        if (element.indice === state.direccion.indice
-          && state.direccion.accion === CRUD.UPDATE) {
+        if (
+          element.indice === state.direccion.indice &&
+          state.direccion.accion === CRUD.UPDATE
+        ) {
           _direccionTemp = state.direccion;
           rowDireccionData.push(_direccionTemp);
           rowDireccionTmp.push(_direccionTemp);
-          console.log('update');
+          console.log("update");
         } else {
           if (state.direccion.flgPredeterminado === true) {
             element.flgPredeterminado = false;
           }
           rowDireccionData.push(element);
-          if (element.accion === CRUD.INSERT || element.accion === CRUD.UPDATE || element.accion === CRUD.SELECT) {
+          if (
+            element.accion === CRUD.INSERT ||
+            element.accion === CRUD.UPDATE ||
+            element.accion === CRUD.SELECT
+          ) {
             rowDireccionTmp.push(element);
           }
-        
         }
-        index = index+1;
-      
+        index = index + 1;
       }
-      console.log(state)
-      console.log("Size:"+ state.lstDireccionData.length)
-      console.log("INDICDE:"+index)
+      console.log(state);
+      console.log("Size:" + state.lstDireccionData.length);
+      console.log("INDICDE:" + index);
       if (state.direccion.accion === CRUD.INSERT) {
         state.direccion.indice = index + 1;
         rowDireccionData.push(state.direccion);
@@ -1193,28 +1224,37 @@ export default function RegistrarCliente(props) {
           nsecuenciaDespacho = nsecuenciaDespacho + 1;
           _direccion.nsecuencia = nsecuenciaDespacho;
         }
-        rowDireccion.push(<CardDireccion key={j} direccion={_direccion}
-          handleEventShow={handleEventShowModalDireccion}></CardDireccion>);
+        rowDireccion.push(
+          <CardDireccion
+            key={j}
+            direccion={_direccion}
+            handleEventShow={handleEventShowModalDireccion}
+          ></CardDireccion>
+        );
       }
       dispatch({
-        type: actionType.DIRECCION_GUARDAR, showDireccion: false,
+        type: actionType.DIRECCION_GUARDAR,
+        showDireccion: false,
         lstDireccion: rowDireccion,
-        lstDireccionData: rowDireccionData
+        lstDireccionData: rowDireccionData,
       });
     } else {
       dispatch({
         type: actionType.DIRECCION_ERROR,
-        error: valError
+        error: valError,
       });
     }
-
   }
 
   async function handleEventShowModalAgregarDireccion() {
-    let _flgFacturacion= false;
+    let _flgFacturacion = false;
     for (let j = 0; j < state.lstDireccionData.length; j++) {
       const element = state.lstDireccionData[j];
-      if (element.accion === CRUD.INSERT || element.accion === CRUD.UPDATE || element.accion === CRUD.SELECT) {
+      if (
+        element.accion === CRUD.INSERT ||
+        element.accion === CRUD.UPDATE ||
+        element.accion === CRUD.SELECT
+      ) {
         if (element.vchrAlias === tipoDireccion.FACTURACION) {
           _flgFacturacion = true;
           break;
@@ -1232,10 +1272,13 @@ export default function RegistrarCliente(props) {
       chrCodigoUbigeo: "",
       vchTelefono: "",
       flgRegistro: "",
-      flgPredeterminado: (_flgFacturacion===false?true:false),
+      flgPredeterminado: _flgFacturacion === false ? true : false,
       flgDespacho: false,
       flgMismoRecepciona: false,
-      vchrAlias: (_flgFacturacion===false?tipoDireccion.FACTURACION:tipoDireccion.DESPACHO),
+      vchrAlias:
+        _flgFacturacion === false
+          ? tipoDireccion.FACTURACION
+          : tipoDireccion.DESPACHO,
       numTipoDocumento: 0,
       vchDocumento: "",
       departamento: {
@@ -1269,23 +1312,21 @@ export default function RegistrarCliente(props) {
       chrCodigoDepartamento: { mensaje: "", isValidado: false },
       chrCodigoProvincia: { mensaje: "", isValidado: false },
       chrCodigoDistrito: { mensaje: "", isValidado: false },
-      vchDireccion: { mensaje: "", isValidado: false }
+      vchDireccion: { mensaje: "", isValidado: false },
     };
-    let rowProvincia = await handleObtenerProvincia(
-      "15"
-    );
+    let rowProvincia = await handleObtenerProvincia("15");
     let rowDistrito = await handleObtenerDistrito({
       chrCodigoDepartamento: "15",
       chrCodigoProvincia: "01",
     });
     dispatch({
-      type: actionType.MODAL_SHOW_DIRECCION, showDireccion: true,
+      type: actionType.MODAL_SHOW_DIRECCION,
+      showDireccion: true,
       direccion: _tmpdireccion,
       lstProvinciaD: rowProvincia,
       lstDistritoD: rowDistrito,
-      error: _error
+      error: _error,
     });
-
   }
   async function handleEventModalConfirmarEliminacion() {
     let rowDireccion = [];
@@ -1298,7 +1339,11 @@ export default function RegistrarCliente(props) {
       const element = state.lstDireccionData[j];
 
       if (element.indice !== state.direccion.indice) {
-        if (element.accion === CRUD.INSERT || element.accion === CRUD.UPDATE || element.accion === CRUD.SELECT) {
+        if (
+          element.accion === CRUD.INSERT ||
+          element.accion === CRUD.UPDATE ||
+          element.accion === CRUD.SELECT
+        ) {
           index = index + 1;
           element.indice = index;
           if (element.vchrAlias === tipoDireccion.FACTURACION) {
@@ -1310,11 +1355,13 @@ export default function RegistrarCliente(props) {
             element.nsecuencia = nsecuenciaDespacho;
           }
           rowDireccion.push(
-            <CardDireccion direccion={element} key={j}
-              handleEventShow={handleEventShowModalDireccion}></CardDireccion>
+            <CardDireccion
+              direccion={element}
+              key={j}
+              handleEventShow={handleEventShowModalDireccion}
+            ></CardDireccion>
           );
         }
-
       } else {
         index = index + 1;
         element.indice = index;
@@ -1325,11 +1372,11 @@ export default function RegistrarCliente(props) {
       rowDireccionData.push(element);
     }
 
-
     dispatch({
-      type: actionType.DIRECCION_GUARDAR, showDireccion: false,
+      type: actionType.DIRECCION_GUARDAR,
+      showDireccion: false,
       lstDireccion: rowDireccion,
-      lstDireccionData: rowDireccionData
+      lstDireccionData: rowDireccionData,
     });
     dispatchModal({
       type: actionTypeModal.SHOW_MODAL,
@@ -1347,62 +1394,73 @@ export default function RegistrarCliente(props) {
       title: "",
     });
   }
-  function handleEventCheckChange(value){
+  function handleEventCheckChange(value) {
     dispatch({
       type: actionType.flgDespacho_DIRECCION,
       flgDespacho: value,
-    })
+    });
     dispatch({
       type: actionType.flgMismoRecepciona_DIRECCION,
       flgMismoRecepciona: false,
       numTipoDocumento: TipoDocumento.DEFAULT.numtipocliente,
       vchDocumento: "",
       vchNombre: "",
-      vchApellido: ""
+      vchApellido: "",
+      vchTelefono: "",
     });
   }
   function handleEventMismoRecepciona(value) {
     console.log(state);
 
-    if ( value === true) {
-      console.log('OK');
+    if (value === true) {
       dispatch({
         type: actionType.flgMismoRecepciona_DIRECCION,
         flgMismoRecepciona: value,
         numTipoDocumento: state.numTipoCliente,
         vchDocumento: state.vchDocumento,
-        vchNombre: state.vchApellidoPaterno + " " + state.vchApellidoMaterno +" "+ state.vchNombre,
-        vchApellido: ""
+        vchNombre:
+          state.vchApellidoPaterno +
+          " " +
+          state.vchApellidoMaterno +
+          " " +
+          state.vchNombre,
+        vchApellido: "",
+        vchTelefono: state.vchTelefonoMovil,
       });
     } else {
-      console.log('No_OK');
       dispatch({
         type: actionType.flgMismoRecepciona_DIRECCION,
         flgMismoRecepciona: value,
         numTipoDocumento: TipoDocumento.DEFAULT.numtipocliente,
         vchDocumento: "",
         vchNombre: "",
-        vchApellido: ""
+        vchApellido: "",
+        vchTelefono: "",
       });
     }
-
   }
   function handleEventChangePassword(_value) {
-
     dispatch({
       type: actionType.chrPassword,
       chrPassword: _value,
-      statusPassword: zxcvbn(_value).score
-    })
+      statusPassword: zxcvbn(_value).score,
+    });
   }
   function handleOnKeyDownNumeros(e) {
     if (e.keyCode === 8) {
-      console.log(e.keyCode);
+      /* */
     } else {
       if (e.keyCode < "48" || e.keyCode > "57") {
         e.preventDefault();
       }
     }
+  }
+  function handleEnventShowInputSecret(_typeValue) {
+    dispatch({
+      type: actionType.setType,
+      _type:
+        _typeValue === _type.typePassword ? _type.typeText : _type.typePassword,
+    });
   }
   return (
     <div className="registrar-cliente">
@@ -1438,7 +1496,6 @@ export default function RegistrarCliente(props) {
       )}
 
       <div className="form-body-cliente">
-
         {state.accion === CRUD.INSERT ? (
           <div className="row-body-registro-row">
             ¿Ya tiene una cuenta?{" "}
@@ -1453,276 +1510,456 @@ export default function RegistrarCliente(props) {
         )}
         <div className="form-body-cliente-content">
           <div className="row-body-form">
-     
-          <div className="row-body">
-            <div className="row-body-registro-row" >
-      
-              <label htmlFor="numTipoCliente" className="label-registro">Documento</label>
-              <select
-                className={`form-control form-select imput-registro-width ${state.error.numTipoCliente.isValidado ? 'imput-registro-error' : ''}`}
-                name="numTipoCliente"
-                disabled={state.accion === CRUD.UPDATE ? true : false}
-                value={state.numTipoCliente}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.numTipoCliente,
-                    numTipoCliente: e.target.value,
-                  })
-                }
-              >
-                <option value={TipoDocumento.DEFAULT.numtipocliente}>
-                  {TipoDocumento.DEFAULT.vchdescripcion}
-                </option>
-                <option value={TipoDocumento.DNI.numtipocliente}>
-                  {TipoDocumento.DNI.vchdescripcion}
-                </option>
-                <option value={TipoDocumento.RUC.numtipocliente}>
-                  {TipoDocumento.RUC.vchdescripcion}
-                </option>
-                <option value={TipoDocumento.CARNET_EXT.numtipocliente}>
-                  {TipoDocumento.CARNET_EXT.vchdescripcion}
-                </option>
-                <option value={TipoDocumento.PASAPORTE.numtipocliente}>
-                  {TipoDocumento.PASAPORTE.vchdescripcion}
-                </option>
-              </select>
-            </div>
-            <div className="row-body-registro-row" >
-              <label htmlFor="numTipoCliente" className="label-registro"></label>
-              <input
-                type="text"
-                name="vchDocumento"
-                className={`form-control imput-registro-width ${state.error.vchDocumento.isValidado ? 'imput-registro-error' : ''}`}
-                autoComplete="false"
-                autoSave="false"
-                disabled={state.accion === CRUD.UPDATE ? true : false}
-                value={state.vchDocumento}
-                onKeyDown={handleOnKeyDownNumeros}
-                maxLength={15}
-                placeholder={state.error.vchDocumento.isValidado ? state.error.vchDocumento.mensaje : ""}
-                title={state.error.vchDocumento.isValidado ? state.error.vchDocumento.mensaje : ""}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.vchDocumento,
-                    vchDocumento: e.target.value,
-                  })
-                }
-              ></input></div>
-
-
-          
-          {parseInt(state.numTipoCliente) === TipoDocumento.RUC.numtipocliente ? (
-            
-              <div className="row-body-registro-row" >
-                <label htmlFor="vchNombreCompleto" className="label-registro">Razón Social</label>
+            <div className="row-body">
+              <div className="row-body-registro-row">
+                <label htmlFor="numTipoCliente" className="label-registro">
+                  Documento
+                </label>
+                <select
+                  className={`form-control form-select imput-registro-width   ${
+                    state.error.numTipoCliente.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  name="numTipoCliente"
+                  disabled={state.accion === CRUD.UPDATE ? true : false}
+                  value={state.numTipoCliente}
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.numTipoCliente,
+                      numTipoCliente: e.target.value,
+                    });
+                    e.target.className =
+                      "form-control form-select imput-registro-width";
+                  }}
+                >
+                  <option value={TipoDocumento.DEFAULT.numtipocliente}>
+                    {TipoDocumento.DEFAULT.vchdescripcion}
+                  </option>
+                  <option value={TipoDocumento.DNI.numtipocliente}>
+                    {TipoDocumento.DNI.vchdescripcion}
+                  </option>
+                  <option value={TipoDocumento.RUC.numtipocliente}>
+                    {TipoDocumento.RUC.vchdescripcion}
+                  </option>
+                  <option value={TipoDocumento.CARNET_EXT.numtipocliente}>
+                    {TipoDocumento.CARNET_EXT.vchdescripcion}
+                  </option>
+                  <option value={TipoDocumento.PASAPORTE.numtipocliente}>
+                    {TipoDocumento.PASAPORTE.vchdescripcion}
+                  </option>
+                </select>
+                <div className="requerido"></div>
+              </div>
+              <div className="row-body-registro-row">
+                <label
+                  htmlFor="numTipoCliente"
+                  className="label-registro"
+                ></label>
                 <input
                   type="text"
-                  name="vchNombreCompleto"
-                  className={`form-control imput-registro-width ${state.error.vchNombreCompleto.isValidado ? 'imput-registro-error' : ''}`}
+                  name="vchDocumento"
+                  className={`form-control imput-registro-width ${
+                    state.error.vchDocumento.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
                   autoComplete="false"
                   autoSave="false"
-                  maxLength={255}
-                  value={state.vchNombreCompleto}
-                  placeholder={state.error.vchNombreCompleto.isValidado ? state.error.vchNombreCompleto.mensaje : ""}
-                  title={state.error.vchNombreCompleto.isValidado ? state.error.vchNombreCompleto.mensaje : ""}
+                  disabled={state.accion === CRUD.UPDATE ? true : false}
+                  value={state.vchDocumento}
+                  onKeyDown={handleOnKeyDownNumeros}
+                  maxLength={15}
+                  placeholder={
+                    state.error.vchDocumento.isValidado
+                      ? state.error.vchDocumento.mensaje
+                      : ""
+                  }
+                  title={
+                    state.error.vchDocumento.isValidado
+                      ? state.error.vchDocumento.mensaje
+                      : ""
+                  }
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.vchDocumento,
+                      vchDocumento: e.target.value,
+                    });
+                    e.target.className = "form-control imput-registro-width";
+                  }}
+                ></input>
+                <div className="requerido"></div>
+              </div>
+
+              {parseInt(state.numTipoCliente) ===
+              TipoDocumento.RUC.numtipocliente ? (
+                <div className="row-body-registro-row">
+                  <label htmlFor="vchNombreCompleto" className="label-registro">
+                    Razón Social
+                  </label>
+                  <input
+                    type="text"
+                    name="vchNombreCompleto"
+                    className={`form-control imput-registro-width  ${
+                      state.error.vchNombreCompleto.isValidado
+                        ? "imput-registro-error"
+                        : ""
+                    }`}
+                    autoComplete="false"
+                    autoSave="false"
+                    maxLength={255}
+                    value={state.vchNombreCompleto}
+                    placeholder={
+                      state.error.vchNombreCompleto.isValidado
+                        ? state.error.vchNombreCompleto.mensaje
+                        : ""
+                    }
+                    title={
+                      state.error.vchNombreCompleto.isValidado
+                        ? state.error.vchNombreCompleto.mensaje
+                        : ""
+                    }
+                    onChange={(e) => {
+                      dispatch({
+                        type: actionType.vchNombreCompleto,
+                        vchNombreCompleto: e.target.value,
+                      });
+                      e.target.className = "form-control imput-registro-width";
+                    }}
+                  ></input>
+                  <div className="requerido"></div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="row-body">
+              <div className="row-body-registro-row">
+                <label htmlFor="vchNombre" className="label-registro">
+                  Nombres
+                </label>
+                <input
+                  type="text"
+                  name="vchNombre"
+                  className={`form-control imput-registro-width ${
+                    state.error.vchNombre.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  autoComplete="false"
+                  autoSave="false"
+                  maxLength={128}
+                  value={state.vchNombre}
+                  placeholder={
+                    state.error.vchNombre.isValidado
+                      ? state.error.vchNombre.mensaje
+                      : ""
+                  }
+                  title={
+                    state.error.vchNombre.isValidado
+                      ? state.error.vchNombre.mensaje
+                      : ""
+                  }
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.vchNombre,
+                      vchNombre: e.target.value,
+                    });
+                    e.target.className = "form-control imput-registro-width";
+                  }}
+                ></input>
+                <div className="requerido"></div>
+              </div>
+
+              <div className="row-body-registro-row">
+                <label
+                  htmlFor="vchApellidoPaterno"
+                  className="label-registro label-flex"
+                >
+                  <label className="row-label-flex row-label-flex-left">
+                    Apellidos:
+                  </label>
+                  <label className="row-label-flex row-label-flex-left">
+                    Paterno&nbsp;&nbsp;
+                  </label>
+                </label>
+                <input
+                  type="text"
+                  name="vchApellidoPaterno"
+                  className={`form-control imput-registro-width ${
+                    state.error.vchApellidoPaterno.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  autoComplete="false"
+                  autoSave="false"
+                  maxLength={128}
+                  value={state.vchApellidoPaterno}
+                  placeholder={
+                    state.error.vchApellidoPaterno.isValidado
+                      ? state.error.vchApellidoPaterno.mensaje
+                      : ""
+                  }
+                  title={
+                    state.error.vchApellidoPaterno.isValidado
+                      ? state.error.vchApellidoPaterno.mensaje
+                      : ""
+                  }
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.vchApellidoPaterno,
+                      vchApellidoPaterno: e.target.value,
+                    });
+                    e.target.className = "form-control imput-registro-width";
+                  }}
+                ></input>
+                <div className="requerido"></div>
+              </div>
+              <div className="row-body-registro-row">
+                <label
+                  htmlFor="vchApellidoMaterno"
+                  className="label-registro label-flex"
+                >
+                  <label className="row-label-flex row-label-flex-left"></label>
+                  <label className="row-label-flex row-label-flex-left">
+                    Materno&nbsp;&nbsp;
+                  </label>
+                </label>
+                <input
+                  type="text"
+                  name="vchApellidoMaterno"
+                  className={`form-control imput-registro-width ${
+                    state.error.vchApellidoMaterno.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  autoComplete="false"
+                  autoSave="false"
+                  maxLength={128}
+                  value={state.vchApellidoMaterno}
+                  placeholder={
+                    state.error.vchApellidoMaterno.isValidado
+                      ? state.error.vchApellidoMaterno.mensaje
+                      : ""
+                  }
+                  title={
+                    state.error.vchApellidoMaterno.isValidado
+                      ? state.error.vchApellidoMaterno.mensaje
+                      : ""
+                  }
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.vchApellidoMaterno,
+                      vchApellidoMaterno: e.target.value,
+                    });
+                    e.target.className = "form-control imput-registro-width";
+                  }}
+                ></input>
+                <div className="requerido"></div>
+              </div>
+            </div>
+            <div className="row-body">
+              <div className="row-body-registro-row">
+                <label
+                  htmlFor="vchApellidoPaterno"
+                  className="label-registro label-flex"
+                >
+                  <label className="row-label-flex row-label-flex-left">
+                    Telefonos:
+                  </label>
+                  <label className="row-label-flex  row-label-flex-left">
+                    Movil
+                  </label>
+                </label>
+                <input
+                  type="text"
+                  name="vchTelefonoMovil"
+                  className={`form-control imput-registro-width ${
+                    state.error.vchTelefonoMovil.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  autoComplete="false"
+                  autoSave="false"
+                  maxLength={20}
+                  value={state.vchTelefonoMovil}
+                  placeholder={
+                    state.error.vchTelefonoMovil.isValidado
+                      ? state.error.vchTelefonoMovil.mensaje
+                      : ""
+                  }
+                  title={
+                    state.error.vchTelefonoMovil.isValidado
+                      ? state.error.vchTelefonoMovil.mensaje
+                      : ""
+                  }
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.vchTelefonoMovil,
+                      vchTelefonoMovil: e.target.value,
+                    });
+                    e.target.className = "form-control imput-registro-width";
+                  }}
+                ></input>
+                <div className="requerido"></div>
+              </div>
+              <div className="row-body-registro-row">
+                <label
+                  htmlFor="vchTelefonoFijo"
+                  className="label-registro label-flex"
+                >
+                  <label className="row-label-flex row-label-flex-left"></label>
+                  <label className="row-label-flex  row-label-flex-left">
+                    Fijo
+                  </label>
+                </label>
+                <input
+                  type="text"
+                  name="vchTelefonoFijo"
+                  className={`form-control imput-registro-width ${
+                    state.error.vchTelefonoFijo.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  autoComplete="false"
+                  autoSave="false"
+                  maxLength={20}
+                  value={state.vchTelefonoFijo}
+                  placeholder={
+                    state.error.vchTelefonoFijo.isValidado
+                      ? state.error.vchTelefonoFijo.mensaje
+                      : ""
+                  }
+                  title={
+                    state.error.vchTelefonoFijo.isValidado
+                      ? state.error.vchTelefonoFijo.mensaje
+                      : ""
+                  }
                   onChange={(e) =>
                     dispatch({
-                      type: actionType.vchNombreCompleto,
-                      vchNombreCompleto: e.target.value,
+                      type: actionType.vchTelefonoFijo,
+                      vchTelefonoFijo: e.target.value,
                     })
                   }
-                ></input></div>
-            
-          ) : (
-            ""
-          )}</div>
-          <div className="row-body">
-            <div className="row-body-registro-row" >
-              <label htmlFor="vchNombre" className="label-registro">Nombres</label>
-              <input
-                type="text"
-                name="vchNombre"
-                className={`form-control imput-registro-width ${state.error.vchNombre.isValidado ? 'imput-registro-error' : ''}`}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={128}
-                value={state.vchNombre}
-                placeholder={state.error.vchNombre.isValidado ? state.error.vchNombre.mensaje : ""}
-                title={state.error.vchNombre.isValidado ? state.error.vchNombre.mensaje : ""}
-
-                onChange={(e) =>
-
-                  dispatch({
-                    type: actionType.vchNombre,
-                    vchNombre: e.target.value,
-                  })
-
-                }
-              ></input></div>
-          
-            <div className="row-body-registro-row" >
-              <label htmlFor="vchApellidoPaterno" className="label-registro label-flex">
-                <label className="row-label-flex row-label-flex-left">Apellidos:</label>
-                <label className="row-label-flex row-label-flex-left">Paterno&nbsp;&nbsp;</label>
-              </label>
-              <input
-                type="text"
-                name="vchApellidoPaterno"
-                className={`form-control imput-registro-width ${state.error.vchApellidoPaterno.isValidado ? 'imput-registro-error' : ''}`}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={128}
-                value={state.vchApellidoPaterno}
-                placeholder={state.error.vchApellidoPaterno.isValidado ? state.error.vchApellidoPaterno.mensaje : ""}
-                title={state.error.vchApellidoPaterno.isValidado ? state.error.vchApellidoPaterno.mensaje : ""}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.vchApellidoPaterno,
-                    vchApellidoPaterno: e.target.value,
-                  })
-                }
-              ></input></div>
-            <div className="row-body-registro-row" >
-            
-              <label htmlFor="vchApellidoMaterno" className="label-registro label-flex">
-                <label className="row-label-flex row-label-flex-left"></label>
-                <label className="row-label-flex row-label-flex-left">Materno&nbsp;&nbsp;</label>
-              </label>
-              <input
-                type="text"
-                name="vchApellidoMaterno"
-                className={`form-control imput-registro-width ${state.error.vchApellidoMaterno.isValidado ? 'imput-registro-error' : ''}`}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={128}
-                value={state.vchApellidoMaterno}
-                placeholder={state.error.vchApellidoMaterno.isValidado ? state.error.vchApellidoMaterno.mensaje : ""}
-                title={state.error.vchApellidoMaterno.isValidado ? state.error.vchApellidoMaterno.mensaje : ""}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.vchApellidoMaterno,
-                    vchApellidoMaterno: e.target.value,
-                  })
-                }
-              ></input>
-
-            </div>
-          </div>
-          <div className="row-body">
-            <div className="row-body-registro-row" >
-
-              <label htmlFor="vchApellidoPaterno" className="label-registro label-flex">
-                <label className="row-label-flex row-label-flex-left">Telefonos:</label>
-                <label className="row-label-flex  row-label-flex-left">Movil</label>
-              </label>
-              <input
-                type="text"
-                name="vchTelefonoMovil"
-                className={`form-control imput-registro-width ${state.error.vchTelefonoMovil.isValidado ? 'imput-registro-error' : ''}`}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={20}
-                value={state.vchTelefonoMovil}
-                placeholder={state.error.vchTelefonoMovil.isValidado ? state.error.vchTelefonoMovil.mensaje : ""}
-                title={state.error.vchTelefonoMovil.isValidado ? state.error.vchTelefonoMovil.mensaje : ""}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.vchTelefonoMovil,
-                    vchTelefonoMovil: e.target.value,
-                  })
-                }
-              ></input>
-            </div>
-            <div className="row-body-registro-row" >
-            <label htmlFor="vchTelefonoFijo" className="label-registro label-flex">
-                <label className="row-label-flex row-label-flex-left"></label>
-                <label className="row-label-flex  row-label-flex-left">Fijo</label>
-              </label>
-              <input
-                type="text"
-                name="vchTelefonoFijo"
-                className={`form-control imput-registro-width ${state.error.vchTelefonoFijo.isValidado ? 'imput-registro-error' : ''}`}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={20}
-                value={state.vchTelefonoFijo}
-                placeholder={state.error.vchTelefonoFijo.isValidado ? state.error.vchTelefonoFijo.mensaje : ""}
-                title={state.error.vchTelefonoFijo.isValidado ? state.error.vchTelefonoFijo.mensaje : ""}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.vchTelefonoFijo,
-                    vchTelefonoFijo: e.target.value,
-                  })
-                }
-              ></input>
-            </div>
-
-          </div>
-          <div className="row-body">
-            <div className="row-body-registro-row" >
-              <label htmlFor="chrEmail" className="label-registro">Correo electrónico</label>
-              <input
-                type="text"
-                name="chrEmail"
-                className={`form-control imput-registro-width ${state.error.chrEmail.isValidado ? 'imput-registro-error' : ''}`}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={128}
-                disabled={state.accion === CRUD.UPDATE ? true : false}
-                value={state.chrEmail}
-                placeholder={state.error.chrEmail.isValidado ? state.error.chrEmail.mensaje : ""}
-                title={state.error.chrEmail.isValidado ? state.error.chrEmail.mensaje : ""}
-                onChange={(e) =>
-                  dispatch({ type: actionType.chrEmail, chrEmail: e.target.value })
-                }
-              ></input>
-            </div>
-          </div>
-
-          <div className="row-body">
-            <div className="row-body-registro-row" >
-              <label htmlFor="chrPassword" className="label-registro">Contraseña</label>
-              <div className="progres-container">
-                <input
-                  type="password"
-                  className={`form-control imput-registro-width ${state.error.chrPassword.isValidado ? 'imput-registro-error' : ''}`}
-                  name="chrPassword"
-                  autoComplete="false"
-                  autoSave="false"
-                  maxLength={50}
-                  value={state.chrPassword}
-                  placeholder={state.error.chrPassword.isValidado ? state.error.chrPassword.mensaje : ""}
-                  title={state.error.chrPassword.isValidado ? state.error.chrPassword.mensaje : ""}
-                  onChange={(e) => handleEventChangePassword(e.target.value)}
                 ></input>
-                <div className={`progres-ui progres-ui-level${state.statusPassword}`}> </div>
+              </div>
+            </div>
+            <div className="row-body">
+              <div className="row-body-registro-row">
+                <label htmlFor="chrEmail" className="label-registro">
+                  Correo electrónico
+                </label>
+                <input
+                  type="text"
+                  name="chrEmail"
+                  className={`form-control imput-registro-width ${
+                    state.error.chrEmail.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  autoComplete="off"
+                  autoSave="false"
+                  maxLength={128}
+                  disabled={state.accion === CRUD.UPDATE ? true : false}
+                  value={state.chrEmail}
+                  placeholder={
+                    state.error.chrEmail.isValidado
+                      ? state.error.chrEmail.mensaje
+                      : ""
+                  }
+                  title={
+                    state.error.chrEmail.isValidado
+                      ? state.error.chrEmail.mensaje
+                      : ""
+                  }
+                  onChange={(e) =>
+                    dispatch({
+                      type: actionType.chrEmail,
+                      chrEmail: e.target.value,
+                    })
+                  }
+                ></input>
+                <div className="requerido"></div>
+              </div>
+            </div>
 
+            <div className="row-body">
+              <div className="row-body-registro-row">
+                <label htmlFor="chrPassword" className="label-registro">
+                  Contraseña
+                </label>
+                <div className="progres-container">
+                  <div className="row-body-registro-row-secret">
+                    <input
+                      type={state._type}
+                      className={`form-control imput-registro-width ${
+                        state.error.chrPassword.isValidado
+                          ? "imput-registro-error"
+                          : ""
+                      }`}
+                      name="chrPassword"
+                      autoComplete="off"
+                      autoSave="false"
+                      maxLength={50}
+                      value={state.chrPassword}
+                      placeholder={
+                        state.error.chrPassword.isValidado
+                          ? state.error.chrPassword.mensaje
+                          : ""
+                      }
+                      title={
+                        state.error.chrPassword.isValidado
+                          ? state.error.chrPassword.mensaje
+                          : ""
+                      }
+                      onChange={(e) =>
+                        handleEventChangePassword(e.target.value)
+                      }
+                    ></input>
+                    <button
+                      onClick={(e) => handleEnventShowInputSecret(state._type)}
+                      className={`btn btn-primary fa fa-eye ${
+                        state._type === _type.typePassword
+                          ? "secret-inactive"
+                          : "secret-active"
+                      }`}
+                    ></button>
+                    <div className="requerido"></div>
+                  </div>
+                  <div
+                    className={`progres-ui progres-ui-level${state.statusPassword}`}
+                  >
+                    {" "}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="action-cliente">
+              <div className="action-row">
+                <label htmlFor="chrDirecciones">Mis direcciones</label>
+                <div className="action-cliente-button">
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleEventShowModalAgregarDireccion}
+                  >
+                    <i className="fa fa-address-card-o"></i>Agregar
+                  </button>
+
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleEventRegistrar}
+                  >
+                    <i className="fa fa-save "></i>
+                    {state.estado}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          <div className="action-cliente">
-            <div className="action-row" >
-              <label htmlFor="chrDirecciones">Mis direcciones</label>
-              <div className="action-cliente-button">
-                <button className="btn btn-primary" onClick={handleEventShowModalAgregarDireccion}>
-                  <i className="fa fa-address-card-o"></i>Agregar
-                </button>
-
-                <button className="btn btn-primary" onClick={handleEventRegistrar}>
-                  <i className="fa fa-save "></i>{state.estado}
-                </button>
-              </div>
-            </div>
-          </div>
-          </div>
-          <div className="row-body-lista">
-            {state.lstDireccion}
-          </div>
-          </div>
+          <div className="row-body-lista">{state.lstDireccion}</div>
+        </div>
       </div>
 
-
-       
       <ServerException server={state.server}></ServerException>
 
       <Modal
@@ -1731,100 +1968,163 @@ export default function RegistrarCliente(props) {
         size="xl"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-
       >
-        <Modal.Header closeButton onHide={() => dispatch({ type: actionType.MODAL_SHOW, showDireccion: false })} >
-          <Modal.Title id="contained-modal-title-vcenter"  >
+        <Modal.Header
+          closeButton
+          onHide={() =>
+            dispatch({ type: actionType.MODAL_SHOW, showDireccion: false })
+          }
+        >
+          <Modal.Title id="contained-modal-title-vcenter">
             {state.direccion.accion.codigoCrud === CRUD.UPDATE.codigoCrud
-              ? state.direccion.flgPredeterminado===false ?'Actualizar Dirección  Despacho': 'Actualizar Dirección Facturación'
-              : state.direccion.flgPredeterminado===false ?'Registrar Dirección  Despacho':  'Registrar Dirección Facturación'}<span className="modal-title-span">&nbsp;(Si su domicilio de facturación es igual al domicilio de despacho,no necesita llenar mas datos)</span>
-
+              ? state.direccion.flgPredeterminado === false
+                ? "Actualizar Dirección  Despacho"
+                : "Actualizar Dirección Facturación"
+              : state.direccion.flgPredeterminado === false
+              ? "Registrar Dirección  Despacho"
+              : "Registrar Dirección Facturación"}
+            <span className="modal-title-span">
+              &nbsp;(Si su domicilio de facturación es igual al domicilio de
+              despacho,no necesita llenar mas datos)
+            </span>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
           <div className="form-row-direccion">
-            <label htmlFor="vchDireccion">Dirección {state.direccion.flgPredeterminado===true ?' Facturación': ' Despacho'}</label>
+            <label htmlFor="vchDireccion">
+              Dirección{" "}
+              {state.direccion.flgPredeterminado === true
+                ? " Facturación"
+                : " Despacho"}
+            </label>
             <input
               type="text"
               name="vchDireccion"
-              className={`form-control imput-registro-width-l ${state.direccion.error.vchDireccion.isValidado ? 'imput-registro-error' : ''}`}
-              placeholder={state.direccion.error.vchDireccion.isValidado ? state.direccion.error.vchDireccion.mensaje : ""}
-              title={state.direccion.error.vchDireccion.isValidado ? state.direccion.error.vchDireccion.mensaje : ""}
+              className={`form-control imput-registro-width-l ${
+                state.direccion.error.vchDireccion.isValidado
+                  ? "imput-registro-error"
+                  : ""
+              }`}
+              placeholder={
+                state.direccion.error.vchDireccion.isValidado
+                  ? state.direccion.error.vchDireccion.mensaje
+                  : ""
+              }
+              title={
+                state.direccion.error.vchDireccion.isValidado
+                  ? state.direccion.error.vchDireccion.mensaje
+                  : ""
+              }
               autoComplete="false"
               autoSave="false"
               maxLength={128}
               value={state.direccion.vchDireccion}
-              onChange={(e) =>
+              onChange={(e) => {
                 dispatch({
                   type: actionType.vchDireccion_DIRECCION,
                   vchDireccion: e.target.value,
-                })
-              }
+                });
+                e.target.className = "form-control imput-registro-width-l";
+              }}
             ></input>
           </div>
           <div className="form-row-direccion">
-            <label htmlFor="vchreferencia">Punto de Referencia(Cruce con Av. o calle,Iglesia y etc)</label>
+            <label htmlFor="vchreferencia">
+              Punto de Referencia(Cruce con Av. o calle,Iglesia y etc)
+            </label>
             <input
               type="text"
               name="vchreferencia"
-              className={`form-control imput-registro-width-l ${state.direccion.error.vchreferencia.isValidado ? 'imput-registro-error' : ''}`}
-              placeholder={state.direccion.error.vchreferencia.isValidado ? state.direccion.error.vchreferencia.mensaje : ""}
-              title={state.direccion.error.vchreferencia.isValidado ? state.direccion.error.vchreferencia.mensaje : ""}
+              className={`form-control imput-registro-width-l ${
+                state.direccion.error.vchreferencia.isValidado
+                  ? "imput-registro-error"
+                  : ""
+              }`}
+              placeholder={
+                state.direccion.error.vchreferencia.isValidado
+                  ? state.direccion.error.vchreferencia.mensaje
+                  : ""
+              }
+              title={
+                state.direccion.error.vchreferencia.isValidado
+                  ? state.direccion.error.vchreferencia.mensaje
+                  : ""
+              }
               autoComplete="false"
               autoSave="false"
               maxLength={128}
               value={state.direccion.vchreferencia}
-              onChange={(e) =>
+              onChange={(e) => {
                 dispatch({
                   type: actionType.vchreferencia_DIRECCION,
                   vchreferencia: e.target.value,
-                })
-              }
+                });
+                e.target.className = "form-control imput-registro-width-l";
+              }}
             ></input>
           </div>
 
           <div className="form-row-direccion">
             <label htmlFor="chrCodigoDepartamento">Departamento</label>
             <select
-              className={`form-control imput-registro-width-l ${state.direccion.error.chrCodigoDepartamento.isValidado ? 'imput-registro-error' : ''}`}
+              className={`form-control imput-registro-width-l ${
+                state.direccion.error.chrCodigoDepartamento.isValidado
+                  ? "imput-registro-error"
+                  : ""
+              }`}
               name="chrCodigoDepartamento"
               value={state.direccion.departamento.chrCodigoDepartamento}
-              onChange={handleEventChangeDepartamentoDirrecion}
+              onChange={(e) => {
+                handleEventChangeDepartamentoDirrecion(e);
+                e.target.className = "form-control imput-registro-width-l";
+              }}
             >
               <option value="00">-- por favor, seleccione --</option>
               {state.lstDepartamento}
             </select>
-
           </div>
           <div className="form-row-direccion">
             <label htmlFor="chrCodigoProvincia">Provincia</label>
             <select
-              className={`form-control imput-registro-width-l ${state.direccion.error.chrCodigoProvincia.isValidado ? 'imput-registro-error' : ''}`}
+              className={`form-control imput-registro-width-l ${
+                state.direccion.error.chrCodigoProvincia.isValidado
+                  ? "imput-registro-error"
+                  : ""
+              }`}
               name="chrCodigoProvincia"
               value={state.direccion.provincia.chrCodigoProvincia}
-              onChange={handleEventChangeProvinciaDireccion}
+              onChange={(e) => {
+                handleEventChangeProvinciaDireccion(e);
+                e.target.className = "form-control imput-registro-width-l";
+              }}
             >
               <option value="00">-- por favor, seleccione --</option>
               {state.lstProvinciaD}
             </select>
-
           </div>
           <div className="form-row-direccion">
             <label htmlFor="chrCodigoDistrito">Distrito</label>
             <select
-              className={`form-control imput-registro-width-l ${state.direccion.error.chrCodigoDistrito.isValidado ? 'imput-registro-error' : ''}`}
+              className={`form-control imput-registro-width-l ${
+                state.direccion.error.chrCodigoDistrito.isValidado
+                  ? "imput-registro-error"
+                  : ""
+              }`}
               name="chrCodigoDistrito"
               value={state.direccion.distrito.chrCodigoDistrito}
-              onChange={handleEventChangeDistritoDireccion}
+              onChange={(e) => {
+                handleEventChangeDistritoDireccion(e);
+                e.target.className = "form-control imput-registro-width-l";
+              }}
             >
               <option value="00">-- por favor, seleccione --</option>
               {state.lstDistritoD}
             </select>
-
           </div>
           <div className="form-row-direccion">
-            <label className="form-row-direccion-title">¿Datos de la persona que recepciona?</label>
+            <label className="form-row-direccion-title">
+              ¿Datos de la persona que recepciona?
+            </label>
             <input
               type="checkbox"
               name="flgDireccionDespacho"
@@ -1832,112 +2132,161 @@ export default function RegistrarCliente(props) {
               autoComplete="false"
               autoSave="false"
               checked={state.direccion.flgDespacho}
-              onChange={(e) =>handleEventCheckChange(e.target.checked)
-                
-              }
+              onChange={(e) => handleEventCheckChange(e.target.checked)}
             ></input>
-            {state.direccion.flgDespacho ? <>
-              <div className="form-row-option">
-                <label className="span-opcion" >¿Yo mismo voy a recepcionar?</label>
+            {state.direccion.flgDespacho ? (
+              <>
+                <div className="form-row-option">
+                  <label className="span-opcion">
+                    ¿Yo mismo voy a recepcionar?
+                  </label>
+                  <input
+                    type="checkbox"
+                    name="flgMismo"
+                    className="form-control span-opcion"
+                    autoComplete="false"
+                    autoSave="false"
+                    checked={state.direccion.flgMismoRecepciona}
+                    onChange={(e) =>
+                      handleEventMismoRecepciona(e.target.checked)
+                    }
+                  ></input>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+          </div>
+          {state.direccion.flgDespacho ? (
+            <>
+              <div className="form-row-direccion">
+                <label htmlFor="vchNombre">Documento de quien recepciona</label>
                 <input
-                  type="checkbox"
-                  name="flgMismo"
-                  className="form-control span-opcion"
+                  type="text"
+                  name="vchDocumento"
+                  className={`form-control imput-registro-width-l ${
+                    state.direccion.error.vchDocumento.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  placeholder={
+                    state.direccion.error.vchDocumento.isValidado
+                      ? state.direccion.error.vchDocumento.mensaje
+                      : ""
+                  }
+                  title={
+                    state.direccion.error.vchDocumento.isValidado
+                      ? state.direccion.error.vchDocumento.mensaje
+                      : ""
+                  }
                   autoComplete="false"
                   autoSave="false"
-                  checked={state.direccion.flgMismoRecepciona}
-                  onChange={(e) => handleEventMismoRecepciona(e.target.checked)}
+                  maxLength={30}
+                  onKeyDown={handleOnKeyDownNumeros}
+                  value={state.direccion.vchDocumento}
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.vchDocumento_DIRECCION,
+                      vchDocumento: e.target.value,
+                    });
+                    e.target.className = "form-control imput-registro-width-l";
+                  }}
                 ></input>
               </div>
-            </> : ""}
-          </div>
-          {state.direccion.flgDespacho ? <>
 
+              <div className="form-row-direccion">
+                <label htmlFor="vchNombre">
+                  Nombre y Apellidos de quien recepciona
+                </label>
+                <input
+                  type="text"
+                  name="vchNombre"
+                  className={`form-control imput-registro-width-l ${
+                    state.direccion.error.vchNombre.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  placeholder={
+                    state.direccion.error.vchNombre.isValidado
+                      ? state.direccion.error.vchNombre.mensaje
+                      : ""
+                  }
+                  title={
+                    state.direccion.error.vchNombre.isValidado
+                      ? state.direccion.error.vchNombre.mensaje
+                      : ""
+                  }
+                  autoComplete="false"
+                  autoSave="false"
+                  maxLength={128}
+                  value={state.direccion.vchNombre}
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.vchNombre_DIRECCION,
+                      vchNombre: e.target.value,
+                    });
+                    e.target.className = "form-control imput-registro-width-l";
+                  }}
+                ></input>
+              </div>
 
-
-            
-            <div className="form-row-direccion">
-              <label htmlFor="vchNombre">Documento de quien recepciona</label>
-              <input
-                type="text"
-                name="vchDocumento"
-                className={`form-control imput-registro-width-l ${state.direccion.error.vchDocumento.isValidado ? 'imput-registro-error' : ''}`}
-                placeholder={state.direccion.error.vchDocumento.isValidado ? state.direccion.error.vchDocumento.mensaje : ""}
-                title={state.direccion.error.vchDocumento.isValidado ? state.direccion.error.vchDocumento.mensaje : ""}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={30}
-                onKeyDown={handleOnKeyDownNumeros}                
-                value={state.direccion.vchDocumento}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.vchDocumento_DIRECCION,
-                    vchDocumento: e.target.value,
-                  })
-                }
-              ></input>
-
-            </div>
-
-            <div className="form-row-direccion">
-              <label htmlFor="vchNombre">Nombre y Apellidos de quien recepciona</label>
-              <input
-                type="text"
-                name="vchNombre"
-                className={`form-control imput-registro-width-l ${state.direccion.error.vchNombre.isValidado ? 'imput-registro-error' : ''}`}
-                placeholder={state.direccion.error.vchNombre.isValidado ? state.direccion.error.vchNombre.mensaje : ""}
-                title={state.direccion.error.vchNombre.isValidado ? state.direccion.error.vchNombre.mensaje : ""}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={128}
-                value={state.direccion.vchNombre}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.vchNombre_DIRECCION,
-                    vchNombre: e.target.value,
-                  })
-                }
-              ></input>
-
-            </div>
-            
-            <div className="form-row-direccion">
-              <label htmlFor="vchTelefono">Telefono de quien recepciona</label>
-              <input
-                type="text"
-                name="vchTelefono"
-                className={`form-control imput-registro-width-l ${state.direccion.error.vchTelefono.isValidado ? 'imput-registro-error' : ''}`}
-                placeholder={state.direccion.error.vchTelefono.isValidado ? state.direccion.error.vchTelefono.mensaje : ""}
-                title={state.direccion.error.vchTelefono.isValidado ? state.direccion.error.vchTelefono.mensaje : ""}
-                autoComplete="false"
-                autoSave="false"
-                maxLength={15}
-                value={state.direccion.vchTelefono}
-                onChange={(e) =>
-                  dispatch({
-                    type: actionType.vchTelefono_DIRECCION,
-                    vchTelefono: e.target.value,
-                  })}
-              ></input>
-
-            </div>
-
-          </> : <></>}
-
+              <div className="form-row-direccion">
+                <label htmlFor="vchTelefono">
+                  Teléfono de quien recepciona
+                </label>
+                <input
+                  type="text"
+                  name="vchTelefono"
+                  className={`form-control imput-registro-width-l ${
+                    state.direccion.error.vchTelefono.isValidado
+                      ? "imput-registro-error"
+                      : ""
+                  }`}
+                  placeholder={
+                    state.direccion.error.vchTelefono.isValidado
+                      ? state.direccion.error.vchTelefono.mensaje
+                      : ""
+                  }
+                  title={
+                    state.direccion.error.vchTelefono.isValidado
+                      ? state.direccion.error.vchTelefono.mensaje
+                      : ""
+                  }
+                  autoComplete="false"
+                  autoSave="false"
+                  maxLength={15}
+                  value={state.direccion.vchTelefono}
+                  onChange={(e) => {
+                    dispatch({
+                      type: actionType.vchTelefono_DIRECCION,
+                      vchTelefono: e.target.value,
+                    });
+                    e.target.className = "form-control imput-registro-width-l";
+                  }}
+                ></input>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
 
           <Modal.Footer>
             <button
               onClick={handleEventSaveDireccion}
-              className="btn btn-primary" >
+              className="btn btn-primary"
+            >
               <i className="fa fa-plus"></i>
               {state.direccion.estado}
             </button>
-            <button onClick={() => dispatch({ type: actionType.MODAL_SHOW, showDireccion: false })} className="btn btn-primary">
-
+            <button
+              onClick={() =>
+                dispatch({ type: actionType.MODAL_SHOW, showDireccion: false })
+              }
+              className="btn btn-primary"
+            >
               <i className="fa fa-close"></i> Cerrar
             </button>
           </Modal.Footer>
-
         </Modal.Body>
       </Modal>
 
@@ -1956,8 +2305,6 @@ export default function RegistrarCliente(props) {
   );
 }
 function CardDireccion(props) {
-
-
   let direccion = {
     indice: props.direccion.indice,
     numCodigoDireccion: props.direccion.numCodigoDireccion,
@@ -2003,75 +2350,90 @@ function CardDireccion(props) {
     },
   };
 
-  return (<>
-    <div className="registrar-direccion-card">
-      <div className="card-row-direccion card-row-flex">
-        <span className={direccion.vchrAlias === tipoDireccion.FACTURACION ? 'direcion-tipo' : " direcion-tipo"} >
-          {direccion.vchrAlias === tipoDireccion.FACTURACION ? direccion.vchrAlias : direccion.vchrAlias + " " + direccion.nsecuencia}
-        </span>
-        
-        {direccion.flgPredeterminado ? (
-          <div className="fa-direccion-circulo" >
-            <div className="fa-direccion-circulo-interno" >&nbsp;</div>
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-      <div className="card-row-direccion">
-      <div className="row-direccion-etiqueta">Dirección</div>:&nbsp;
-        <span>{direccion.vchDireccion}</span>
-      </div>
-      <div className="card-row-direccion">
-      <div className="row-direccion-etiqueta">Referencia</div>:&nbsp;
-        <span>
-          {direccion.vchreferencia}
-        </span>
-      </div>
-      <div className="card-row-direccion">
-      <div className="row-direccion-etiqueta">Documento</div>:&nbsp;
-        <span>
-          {direccion.vchDocumento}
-        </span>
-      </div>
-      <div className="card-row-direccion">
-      <div className="row-direccion-etiqueta">Nombre</div>:&nbsp;
-        <span>
-         
-          {direccion.vchNombre}
-        </span>
-      </div>
+  return (
+    <>
+      <div className="registrar-direccion-card">
+        <div className="card-row-direccion card-row-flex">
+          <span
+            className={
+              direccion.vchrAlias === tipoDireccion.FACTURACION
+                ? "direcion-tipo"
+                : " direcion-tipo"
+            }
+          >
+            {direccion.vchrAlias === tipoDireccion.FACTURACION
+              ? direccion.vchrAlias
+              : direccion.vchrAlias + " " + direccion.nsecuencia}
+          </span>
 
-      <div className="card-row-direccion">
-      <div className="row-direccion-etiqueta">Teléfono </div>:&nbsp;
-        <span>{direccion.vchTelefono}</span>
+          {direccion.flgPredeterminado ? (
+            <div className="fa-direccion-circulo">
+              <div className="fa-direccion-circulo-interno">&nbsp;</div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="card-row-direccion">
+          <div className="row-direccion-etiqueta">Dirección</div>:&nbsp;
+          <span>{direccion.vchDireccion}</span>
+        </div>
+        <div className="card-row-direccion">
+          <div className="row-direccion-etiqueta">Referencia</div>:&nbsp;
+          <span>{direccion.vchreferencia}</span>
+        </div>
+        <div className="card-row-direccion row-title">
+          Persona que Recepciona
+          <hr />
+        </div>
+        <div className="card-row-direccion">
+          <div className="row-direccion-etiqueta">Documento</div>:&nbsp;
+          <span>{direccion.vchDocumento}</span>
+        </div>
+        <div className="card-row-direccion">
+          <div className="row-direccion-etiqueta">Nombre</div>:&nbsp;
+          <span>{direccion.vchNombre}</span>
+        </div>
+
+        <div className="card-row-direccion">
+          <div className="row-direccion-etiqueta">Teléfono </div>:&nbsp;
+          <span>{direccion.vchTelefono}</span>
+        </div>
+        <div className="card-row-direccion">
+          <span>
+            {" "}
+            {direccion.departamento.vchDescripcion} /{" "}
+            {direccion.provincia.vchDescripcion} /{" "}
+            {direccion.distrito.vchDescripcion}
+          </span>
+        </div>
+        <hr />
+        <div className="card-row-direccion">
+          <button
+            className="btn btn-primary"
+            onClick={(e) => props.handleEventShow(direccion, CRUD.UPDATE)}
+          >
+            {" "}
+            <i className="fa fa-pencil" aria-hidden="true"></i>Editar
+          </button>
+          &nbsp;&nbsp;
+          {direccion.vchrAlias === tipoDireccion.DESPACHO ? (
+            <>
+              <button
+                className="btn btn-primary"
+                onClick={(e) => props.handleEventShow(direccion, CRUD.DELETE)}
+              >
+                {" "}
+                <i className="fa fa-trash" aria-hidden="true"></i>Quitar
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
-      <div className="card-row-direccion">
-        <span>
-          {" "}
-          {direccion.departamento.vchDescripcion} /{" "}
-          {direccion.provincia.vchDescripcion} /{" "}
-          {direccion.distrito.vchDescripcion}
-        </span>
-      </div>
-      <hr/> 
-      <div className="card-row-direccion">
-        <button className="btn btn-primary" onClick={(e) => props.handleEventShow(direccion, CRUD.UPDATE)}>
-          {" "}
-          <i className="fa fa-pencil" aria-hidden="true"></i>Editar
-        </button>
-        &nbsp;&nbsp;
-        {direccion.vchrAlias === tipoDireccion.DESPACHO ?<>
-        <button
-          className="btn btn-primary"
-          onClick={(e) => props.handleEventShow(direccion, CRUD.DELETE)}
-        >
-          {" "}
-          <i className="fa fa-trash" aria-hidden="true"></i>Quitar
-        </button></> :<></>}
-      </div>
-    </div>
-  </>)
+    </>
+  );
 }
 
 export { CardDireccion };
@@ -2096,8 +2458,6 @@ function handleValidarForm(state) {
     isValido: true,
   };
 
-
-
   let emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
   /*Criterios de validaciones */
   let isValido = true;
@@ -2106,9 +2466,7 @@ function handleValidarForm(state) {
     _error.chrEmail.mensaje = "El correo es requerido";
     _error.chrEmail.isValidado = true;
     isValido = false;
-  } else if (
-    emailRegex.test(state.chrEmail.toUpperCase()) === false
-  ) {
+  } else if (emailRegex.test(state.chrEmail.toUpperCase()) === false) {
     _error.chrEmail.mensaje = "El formato el correo no es valido";
     _error.chrEmail.isValidado = true;
     isValido = false;
@@ -2241,9 +2599,7 @@ function handleValidarForm(state) {
   return _error;
 }
 
-
 function handleValidarFormDireccion(state) {
-
   /* eslint-disable */
   /*Iniciando la estructura del objeto para el control de mensajes depues de la validacion */
   let _error = {
@@ -2266,7 +2622,6 @@ function handleValidarFormDireccion(state) {
   /*Criterios de validaciones */
   let isValido = true;
   if (state.direccion.flgDespacho === true) {
-    
     /*if (parseInt(state.direccion.numTipoDocumento, 10) === 0) {
       _error.numTipoDocumento.mensaje = "Seleccione el tipo de documento";
       _error.numTipoDocumento.isValidado = true;
@@ -2315,7 +2670,7 @@ function handleValidarFormDireccion(state) {
       _error.vchNombre.isValidado = true;
       isValido = false;
     }
-   /* if (!state.direccion.vchApellido) {
+    /* if (!state.direccion.vchApellido) {
       _error.vchApellido.mensaje = "Ingrese los apellidos";
       _error.vchApellido.isValidado = true;
       isValido = false;
@@ -2325,7 +2680,6 @@ function handleValidarFormDireccion(state) {
       _error.vchTelefono.isValidado = true;
       isValido = false;
     }*/
-
   }
   if (!state.direccion.vchDireccion) {
     _error.vchDireccion.mensaje = "Ingrese la dirección";
@@ -2352,7 +2706,7 @@ function handleValidarFormDireccion(state) {
   _error.isValido = isValido;
   /*Registrando los mensajes  */
   /* eslint-enable */
-  console.log(_error)
+  console.log(_error);
   return _error;
 }
 

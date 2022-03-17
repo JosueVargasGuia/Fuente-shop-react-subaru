@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.ShopAutoPartsServices.Config.CorreoConfiguracion;
+import com.ShopAutoPartsServices.Config.Empresa;
 import com.ShopAutoPartsServices.Domain.CorreoJobsOnline;
 import com.ShopAutoPartsServices.Domain.CorreoRequest;
 import com.ShopAutoPartsServices.Enums.AccountsEmail;
@@ -27,10 +28,11 @@ import com.ShopAutoPartsServices.WsServices.CotizacionController;
 public class BuildEnviaCorreo {
 	Logger logger = LoggerFactory.getLogger(CotizacionController.class);
 	CorreoConfiguracion correoConfiguracion;
-
-	public BuildEnviaCorreo(CorreoConfiguracion correoConfiguracion) {
+	Empresa empresa;
+	public BuildEnviaCorreo(CorreoConfiguracion correoConfiguracion,Empresa empresa) {
 		super();
 		this.correoConfiguracion = correoConfiguracion;
+		this.empresa=empresa;
 	}
 
 	public boolean buildCorreoSSL(CorreoRequest correoRequest, String html, String subject, AccountsEmail accountsEmail,
@@ -73,7 +75,7 @@ public class BuildEnviaCorreo {
 			texto.setContent(html, "text/html; charset=utf-8");
 			multiParte.addBodyPart(texto);
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(USER));
+			message.setFrom(new InternetAddress(USER,empresa.getAlias()));
 			StringBuilder mails=new StringBuilder();   
 			for (CorreoJobsOnline jobsOnline : correoRequest.getListaCorreo()) {
 				message.setRecipient(Message.RecipientType.TO, new InternetAddress(jobsOnline.getVchCorreo()));

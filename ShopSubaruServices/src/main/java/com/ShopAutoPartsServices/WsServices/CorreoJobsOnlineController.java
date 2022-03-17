@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ShopAutoPartsServices.Config.CorreoConfiguracion;
-
+import com.ShopAutoPartsServices.Config.Empresa;
 import com.ShopAutoPartsServices.Domain.CorreoJobsOnline;
 import com.ShopAutoPartsServices.Domain.CorreoJobsResponse;
 import com.ShopAutoPartsServices.Domain.CorreoRequest;
@@ -49,7 +49,9 @@ public class CorreoJobsOnlineController {
 	CorreoJobsService correoJobsService;
 	@Autowired
 	CorreoConfiguracion correoConfiguracion;
-
+	@Autowired
+	Empresa empresa;
+	
 	@PostMapping(value = "/obtenerCorreoJobs", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CorreoJobsResponse> obtenerCorreoJobs(@RequestBody CorreoJobsOnline correoJobsOnline) {
 		ResponseEntity<CorreoJobsResponse> responseEntity = null;
@@ -101,7 +103,7 @@ public class CorreoJobsOnlineController {
 			boolean _valida = correoJobsService.validarScheduledCorrreo(FilterValidacionGenerico.SCHEDULED_ALERTA_TIPO_CAMBIO.toString());
 			if (_valida) {
 				
-				BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion);
+				BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion,empresa);
 				CorreoJobsOnline correoJobs = new CorreoJobsOnline();
 				correoJobs.setFilterCorreo(FilterCorreo.FILTER_TIPO_CAMBIO_REGISTRO);
 				List<CorreoJobsOnline> lista = correoJobsService.obtenerListaCorreoJobs(correoJobs);

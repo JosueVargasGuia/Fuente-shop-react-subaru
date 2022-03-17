@@ -65,6 +65,7 @@ import ReporteCotizacion from "./loginAdmin/reporte/reporteCotizacion";
 import { ProductoOutlet } from "./producto/productoOutlet";
 import OutletCargaProducto from "./loginAdmin/producto/outletCargaProducto";
 import ListadoProductoOutlet from "./loginAdmin/producto/listadoProductoOutlet";
+import TestAuto from "./loginAdmin/testAuto";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -518,6 +519,11 @@ function App() {
               ></ListaUsuario>
             </div>
           </Route>
+          <Route path="/test">
+            <div className="container">
+              <TestAuto></TestAuto>
+            </div>
+          </Route>
           <Route path="/">
             <div className="container-Carousel">
               <Carrucel
@@ -538,6 +544,7 @@ function App() {
               </div>
             </div>
           </Route>
+          
         </Switch>
         <br />
 
