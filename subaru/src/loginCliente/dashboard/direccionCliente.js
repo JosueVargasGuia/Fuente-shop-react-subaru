@@ -477,6 +477,7 @@ function DireccionCard(props) {
   }
   return (
     <div className="direccion-card">
+     
       <div className="row-direccion-row-1">
         <div className="row-direccion card-row-flex">
           <span
@@ -510,8 +511,7 @@ function DireccionCard(props) {
           </span>
         </div>
         <div className="row-direccion row-title">
-          Persona que Recepciona
-          <hr />
+          Persona que Recepciona          
         </div>
         <div className="row-direccion">
           <div className="row-direccion-etiqueta">Documento</div>:&nbsp;

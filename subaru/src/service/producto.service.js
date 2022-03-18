@@ -167,6 +167,14 @@ async function updateProductoOutletRow(body) {
   );
   return response;
 }
+async function listaProductoFindCodByDesc(body) {     
+  const response = await tokenFetchService(
+    IP(URL.LST_PRODUCTO_FIND),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 
 export {
   findProductos,
@@ -189,5 +197,6 @@ export {
   saveProductoOutletVigencia,
   listarProductoOutlet,
   saveUpdateProductoOutlet,
-  updateProductoOutletRow
+  updateProductoOutletRow,
+  listaProductoFindCodByDesc
 };

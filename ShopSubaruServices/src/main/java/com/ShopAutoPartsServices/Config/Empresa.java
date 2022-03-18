@@ -7,10 +7,16 @@ import org.springframework.context.annotation.Configuration;
 public class Empresa {
 	@Value("${shop.empresa.ruc}")
 	private String ruc;
+	
 	@Value("${shop.empresa.razonsocial}")
 	private String razonSocial;
+	
 	@Value("${shop.empresa.alias}")
 	private String alias;
+	
+	@Value("${shop.empresa.link}")
+	private String link;
+	
 	@Value("${shop.empresa.direccion}")
 	private String direccion;
 
@@ -23,6 +29,9 @@ public class Empresa {
 	@Value("${shop.empresa.logourl}")
 	private String logourl;
 
+	@Value("${shop.empresa.logourltext}")
+	private String logourlText;
+	
 	@Value("${shop.empresa.secret}")
 	private String secret;
 	
@@ -133,6 +142,22 @@ public class Empresa {
 	public Empresa setAbreviaturaSucursal(String abreviaturaSucursal) {
 		this.abreviaturaSucursal = abreviaturaSucursal;
 		return this;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getLogourlText() {
+		return logourlText;
+	}
+
+	public void setLogourlText(String logourlText) {
+		this.logourlText = logourlText;
 	}
 
 	@Override

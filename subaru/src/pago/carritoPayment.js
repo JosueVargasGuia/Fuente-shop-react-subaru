@@ -25,14 +25,14 @@ import { handleSyncDatosCotizacion } from "../service/general";
 import {
   obtenerCotizacion,
   registrarMetodoEnvioCotizacion,
-  initCreatePayment
+  initCreatePayment,
 } from "../service/cotizacion.service";
 import izipay from "../css/izipay.png";
 import ServerException from "../utils/serverException";
-import Hex from 'crypto-js/enc-hex';
-import hmacSHA256 from 'crypto-js/hmac-sha256';
+import Hex from "crypto-js/enc-hex";
+import hmacSHA256 from "crypto-js/hmac-sha256";
 import { validacionToken } from "../service/loginCliente.service";
- 
+
 export function CarritoPayment(props) {
   let history = useHistory();
   const [focusMenu, setFocusMenu] = useState(1);
@@ -66,16 +66,12 @@ export function CarritoPayment(props) {
   });
 
   useEffect(() => {
-
     //eslint-disable-next-line
     handleLoad();
     console.log("useEffect CarritoPayment");
     _validarToken();
     //eslint-disable-next-line
   }, []);
-
-
-
 
   if (localStorage.getItem(localStoreEnum.ISLOGIN) !== LOGGIN.LOGGIN) {
     /*Verificando que el cliente este logeado  */
@@ -115,7 +111,6 @@ export function CarritoPayment(props) {
     console.log(_value);
     return _value;
   }
-
 
   let usuarioLogeado = JSON.parse(localStorage.getItem(localStoreEnum.USUARIO));
 
@@ -160,8 +155,10 @@ export function CarritoPayment(props) {
             vchrAlias: direccion.vchrAlias,
             numTipoDocumento: direccion.numTipoDocumento,
             vchDocumento: direccion.vchDocumento,
+            nsecuencia:  direccion.nsecuencia,
             departamento: {
-              chrCodigoDepartamento: direccion.departamento.chrCodigoDepartamento,
+              chrCodigoDepartamento:
+                direccion.departamento.chrCodigoDepartamento,
               vchDescripcion: direccion.departamento.vchDescripcion,
             },
             provincia: {
@@ -172,7 +169,7 @@ export function CarritoPayment(props) {
               chrCodigoDistrito: direccion.distrito.chrCodigoDistrito,
               vchDescripcion: direccion.distrito.vchDescripcion,
             },
-          }
+          };
         }
         lstDireccion.push({
           numCodigoDireccion: direccion.numCodigoDireccion,
@@ -188,6 +185,7 @@ export function CarritoPayment(props) {
           vchrAlias: direccion.vchrAlias,
           numTipoDocumento: direccion.numTipoDocumento,
           vchDocumento: direccion.vchDocumento,
+          nsecuencia:  direccion.nsecuencia,
           departamento: {
             chrCodigoDepartamento: direccion.departamento.chrCodigoDepartamento,
             vchDescripcion: direccion.departamento.vchDescripcion,
@@ -234,7 +232,8 @@ export function CarritoPayment(props) {
       _cotizacionResumen.numIgvSol = jsonC.numIgvSol;
       _cotizacionResumen.numEnvioSol = jsonC.numEnvioSol;
       _cotizacionResumen.numTotalSol = jsonC.numTotalSol;
-      _cotizacionResumen.numCodigoCotizacionOnline = cotizacion.numCodigoCotizacionOnline;
+      _cotizacionResumen.numCodigoCotizacionOnline =
+        cotizacion.numCodigoCotizacionOnline;
       //console.log(_cotizacionResumen);
     }
     //let _metodoEnvio = MetodoEnvio.RecojoAlmacen;
@@ -252,25 +251,30 @@ export function CarritoPayment(props) {
       MetodoEnvio: _metodoEnvio,
     });
   }
-  async function initCreatePaymentRequets(_numCodigoCotizacionOnline, _metodoEnvioCodigo,
-    _numCodigoDireccion, _vchObservacion, _moneda) {
-
+  async function initCreatePaymentRequets(
+    _numCodigoCotizacionOnline,
+    _metodoEnvioCodigo,
+    _numCodigoDireccion,
+    _vchObservacion,
+    _moneda
+  ) {
     let _payment = {
       endPoint: "",
       publicKey: "",
       formToken: "",
-      hmacSha256Key: ""
-    }
+      hmacSha256Key: "",
+    };
     let objectPayment = {
-      type: actionType.INIT_PAYMENT, payment: _payment,
-      server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT }
+      type: actionType.INIT_PAYMENT,
+      payment: _payment,
+      server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
     };
     const rpt = await initCreatePayment({
       numCodigoCotizacionOnline: _numCodigoCotizacionOnline,
       metodoEnvio: _metodoEnvioCodigo,
       numCodigoDireccion: _numCodigoDireccion,
       vchObservacion: _vchObservacion,
-      moneda: _moneda
+      moneda: _moneda,
     });
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
@@ -287,16 +291,15 @@ export function CarritoPayment(props) {
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
         objectPayment.type = actionType.ERROR;
         objectPayment.server.error = json.response.error;
-        objectPayment.server.success = SUCCESS_SERVER.SUCCES_SERVER_INFO
+        objectPayment.server.success = SUCCESS_SERVER.SUCCES_SERVER_INFO;
       }
     } else {
       objectPayment.type = actionType.ERROR;
       objectPayment.server.error = "";
-      objectPayment.server.success = SUCCESS_SERVER.SUCCES_SERVER_ERROR
-
+      objectPayment.server.success = SUCCESS_SERVER.SUCCES_SERVER_ERROR;
     }
     objectPayment.payment = _payment;
-    return objectPayment
+    return objectPayment;
   }
   //eslint-disable-next-line
   async function loadPago() {
@@ -306,10 +309,12 @@ export function CarritoPayment(props) {
       state.MetodoEnvio.codigo,
       state.numCodigoDireccion,
       state.vchObservacion,
-      (props.moneda.numCodigoMoneda === Moneda.DOLARES.numCodigoMoneda ? 'DOLARES' : 'SOLES'));
+      props.moneda.numCodigoMoneda === Moneda.DOLARES.numCodigoMoneda
+        ? "DOLARES"
+        : "SOLES"
+    );
     console.log(builtPayment);
     if (builtPayment.server.success === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-      
       const endpoint = builtPayment.payment.endPoint;
       const publicKey = builtPayment.payment.publicKey;
       const formToken = builtPayment.payment.formToken;
@@ -323,28 +328,32 @@ export function CarritoPayment(props) {
             //"kr-get-url-success": "https://eanetautoparts.pe/succespayment",
           })
         )
-        .then(({ KR }) => KR.onSubmit(resp => {
-          /*https://github.com/lyra/embedded-form-glue/tree/master/examples/react/minimal-example */
-          console.log(resp);
-          const answer = resp.clientAnswer;
-          const hash = resp.hash;
-          const answerHash = Hex.stringify(hmacSHA256(JSON.stringify(answer), hmacSha256Key));
-          if (hash === answerHash) {
-            console.log('hash Valido');
-            localStorage.removeItem(localStoreEnum.COTIZACION);
-            if (answer.orderStatus === 'PAID') {
-              history.push("/succesPayment");
-              window.location.reload();
-              console.log('Pago Valido');
+        .then(({ KR }) =>
+          KR.onSubmit((resp) => {
+            /*https://github.com/lyra/embedded-form-glue/tree/master/examples/react/minimal-example */
+            console.log(resp);
+            const answer = resp.clientAnswer;
+            const hash = resp.hash;
+            const answerHash = Hex.stringify(
+              hmacSHA256(JSON.stringify(answer), hmacSha256Key)
+            );
+            if (hash === answerHash) {
+              console.log("hash Valido");
+              localStorage.removeItem(localStoreEnum.COTIZACION);
+              if (answer.orderStatus === "PAID") {
+                history.push("/succesPayment");
+                window.location.reload();
+                console.log("Pago Valido");
+              } else {
+                history.push("/succesNopayment");
+                console.log("Pago NO PAID");
+              }
             } else {
-              history.push("/succesNopayment");
-              console.log('Pago NO PAID');
+              console.log("hash no Valido");
             }
-          } else {
-            console.log('hash no Valido');
-          }
-          return false
-        }))
+            return false;
+          })
+        )
         .then(({ KR }) =>
           KR.addForm("#myPaymentForm")
         ) /* add a payment form  to myPaymentForm div*/
@@ -352,21 +361,20 @@ export function CarritoPayment(props) {
           console.log(result);
           console.log("show the payment form");
           KR.showForm(result.formId);
-          KR.onFormCreated(() => dispatch({ type: actionType.enableLoading, enableLoading: false }));
+          KR.onFormCreated(() =>
+            dispatch({ type: actionType.enableLoading, enableLoading: false })
+          );
         })
-        .catch(error =>
+        .catch((error) =>
           console.log(error + " (see console for more details)")
-        );
-      ; /* show the payment form */
+        ); /* show the payment form */
     } else {
       setFocusMenu(3);
       console.log(builtPayment.server);
       dispatch({ type: actionType.ERROR, server: builtPayment.server });
-      dispatch({ type: actionType.enableLoading, enableLoading: false })
+      dispatch({ type: actionType.enableLoading, enableLoading: false });
     }
   }
-
-
 
   function handleEnventControlMenuNext() {
     let tmp = focusMenu + 1;
@@ -392,7 +400,6 @@ export function CarritoPayment(props) {
     setFocusMenu(temp);
   }
 
-
   function handleActionCerrar(value) {
     console.log("closeButton");
     setShowModal(value);
@@ -406,9 +413,17 @@ export function CarritoPayment(props) {
       statusMetodoEnvio: { status: statusMetodoEnvio.DEFAULT, mensaje: "" },
     });
     //handleEventChangeModoEnvio(MetodoEnvio.RecojoAlmacen); Reunion Nro1
-    handleEventChangeModoEnvio(MetodoEnvio.RecojoAlmacen,_direccion.numCodigoDireccion, false);
+    handleEventChangeModoEnvio(
+      MetodoEnvio.RecojoAlmacen,
+      _direccion.numCodigoDireccion,
+      false
+    );
   }
-  async function handleEventChangeModoEnvio(_metodoEnvio,_numCodigoDireccion, _flgChange) {
+  async function handleEventChangeModoEnvio(
+    _metodoEnvio,
+    _numCodigoDireccion,
+    _flgChange
+  ) {
     //let _metodoEnvio = MetodoEnvio.EnvioRegular;
     /*Resumen de cotizacion*/
     let _statusMetodoEnvio = { status: statusMetodoEnvio.DEFAULT, mensaje: "" };
@@ -416,24 +431,25 @@ export function CarritoPayment(props) {
     const rptM = await registrarMetodoEnvioCotizacion({
       numCodigoCotizacionOnline: cotizacion.numCodigoCotizacionOnline,
       metodoEnvio: _metodoEnvio.codigo,
-      numCodigoDireccion: (_flgChange === false ? _numCodigoDireccion : state.numCodigoDireccion),
+      numCodigoDireccion:
+        _flgChange === false ? _numCodigoDireccion : state.numCodigoDireccion,
     });
     const jsonR = await rptM.json();
     console.log(jsonR);
     if (rptM.status === HttpStatus.HttpStatus_OK) {
-      _metodoEnvio = jsonR.metodoEnvio === MetodoEnvio.EnvioRegular.codigo ? MetodoEnvio.EnvioRegular : MetodoEnvio.RecojoAlmacen;
+      _metodoEnvio =
+        jsonR.metodoEnvio === MetodoEnvio.EnvioRegular.codigo
+          ? MetodoEnvio.EnvioRegular
+          : MetodoEnvio.RecojoAlmacen;
       if (jsonR.status === statusMetodoEnvio.ERROR_ZONA_INCONRRECTA) {
-
         _statusMetodoEnvio.status = statusMetodoEnvio.ERROR_ZONA_INCONRRECTA;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
       if (jsonR.status === statusMetodoEnvio.ERROR_SUPERA_CARGA) {
-
         _statusMetodoEnvio.status = statusMetodoEnvio.ERROR_SUPERA_CARGA;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
       if (jsonR.status === statusMetodoEnvio.ACTUALIZADO) {
-
         _statusMetodoEnvio.status = statusMetodoEnvio.ACTUALIZADO;
         _statusMetodoEnvio.mensaje = jsonR.mensaje;
       }
@@ -466,7 +482,8 @@ export function CarritoPayment(props) {
       _cotizacionResumen.numIgvSol = jsonC.numIgvSol;
       _cotizacionResumen.numEnvioSol = jsonC.numEnvioSol;
       _cotizacionResumen.numTotalSol = jsonC.numTotalSol;
-      _cotizacionResumen.numCodigoCotizacionOnline = cotizacion.numCodigoCotizacionOnline;
+      _cotizacionResumen.numCodigoCotizacionOnline =
+        cotizacion.numCodigoCotizacionOnline;
       console.log(_cotizacionResumen);
     }
     console.log(_metodoEnvio);
@@ -539,7 +556,6 @@ export function CarritoPayment(props) {
               : "form-pago-card-persona"
           }
         >
-
           <p>
             Conectado como:{" "}
             <Link
@@ -552,7 +568,6 @@ export function CarritoPayment(props) {
               {usuarioLogeado.NombreCompleto}
             </Link>
           </p>
-
 
           <span className="form-pago-item-direccion">Dirección de envío</span>
           <div className="direccion-content">
@@ -574,33 +589,37 @@ export function CarritoPayment(props) {
                   ></input>
 
                   <span className="class-text-bold">
-                    {direccion.vchrAlias === null ? "-" : direccion.vchrAlias}{" "}
+                    {direccion.vchrAlias === null ? "-" : direccion.vchrAlias + " " + (direccion.nsecuencia===0?"":direccion.nsecuencia)}{" "}
                   </span>
                 </div>
                 <div className="row-direccion">
+                <div className="row-direccion-etiqueta">Dirección</div>:&nbsp;
                   <span>{direccion.vchDireccion}</span>
                 </div>
                 <div className="row-direccion">
+                <div className="row-direccion-etiqueta">Referencia</div>:&nbsp;
                   <span>
                     {direccion.vchreferencia === null
                       ? "-"
                       : direccion.vchreferencia}
                   </span>
                 </div>
+                <div className="row-direccion row-title">
+                  Persona que Recepciona
+                  
+                </div>
                 <div className="row-direccion">
+                  <div className="row-direccion-etiqueta">Documento</div>:&nbsp;
+                  <span>{direccion.vchDocumento}</span>
+                </div>
+                <div className="row-direccion">
+                <div className="row-direccion-etiqueta">Nombre</div>:&nbsp;
                   <span>
-                    {direccion.vchDocumento}
-
+                    {direccion.vchApellido} {direccion.vchNombre}
                   </span>
                 </div>
                 <div className="row-direccion">
-                  <span>
-                    {direccion.vchApellido}
-                    {" "}
-                    {direccion.vchNombre}
-                  </span>
-                </div>
-                <div className="row-direccion">
+                  <div className="row-direccion-etiqueta">Teléfono</div>:&nbsp;
                   <span>{direccion.vchTelefono}</span>
                 </div>
                 <div className="row-direccion">
@@ -622,8 +641,8 @@ export function CarritoPayment(props) {
                 "/CarritoPayment"
               }
             >
-              <i className="fa fa-pencil" aria-hidden="true"></i>Modificar/Adicionar
-              Direcciones
+              <i className="fa fa-pencil" aria-hidden="true"></i>
+              Modificar/Adicionar Direcciones
             </Link>
           </div>
           <p>
@@ -655,15 +674,18 @@ export function CarritoPayment(props) {
                   type="radio"
                   name="MetodoEnvio"
                   className="label-disable"
-
                   checked={
                     state.MetodoEnvio.codigo ===
-                      MetodoEnvio.RecojoAlmacen.codigo
+                    MetodoEnvio.RecojoAlmacen.codigo
                       ? true
                       : false
                   }
                   onChange={() =>
-                    handleEventChangeModoEnvio(MetodoEnvio.RecojoAlmacen, 0, true)
+                    handleEventChangeModoEnvio(
+                      MetodoEnvio.RecojoAlmacen,
+                      0,
+                      true
+                    )
                   }
                 ></input>
                 <img
@@ -684,14 +706,17 @@ export function CarritoPayment(props) {
                 <input
                   type="radio"
                   name="MetodoEnvio"
-
                   checked={
                     state.MetodoEnvio.codigo === MetodoEnvio.EnvioRegular.codigo
                       ? true
                       : false
                   }
                   onChange={() =>
-                    handleEventChangeModoEnvio(MetodoEnvio.EnvioRegular, 0, true)
+                    handleEventChangeModoEnvio(
+                      MetodoEnvio.EnvioRegular,
+                      0,
+                      true
+                    )
                   }
                 ></input>
                 <img
@@ -707,7 +732,7 @@ export function CarritoPayment(props) {
             </div>
             <div className="form-pago-info-item">
               {state.statusMetodoEnvio.status ===
-                statusMetodoEnvio.ERROR_SUPERA_CARGA ? (
+              statusMetodoEnvio.ERROR_SUPERA_CARGA ? (
                 <div className="alert alert-danger">
                   {state.statusMetodoEnvio.mensaje}
                 </div>
@@ -716,7 +741,7 @@ export function CarritoPayment(props) {
               )}
 
               {state.statusMetodoEnvio.status ===
-                statusMetodoEnvio.ERROR_ZONA_INCONRRECTA ? (
+              statusMetodoEnvio.ERROR_ZONA_INCONRRECTA ? (
                 <div className="alert alert-danger">
                   {state.statusMetodoEnvio.mensaje}
                 </div>
@@ -725,7 +750,7 @@ export function CarritoPayment(props) {
               )}
 
               {state.statusMetodoEnvio.status ===
-                statusMetodoEnvio.ACTUALIZADO ? (
+              statusMetodoEnvio.ACTUALIZADO ? (
                 <div className="alert alert-info">
                   {state.statusMetodoEnvio.mensaje}
                 </div>
@@ -739,8 +764,14 @@ export function CarritoPayment(props) {
             escríbalo a continuación.
           </p>
           <div className="form-pago-textarea">
-            <textarea value={state.vchObservacion}
-              onChange={(e) => dispatch({ type: actionType.OBSERVACION, vchObservacion: e.target.value })}
+            <textarea
+              value={state.vchObservacion}
+              onChange={(e) =>
+                dispatch({
+                  type: actionType.OBSERVACION,
+                  vchObservacion: e.target.value,
+                })
+              }
             ></textarea>
           </div>
           <input
@@ -754,19 +785,35 @@ export function CarritoPayment(props) {
             }
           ></input>
           Estoy de acuerdo con los{" "}
-          <span onClick={() => handleActionCerrar(true)} className="form-pago-link-tc">
+          <span
+            onClick={() => handleActionCerrar(true)}
+            className="form-pago-link-tc"
+          >
             términos del servicio
           </span>{" "}
           y los acepto sin reservas.
           <div className="form-pago-botonera">
-           
-           {APP_DEV.CONTEXT!=='PRODUCCION' ?<button
-              className="btn btn-primary"
-              disabled={!(state.enableButton && (state.statusMetodoEnvio.status === statusMetodoEnvio.DEFAULT || state.statusMetodoEnvio.status === statusMetodoEnvio.ACTUALIZADO))}
-              onClick={() => handleEnventControlMenuNext()}
-            >
-              Continuar
-            </button>:<span style={{color:'red'}}>Servicio de pago deshabilitado</span>} 
+            {APP_DEV.CONTEXT !== "PRODUCCION" ? (
+              <button
+                className="btn btn-primary"
+                disabled={
+                  !(
+                    state.enableButton &&
+                    (state.statusMetodoEnvio.status ===
+                      statusMetodoEnvio.DEFAULT ||
+                      state.statusMetodoEnvio.status ===
+                        statusMetodoEnvio.ACTUALIZADO)
+                  )
+                }
+                onClick={() => handleEnventControlMenuNext()}
+              >
+                Continuar
+              </button>
+            ) : (
+              <span style={{ color: "red" }}>
+                Servicio de pago deshabilitado
+              </span>
+            )}
           </div>
         </div>
         <div
@@ -776,19 +823,14 @@ export function CarritoPayment(props) {
               : "form-pago-card-pasarela"
           }
         >
-
           <div className="div-forma-pago-banner">
-            <img src={izipay} alt="izipay.png" ></img>
-
+            <img src={izipay} alt="izipay.png"></img>
           </div>
           <div className="div-pago">
-
             <div className="form">
               <div className="container">
-                <div id="myPaymentForm">
-                </div>
-                {state.enableLoading===true?<Loading></Loading>:<></>}
-                
+                <div id="myPaymentForm"></div>
+                {state.enableLoading === true ? <Loading></Loading> : <></>}
               </div>
             </div>
           </div>
@@ -861,22 +903,18 @@ export function CarritoPayment(props) {
         </div>
         <div className="form-pago-resumen-info">
           <div className="carrito-detalle-item">
-
             {InfoCondicionCompra.EMISION}
             <hr />
           </div>
           <div className="carrito-detalle-item">
-
             {InfoCondicionCompra.STOCK}
             <hr />
           </div>
           <div className="carrito-detalle-item">
-
             {InfoCondicionCompra.TRANSPORTE}
             <hr />
           </div>
           <div className="carrito-detalle-item">
-
             {InfoCondicionCompra.DEVOLUCIONES}
             <hr />
           </div>
@@ -921,7 +959,7 @@ let actionType = {
   ERROR: "ERROR",
   INIT_PAYMENT: "INIT_PAYMENT",
   OBSERVACION: "OBSERVACION",
-  enableLoading: "enableLoading"
+  enableLoading: "enableLoading",
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -933,7 +971,7 @@ const reducer = (state, action) => {
 
     case actionType.INIT_PAYMENT:
       return {
-        ...state
+        ...state,
       };
     case actionType.ERROR:
       return {

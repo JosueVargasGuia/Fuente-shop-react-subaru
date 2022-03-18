@@ -41,6 +41,7 @@ const URL = {
   QUITAR_USUARIO_ADMIN:"/authorization/cliente/quitarUsuarioAdmin",/*Privado Administrador */
   //OBTENER_LISTA_STOCK:"/productoImagen/cliente/quitarUsuarioAdmin",/*Privado Administrador */
   LISTAR_PRODUCTO_IMAGEN:"/productoImagen/listaImangen",/*Privado Administrador */
+  LST_PRODUCTO_FIND:"/productoImagen/lstProductoFindCodigoDesc",/*Privado Administrador */
   LISTAR_PRODUCTO_IMAGEN_STOCK:"/productoImagen/listaProductosStock",/*Privado Administrador */  
   ACTUALIZAR_PRODUCTO_STOCK:"/productoImagen/actualizarProductosStock",/*Privado Administrador */
   OBTENER_CORREO_JOBS:"/correo/obtenerCorreoJobs",/*Privado Administrador */

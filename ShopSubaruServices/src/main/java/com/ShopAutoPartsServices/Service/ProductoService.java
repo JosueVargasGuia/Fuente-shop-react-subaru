@@ -60,5 +60,7 @@ public interface ProductoService  {
 
 	ProductoOutlet updateProductoOutlet(ProductoOutlet outletRequets)throws Exception;
 
+	List<Producto> listarProductoFindCodigoDesc(ProductoImagen productoImagen)throws Exception;
+
 	 
 }

@@ -1918,10 +1918,10 @@ export default function RegistrarCliente(props) {
                     ></input>
                     <button
                       onClick={(e) => handleEnventShowInputSecret(state._type)}
-                      className={`btn btn-primary fa fa-eye ${
+                      className={`btn btn-primary fa   ${
                         state._type === _type.typePassword
-                          ? "secret-inactive"
-                          : "secret-active"
+                          ? "fa-eye secret-inactive"
+                          : "fa-eye-slash secret-active"
                       }`}
                     ></button>
                     <div className="requerido"></div>
@@ -1953,8 +1953,10 @@ export default function RegistrarCliente(props) {
                     {state.estado}
                   </button>
                 </div>
+                 
               </div>
             </div>
+            <div className="row-body row-leyenda-obligatorio">* Datos obligatorios</div>
           </div>
           <div className="row-body-lista">{state.lstDireccion}</div>
         </div>
@@ -2384,7 +2386,7 @@ function CardDireccion(props) {
         </div>
         <div className="card-row-direccion row-title">
           Persona que Recepciona
-          <hr />
+          
         </div>
         <div className="card-row-direccion">
           <div className="row-direccion-etiqueta">Documento</div>:&nbsp;

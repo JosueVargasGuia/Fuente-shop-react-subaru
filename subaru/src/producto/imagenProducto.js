@@ -12,16 +12,17 @@ import {
   listaProductoAtributo,
   crudProductoAtributo,
   crudProductoCategoria,
-  listaProductoReporte
+  listaProductoReporte,
+  listaProductoFindCodByDesc,
 } from "../service/producto.service";
 import ServerException from "../utils/serverException";
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { Link } from "react-router-dom";
 
 export default function ImagenProducto() {
   const [chrCodigoProducto, setChrCodigoProducto] = useState("");
   const [file, setFile] = useState("");
-  const inputFile=useRef();
+  const inputFile = useRef();
   const [state, dispatch] = useReducer(reducer, {
     rowsProductoImage: [],
     rowsProductoImageHtml: [],
@@ -37,12 +38,18 @@ export default function ImagenProducto() {
       crud: CRUD.SELECT,
     },
     producto: {
-      chrCodigoProducto: "", vchDescripcion: "",
+      chrCodigoProducto: "",
+      vchDescripcion: "",
       familia: { chrCodigoFamilia: "", vchDescripcion: "" },
       productoOnlineCategoria: {
-        numCodigoProductoCategoria: 0, chrCodigoProducto: "", chrRecomendado: "",
-        chrDestacadoMarca: "", chrOferta: "", chrRemate: "", chrDestacado: ""
-      }
+        numCodigoProductoCategoria: 0,
+        chrCodigoProducto: "",
+        chrRecomendado: "",
+        chrDestacadoMarca: "",
+        chrOferta: "",
+        chrRemate: "",
+        chrDestacado: "",
+      },
     },
     isDestacado: "0",
     isRecomendado: "0",
@@ -60,6 +67,8 @@ export default function ImagenProducto() {
       isDestacadoMarca: false,
     },
     server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_DEFAULT },
+    listaFilterProducto: [],
+    diplayFilter: false,
   });
   useEffect(() => {
     console.log("useEffect [ImagenProducto]");
@@ -69,25 +78,73 @@ export default function ImagenProducto() {
       isRecomendado: false,
       isOferta: false,
       isRemate: false,
-      isDestacadoMarca: false
-    })
-    //eslint-disable-next-line 
+      isDestacadoMarca: false,
+    });
+    //eslint-disable-next-line
   }, []);
   const [tabsIndex, setTabsIndex] = useState(_TabsIndex.TABS_IMAGEN);
-
+  async function handleEventFilterProducto(_chrCodigoProducto) {
+    setChrCodigoProducto(_chrCodigoProducto);
+    let _listaFilterProducto = [];
+    let _chrCodigoProductoFind="";
+    if (_chrCodigoProducto.length >= 1) {
+      const rpt = await listaProductoFindCodByDesc({
+        chrCodigoProducto: _chrCodigoProducto,
+      });
+      if (rpt.status === HttpStatus.HttpStatus_OK) {
+        const json = await rpt.json();
+        console.log(json);
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
+          for (let i = 0; i < json.listaProductos.length; i++) {
+            let objProd = json.listaProductos[i];
+            _listaFilterProducto.push(
+              <div className="prod-img-row">
+                <div className="prod-img-row-desc">
+                  {objProd.chrCodigoProducto}&nbsp;{objProd.vchDescripcion}
+                </div>
+              </div>
+            );
+          }
+        
+        }
+        if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
+          dispatch({
+            type: actionType.ERROR,
+            server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_INFO },
+          });
+        }
+      } else {
+        dispatch({
+          type: actionType.ERROR,
+          server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
+        });
+      }
+    }
+    dispatch({
+      type: actionType.SET_FILTER,
+      listaFilterProducto: _listaFilterProducto,
+      diplayFilter: _listaFilterProducto.length >= 2 ? true : false,
+    });
+    if(_listaFilterProducto.length===1){
+      handleEventFindProducto(_chrCodigoProducto)
+    }
+  }
   async function handleEventFindProducto(_chrCodigoProducto) {
-    
-    if (_chrCodigoProducto.trim().length>=1) {
-
-
+    if (_chrCodigoProducto.trim().length >= 1) {
       let _rowsProductoImage = [];
       let _producto = {
-        chrCodigoProducto: "", vchDescripcion: "",
+        chrCodigoProducto: "",
+        vchDescripcion: "",
         familia: { chrCodigoFamilia: "", vchDescripcion: "" },
         productoOnlineCategoria: {
-          numCodigoProductoCategoria: 0, chrCodigoProducto: "", chrRecomendado: "",
-          chrDestacadoMarca: "", chrOferta: "", chrRemate: "", chrDestacado: ""
-        }
+          numCodigoProductoCategoria: 0,
+          chrCodigoProducto: "",
+          chrRecomendado: "",
+          chrDestacadoMarca: "",
+          chrOferta: "",
+          chrRemate: "",
+          chrDestacado: "",
+        },
       };
       const rpt = await listaProductoImagen({
         chrCodigoProducto: _chrCodigoProducto,
@@ -113,19 +170,28 @@ export default function ImagenProducto() {
             _producto.chrCodigoProducto = json.producto.chrCodigoProducto;
             _producto.vchDescripcion = json.producto.vchDescripcion;
             if (json.producto.familia !== null) {
-              _producto.familia.chrCodigoFamilia = json.producto.familia.chrCodigoFamilia;
-              _producto.familia.vchDescripcion = json.producto.familia.vchDescripcion;
+              _producto.familia.chrCodigoFamilia =
+                json.producto.familia.chrCodigoFamilia;
+              _producto.familia.vchDescripcion =
+                json.producto.familia.vchDescripcion;
             }
           }
 
           if (json.producto.productoOnlineCategoria !== null) {
-            _producto.productoOnlineCategoria.numCodigoProductoCategoria = json.productoOnlineCategoria.numCodigoProductoCategoria;
-            _producto.productoOnlineCategoria.chrCodigoProducto = json.productoOnlineCategoria.chrCodigoProducto;
-            _producto.productoOnlineCategoria.chrRecomendado = json.productoOnlineCategoria.chrRecomendado;
-            _producto.productoOnlineCategoria.chrDestacadoMarca = json.productoOnlineCategoria.chrDestacadoMarca;
-            _producto.productoOnlineCategoria.chrOferta = json.productoOnlineCategoria.chrOferta;
-            _producto.productoOnlineCategoria.chrRemate = json.productoOnlineCategoria.chrRemate;
-            _producto.productoOnlineCategoria.chrDestacado = json.productoOnlineCategoria.chrDestacado;
+            _producto.productoOnlineCategoria.numCodigoProductoCategoria =
+              json.productoOnlineCategoria.numCodigoProductoCategoria;
+            _producto.productoOnlineCategoria.chrCodigoProducto =
+              json.productoOnlineCategoria.chrCodigoProducto;
+            _producto.productoOnlineCategoria.chrRecomendado =
+              json.productoOnlineCategoria.chrRecomendado;
+            _producto.productoOnlineCategoria.chrDestacadoMarca =
+              json.productoOnlineCategoria.chrDestacadoMarca;
+            _producto.productoOnlineCategoria.chrOferta =
+              json.productoOnlineCategoria.chrOferta;
+            _producto.productoOnlineCategoria.chrRemate =
+              json.productoOnlineCategoria.chrRemate;
+            _producto.productoOnlineCategoria.chrDestacado =
+              json.productoOnlineCategoria.chrDestacado;
           }
         }
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
@@ -140,15 +206,11 @@ export default function ImagenProducto() {
           server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
         });
       }
-      setChrCodigoProducto(_chrCodigoProducto);
+
       handleEventBuiltList(_rowsProductoImage, _producto);
-      handleLoadAtributoProducto(_chrCodigoProducto)
-    } else {
-      dispatch({
-        type: actionType.ERROR,
-        server: { error: "Ingrese el codigo de producto", success: SUCCESS_SERVER.SUCCES_SERVER_WARRING },
-      });
+      handleLoadAtributoProducto(_chrCodigoProducto);
     }
+    setChrCodigoProducto(_chrCodigoProducto);
   }
   function handleEventBuiltList(_rowsProductoImage, _producto) {
     let _rowsProductoImageHtml = [];
@@ -212,25 +274,37 @@ export default function ImagenProducto() {
           <td style={{ width: "20%" }}>
             &nbsp;{element.caracteristica.chrDescripcion}
           </td>
-          <td style={{ width: "20%" }}>
-            &nbsp;{element.chrValue}
-          </td>
+          <td style={{ width: "20%" }}>&nbsp;{element.chrValue}</td>
           <td style={{ width: "5%" }}>
-            &nbsp;&nbsp;<button className="btn btn-primary fa fa-trash" title="Eliminar"
-              onClick={() => handleEventEliminarAtributoProducto(element.numCodProdCaracteristica)}></button>
+            &nbsp;&nbsp;
+            <button
+              className="btn btn-primary fa fa-trash"
+              title="Eliminar"
+              onClick={() =>
+                handleEventEliminarAtributoProducto(
+                  element.numCodProdCaracteristica
+                )
+              }
+            ></button>
           </td>
         </tr>
       );
     }
     dispatch({
       type: actionType.LIST_PRODUCTO_ATRIBUTO,
-      rowsProductoAtributoHtml: _rowsProductoAtributoHtml
-
+      rowsProductoAtributoHtml: _rowsProductoAtributoHtml,
     });
   }
-  async function handleEventEliminarAtributoProducto(_numCodProdCaracteristica) {
-    handleEventGuardarProductoAtributo(_numCodProdCaracteristica, state.producto.chrCodigoProducto,
-      "", "", CRUD.DELETE)
+  async function handleEventEliminarAtributoProducto(
+    _numCodProdCaracteristica
+  ) {
+    handleEventGuardarProductoAtributo(
+      _numCodProdCaracteristica,
+      state.producto.chrCodigoProducto,
+      "",
+      "",
+      CRUD.DELETE
+    );
   }
   async function handleEventSelectItem(obj) {
     let _produto = {
@@ -392,10 +466,15 @@ export default function ImagenProducto() {
       });
     }
   }
-  async function handleEventGuardarProductoAtributo(_numCodProdCaracteristica, _chrCodigoProducto,
-    _numCodigoCaracteristica, _chrValue, _crud) {
+  async function handleEventGuardarProductoAtributo(
+    _numCodProdCaracteristica,
+    _chrCodigoProducto,
+    _numCodigoCaracteristica,
+    _chrValue,
+    _crud
+  ) {
     let _validate = "1";
-    let _menssage = ""
+    let _menssage = "";
 
     if (_chrCodigoProducto === "") {
       _menssage = "Es necesario seleccionar un producto. ";
@@ -417,19 +496,18 @@ export default function ImagenProducto() {
         chrCodigoProducto: _chrCodigoProducto,
         caracteristica: { numCodigoCaracteristica: _numCodigoCaracteristica },
         chrValue: _chrValue,
-        crud: _crud.descripcion
+        crud: _crud.descripcion,
       });
 
       if (rpt.status === HttpStatus.HttpStatus_OK) {
         const json = await rpt.json();
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-          handleLoadAtributoProducto(_chrCodigoProducto)
+          handleLoadAtributoProducto(_chrCodigoProducto);
           dispatch({
             type: actionType.SET_RESET,
             numCodigoCaracteristica: 0,
             chrValue: "",
           });
-
         }
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
           dispatch({
@@ -515,11 +593,14 @@ export default function ImagenProducto() {
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let i = 0; i < json.lista.length; i++) {
           let obj = json.lista[i];
-          _rowsAtributo.push(<option
-            value={obj.numCodigoCaracteristica}
-            key={obj.numCodigoCaracteristica}>
-            {obj.chrDescripcion}
-          </option>);
+          _rowsAtributo.push(
+            <option
+              value={obj.numCodigoCaracteristica}
+              key={obj.numCodigoCaracteristica}
+            >
+              {obj.chrDescripcion}
+            </option>
+          );
         }
         dispatch({
           type: actionType.LIST_ATRIBUTO,
@@ -539,40 +620,80 @@ export default function ImagenProducto() {
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
       });
     }
-
   }
 
-
   async function handleLoadReporte(filter) {
-
     let _rowsAtributo = [];
     const rpt = await listaProductoReporte({
       chrDestacado: filter.isDestacado === true ? "1" : "0",
       chrRecomendado: filter.isRecomendado === true ? "1" : "0",
       chrOferta: filter.isOferta === true ? "1" : "0",
       chrRemate: filter.isRemate === true ? "1" : "0",
-      chrDestacadoMarca: filter.isDestacadoMarca === true ? "1" : "0"
+      chrDestacadoMarca: filter.isDestacadoMarca === true ? "1" : "0",
     });
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
       if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
         for (let i = 0; i < json.lista.length; i++) {
           let obj = json.lista[i];
-          _rowsAtributo.push(<tr key={i}>
-            <td>
-              <i
-                className="fa-btn fa fa-check"
-                onClick={() => handleEventFindProducto(obj.chrCodigoProducto)}
-              ></i>{obj.chrCodigoProducto}
-            </td>
-            <td>{obj.vchDescripcion}</td>
-            <td>{obj.familia.vchDescripcion}</td>
-            <td style={{ textAlign: "center", }}>{obj.chrDestacado === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
-            <td style={{ textAlign: "center", }}>{obj.chrOferta === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
-            <td style={{ textAlign: "center", }}>{obj.chrRecomendado === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
-            <td style={{ textAlign: "center", }}>{obj.chrRemate === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
-            <td style={{ textAlign: "center", }}>{obj.chrDestacadoMarca === "1" ? <i className="fa fa-check" aria-hidden="true">Si</i> : ""}</td>
-          </tr>);
+          _rowsAtributo.push(
+            <tr key={i}>
+              <td>
+                <i
+                  className="fa-btn fa fa-check"
+                  onClick={() => handleEventFindProducto(obj.chrCodigoProducto)}
+                ></i>
+                {obj.chrCodigoProducto}
+              </td>
+              <td>{obj.vchDescripcion}</td>
+              <td>{obj.familia.vchDescripcion}</td>
+              <td style={{ textAlign: "center" }}>
+                {obj.chrDestacado === "1" ? (
+                  <i className="fa fa-check" aria-hidden="true">
+                    Si
+                  </i>
+                ) : (
+                  ""
+                )}
+              </td>
+              <td style={{ textAlign: "center" }}>
+                {obj.chrOferta === "1" ? (
+                  <i className="fa fa-check" aria-hidden="true">
+                    Si
+                  </i>
+                ) : (
+                  ""
+                )}
+              </td>
+              <td style={{ textAlign: "center" }}>
+                {obj.chrRecomendado === "1" ? (
+                  <i className="fa fa-check" aria-hidden="true">
+                    Si
+                  </i>
+                ) : (
+                  ""
+                )}
+              </td>
+              <td style={{ textAlign: "center" }}>
+                {obj.chrRemate === "1" ? (
+                  <i className="fa fa-check" aria-hidden="true">
+                    Si
+                  </i>
+                ) : (
+                  ""
+                )}
+              </td>
+              <td style={{ textAlign: "center" }}>
+                {obj.chrDestacadoMarca === "1" ? (
+                  <i className="fa fa-check" aria-hidden="true">
+                    Si
+                  </i>
+                ) : (
+                  ""
+                )}
+              </td>
+            </tr>
+          );
         }
         dispatch({
           type: actionType.LST_REPORTE,
@@ -592,12 +713,13 @@ export default function ImagenProducto() {
         server: { error: "", success: SUCCESS_SERVER.SUCCES_SERVER_ERROR },
       });
     }
-
   }
 
   async function handleLoadAtributoProducto(_chrCodigoProducto) {
     let _rowsProductoAtributo = [];
-    const rpt = await listaProductoAtributo({ chrCodigoProducto: _chrCodigoProducto });
+    const rpt = await listaProductoAtributo({
+      chrCodigoProducto: _chrCodigoProducto,
+    });
 
     if (rpt.status === HttpStatus.HttpStatus_OK) {
       const json = await rpt.json();
@@ -608,7 +730,11 @@ export default function ImagenProducto() {
             numCodProdCaracteristica: obj.numCodProdCaracteristica,
             chrCodigoProducto: obj.chrCodigoProducto,
             chrValue: obj.chrValue,
-            caracteristica: { chrDescripcion: obj.caracteristica.chrDescripcion, numCodigoCaracteristica: obj.caracteristica.numCodigoCaracteristica }
+            caracteristica: {
+              chrDescripcion: obj.caracteristica.chrDescripcion,
+              numCodigoCaracteristica:
+                obj.caracteristica.numCodigoCaracteristica,
+            },
           });
         }
       }
@@ -625,7 +751,7 @@ export default function ImagenProducto() {
       });
     }
 
-    handleEventBuiltListProductoCaracteristica(_rowsProductoAtributo)
+    handleEventBuiltListProductoCaracteristica(_rowsProductoAtributo);
   }
 
   async function handleEventGuardarCategoria() {
@@ -637,15 +763,13 @@ export default function ImagenProducto() {
         chrDestacado: state.isDestacado,
         chrOferta: state.isOferta,
         chrRemate: state.isRemate,
-        crud: CRUD.UPDATE.descripcion
-
+        crud: CRUD.UPDATE.descripcion,
       });
 
       if (rpt.status === HttpStatus.HttpStatus_OK) {
         const json = await rpt.json();
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
           handleEventFindProducto(state.producto.chrCodigoProducto);
-
         }
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
           dispatch({
@@ -670,7 +794,6 @@ export default function ImagenProducto() {
     }
   }
 
-
   return (
     <>
       <div className="link-href">
@@ -681,18 +804,30 @@ export default function ImagenProducto() {
       </div>
       <div className="prod-img-upload">
         <div className="prod-img-search">
-          <label>Codigo Producto&nbsp;&nbsp;&nbsp;</label>
+          <label>Producto&nbsp;&nbsp;:&nbsp;</label>
           <input
             type="text"
+            className="form-control"
             value={chrCodigoProducto}
-            onChange={(e) => handleEventFindProducto(e.target.value)}
+            onChange={(e) => handleEventFilterProducto(e.target.value)}
           ></input>
           <button
             className=" btn btn-primary fa fa-search"
-            onClick={() => handleEventFindProducto(chrCodigoProducto)}
+            onClick={() => handleEventFilterProducto(chrCodigoProducto)}
           ></button>
-          {state.producto.chrCodigoProducto === '' ? '' : <>
-            &nbsp;&nbsp;&nbsp;&nbsp;{state.producto.familia.vchDescripcion}&nbsp;&nbsp;{chrCodigoProducto}&nbsp;&nbsp;{state.producto.vchDescripcion}</>}
+          {state.producto.chrCodigoProducto === "" ? (
+            ""
+          ) : (
+            <>
+              &nbsp;&nbsp;&nbsp;&nbsp;{state.producto.familia.vchDescripcion}
+              &nbsp;&nbsp;{chrCodigoProducto}&nbsp;&nbsp;
+              {state.producto.vchDescripcion}
+            </>
+          )}
+          {state.diplayFilter===true?<> <div className="prod-img-search-float">
+            {state.listaFilterProducto}
+          </div></>:<></>}
+         
         </div>
         <div className="prod-img-search-tab">
           <ul className="nav nav-tabs">
@@ -801,11 +936,14 @@ export default function ImagenProducto() {
                     onChange={handleEnventReadFile}
                     ref={inputFile}
                   ></input>
-                  <button className="btn btn-primary fa fa-upload btn-file"
-                          onClick={(e) => {                            
-                            inputFile.current && inputFile.current.click();
-                          }}
-                        >&nbsp;Seleccionar Imagen</button>
+                  <button
+                    className="btn btn-primary fa fa-upload btn-file"
+                    onClick={(e) => {
+                      inputFile.current && inputFile.current.click();
+                    }}
+                  >
+                    &nbsp;Seleccionar Imagen
+                  </button>
                 </div>
                 <div className="prod-card-row">
                   <label>Código</label>
@@ -858,7 +996,7 @@ export default function ImagenProducto() {
                     disabled={
                       state.productoImangen.crud.codigoCrud ===
                         CRUD.INSERT.codigoCrud ||
-                        state.productoImangen.crud.codigoCrud ===
+                      state.productoImangen.crud.codigoCrud ===
                         CRUD.UPDATE.codigoCrud
                         ? false
                         : true
@@ -873,7 +1011,7 @@ export default function ImagenProducto() {
                     disabled={
                       state.productoImangen.crud.codigoCrud ===
                         CRUD.DELETE.codigoCrud ||
-                        state.productoImangen.crud.codigoCrud ===
+                      state.productoImangen.crud.codigoCrud ===
                         CRUD.UPDATE.codigoCrud
                         ? false
                         : true
@@ -904,28 +1042,44 @@ export default function ImagenProducto() {
                   className="form-control"
                   name="chrAtributo"
                   value={state.numCodigoCaracteristica}
-                  onChange={(e) => dispatch({
-                    type: actionType.SET_CODIGO_CARACTERISTICA,
-                    numCodigoCaracteristica: e.target.value
-                  })}
+                  onChange={(e) =>
+                    dispatch({
+                      type: actionType.SET_CODIGO_CARACTERISTICA,
+                      numCodigoCaracteristica: e.target.value,
+                    })
+                  }
                 >
                   <option value="0">-- por favor, seleccione --</option>
                   {state.rowsAtributo}
                 </select>
                 <label>Valor</label>
-                <input type="text" value={state.chrValue}
-                  onChange={(e) => dispatch({
-                    type: actionType.SET_VALUE_CARACTERISTICA,
-                    chrValue: e.target.value
-                  })}></input>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={state.chrValue}
+                  onChange={(e) =>
+                    dispatch({
+                      type: actionType.SET_VALUE_CARACTERISTICA,
+                      chrValue: e.target.value,
+                    })
+                  }
+                ></input>
 
                 <button
                   className="btn btn-primary  fa fa-plus"
                   title="Guardar"
-                  onClick={() => handleEventGuardarProductoAtributo(0,
-                    state.producto.chrCodigoProducto, state.numCodigoCaracteristica, state.chrValue, CRUD.INSERT)}
-                >&nbsp;Adicionar</button>
-
+                  onClick={() =>
+                    handleEventGuardarProductoAtributo(
+                      0,
+                      state.producto.chrCodigoProducto,
+                      state.numCodigoCaracteristica,
+                      state.chrValue,
+                      CRUD.INSERT
+                    )
+                  }
+                >
+                  &nbsp;Adicionar
+                </button>
               </div>
               <hr />
               <div className="prod-img-search-row prod-img-search-table">
@@ -974,40 +1128,55 @@ export default function ImagenProducto() {
                   <tbody>{state.rowsProductoAtributoHtml}</tbody>
                 </table>
               </div>
-
             </div>
             <div className="prod-img-search-row2">
               <div className="producto-card">
                 <div className="prod-card-row">
-                  <div className="div-row-1"><label>Es Destacado?</label></div>
+                  <div className="div-row-1">
+                    <label>Es Destacado?</label>
+                  </div>
                   <div className="div-row-2">
                     <input
                       type="checkbox"
                       checked={state.isDestacado === "1" ? true : false}
                       onChange={(e) =>
-                        dispatch({ type: actionType.SET_DESTACADO, isDestacado: (e.target.checked ? "1" : "0") })
+                        dispatch({
+                          type: actionType.SET_DESTACADO,
+                          isDestacado: e.target.checked ? "1" : "0",
+                        })
                       }
                     ></input>
                   </div>
-                  <div className="div-row-1"><label>Es Recomendado?</label></div>
+                  <div className="div-row-1">
+                    <label>Es Recomendado?</label>
+                  </div>
                   <div className="div-row-2">
                     <input
                       type="checkbox"
                       checked={state.isRecomendado === "1" ? true : false}
                       onChange={(e) =>
-                        dispatch({ type: actionType.SET_RECOMENDADO, isRecomendado: (e.target.checked ? "1" : "0") })
+                        dispatch({
+                          type: actionType.SET_RECOMENDADO,
+                          isRecomendado: e.target.checked ? "1" : "0",
+                        })
                       }
                     ></input>
                   </div>
                 </div>
                 <div className="prod-card-row">
-                  <div className="div-row-1"> <label>Esta en Oferta?</label></div>
+                  <div className="div-row-1">
+                    {" "}
+                    <label>Esta en Oferta?</label>
+                  </div>
                   <div className="div-row-2">
                     <input
                       type="checkbox"
                       checked={state.isOferta === "1" ? true : false}
                       onChange={(e) =>
-                        dispatch({ type: actionType.SET_OFERTA, isOferta: (e.target.checked ? "1" : "0") })
+                        dispatch({
+                          type: actionType.SET_OFERTA,
+                          isOferta: e.target.checked ? "1" : "0",
+                        })
                       }
                     ></input>
                   </div>
@@ -1019,7 +1188,10 @@ export default function ImagenProducto() {
                       type="checkbox"
                       checked={state.isRemate === "1" ? true : false}
                       onChange={(e) =>
-                        dispatch({ type: actionType.SET_REMATE, isRemate: (e.target.checked ? "1" : "0") })
+                        dispatch({
+                          type: actionType.SET_REMATE,
+                          isRemate: e.target.checked ? "1" : "0",
+                        })
                       }
                     ></input>
                   </div>
@@ -1033,11 +1205,13 @@ export default function ImagenProducto() {
                       type="checkbox"
                       checked={state.isDestacadoMarca === "1" ? true : false}
                       onChange={(e) =>
-                        dispatch({ type: actionType.SET_DESTACADO_MARCA, isDestacadoMarca: (e.target.checked ? "1" : "0") })
+                        dispatch({
+                          type: actionType.SET_DESTACADO_MARCA,
+                          isDestacadoMarca: e.target.checked ? "1" : "0",
+                        })
                       }
                     ></input>
                   </div>
-
                 </div>
                 <hr />
                 <div className="prod-card-row row-right ">
@@ -1055,229 +1229,250 @@ export default function ImagenProducto() {
         ) : (
           ""
         )}
-        {tabsIndex === _TabsIndex.TABS_REPORTE ? <>
-          <div className="prod-img-search-row-reporte">
-            <div className="prod-img-search-row-reporte-filter">
+        {tabsIndex === _TabsIndex.TABS_REPORTE ? (
+          <>
+            <div className="prod-img-search-row-reporte">
+              <div className="prod-img-search-row-reporte-filter">
+                <div className="prod-card-row">
+                  <div className="div-row-1">
+                    <label>Filtrar solo:</label>
+                  </div>
+                </div>
+                <div className="prod-card-row">
+                  <div className="div-row-1">
+                    <label>Destacado:</label>
+                  </div>
+                  <div className="div-row-2">
+                    <input
+                      type="checkbox"
+                      checked={state.filterReporte.isDestacado}
+                      onChange={(e) => {
+                        dispatch({
+                          type: actionType.SET_DESTACADO_FILTER,
+                          isDestacado: e.target.checked,
+                        });
+                        let _filter = {
+                          isDestacado: e.target.checked,
+                          isRecomendado: state.filterReporte.isRecomendado,
+                          isOferta: state.filterReporte.isOferta,
+                          isRemate: state.filterReporte.isRemate,
+                          isDestacadoMarca:
+                            state.filterReporte.isDestacadoMarca,
+                        };
+                        handleLoadReporte(_filter);
+                      }}
+                    ></input>
+                  </div>
+                </div>
 
-              <div className="prod-card-row">
-                <div className="div-row-1">
-                  <label>Filtrar solo:</label>
+                <div className="prod-card-row">
+                  <div className="div-row-1">
+                    <label>Recomendado:</label>
+                  </div>
+                  <div className="div-row-2">
+                    <input
+                      type="checkbox"
+                      checked={state.filterReporte.isRecomendado}
+                      onChange={(e) => {
+                        dispatch({
+                          type: actionType.SET_RECOMENDADO_FILTER,
+                          isRecomendado: e.target.checked,
+                        });
+                        let _filter = {
+                          isDestacado: state.filterReporte.isDestacado,
+                          isRecomendado: e.target.checked,
+                          isOferta: state.filterReporte.isOferta,
+                          isRemate: state.filterReporte.isRemate,
+                          isDestacadoMarca:
+                            state.filterReporte.isDestacadoMarca,
+                        };
+                        handleLoadReporte(_filter);
+                      }}
+                    ></input>
+                  </div>
                 </div>
-              </div>
-              <div className="prod-card-row">
-                <div className="div-row-1">
-                  <label>Destacado:</label>
-                </div>
-                <div className="div-row-2">
-                  <input
-                    type="checkbox"
-                    checked={state.filterReporte.isDestacado}
-                    onChange={(e) => {
-                      dispatch({ type: actionType.SET_DESTACADO_FILTER, isDestacado: e.target.checked })
-                      let _filter = {
-                        isDestacado: e.target.checked,
-                        isRecomendado: state.filterReporte.isRecomendado,
-                        isOferta: state.filterReporte.isOferta,
-                        isRemate: state.filterReporte.isRemate,
-                        isDestacadoMarca: state.filterReporte.isDestacadoMarca,
-                      }
-                      handleLoadReporte(_filter);
-                    }}></input>
-                </div>
-              </div>
 
+                <div className="prod-card-row">
+                  <div className="div-row-1">
+                    <label>Oferta:</label>
+                  </div>
+                  <div className="div-row-2">
+                    <input
+                      type="checkbox"
+                      checked={state.filterReporte.isOferta}
+                      onChange={(e) => {
+                        dispatch({
+                          type: actionType.SET_OFERTA_FILTER,
+                          isOferta: e.target.checked,
+                        });
+                        let _filter = {
+                          isDestacado: state.filterReporte.isDestacado,
+                          isRecomendado: state.filterReporte.isRecomendado,
+                          isOferta: e.target.checked,
+                          isRemate: state.filterReporte.isRemate,
+                          isDestacadoMarca:
+                            state.filterReporte.isDestacadoMarca,
+                        };
+                        handleLoadReporte(_filter);
+                      }}
+                    ></input>
+                  </div>
+                </div>
+                <div className="prod-card-row">
+                  <div className="div-row-1">
+                    <label>Remate:</label>
+                  </div>
+                  <div className="div-row-2">
+                    <input
+                      type="checkbox"
+                      checked={state.filterReporte.isRemate}
+                      onChange={(e) => {
+                        dispatch({
+                          type: actionType.SET_REMATE_FILTER,
+                          isRemate: e.target.checked,
+                        });
+                        let _filter = {
+                          isDestacado: state.filterReporte.isDestacado,
+                          isRecomendado: state.filterReporte.isRecomendado,
+                          isOferta: state.filterReporte.isOferta,
+                          isRemate: e.target.checked,
+                          isDestacadoMarca:
+                            state.filterReporte.isDestacadoMarca,
+                        };
+                        handleLoadReporte(_filter);
+                      }}
+                    ></input>
+                  </div>
+                </div>
+                <div className="prod-card-row">
+                  <div className="div-row-1">
+                    <label>Destacado en marca:</label>
+                  </div>
+                  <div className="div-row-2">
+                    <input
+                      type="checkbox"
+                      checked={state.filterReporte.isDestacadoMarca}
+                      onChange={(e) => {
+                        dispatch({
+                          type: actionType.SET_DESTACADO_MARCA_FILTER,
+                          isDestacadoMarca: e.target.checked,
+                        });
+                        let _filter = {
+                          isDestacado: state.filterReporte.isDestacado,
+                          isRecomendado: state.filterReporte.isRecomendado,
+                          isOferta: state.filterReporte.isOferta,
+                          isRemate: state.filterReporte.isRemate,
+                          isDestacadoMarca: e.target.checked,
+                        };
+                        handleLoadReporte(_filter);
+                      }}
+                    ></input>
+                  </div>
+                </div>
+                <div className="prod-card-row">
+                  <div className="div-row-1">
+                    <ReactHTMLTableToExcel
+                      id="table-xls1"
+                      className="btn btn-primary"
+                      table="table-xls"
+                      filename="Reporte"
+                      sheet="Reporte"
+                      buttonText="Exportar"
+                    ></ReactHTMLTableToExcel>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div className="tbl-rpt-display">
+                <table id="table-xls">
+                  <thead>
+                    <tr>
+                      <td
+                        style={{
+                          width: "13%",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Codigo
+                      </td>
 
-              <div className="prod-card-row">
-                <div className="div-row-1">
-                  <label>Recomendado:</label>
-                </div>
-                <div className="div-row-2">
-                  <input
-                    type="checkbox"
-                    checked={state.filterReporte.isRecomendado}
-                    onChange={(e) => {
-                      dispatch({ type: actionType.SET_RECOMENDADO_FILTER, isRecomendado: e.target.checked })
-                      let _filter = {
-                        isDestacado: state.filterReporte.isDestacado,
-                        isRecomendado: e.target.checked,
-                        isOferta: state.filterReporte.isOferta,
-                        isRemate: state.filterReporte.isRemate,
-                        isDestacadoMarca: state.filterReporte.isDestacadoMarca,
-                      }
-                      handleLoadReporte(_filter);
-                    }}></input>
-                </div>
-              </div>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Descripcion
+                      </td>
+                      <td
+                        style={{
+                          width: "8%",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Marca
+                      </td>
+                      <td
+                        style={{
+                          width: "8%",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Destacado
+                      </td>
+                      <td
+                        style={{
+                          width: "8%",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Oferta
+                      </td>
 
-              <div className="prod-card-row">
-                <div className="div-row-1">
-                  <label>Oferta:</label>
-                </div>
-                <div className="div-row-2">
-                  <input
-                    type="checkbox"
-                    checked={state.filterReporte.isOferta}
-                    onChange={(e) => {
-                      dispatch({ type: actionType.SET_OFERTA_FILTER, isOferta: e.target.checked })
-                      let _filter = {
-                        isDestacado: state.filterReporte.isDestacado,
-                        isRecomendado: state.filterReporte.isRecomendado,
-                        isOferta: e.target.checked,
-                        isRemate: state.filterReporte.isRemate,
-                        isDestacadoMarca: state.filterReporte.isDestacadoMarca,
-                      }
-                      handleLoadReporte(_filter);
-                    }}></input>
-                </div>
-              </div>
-              <div className="prod-card-row">
-                <div className="div-row-1">
-                  <label>Remate:</label>
-                </div>
-                <div className="div-row-2">
-                  <input
-                    type="checkbox"
-                    checked={state.filterReporte.isRemate}
-                    onChange={(e) => {
-                      dispatch({ type: actionType.SET_REMATE_FILTER, isRemate: e.target.checked })
-                      let _filter = {
-                        isDestacado: state.filterReporte.isDestacado,
-                        isRecomendado: state.filterReporte.isRecomendado,
-                        isOferta: state.filterReporte.isOferta,
-                        isRemate: e.target.checked,
-                        isDestacadoMarca: state.filterReporte.isDestacadoMarca,
-                      }
-                      handleLoadReporte(_filter);
-                    }}></input>
-                </div>
-              </div>
-              <div className="prod-card-row">
-                <div className="div-row-1">
-                  <label>Destacado en marca:</label>
-                </div>
-                <div className="div-row-2">
-                  <input
-                    type="checkbox"
-                    checked={state.filterReporte.isDestacadoMarca}
-                    onChange={(e) => {
-                      dispatch({ type: actionType.SET_DESTACADO_MARCA_FILTER, isDestacadoMarca: e.target.checked })
-                      let _filter = {
-                        isDestacado: state.filterReporte.isDestacado,
-                        isRecomendado: state.filterReporte.isRecomendado,
-                        isOferta: state.filterReporte.isOferta,
-                        isRemate: state.filterReporte.isRemate,
-                        isDestacadoMarca: e.target.checked,
-                      }
-                      handleLoadReporte(_filter);
-                    }}></input>
-                </div>
-              </div>
-              <div className="prod-card-row">
-                <div className="div-row-1">
-                  <ReactHTMLTableToExcel
-                    id="table-xls1"
-                    className="btn btn-primary"
-                    table="table-xls"
-                    filename="Reporte"
-                    sheet="Reporte"
-                    buttonText="Exportar">
-
-                  </ReactHTMLTableToExcel>
-                </div>
-              </div>
+                      <td
+                        style={{
+                          width: "8%",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Recomendado
+                      </td>
+                      <td
+                        style={{
+                          width: "8%",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Remate
+                      </td>
+                      <td
+                        style={{
+                          width: "12%",
+                          textAlign: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Destacado en Marca
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>{state.rowsReporte}</tbody>
+                </table>
+              </div>{" "}
             </div>
-            <hr />
-            <div className="tbl-rpt-display">
-
-              <table id="table-xls">
-                <thead>
-                  <tr>
-                    <td
-                      style={{
-                        width: "13%",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Codigo
-                    </td>
-
-                    <td
-                      style={{
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Descripcion
-                    </td>
-                    <td
-                      style={{
-                        width: "8%",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Marca
-                    </td>
-                    <td
-                      style={{
-                        width: "8%",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Destacado
-                    </td>
-                    <td
-                      style={{
-                        width: "8%",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Oferta
-                    </td>
-
-                    <td
-                      style={{
-                        width: "8%",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Recomendado
-                    </td>
-                    <td
-                      style={{
-                        width: "8%",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Remate
-                    </td>
-                    <td
-                      style={{
-                        width: "12%",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Destacado en Marca
-                    </td>
-                  </tr>
-
-                </thead>
-                <tbody>
-                  {state.rowsReporte}
-                </tbody>
-              </table>
-            </div> </div>
-        </> : ""}
+          </>
+        ) : (
+          ""
+        )}
       </div>
 
       <ServerException server={state.server}></ServerException>
-     
     </>
   );
 }
@@ -1308,6 +1503,7 @@ let actionType = {
   SET_OFERTA_FILTER: "SET_OFERTA_FILTER",
   SET_REMATE_FILTER: "SET_REMATE_FILTER",
   SET_DESTACADO_MARCA_FILTER: "SET_DESTACADO_MARCA_FILTER",
+  SET_FILTER: "SET_FILTER",
 };
 const reducer = (state, action) => {
   let _filterReporte = state.filterReporte;
@@ -1369,26 +1565,22 @@ const reducer = (state, action) => {
       return {
         ...state,
         rowsAtributo: action.rowsAtributo,
-
       };
     case actionType.LST_REPORTE:
       return {
         ...state,
         rowsReporte: action.rowsReporte,
-
       };
 
     case actionType.LIST_PRODUCTO_ATRIBUTO:
       return {
         ...state,
         rowsProductoAtributoHtml: action.rowsProductoAtributoHtml,
-
       };
     case actionType.SET_CODIGO_CARACTERISTICA:
       return {
         ...state,
         numCodigoCaracteristica: action.numCodigoCaracteristica,
-
       };
     case actionType.SET_VALUE_CARACTERISTICA:
       return {
@@ -1402,17 +1594,14 @@ const reducer = (state, action) => {
         numCodigoCaracteristica: action.numCodigoCaracteristica,
       };
     case actionType.SET_DESTACADO_FILTER:
-
       _filterReporte.isDestacado = action.isDestacado;
       return { ...state, filterReporte: _filterReporte };
 
     case actionType.SET_OFERTA_FILTER:
-
       _filterReporte.isOferta = action.isOferta;
       return { ...state, filterReporte: _filterReporte };
 
     case actionType.SET_REMATE_FILTER:
-
       _filterReporte.isRemate = action.isRemate;
       return { ...state, filterReporte: _filterReporte };
 
@@ -1423,9 +1612,13 @@ const reducer = (state, action) => {
     case actionType.SET_DESTACADO_MARCA_FILTER:
       _filterReporte.isDestacadoMarca = action.isDestacadoMarca;
       return { ...state, filterReporte: _filterReporte };
+    case actionType.SET_FILTER:
+      return {
+        ...state,
+        listaFilterProducto: action.listaFilterProducto,
+        diplayFilter: action.diplayFilter,
+      };
     default:
       return state;
   }
 };
-
-

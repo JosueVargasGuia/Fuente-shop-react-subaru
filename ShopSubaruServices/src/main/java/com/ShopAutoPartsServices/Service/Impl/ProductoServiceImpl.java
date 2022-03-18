@@ -127,6 +127,11 @@ public class ProductoServiceImpl implements ProductoService {
 		// TODO Auto-generated method stub
 		return productoServiceRepository.updateProductoOutlet(outletRequets);
 	}
+	@Override
+	public List<Producto> listarProductoFindCodigoDesc(ProductoImagen productoImagen)throws Exception  {
+		// TODO Auto-generated method stub
+		return productoServiceRepository.listarProductoFindCodigoDesc(productoImagen);
+	}
 	 
 
 }

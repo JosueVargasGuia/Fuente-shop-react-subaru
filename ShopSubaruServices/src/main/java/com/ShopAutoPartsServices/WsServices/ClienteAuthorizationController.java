@@ -723,16 +723,16 @@ public class ClienteAuthorizationController {
 	}
 
 	public String HTML_PETICION_CAMBIO_CONTRASEÑA(String nombrecompleto, String tokenUrl) {
-		return "<!DOCTYPE html>\r\n" + "<html lang='en'>\r\n" + "\r\n" + "<body style='background: #a29e9e;'>\r\n"
+		String  html="<!DOCTYPE html>\r\n" + "<html lang='en'>\r\n" + "\r\n" + "<body style='background: #a29e9e;'>\r\n"
 				+ "    <div style='background:#fbfbfb;width: 500px; min-width: 500px;\r\n"
 				+ "    margin: auto;margin-top: 2em;   \r\n" + "    font-family: sans-serif,monospace,arial; \r\n"
 				+ "    font-size:  1em; color:#000;\r\n" + "    border:solid 1px #fbfbfb'>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;height: 25px;'>\r\n"
 				+ "\r\n" + "        </div>\r\n"
-				+ "        <div style='width: 250px;height: auto;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>\r\n"
+				+ "        <div style='width: 225px;height: auto;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>\r\n"
 				+ "            <a href='" + empresa.getWeburl() + "'>\r\n" + "                <img src='"
 				+ empresa.getLogourl() + "' alt='" + empresa.getAlias()
-				+ "' style='width: 250px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
+				+ "' style='width: 225px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight:  bold;  '>Hola "
 				+ nombrecompleto + ",</div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>Confirmación de la solicitud de contraseña en "
@@ -745,10 +745,12 @@ public class ClienteAuthorizationController {
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;'>Si usted no hizo esta solicitud, simplemente ignore este correo electrónico.</div>\r\n"
 				+ "\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7'>\r\n"
-				+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()
+				+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'> <img src='"+ empresa.getLogourlText()+"' style='width: 180px;height: auto;'></img>" 
 				+ "</a>\r\n" + "        </div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;height: 35px;'>\r\n"
 				+ "\r\n" + "        </div>\r\n" + "    </div>\r\n" + "</body>\r\n" + "\r\n" + "</html>";
+		System.out.println(html);
+		return html;
 	}
 
 	public String HTML_CONFIRMACION_CAMBIO_CONTRASEÑA(String nombrecompleto) {

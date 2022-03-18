@@ -1,6 +1,7 @@
 /*https://webdesign.tutsplus.com/es/tutorials/bring-your-forms-up-to-date-with-css3-and-html5-validation--webdesign-4738 */
 import { useReducer } from "react";
 import "../styles/others/test.scss";
+ 
 
 let actionType = {
   nombre: "nombre",
@@ -25,6 +26,11 @@ export default function TestAuto() {
   }
   return (
     <div className="test-content">
+       <div className="test-content-text">
+         <div>
+        <span class="filter-home-emp-nombre">EA Corp</span>&nbsp;<span class="filter-home-emp-sociedad">SAC&nbsp;</span></div>
+      </div>
+       
       <form onSubmit={(e)=>handleEventSumit(e)}>
         <div className="test-content-form">
           <div className="form-row">
