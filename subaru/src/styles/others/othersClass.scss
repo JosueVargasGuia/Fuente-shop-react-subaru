@@ -904,8 +904,15 @@
             width: 50%;
         }
         button {
-            margin-left: 1em;
+            margin-left: 0.3em;
             width: 120px;
+            padding-top: 0.275rem;
+            padding-right: 0rem;
+            padding-bottom: 0.275rem;
+            padding-left: 0rem;
+        }
+        .btn-file {
+            width: 180px;
         }
     }
     .div-table {

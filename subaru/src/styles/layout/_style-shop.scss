@@ -2735,12 +2735,25 @@ h4 {
 
 .prod-card-row {
     display: flex;
-    margin-top: 0.5em;
+    margin-top: 0.2em;
+    margin-left: 0.5em;
+    .form-ctrl-lg {
+        display: none;
+    }
+    .btn-file {
+        width: 180px;
+    }
+}
+
+.prod-card-row-center {
+    justify-content: center;
 }
 
 .prod-card-row label {
     width: 30%;
     font-weight: bold;
+    margin-bottom: 0em;
+    margin-right: 0.2em;
 }
 
 .prod-card-row div {
@@ -2755,6 +2768,9 @@ h4 {
 
 .prod-img-search {
     margin-left: 1em;
+    input {
+        margin-right: 0.3em;
+    }
 }
 
 .prod-img-search-row2 .producto-card {
@@ -2886,11 +2902,10 @@ h4 {
     padding-bottom: 3.28px;
 }
 
-.form-ctrl-lg {
-    min-height: calc(1.6em + 1rem + 2px);
-    padding: .5rem 1rem;
-    font-size: 1rem;
-    border-radius: .3rem;
+.form-body-stock {
+    .form-ctrl-lg {
+        display: none;
+    }
 }
 
 .form-ctrl[type=file]:not(:disabled):not([readonly]) {
@@ -2915,7 +2930,8 @@ h4 {
 }
 
 .producto-card .row-img {
-    min-height: 180px;
+    min-height: 205px;
+    margin-left: 0em;
 }
 
 .form-pago-link-tc {

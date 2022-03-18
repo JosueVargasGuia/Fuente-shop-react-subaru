@@ -77,9 +77,8 @@ public class IpnController {
 
 	@PostMapping(value = "/confirmar")
 	public ResponseEntity<String> confirmacionIziPay(HttpServletRequest httpServletRequest) {
-		try {
-
-			IpnRequets ipnRequets = new IpnRequets();
+		IpnRequets ipnRequets = new IpnRequets();
+		try {			
 			Gson g = new Gson();
 			Answer answer = g.fromJson(httpServletRequest.getParameter("kr-answer"), Answer.class);
 			ipnRequets.setEstadoCotizacion(EstadoCotizacion.CONFIRMADO);
@@ -107,9 +106,9 @@ public class IpnController {
 			cotizacionOnlineService.confirmarCotizacion(ipnRequets);
 
 		} catch (Exception e) {
-			return new ResponseEntity<String>("OK_OK", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("ERROR:"+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<String>("OK_OK", HttpStatus.OK);
+		return new ResponseEntity<String>("OK:Recepcion de estado:"+ipnRequets.getStatusAction()+" Status:"+ipnRequets.getStatus(), HttpStatus.OK);
 	}
 
 	/*
@@ -204,10 +203,8 @@ public class IpnController {
 	 * } catch (Exception e) { e.printStackTrace(); } }
 	 */
 
-	// @Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
-	// PRODUCCUIN DESAHABILITADO
-	public void scheduledConfirmaCotizacion() {
-		// logger.info( correoConfiguracion.getDeployApp().toString());
+	@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
+	public void scheduledConfirmaCotizacion() {	 
 		boolean correoStatusTipoCambioTomado = false;
 		String asuntoTipoCambioTomado = "Alerta de tipo de cambio tomado";
 		boolean correoStatus = false;
@@ -220,8 +217,7 @@ public class IpnController {
 		CorreoRequest correoRequest = new CorreoRequest();
 		BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion, empresa);
 		try {
-			List<ClienteFactura> lista = cotizacionOnlineService.obtenerCotizacionFactura();
-			// logger.info(new Date().getTime() + " Iniciando Cantidad:"+lista.size());
+			List<ClienteFactura> lista = cotizacionOnlineService.obtenerCotizacionFactura();			 
 			for (ClienteFactura clienteFactura : lista) {
 				ScheduledProceso scheduledProceso = new ScheduledProceso();
 				scheduledProceso.setEstadoCotizacion(clienteFactura.getEstadoCotizacion());

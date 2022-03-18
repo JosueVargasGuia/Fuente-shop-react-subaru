@@ -71,7 +71,10 @@
 }
 
 .prod-img-search-row .prod-img-search-row {
-    width: 98%;
+    width: 100%;
+    box-shadow: none;
+    padding: 0em;
+    margin: 0em;
 }
 
 .prod-img-search-table {

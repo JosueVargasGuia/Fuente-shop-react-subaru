@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import {
   CRUD,
   HttpStatus,
@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 export default function ImagenProducto() {
   const [chrCodigoProducto, setChrCodigoProducto] = useState("");
   const [file, setFile] = useState("");
+  const inputFile=useRef();
   const [state, dispatch] = useReducer(reducer, {
     rowsProductoImage: [],
     rowsProductoImageHtml: [],
@@ -791,14 +792,20 @@ export default function ImagenProducto() {
             </div>
             <div className="prod-img-search-row2">
               <div className="producto-card">
-                <div className="prod-card-row">
+                <div className="prod-card-row prod-card-row-center">
                   <input
                     type="file"
                     accept=".png"
                     className="form-ctrl form-ctrl-lg"
                     value={file}
                     onChange={handleEnventReadFile}
+                    ref={inputFile}
                   ></input>
+                  <button className="btn btn-primary fa fa-upload btn-file"
+                          onClick={(e) => {                            
+                            inputFile.current && inputFile.current.click();
+                          }}
+                        >&nbsp;Seleccionar Imagen</button>
                 </div>
                 <div className="prod-card-row">
                   <label>Código</label>
