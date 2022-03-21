@@ -110,7 +110,7 @@ export default function ProductoFilter(props) {
       return "NO";
     }
   }
-  async function handleInitVariable(_identificador,target) {
+  async function handleInitVariable(_identificador) {
     let _MENU= {
       descripcion: "Todos los Productos",  
       srcimg:"",  

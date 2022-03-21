@@ -2786,7 +2786,7 @@ h4 {
         display: none;
     }
     .btn-file {
-        width: 180px;
+        width: 185px;
     }
 }
 
@@ -2822,7 +2822,7 @@ h4 {
     .prod-img-search-float {
         min-width: 50px;
         position: absolute;
-        margin-top: 29px;
+        margin-top: 35px;
         margin-left: 86px;
         width: 368px;
         background-color: var(--color-background-white);
@@ -2831,16 +2831,61 @@ h4 {
         flex-wrap: nowrap;
         align-content: space-around;
         font-size: 12px;
-        max-height: 120px;
-        border-radius: 5px;
+        max-height: 220px;
+        border-radius: 10px;
         overflow-x: auto;
+        padding: 0.2em;
+        box-shadow: 4px 4px 8px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
         .prod-img-row {
             padding: 0.5em;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             word-wrap: break-word;
+            cursor: pointer;
+            flex-wrap: nowrap;
+            border-bottom: solid 1px var(--color-arrow-active);
+            .prod-img-row-codigo {
+                font-weight: bold;
+                min-width: 90px;
+                cursor: pointer;
+            }
+            .prod-img-row-desc {
+                cursor: pointer;
+            }
+            &:hover {
+                color: var(--color-font3);
+                background-color: var(--color-arrow-active);
+            }
         }
     }
+}
+
+.prod-img-search-float::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.prod-img-search-float::-webkit-scrollbar:vertical {
+    width: 10px;
+}
+
+.prod-img-search-float::-webkit-scrollbar-button:increment,
+.contenedor::-webkit-scrollbar-button {
+    display: none;
+}
+
+.prod-img-search-float::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+.prod-img-search-float::-webkit-scrollbar-thumb {
+    background-color: var(--color-arrow-active);
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.prod-img-search-float::-webkit-scrollbar-track {
+    border-radius: 10px;
 }
 
 .prod-img-search-row2 .producto-card {

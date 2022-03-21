@@ -25,7 +25,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
-	Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
+	//Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
 
 	@SuppressWarnings("unchecked")
 	@Override

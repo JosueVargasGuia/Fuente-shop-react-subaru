@@ -47,6 +47,7 @@ let actionType = {
   flgOfertas: "flgOfertas",
   flgSuscripcion: "flgSuscripcion",
   ERROR: "ERROR",
+  ERROR_DISPLAY:"ERROR_DISPLAY",
   REQUETS: "REQUETS",
   LOAD_CLIENTE: "LOAD_CLIENTE",
   MODAL_SHOW_DIRECCION: "MODAL_SHOW_DIRECCION",
@@ -301,6 +302,14 @@ const reducer = (state, action) => {
         error: action.error,
         estado: action.estado,
       };
+      case actionType.ERROR_DISPLAY:
+        return {
+          ...state,
+          error: action.error,
+          estado: action.estado,
+          listaError:action.listaError
+        };
+      
     case actionType.REQUETS:
       return {
         ...state,
@@ -572,6 +581,7 @@ export default function RegistrarCliente(props) {
     estado: CRUD.INSERT.estado,
     accion: CRUD.INSERT,
     _type: _type.typePassword,
+    listaError:[]
   });
 
   const [modalConfirmarShow, dispatchModal] = useReducer(reducerModal, {
@@ -941,7 +951,7 @@ export default function RegistrarCliente(props) {
     });
 
     const valError = await handleValidarForm(state);
-
+    console.log(valError.listaError)
     if (valError.isValido) {
       let rowDireccion = [];
       for (let i = 0; i < state.lstDireccionData.length; i++) {
@@ -1037,12 +1047,13 @@ export default function RegistrarCliente(props) {
       }
     } else {
       dispatch({
-        type: actionType.ERROR,
+        type: actionType.ERROR_DISPLAY,
         error: valError,
         estado:
           state.accion === CRUD.INSERT
             ? CRUD.INSERT.estado
             : CRUD.UPDATE.estado,
+          listaError:valError.listaError
       });
     }
   }
@@ -1956,7 +1967,11 @@ export default function RegistrarCliente(props) {
                  
               </div>
             </div>
-            <div className="row-body row-leyenda-obligatorio">* Datos obligatorios</div>
+            <div className="row-body row-leyenda-obligatorio">* Datos obligatorios
+              <div className="box-error">
+                {state.listaError}
+              </div>
+            </div>
           </div>
           <div className="row-body-lista">{state.lstDireccion}</div>
         </div>
@@ -2458,8 +2473,9 @@ function handleValidarForm(state) {
     vchTelefonoFijo: { mensaje: "", isValidado: false },
     vchTelefonoMovil: { mensaje: "", isValidado: false },
     isValido: true,
+    listaError:[]
   };
-
+  let listaError=[];
   let emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
   /*Criterios de validaciones */
   let isValido = true;
@@ -2468,30 +2484,36 @@ function handleValidarForm(state) {
     _error.chrEmail.mensaje = "El correo es requerido";
     _error.chrEmail.isValidado = true;
     isValido = false;
+    listaError.push(<div className="registro-error-display">{_error.chrEmail.mensaje}</div>);
   } else if (emailRegex.test(state.chrEmail.toUpperCase()) === false) {
     _error.chrEmail.mensaje = "El formato el correo no es valido";
     _error.chrEmail.isValidado = true;
     isValido = false;
+    listaError.push(<div className="registro-error-display">{_error.chrEmail.mensaje}</div>);
   }
   if (!state.vchTelefonoMovil) {
     _error.vchTelefonoMovil.mensaje = "Ingrese su telefono movil";
     _error.vchTelefonoMovil.isValidado = true;
     isValido = false;
+    listaError.push(<div className="registro-error-display">{_error.vchTelefonoMovil.mensaje}</div>);
   }
   if (!state.vchNombre) {
     _error.vchNombre.mensaje = "Ingrese su nombre";
     _error.vchNombre.isValidado = true;
     isValido = false;
+    listaError.push(<div className="registro-error-display">{_error.vchNombre.mensaje}</div>);
   }
   if (!state.vchApellidoPaterno) {
     _error.vchApellidoPaterno.mensaje = "Ingrese su apellido paterno";
     _error.vchApellidoPaterno.isValidado = true;
     isValido = false;
+    listaError.push(<div className="registro-error-display">{_error.vchApellidoPaterno.mensaje}</div>);
   }
   if (!state.vchApellidoMaterno) {
     _error.vchApellidoMaterno.mensaje = "Ingrese su apellido materno";
     _error.vchApellidoMaterno.isValidado = true;
     isValido = false;
+    listaError.push(<div className="registro-error-display">{_error.vchApellidoMaterno.mensaje}</div>);
   }
   if (parseInt(state.numTipoCliente, 10) === 0) {
     _error.numTipoCliente.mensaje = "Seleccione el tipo de documento";
@@ -2499,6 +2521,8 @@ function handleValidarForm(state) {
     _error.vchDocumento.mensaje = "N° de documento es requerido";
     _error.vchDocumento.isValidado = true;
     isValido = false;
+    listaError.push(<div className="registro-error-display">{_error.numTipoCliente.mensaje}</div>);
+    listaError.push(<div className="registro-error-display">{_error.vchDocumento.mensaje}</div>);
   }
 
   if (state.numTipoCliente == TipoDocumento.DNI.numtipocliente) {
@@ -2511,6 +2535,7 @@ function handleValidarForm(state) {
         " dígitos";
       _error.vchDocumento.isValidado = true;
       isValido = false;
+      listaError.push(<div className="registro-error-display">{_error.vchDocumento.mensaje}</div>);
     }
   }
   if (state.numTipoCliente == TipoDocumento.CARNET_EXT.numtipocliente) {
@@ -2523,6 +2548,7 @@ function handleValidarForm(state) {
         " dígitos";
       _error.vchDocumento.isValidado = true;
       isValido = false;
+      listaError.push(<div className="registro-error-display">{_error.vchDocumento.mensaje}</div>);
     }
   }
   if (state.numTipoCliente == TipoDocumento.PASAPORTE.numtipocliente) {
@@ -2535,6 +2561,7 @@ function handleValidarForm(state) {
         " dígitos";
       _error.vchDocumento.isValidado = true;
       isValido = false;
+      listaError.push(<div className="registro-error-display">{_error.vchDocumento.mensaje}</div>);
     }
   }
   if (state.numTipoCliente == TipoDocumento.RUC.numtipocliente) {
@@ -2547,14 +2574,17 @@ function handleValidarForm(state) {
         " dígitos";
       _error.vchDocumento.isValidado = true;
       isValido = false;
+      listaError.push(<div className="registro-error-display">{_error.vchDocumento.mensaje}</div>);
     }
     if (!state.vchNombreCompleto) {
       _error.vchNombreCompleto.mensaje = "Ingrese la Razón Social";
       _error.vchNombreCompleto.isValidado = true;
       isValido = false;
+      listaError.push(<div className="registro-error-display">{_error.vchNombreCompleto.mensaje}</div>);
     } else if (state.vchNombreCompleto.length <= 3) {
       _error.vchNombreCompleto.mensaje = "Ingrese la Razón Social";
       _error.vchNombreCompleto.isValidado = true;
+      listaError.push(<div className="registro-error-display">{_error.vchNombreCompleto.mensaje}</div>);
     }
   }
   /*
@@ -2589,12 +2619,15 @@ function handleValidarForm(state) {
       _error.chrPassword.mensaje = "Ingrese una contraseña";
       _error.chrPassword.isValidado = true;
       isValido = false;
-    } else if (state.chrPassword.length <= 4) {
+      listaError.push(<div className="registro-error-display">{_error.chrPassword.mensaje}</div>);
+    } else if (state.chrPassword.length <= 3) {
       _error.chrPassword.mensaje = "La contraseña debe tener más de 4 dígitos ";
       _error.chrPassword.isValidado = true;
+      listaError.push(<div className="registro-error-display">{_error.chrPassword.mensaje}</div>);
     }
   }
   _error.isValido = isValido;
+  _error.listaError=listaError;
   /*Registrando los mensajes  */
   /* eslint-enable */
 

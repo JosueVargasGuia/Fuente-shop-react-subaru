@@ -974,6 +974,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						Producto producto=new Producto();
 						producto.setChrCodigoProducto(rs.getString("CHRCODIGOPRODUCTO"));
 						producto.setVchDescripcion(rs.getString("VCHDESCRIPCION"));
+						producto.setFamilia(new Familia(rs.getString("CHRCODIGOFAMILIA"), rs.getString("VCHDESCRIPCIONFAMILIA")));
 						list.add(producto);
 					}
 					return list;

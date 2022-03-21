@@ -24,6 +24,7 @@ const _IndentificadorMenu={
   Repuesto_11:"Repuesto_11",
   Repuesto_12:"Repuesto_12",
   Repuesto_13:"Repuesto_13",
+  Repuesto_14:"Repuesto_14",
 
   Accesorio_LyfeStyle_1:"Accesorio_LyfeStyle_1",
   Accesorio_LyfeStyle_2:"Accesorio_LyfeStyle_2",
@@ -177,8 +178,6 @@ const listaMenu = [
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
-    
-     
   },
   {
     descripcion: "Faros, Iluminación y Eléctricos",
@@ -221,6 +220,17 @@ const listaMenu = [
     srcimg:"",
     identificador:  _IndentificadorMenu.Repuesto_13,
     subFamilia: ["112A9"],
+    codigoGrupo: _CodigoGrupo.Repuesto,
+    display: 0,
+    select:0,
+    
+     
+  }, 
+  {
+    descripcion: "Aditivo Subaru",
+    srcimg:"",
+    identificador:  _IndentificadorMenu.Repuesto_14,
+    subFamilia: ["113A0"],
     codigoGrupo: _CodigoGrupo.Repuesto,
     display: 0,
     select:0,
@@ -339,7 +349,7 @@ const listaMenu = [
     descripcion: "Lubricantes y Fluidos",
     srcimg: "/marcas/subaru/mantenimiento/M7.gif",    
     identificador: _IndentificadorMenu.Mantenimiento_7,
-    subFamilia: [],
+    subFamilia: ['112A9'],
     query: [],
     codigoGrupo:  _CodigoGrupo.Mantenimiento,
     display: 0,
@@ -350,7 +360,7 @@ const listaMenu = [
     descripcion: "Aditivos",
     srcimg: "/marcas/subaru/mantenimiento/M8.png",    
     identificador: _IndentificadorMenu.Mantenimiento_8,
-    subFamilia: ['112A9'],
+    subFamilia: ['113A0'],
     query: [],
     codigoGrupo:  _CodigoGrupo.Mantenimiento,
     display: 0,

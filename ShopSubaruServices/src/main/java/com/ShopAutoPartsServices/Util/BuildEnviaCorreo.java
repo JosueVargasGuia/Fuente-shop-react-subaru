@@ -75,7 +75,7 @@ public class BuildEnviaCorreo {
 			texto.setContent(html, "text/html; charset=utf-8");
 			multiParte.addBodyPart(texto);
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(USER,empresa.getLink()));
+			message.setFrom(new InternetAddress(USER,empresa.getAlias()));
 			StringBuilder mails=new StringBuilder();   
 			for (CorreoJobsOnline jobsOnline : correoRequest.getListaCorreo()) {
 				message.setRecipient(Message.RecipientType.TO, new InternetAddress(jobsOnline.getVchCorreo()));

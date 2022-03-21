@@ -305,8 +305,7 @@ const TypePresentacion={
 }
 
 const APP_DEV= {
-    CONTEXT:"PRODUCCION",//PRODUCCION -- DESARROLLO,DESARROLLODEV,
-     
+    CONTEXT:"PRODUCCION",//PRODUCCION -- DESARROLLO,DESARROLLODEV,     
 };
 
 export {

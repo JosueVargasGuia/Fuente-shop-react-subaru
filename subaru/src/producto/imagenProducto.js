@@ -85,8 +85,7 @@ export default function ImagenProducto() {
   const [tabsIndex, setTabsIndex] = useState(_TabsIndex.TABS_IMAGEN);
   async function handleEventFilterProducto(_chrCodigoProducto) {
     setChrCodigoProducto(_chrCodigoProducto);
-    let _listaFilterProducto = [];
-    let _chrCodigoProductoFind="";
+    let _listaFilterProducto = [];    
     if (_chrCodigoProducto.length >= 1) {
       const rpt = await listaProductoFindCodByDesc({
         chrCodigoProducto: _chrCodigoProducto,
@@ -98,9 +97,12 @@ export default function ImagenProducto() {
           for (let i = 0; i < json.listaProductos.length; i++) {
             let objProd = json.listaProductos[i];
             _listaFilterProducto.push(
-              <div className="prod-img-row">
-                <div className="prod-img-row-desc">
-                  {objProd.chrCodigoProducto}&nbsp;{objProd.vchDescripcion}
+              <div key={i}  className="prod-img-row" onClick={(e)=>handleEventFindProducto(objProd.chrCodigoProducto,false)} >
+                <div className="prod-img-row-codigo" onClick={(e)=>handleEventFindProducto(objProd.chrCodigoProducto,false)} >
+                  {objProd.chrCodigoProducto}
+                </div>
+                <div className="prod-img-row-desc" onClick={(e)=>handleEventFindProducto(objProd.chrCodigoProducto,false)} >
+                  &nbsp;{objProd.vchDescripcion}
                 </div>
               </div>
             );
@@ -120,16 +122,21 @@ export default function ImagenProducto() {
         });
       }
     }
+    let _diplayFilter=_listaFilterProducto.length ===1 ? false : true;
+    if(_listaFilterProducto.length===1){
+      _diplayFilter=false;
+      handleEventFindProducto(_chrCodigoProducto,false)
+     
+    }
+
     dispatch({
       type: actionType.SET_FILTER,
       listaFilterProducto: _listaFilterProducto,
-      diplayFilter: _listaFilterProducto.length >= 2 ? true : false,
+      diplayFilter: _diplayFilter,
     });
-    if(_listaFilterProducto.length===1){
-      handleEventFindProducto(_chrCodigoProducto)
-    }
   }
-  async function handleEventFindProducto(_chrCodigoProducto) {
+  async function handleEventFindProducto(_chrCodigoProducto,_diplayFilter) {
+     
     if (_chrCodigoProducto.trim().length >= 1) {
       let _rowsProductoImage = [];
       let _producto = {
@@ -211,6 +218,11 @@ export default function ImagenProducto() {
       handleLoadAtributoProducto(_chrCodigoProducto);
     }
     setChrCodigoProducto(_chrCodigoProducto);
+    dispatch({
+      type: actionType.SET_FILTER,
+      listaFilterProducto: [],
+      diplayFilter: _diplayFilter,
+    });
   }
   function handleEventBuiltList(_rowsProductoImage, _producto) {
     let _rowsProductoImageHtml = [];
@@ -429,7 +441,7 @@ export default function ImagenProducto() {
       if (rpt.status === HttpStatus.HttpStatus_OK) {
         const json = await rpt.json();
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-          handleEventFindProducto(state.productoImangen.chrCodigoProducto);
+          handleEventFindProducto(state.productoImangen.chrCodigoProducto,false);
           let _productoImangen = {
             numCodigoProductoImagen: 0,
             chrCodigoProducto: null,
@@ -547,7 +559,7 @@ export default function ImagenProducto() {
       if (rpt.status === HttpStatus.HttpStatus_OK) {
         const json = await rpt.json();
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-          handleEventFindProducto(state.productoImangen.chrCodigoProducto);
+          handleEventFindProducto(state.productoImangen.chrCodigoProducto,false);
           let _productoImangen = {
             numCodigoProductoImagen: 0,
             chrCodigoProducto: null,
@@ -641,7 +653,7 @@ export default function ImagenProducto() {
               <td>
                 <i
                   className="fa-btn fa fa-check"
-                  onClick={() => handleEventFindProducto(obj.chrCodigoProducto)}
+                  onClick={() => handleEventFindProducto(obj.chrCodigoProducto,false)}
                 ></i>
                 {obj.chrCodigoProducto}
               </td>
@@ -769,7 +781,7 @@ export default function ImagenProducto() {
       if (rpt.status === HttpStatus.HttpStatus_OK) {
         const json = await rpt.json();
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_OK) {
-          handleEventFindProducto(state.producto.chrCodigoProducto);
+          handleEventFindProducto(state.producto.chrCodigoProducto,false);
         }
         if (json.response.status === SUCCESS_SERVER.SUCCES_SERVER_INFO) {
           dispatch({
@@ -824,6 +836,7 @@ export default function ImagenProducto() {
               {state.producto.vchDescripcion}
             </>
           )}
+       
           {state.diplayFilter===true?<> <div className="prod-img-search-float">
             {state.listaFilterProducto}
           </div></>:<></>}

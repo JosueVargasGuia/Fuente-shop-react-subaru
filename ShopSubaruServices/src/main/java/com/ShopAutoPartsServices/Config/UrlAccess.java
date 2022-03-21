@@ -10,8 +10,7 @@ public class UrlAccess {
 		 
 		 
 		/*Privado, url que requieren token y son cliente logeados */ 
-		privado.add("/service/authorization/cliente/obtenerUsuario");
-		 
+		privado.add("/service/authorization/cliente/obtenerUsuario");		 
 		privado.add("/service/iniciarCreatePayment");
 		privado.add("/service/cotizacion/obtenerTusCompras");
 		privado.add("/service/cotizacion/obtenerTusComprasDetalle");

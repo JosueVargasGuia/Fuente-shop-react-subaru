@@ -52,13 +52,14 @@ public class ProductoImagenController {
 		// logger.info(productoImagen.toString());
 		try {
 			productoResponse.setLista(productoService.listarProductoImagen(productoImagen));
-			ProductoRequets producto = new ProductoRequets();
-			producto.setChrCodigoProducto(productoImagen.getChrCodigoProducto());
-			producto.setFilterProducto(FilterProducto.FILTER_CODIGO);
-			producto.setListaSubFamilia(productoService.listarSubfamilia(new Familia()));
-			producto.setPagina(1);
-			producto.setLimit(1);
-			List<Producto> lista = productoService.listarProductos(producto);
+			/*
+			 * ProductoRequets producto = new ProductoRequets();
+			 * producto.setChrCodigoProducto(productoImagen.getChrCodigoProducto());
+			 * producto.setFilterProducto(FilterProducto.FILTER_CODIGO);
+			 * producto.setListaSubFamilia(productoService.listarSubfamilia(new Familia()));
+			 * producto.setPagina(1); producto.setLimit(1);
+			 */
+			List<Producto> lista = productoService.listarProductoFindCodigoDesc(productoImagen);
 			if (lista.size() >= 1) {
 				productoResponse.setProducto(lista.get(0));
 			}

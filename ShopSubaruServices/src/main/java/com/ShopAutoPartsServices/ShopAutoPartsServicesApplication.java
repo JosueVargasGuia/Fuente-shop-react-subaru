@@ -5,6 +5,7 @@ import java.util.Collections;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -46,8 +47,7 @@ public class ShopAutoPartsServicesApplication {
 		SpringApplication app = new SpringApplication(ShopAutoPartsServicesApplication.class);
 		app.setDefaultProperties(Collections.singletonMap("server.port", "8086"));/**/
 		app.getSources().remove(ErrorPageFilter.class);
-		app.run(args);
-		 
+		app.run(args);		
 	}
 
 	/*

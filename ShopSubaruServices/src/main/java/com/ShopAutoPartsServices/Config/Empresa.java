@@ -8,14 +8,14 @@ public class Empresa {
 	@Value("${shop.empresa.ruc}")
 	private String ruc;
 	
-	@Value("${shop.empresa.razonsocial}")
+	@Value("${shop.empresa.razon-social}")
 	private String razonSocial;
 	
 	@Value("${shop.empresa.alias}")
 	private String alias;
 	
-	@Value("${shop.empresa.link}")
-	private String link;
+	@Value("${shop.empresa.nombre-comercial}")
+	private String nombreComercial;
 	
 	@Value("${shop.empresa.direccion}")
 	private String direccion;
@@ -41,7 +41,7 @@ public class Empresa {
 	@Value("${shop.mail.smtp.to.oc}")
 	private String toOrdenCompra;
 	
-	@Value("${shop.empresa.abreviatura.sucursal}")
+	@Value("${shop.empresa.abreviatura-sucursal}")
 	private String abreviaturaSucursal;
 	
 	
@@ -63,7 +63,7 @@ public class Empresa {
 		return this;
 	}
 
-	public String getAlias() {
+	public String getAlias1() {
 		return alias;
 	}
 
@@ -144,12 +144,18 @@ public class Empresa {
 		return this;
 	}
 
-	public String getLink() {
-		return link;
+	 
+
+	public String getNombreComercial() {
+		return nombreComercial;
 	}
 
-	public void setLink(String link) {
-		this.link = link;
+	public void setNombreComercial(String nombreComercial) {
+		this.nombreComercial = nombreComercial;
+	}
+
+	public String getAlias() {
+		return alias;
 	}
 
 	public String getLogourlText() {

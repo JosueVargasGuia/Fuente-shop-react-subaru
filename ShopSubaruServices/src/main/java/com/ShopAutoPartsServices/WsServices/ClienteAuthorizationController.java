@@ -5,7 +5,8 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
- 
+
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+ 
 
 import com.ShopAutoPartsServices.Config.CorreoConfiguracion;
 import com.ShopAutoPartsServices.Config.Empresa;
@@ -69,10 +71,13 @@ public class ClienteAuthorizationController {
 
 	@Autowired
 	Empresa empresa;
+	
+	 
 
+	
 	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ClienteUsuario> login(@RequestBody ClienteLoginRequest loginRequest) {
-
+		 
 		ResponseEntity<ClienteUsuario> responseEntity = null;
 		List<String> error = new ArrayList<String>();
 		ClienteUsuario clienteUsuario = new ClienteUsuario();
@@ -210,6 +215,7 @@ public class ClienteAuthorizationController {
 							.setVchNombreCompleto(clienteUsuario.getCliente().getVchApellidoPaterno() + " "
 									+ clienteUsuario.getCliente().getVchApellidoMaterno() + ","
 									+ clienteUsuario.getCliente().getVchNombre());
+					correoRequest.getClienteUsuario().getCliente().setVchNombre(clienteUsuario.getCliente().getVchNombre());
 					envioCorreo(correoRequest);
 				}
 				for (Direccion direccion : clienteUsuario.getListaDireccion()) {
@@ -369,6 +375,8 @@ public class ClienteAuthorizationController {
 						.setVchNombreCompleto(clienteUsuario.getCliente().getVchApellidoPaterno() + " "
 								+ clienteUsuario.getCliente().getVchApellidoMaterno() + ","
 								+ clienteUsuario.getCliente().getVchNombre());
+				correoRequest.getClienteUsuario().getCliente().setVchNombre(clienteUsuario.getCliente().getVchNombre());
+				
 				List<CorreoJobsOnline> lista = new ArrayList<CorreoJobsOnline>();
 				lista.add(new CorreoJobsOnline(clienteUsuario.getChrEmail()));
 				correoRequest.setListaCorreo(lista);
@@ -558,20 +566,20 @@ public class ClienteAuthorizationController {
 			String subject = "subject";
 			if (correoRequest.getBuildEmail() == BuildEmail.EmailConfirmacion) {
 
-				html = HTML_CONFIRMACION_CLIENTE(correoRequest.getClienteUsuario().getCliente().getVchNombreCompleto(),
+				html = HTML_CONFIRMACION_CLIENTE(correoRequest.getClienteUsuario().getCliente().getVchNombre(),
 						// correoRequest.getCorreoCliente());
 						correoRequest.getListaCorreo().get(0).getVchCorreo());
 				subject = "[" + empresa.getAlias() + "]" + " ¡Bienvenido!";
 			}
 			if (correoRequest.getBuildEmail() == BuildEmail.EmailPeticionCambioContraseña) {
 				html = HTML_PETICION_CAMBIO_CONTRASEÑA(
-						correoRequest.getClienteUsuario().getCliente().getVchNombreCompleto(),
+						correoRequest.getClienteUsuario().getCliente().getVchNombre(),
 						correoRequest.getTokenCliente());
 				subject = "[" + empresa.getAlias() + "]" + "Confirmación de contraseña";
 			}
 			if (correoRequest.getBuildEmail() == BuildEmail.EmailConfirmacionCambioContraseña) {
 				html = HTML_CONFIRMACION_CAMBIO_CONTRASEÑA(
-						correoRequest.getClienteUsuario().getCliente().getVchNombreCompleto());
+						correoRequest.getClienteUsuario().getCliente().getVchNombre());
 				subject = "[" + empresa.getAlias() + "]" + "Su nueva contraseña";
 			}
 			BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion,empresa);
@@ -677,7 +685,26 @@ public class ClienteAuthorizationController {
 	 * logger.info(e.getMessage()); e.printStackTrace();
 	 * 
 	 * } return envio; }
-	 */
+	 *
+	 *
+	 *
+
+
+
+	System.out.println("#################################HTML_CONFIRMACION_CLIENTE############################");
+		System.out.println(HTML_CONFIRMACION_CLIENTE("Josue Vargas Guia", "josue.vargas@eanet.pe"));
+		System.out.println("#################################HTML_CONFIRMACION_CAMBIO_CONTRASEÑA############################");
+		System.out.println(HTML_CONFIRMACION_CAMBIO_CONTRASEÑA("Josue Vargas Guia"));
+	 
+	@PostConstruct
+	public void load() {
+	
+		System.out.println("#################################HTML_PETICION_CAMBIO_CONTRASEÑA############################");
+		System.out.println(HTML_PETICION_CAMBIO_CONTRASEÑA("Josue Vargas Guia", "tokeenn"));
+		
+		
+	}
+	*/
 	public String HTML_CONFIRMACION_CLIENTE(String nombrecompleto, String correo) {
 		return "<!DOCTYPE html>\r\n" + "<html lang='en'>\r\n" + "\r\n" + "<body style='background: #a29e9e;'>\r\n"
 				+ "    <div style='background:#fbfbfb; width: 500px; min-width: 500px;\r\n"
@@ -690,7 +717,7 @@ public class ClienteAuthorizationController {
 				+ "        <div style='width: 250px;height: auto;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>\r\n"
 				+ "            <a href='" + empresa.getWeburl() + "'>\r\n" + "                <img src='"
 				+ empresa.getLogourl() + "' alt='" + empresa.getAlias()
-				+ "' style='width: 250px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
+				+ "' style='width: 180px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight:  bold;  '>Hola "
 				+ nombrecompleto + ",</div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>Gracias por crear una cuenta de cliente en "
@@ -713,10 +740,12 @@ public class ClienteAuthorizationController {
 				+ "                </li>\r\n" + "                <li>\r\n"
 				+ "                    <p style='font-weight: normal;'>Si sospecha que alguien está utilizando ilegalmente su cuenta, avísenos inmediatamente.</p>\r\n"
 				+ "                </li>\r\n" + "            </ul>\r\n" + "        </div>\r\n"
-				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;'>\r\n"
-				+ "            Ahora puede realizar pedidos en nuestra tienda:\r\n" + "        </div>\r\n"
-				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7'>\r\n"
-				+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()
+				+ "        <div style='padding: 0.5em; padding-left: 2.5em;font-weight: normal;text-align: justify;'>\r\n"
+				+ "            Ahora puede realizar pedidos en nuestra tienda:"+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()+ "</a>\r\n"  + "        </div>\r\n"
+				+ " <div style='display: flex;flex-direction: row; justify-content: flex-end;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7;"
+				+ " ' "			 
+				+ "  > "
+				+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'> <img src='"+ empresa.getLogourlText()+"' style='width: 125px;height: auto;'></img>" 
 				+ "</a>\r\n" + "        </div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;height: 35px;'>\r\n"
 				+ "        </div>\r\n" + "    </div>\r\n" + "</body>\r\n" + "\r\n" + "</html>";
@@ -732,30 +761,34 @@ public class ClienteAuthorizationController {
 				+ "        <div style='width: 225px;height: auto;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>\r\n"
 				+ "            <a href='" + empresa.getWeburl() + "'>\r\n" + "                <img src='"
 				+ empresa.getLogourl() + "' alt='" + empresa.getAlias()
-				+ "' style='width: 225px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
+				+ "' style='width: 180px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight:  bold;  '>Hola "
 				+ nombrecompleto + ",</div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>Confirmación de la solicitud de contraseña en "
-				+ empresa.getAlias() + " </div>\r\n" + "\r\n"
-				+ "        <div style='margin-left: 1.5em;margin-right: 1.5em;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;border: solid 1px #a29e9e;text-align: justify;'>\r\n"
-				+ "            Ha solicitado restablecer sus datos de inicio de sesión en " + empresa.getAlias()
+				+  empresa.getAlias()+ " </div> "  
+				+ "        <div style='margin-left: 1.5em;margin-right: 1.5em;padding: 1em;border: solid 1px #a29e9e;text-align: justify;'>\r\n"
+				+ "            Ha solicitado restablecer sus datos de inicio de sesión en la plataforma de E-commerce de <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()+ "</a>" 
 				+ ". Tenga en cuenta que esta acción cambiará su contraseña actual. Para confirmar esta acción, por favor utilice el siguiente enlace:\r\n"
 				+ "             <br/> <a href='" + tokenUrl + "' style='color: #25B9D7; word-wrap: break-word;'>"
 				+ tokenUrl + "</a>\r\n" + "        </div>\r\n" + "        <br></br>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;'>Si usted no hizo esta solicitud, simplemente ignore este correo electrónico.</div>\r\n"
 				+ "\r\n"
-				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7'>\r\n"
-				+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'> <img src='"+ empresa.getLogourlText()+"' style='width: 180px;height: auto;'></img>" 
-				+ "</a>\r\n" + "        </div>\r\n"
+				
+				+ " <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7;"
+				+ " display: flex;flex-direction: row; justify-content: flex-end;\r\n"			 
+				+ " '> "
+				+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'> <img src='"+ empresa.getLogourlText()+"' style='width: 125px;height: auto;'></img>" 
+				+ "</a>   </div> "
+				
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;height: 35px;'>\r\n"
 				+ "\r\n" + "        </div>\r\n" + "    </div>\r\n" + "</body>\r\n" + "\r\n" + "</html>";
-		System.out.println(html);
+		 
 		return html;
 	}
 
 	public String HTML_CONFIRMACION_CAMBIO_CONTRASEÑA(String nombrecompleto) {
 		return "<!DOCTYPE html>\r\n" + "<html lang='en'>\r\n" + "\r\n" + "<body style='background: #a29e9e;'>\r\n"
-				+ "    <div style='background:#fbfbfb;width: 500px; min-width: 500px;\r\n"
+				+ "    <div style='background:#fbfbfb;width: 550px; min-width: 500px;\r\n"
 				+ "    margin: auto;margin-top: 2em;   \r\n" + "    font-family: sans-serif,monospace,arial; \r\n"
 				+ "    font-size:  1em; color:#000;\r\n" + "    border:solid 1px #fbfbfb'>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;height: 25px;'>\r\n"
@@ -763,14 +796,17 @@ public class ClienteAuthorizationController {
 				+ "        <div style='width: 250px;height: auto;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>\r\n"
 				+ "            <a href='" + empresa.getWeburl() + "'>\r\n" + "                <img src='"
 				+ empresa.getLogourl() + "' alt='" + empresa.getAlias()
-				+ "' style='width: 250px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
+				+ "' style='width: 180px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight:  bold;  '>Hola "
-				+ nombrecompleto + "</div>\r\n"
-				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: normal;text-align: center;'>\r\n"
-				+ "            Su contraseña ha sido actualizada correctamente.\r\n" + "        </div>\r\n"
-				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7'>\r\n"
-				+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()
-				+ "</a>\r\n" + "        </div>\r\n"
+				+ nombrecompleto + ",</div>\r\n"
+				+ "        <div style='padding: 0.5em;font-weight: normal;text-align: center;'>\r\n"
+				+ "            Su contraseña ha sido actualizada correctamente en: " + " <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()+ "</a> " + "        </div>\r\n"
+				+ " <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7;"
+				+ " display: flex;flex-direction: row; justify-content: flex-end;\r\n"			 
+				+ " '> "
+				+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'> <img src='"+ empresa.getLogourlText()+"' style='width: 125px;height: auto;'></img>" 
+				+ "</a>   </div> "
+				
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right: 2.5em ;font-weight: normal;text-align: center;height: 35px; '>\r\n"
 				+ "\r\n" + "        </div>\r\n" + "    </div>\r\n" + "</body>\r\n" + "\r\n" + "</html>";
 	};
