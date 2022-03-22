@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ShopAutoPartsServices.Domain.Familia;
+import com.ShopAutoPartsServices.Domain.Producto;
+import com.ShopAutoPartsServices.Domain.ProductoImagen;
+import com.ShopAutoPartsServices.Domain.ProductoImagenResponse;
 import com.ShopAutoPartsServices.Domain.ProductoOutletVigencia;
 import com.ShopAutoPartsServices.Domain.ProductoOutletVigenciaResponse;
 import com.ShopAutoPartsServices.Domain.ProductoRequets;
@@ -28,6 +31,7 @@ import com.ShopAutoPartsServices.Enums.FilterOrderBy;
  
 import com.ShopAutoPartsServices.Enums.FilterSubFamilia;
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
+import com.ShopAutoPartsServices.Enums.TypeFilterProducto;
 import com.ShopAutoPartsServices.Service.ProductoService;
 
 @RestController
@@ -81,7 +85,27 @@ public class ProductoController {
 
 		return responseEntity;
 	}
-
+	@PostMapping(value = "/buscarProducto", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ProductoResponse> listarProductoImagen(@RequestBody ProductoImagen productoImagen) {
+		ProductoResponse productoResponse = new ProductoResponse();
+		ResponseEntity<ProductoResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();	 
+		try {		 
+			productoImagen.setTypeFilter(TypeFilterProducto.TYPE_FILTER_USER.toString());
+			List<Producto> lista = productoService.listarProductoFindCodigoDesc(productoImagen);			
+			productoResponse.setListaProductos(lista);
+			productoResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(new ArrayList<String>())
+					.setError(error);
+			responseEntity = new ResponseEntity<ProductoResponse>(productoResponse, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			productoResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_ERROR)
+					.setError(new ArrayList<String>()).getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<ProductoResponse>(productoResponse, HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+	}
 	/*
 	 * @PostMapping(value = "/subirImagen", consumes =
 	 * MediaType.APPLICATION_JSON_VALUE, produces =

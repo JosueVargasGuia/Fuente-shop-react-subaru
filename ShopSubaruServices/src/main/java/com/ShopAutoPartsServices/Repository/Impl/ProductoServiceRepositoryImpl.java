@@ -967,6 +967,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 						throws SQLException, DataAccessException {
 					cs.registerOutParameter(1, OracleTypes.CURSOR);
 					cs.setString(2, productoImagen.getChrCodigoProducto());
+					cs.setString(3, productoImagen.getTypeFilter());
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);
 					List<Producto> list = new ArrayList<Producto>();
@@ -984,7 +985,8 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{?=call " + PKG_TIENDA + ".LST_PROD_FIND_CODDESC(?)}";
+		logger.info("LST_PROD_FIND_CODDESC-->"+productoImagen.getChrCodigoProducto()+"  "+ productoImagen.getTypeFilter());
+		String sql = "{?=call " + PKG_TIENDA + ".LST_PROD_FIND_CODDESC(?,?)}";
 		return jdbcTemplate.execute(sql, callback);
 	}
 

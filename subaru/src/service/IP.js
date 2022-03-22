@@ -10,6 +10,7 @@ const URL = {
   ACTUALIZAR_PASSWORD:"/authorization/cliente/actualizarPassword",
    
   OBTENER_PRODUCTOS: "/producto/lista",
+  OBTENER_PRODUCTOS_FILTER: "/producto/buscarProducto",
   TIPO_CAMBIO:"/authorization/cliente/tipoCambio",
   REGISTRAR_COTIZACION:"/cotizacion/registrarCotizacion",
   OBTENER_COTIZACION_ACTIVA:"/cotizacion/obtenerCotizacionActiva",

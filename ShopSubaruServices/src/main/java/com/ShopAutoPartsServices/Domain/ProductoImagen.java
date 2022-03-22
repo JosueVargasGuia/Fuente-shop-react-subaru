@@ -13,6 +13,7 @@ public class ProductoImagen {
 	Response response=new Response();
 	CRUD crud=CRUD.SELECT;
 	FilterProducto filter=FilterProducto.FILTER_ALL;
+	String typeFilter="";
 	public int getNumCodigoProductoImagen() {
 		return numCodigoProductoImagen;
 	}
@@ -93,6 +94,15 @@ public class ProductoImagen {
 	public ProductoImagen setFilter(FilterProducto filter) {
 		this.filter = filter;
 		return this;
+	}
+
+	public String getTypeFilter() {
+		return typeFilter;
+	}
+
+	public void setTypeFilter(String typeFilter) {
+		this.typeFilter = typeFilter;
+		 
 	}
 
 	@Override

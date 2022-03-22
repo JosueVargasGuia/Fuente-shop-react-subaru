@@ -1,10 +1,17 @@
 import { fetchService, tokenFetchService, METHOD } from "../matchService/fetchService";
-
 import { IP, URL } from "./IP";
-async function findProductos(body) {
-  
+
+async function findProductos(body) {  
   const response = await fetchService(
     IP(URL.OBTENER_PRODUCTOS),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
+async function findProductosFilterInput(body) {  
+  const response = await fetchService(
+    IP(URL.OBTENER_PRODUCTOS_FILTER),
     body,
     METHOD.POST
   );
@@ -198,5 +205,6 @@ export {
   listarProductoOutlet,
   saveUpdateProductoOutlet,
   updateProductoOutletRow,
-  listaProductoFindCodByDesc
+  listaProductoFindCodByDesc,
+  findProductosFilterInput
 };

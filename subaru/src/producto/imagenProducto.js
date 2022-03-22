@@ -805,7 +805,16 @@ export default function ImagenProducto() {
       });
     }
   }
-
+function  hnadleEnventKeyDow(e){  
+  if (e.key === 'Escape') {
+    dispatch({
+      type: actionType.SET_FILTER,
+      listaFilterProducto: [],
+      diplayFilter: false,
+    });
+    setChrCodigoProducto('');
+  }
+}
   return (
     <>
       <div className="link-href">
@@ -822,6 +831,7 @@ export default function ImagenProducto() {
             className="form-control"
             value={chrCodigoProducto}
             onChange={(e) => handleEventFilterProducto(e.target.value)}
+            onKeyDown={(e)=>{hnadleEnventKeyDow(e)}}
           ></input>
           <button
             className=" btn btn-primary fa fa-search"

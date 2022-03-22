@@ -35,6 +35,7 @@ import com.ShopAutoPartsServices.Domain.ProductoResponse;
 import com.ShopAutoPartsServices.Enums.CRUD;
 import com.ShopAutoPartsServices.Enums.FilterProducto;
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
+import com.ShopAutoPartsServices.Enums.TypeFilterProducto;
 import com.ShopAutoPartsServices.Service.ProductoService;
 
 @RestController
@@ -51,6 +52,7 @@ public class ProductoImagenController {
 		List<String> error = new ArrayList<String>();
 		// logger.info(productoImagen.toString());
 		try {
+			productoImagen.setTypeFilter(TypeFilterProducto.TYPE_FILTER_ADMIN.toString());
 			productoResponse.setLista(productoService.listarProductoImagen(productoImagen));
 			/*
 			 * ProductoRequets producto = new ProductoRequets();
@@ -59,6 +61,7 @@ public class ProductoImagenController {
 			 * producto.setListaSubFamilia(productoService.listarSubfamilia(new Familia()));
 			 * producto.setPagina(1); producto.setLimit(1);
 			 */
+			
 			List<Producto> lista = productoService.listarProductoFindCodigoDesc(productoImagen);
 			if (lista.size() >= 1) {
 				productoResponse.setProducto(lista.get(0));
@@ -83,6 +86,7 @@ public class ProductoImagenController {
 		ProductoResponse productoResponse = new ProductoResponse();
 		List<String> error = new ArrayList<String>();
 		try {
+			productoImagen.setTypeFilter(TypeFilterProducto.TYPE_FILTER_ADMIN.toString());
 			List<Producto> lista = productoService.listarProductoFindCodigoDesc(productoImagen);
 			productoResponse.setListaProductos(lista);
 			productoResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(new ArrayList<String>())

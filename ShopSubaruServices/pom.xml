@@ -116,8 +116,6 @@
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
 			<version>12.2.0.1</version>
-			<scope>system</scope>
-			<systemPath>C:\Users\ANTONIO\Desktop\Josue\OnlineShop\Fuente-shop-react-subaru\ShopSubaruServices\lib\ojdbc8-12.2.0.1.jar</systemPath>
 		</dependency>
 
 		<dependency>

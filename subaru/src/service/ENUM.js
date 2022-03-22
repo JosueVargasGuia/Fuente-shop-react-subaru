@@ -278,7 +278,7 @@ const tipoDireccion = {
   DESPACHO: "Dirección de Despacho",
   FACTURACION: "Dirección de Facturación",
 };
-const homepage = undefined;
+const homepage = null;
 const chrRol = {
   ROLE_USER: "ROLE_USER",
   ROLE_ADMIN: "ROLE_ADMIN",
@@ -305,7 +305,7 @@ const TypePresentacion={
 }
 
 const APP_DEV= {
-    CONTEXT:"PRODUCCION",//PRODUCCION -- DESARROLLO,DESARROLLODEV,     
+    CONTEXT:"DESARROLLO",//PRODUCCION -- DESARROLLO,DESARROLLODEV,     
 };
 
 export {

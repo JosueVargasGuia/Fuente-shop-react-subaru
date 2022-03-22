@@ -57,7 +57,7 @@ for (let index = 0; index < listaMenu.length; index++) {
     rowSegmentoMantenimiento.push(
      <div key={menu.identificador}>
         <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
-          <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
+          <img src={window.location.origin + (homepage === null ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
           <span className="produc-link-title">{menu.descripcion}</span>
         </Link>
       </div>);
@@ -66,7 +66,7 @@ for (let index = 0; index < listaMenu.length; index++) {
     rowsegmentoRecambio.push(
       <div key={menu.identificador}>
          <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
-           <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
+           <img src={window.location.origin + (homepage === null ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
            <span className="produc-link-title">{menu.descripcion}</span>
          </Link>
        </div>);
@@ -75,7 +75,7 @@ for (let index = 0; index < listaMenu.length; index++) {
     rowSegmentoAccesorios.push(
       <div key={menu.identificador}>
          <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
-           <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
+           <img src={window.location.origin + (homepage === null ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
            <span className="produc-link-title">{menu.descripcion}</span>
          </Link>
        </div>);
@@ -84,7 +84,7 @@ for (let index = 0; index < listaMenu.length; index++) {
     rowSegmentoLifeStyle.push(
       <div key={menu.identificador}>
          <Link to={"shop/"+menu.identificador+"/filter/all"} key={menu.identificador} >
-           <img src={window.location.origin + (homepage === undefined ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
+           <img src={window.location.origin + (homepage === null ? "" : "/" + homepage) + menu.srcimg} alt={menu.srcimg} loading='lazy'></img>
            <span className="produc-link-title">{menu.descripcion}</span>
          </Link>
        </div>);
@@ -95,7 +95,7 @@ for (let index = 0; index < listaMenu.length; index++) {
 
   
   let rowCategoria = listaCategoria.map((rowCate) =>
-    <div key={rowCate.key}  className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage === undefined ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
+    <div key={rowCate.key}  className="produc-link-card" style={{ 'backgroundImage': 'url(' + window.location.origin + (homepage === null ? "" : "/" + homepage) + rowCate.srcimg + ')' }} >
       <div className="produc-link-accesorio-left">
         <div className="title">{rowCate.title}</div>
         <div className="content">{rowCate.content}</div>

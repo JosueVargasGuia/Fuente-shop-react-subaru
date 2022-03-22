@@ -3,7 +3,7 @@ import './statico.css'
 import { Link } from 'react-router-dom';
 import { homepage,Empresa } from "../service/ENUM";
 export default function TerminoCondicionEstatico(props) {
-    const [srcLogo] = useState(window.location.origin+(homepage===undefined?"":"/"+homepage) +    '/marcas/logo.png');
+    const [srcLogo] = useState(window.location.origin+(homepage===null?"":"/"+homepage) +    '/marcas/logo.png');
     return (<div className="titulo-div">
         {props.linkNavegacion==="CarritoPayment"?'':<><Link to="/shop">Inicio</Link>{'  '}/{'  '}Términos y condiciones</>}
         {props.linkNavegacion==="CarritoPayment"?'':<h3>Términos y condiciones</h3>}

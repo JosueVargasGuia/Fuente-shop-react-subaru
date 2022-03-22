@@ -66,6 +66,7 @@ import { ProductoOutlet } from "./producto/productoOutlet";
 import OutletCargaProducto from "./loginAdmin/producto/outletCargaProducto";
 import ListadoProductoOutlet from "./loginAdmin/producto/listadoProductoOutlet";
 import TestAuto from "./loginAdmin/testAuto";
+import { _IndentificadorMenu } from "./service/EnumMenu";
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -247,6 +248,8 @@ function App() {
       type: actionType.INPUT_DESCRIPCION,
       descripcion: e.target.value,
     });
+    
+    
   }
 
   /*Al seleccionar la marca del producto */
