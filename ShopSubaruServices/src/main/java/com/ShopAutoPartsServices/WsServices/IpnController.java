@@ -46,9 +46,10 @@ import com.ShopAutoPartsServices.FE.Archivo;
 import com.ShopAutoPartsServices.FE.Constantes;
 import com.ShopAutoPartsServices.FE.Beans.BeanEmpresa;
 import com.ShopAutoPartsServices.FE.Beans.BeanFacturacion;
-import com.ShopAutoPartsServices.Service.CorreoJobsService;
+ 
 import com.ShopAutoPartsServices.Service.CotizacionOnlineService;
 import com.ShopAutoPartsServices.Service.FacturacionService;
+import com.ShopAutoPartsServices.Service.UtilService;
 import com.ShopAutoPartsServices.Util.BuildEnviaCorreo;
 import com.ShopAutoPartsServices.Util.NumeroLetras;
 import com.google.gson.Gson;
@@ -73,7 +74,7 @@ public class IpnController {
 	CorreoConfiguracion correoConfiguracion;
 
 	@Autowired
-	CorreoJobsService correoJobsService;
+	UtilService utilService;
 
 	@PostMapping(value = "/confirmar")
 	public ResponseEntity<String> confirmacionIziPay(HttpServletRequest httpServletRequest) {
@@ -148,7 +149,7 @@ public class IpnController {
 			scheduledProceso.setFechaIniHHmm(sdf.format(fecIni) + "14:01");
 			scheduledProceso.setFechaFinHHmm(sdf.format(new Date()) + "14:00");
 			CorreoRequest correoFERequest = new CorreoRequest();
-			boolean _valida = correoJobsService
+			boolean _valida = utilService
 					.validarScheduledCorrreo(FilterValidacionGenerico.SCHEDULED_CONSOLIDADO_OC.toString());
 			if (_valida) {
 				logger.info("Iniciando envio de consolidado:scheduledMailOcConsolidado");
@@ -270,7 +271,7 @@ public class IpnController {
 								/* Alerta de tipo de cambio tomado por la factura */
 								CorreoJobsOnline correoJobs = new CorreoJobsOnline();
 								correoJobs.setFilterCorreo(FilterCorreo.FILTER_TIPO_CAMBIO_TOMADO);
-								List<CorreoJobsOnline> listaCorreoAtc = correoJobsService
+								List<CorreoJobsOnline> listaCorreoAtc = utilService
 										.obtenerListaCorreoJobs(correoJobs);
 								if (listaCorreoAtc.size() >= 1) {
 									CorreoRequest correoRequestAtCambio = new CorreoRequest();
@@ -283,7 +284,6 @@ public class IpnController {
 								}
 
 							}
-
 							asunto = "[" + empresa.getAlias() + "]" + " ¡Tu pedido N° "
 									+ clienteFactura.getNumCodigoCotizacionOnline() + " fue confirmado!";
 

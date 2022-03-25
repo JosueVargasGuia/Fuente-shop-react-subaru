@@ -241,7 +241,7 @@ export default function ListadoProductoOutlet(props) {
       <h3>Productos Outlet</h3>
       <div className="form-body-outlet">
         <div className="form-accion">
-          <Link to={"/outletCarga/0/insert"} className="btn btn-primary fa fa-plus">Adicionar</Link>
+          <Link to={"/outletCarga/0/insert"} className="fa fa-plus">Adicionar</Link>
         </div>
         <div className="div-table">
           <table>

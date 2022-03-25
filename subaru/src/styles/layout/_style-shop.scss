@@ -3150,3 +3150,127 @@ h4 {
 .error-head {
     margin: 0em;
 }
+
+.form-menu {
+    box-sizing: border-box;
+    .form-menu-content {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        border-left: solid 1px var(--color-font3);
+        border-right: solid 1px var(--color-font3);
+        border-bottom: solid 1px var(--color-font3);
+        margin-left: 1em;
+        margin-right: 1em;
+        padding-bottom: 1em;
+        background-color: var(--color-font3);
+        min-height: 320px;
+        border-radius: 5px 5px 5px 5px;
+        padding-top: 1.5em;
+        .form-menu-head {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            margin-bottom: 0.5em;
+            padding-right: 0.5em;
+            i {
+                cursor: pointer;
+                font-size: 15px;
+                color: var(--color-font-default);
+                &:hover {
+                    color: var(--color-font-hover);
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    h3 {
+        font-size: 1.35rem;
+    }
+    .div-table {
+        width: 98%;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        table {
+            width: 100%;
+            thead {
+                tr {
+                    td {
+                        text-align: center;
+                        font-size: 13px;
+                        font-weight: bold;
+                        border: solid 0.5px var(--color-font2);
+                        color: var(--color-font3);
+                        background-color: var(--color-font2);
+                    }
+                }
+            }
+            tbody {
+                font-size: 13px;
+                tr {
+                    height: auto;
+                    td {
+                        border: solid 0.5px var(--color-font2);
+                        font-size: 13px;
+                        a {
+                            color: var(--color-font-default);
+                        }
+                        i {
+                            cursor: pointer;
+                            font-size: 15px;
+                            color: var(--color-font-default);
+                        }
+                        i:hover {
+                            color: var(--color-font2);
+                        }
+                    }
+                }
+            }
+        }
+        .flex-div-content {
+            ul {
+                width: 100%;
+                padding-inline-start: 0px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                margin-bottom: 0em;
+                li {
+                    margin-block-start: 0em;
+                    margin-block-end: 0em;
+                    list-style: none;
+                    margin-right: 0.5em;
+                    white-space: break-spaces;
+                    &:before {
+                        content: '✓';
+                    }
+                }
+            }
+        }
+    }
+}
+
+.form-menu-form {
+    .form-menu-row {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 0.5em;
+        width: 100%;
+        .form-menu-row-label {
+            min-width: 120px;
+            margin-right: 0.5em;
+            width: 16%;
+        }
+        .form-menu-row-desc {
+            margin-right: 0.5em;
+            width: 74%;
+            input {
+                max-width: 180px;
+            }
+            select {
+                max-width: 180px;
+            }
+        }
+    }
+}

@@ -1,13 +1,15 @@
 package com.ShopAutoPartsServices.WsServices;
- 
+
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
- 
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
- 
- 
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +29,16 @@ import com.ShopAutoPartsServices.Config.Empresa;
 import com.ShopAutoPartsServices.Domain.CorreoJobsOnline;
 import com.ShopAutoPartsServices.Domain.CorreoJobsResponse;
 import com.ShopAutoPartsServices.Domain.CorreoRequest;
- 
- 
-import com.ShopAutoPartsServices.Enums.AccountsEmail; 
+import com.ShopAutoPartsServices.Domain.Direccion;
+import com.ShopAutoPartsServices.Domain.MenuOnline;
+import com.ShopAutoPartsServices.Domain.MenuOnlineResponse;
+import com.ShopAutoPartsServices.Enums.AccountsEmail;
 import com.ShopAutoPartsServices.Enums.FilterCorreo;
 import com.ShopAutoPartsServices.Enums.FilterValidacionGenerico;
 import com.ShopAutoPartsServices.Enums.SUCCESS_SERVER;
- 
-import com.ShopAutoPartsServices.Service.CorreoJobsService;
- 
- 
+
+import com.ShopAutoPartsServices.Service.UtilService;
+import com.ShopAutoPartsServices.ServiceConfiguracion.JwtEnum;
 import com.ShopAutoPartsServices.Util.BuildEnviaCorreo;
 
 @SpringBootApplication
@@ -46,19 +48,19 @@ import com.ShopAutoPartsServices.Util.BuildEnviaCorreo;
 public class CorreoJobsOnlineController {
 	Logger logger = LoggerFactory.getLogger(ProductoController.class);
 	@Autowired
-	CorreoJobsService correoJobsService;
+	UtilService utilService;
 	@Autowired
 	CorreoConfiguracion correoConfiguracion;
 	@Autowired
 	Empresa empresa;
-	
+
 	@PostMapping(value = "/obtenerCorreoJobs", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CorreoJobsResponse> obtenerCorreoJobs(@RequestBody CorreoJobsOnline correoJobsOnline) {
 		ResponseEntity<CorreoJobsResponse> responseEntity = null;
 		CorreoJobsResponse correoJobsResponse = new CorreoJobsResponse();
 		List<String> error = new ArrayList<String>();
 		try {
-			correoJobsResponse.setLista(correoJobsService.obtenerListaCorreoJobs(correoJobsOnline));
+			correoJobsResponse.setLista(utilService.obtenerListaCorreoJobs(correoJobsOnline));
 			correoJobsResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
 			responseEntity = new ResponseEntity<CorreoJobsResponse>(correoJobsResponse, HttpStatus.OK);
 		} catch (Exception e) {
@@ -78,8 +80,8 @@ public class CorreoJobsOnlineController {
 		List<String> error = new ArrayList<String>();
 
 		try {
-			correoJobsService.registrarCorreo(correoJobsOnline);
-			//logger.info(correoJobsOnline.toString());
+			utilService.registrarCorreo(correoJobsOnline);
+			// logger.info(correoJobsOnline.toString());
 			correoJobsOnline.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
 			responseEntity = new ResponseEntity<CorreoJobsOnline>(correoJobsOnline, HttpStatus.OK);
 		} catch (Exception e) {
@@ -93,6 +95,68 @@ public class CorreoJobsOnlineController {
 		return responseEntity;
 	}
 
+	@PostMapping(value = "/saveUpdateMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MenuOnlineResponse> saveUpdateMenu(@RequestBody MenuOnline menuOnline) {
+		ResponseEntity<MenuOnlineResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();
+		MenuOnlineResponse menuOnlineResponse = new MenuOnlineResponse();
+
+		/*
+		 * logger.info(String.join(",", menuOnline.getVchrPalabraClave()));
+		 * 
+		 * String[] t = (String.join(",", menuOnline.getVchrPalabraClave())).split(",");
+		 * for (int i = 0; i < t.length; i++) { logger.info(t[i]); }
+		 */
+		if (menuOnline.getVchrCodigo() != null) {
+			if (menuOnline.getVchrCodigo().lastIndexOf("_") == -1) {
+				menuOnline.setNumSecuencia(0);
+			} else {
+				menuOnline.setNumSecuencia(Integer.parseInt(menuOnline.getVchrCodigo().substring(
+						menuOnline.getVchrCodigo().lastIndexOf("_") + 1, menuOnline.getVchrCodigo().length())));
+			}
+		}
+		logger.info(menuOnline.toString());
+		try {
+			MenuOnline newMenuOnline = utilService.saveUpdateMenu(menuOnline);
+			menuOnlineResponse.setMenuOnline(newMenuOnline);
+			if (newMenuOnline.getStatus().equalsIgnoreCase("OK")) {
+				// logger.info(direccion.toString());
+				menuOnlineResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
+				responseEntity = new ResponseEntity<MenuOnlineResponse>(menuOnlineResponse, HttpStatus.OK);
+			} else {
+				error.add(newMenuOnline.getStatus());
+				menuOnlineResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
+				responseEntity = new ResponseEntity<MenuOnlineResponse>(menuOnlineResponse, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			menuOnlineResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
+			menuOnlineResponse.getResponse().getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<MenuOnlineResponse>(menuOnlineResponse, HttpStatus.OK);
+		}
+		return responseEntity;
+	}
+
+	@PostMapping(value = "/listaMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MenuOnlineResponse> getListaMenu() {
+		ResponseEntity<MenuOnlineResponse> responseEntity = null;
+		List<String> error = new ArrayList<String>();
+		MenuOnlineResponse menuOnlineResponse = new MenuOnlineResponse();
+		try {
+			menuOnlineResponse.setListaMenu(utilService.obtenerListaMenu());
+			menuOnlineResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_OK).setError(error);
+			responseEntity = new ResponseEntity<MenuOnlineResponse>(menuOnlineResponse, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			menuOnlineResponse.getResponse().setStatus(SUCCESS_SERVER.SUCCES_SERVER_INFO).setError(error);
+			menuOnlineResponse.getResponse().getError().add(e.getMessage());
+			responseEntity = new ResponseEntity<MenuOnlineResponse>(menuOnlineResponse, HttpStatus.OK);
+		}
+		return responseEntity;
+	}
+
 	@Scheduled(cron = "${shop.mail.smtp.to.registro.scheduled}")
 	public void scheduledAvisoRegistroTipoCambio() {
 		/*
@@ -100,20 +164,21 @@ public class CorreoJobsOnlineController {
 		 * dia de siguiente
 		 */
 		try {
-			boolean _valida = correoJobsService.validarScheduledCorrreo(FilterValidacionGenerico.SCHEDULED_ALERTA_TIPO_CAMBIO.toString());
+			boolean _valida = utilService
+					.validarScheduledCorrreo(FilterValidacionGenerico.SCHEDULED_ALERTA_TIPO_CAMBIO.toString());
 			if (_valida) {
-				
-				BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion,empresa);
+
+				BuildEnviaCorreo buildEnviaCorreo = new BuildEnviaCorreo(correoConfiguracion, empresa);
 				CorreoJobsOnline correoJobs = new CorreoJobsOnline();
 				correoJobs.setFilterCorreo(FilterCorreo.FILTER_TIPO_CAMBIO_REGISTRO);
-				List<CorreoJobsOnline> lista = correoJobsService.obtenerListaCorreoJobs(correoJobs);
+				List<CorreoJobsOnline> lista = utilService.obtenerListaCorreoJobs(correoJobs);
 				if (lista.size() >= 1) {
 					String asuntoOc = "Alerta de registro del tipo de cambio";
 					CorreoRequest correoRequest = new CorreoRequest();
 					correoRequest.setListaCorreo(lista);
 					boolean correoOcStatus = buildEnviaCorreo.buildCorreoSSL(correoRequest,
 							HTML_ALERTA_TIPO_CAMBIO_REGISTRO(), asuntoOc, AccountsEmail.Compras, null);
-					logger.info("Scheduled de alerta de tipo de cambio finalizado:"+correoOcStatus);
+					logger.info("Scheduled de alerta de tipo de cambio finalizado:" + correoOcStatus);
 				}
 			}
 		} catch (Exception e) {

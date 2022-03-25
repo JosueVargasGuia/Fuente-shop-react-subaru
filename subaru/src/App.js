@@ -66,7 +66,9 @@ import { ProductoOutlet } from "./producto/productoOutlet";
 import OutletCargaProducto from "./loginAdmin/producto/outletCargaProducto";
 import ListadoProductoOutlet from "./loginAdmin/producto/listadoProductoOutlet";
 import TestAuto from "./loginAdmin/testAuto";
-import { _IndentificadorMenu } from "./service/EnumMenu";
+import MenuPersonalizado from "./loginAdmin/menu/menuPersonalizado";
+import MenuPersonalizado2 from "./loginAdmin/menu/menuPersonalizado2";
+ 
 //import $ from "jquery"; $( "#btn" ).click();
 let actionType = {
   SELECT_MARCAS: "SELECT_MARCAS",
@@ -499,6 +501,20 @@ function App() {
               <RegistrarUsuario
                 numCodigoCliente={state.usuario.numCodigoCliente}
               ></RegistrarUsuario>
+            </div>
+          </Route>
+          <Route path="/menu">
+            <div className="container">
+              <MenuPersonalizado
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              ></MenuPersonalizado>
+            </div>
+          </Route>
+          <Route path="/menu2">
+            <div className="container">
+              <MenuPersonalizado2
+                numCodigoCliente={state.usuario.numCodigoCliente}
+              ></MenuPersonalizado2>
             </div>
           </Route>
           <Route path="/listaCorreoJobs">

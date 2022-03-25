@@ -7,6 +7,7 @@ const _CodigoGrupo={
   Accesorio_LyfeStyle:"Accesorio_LyfeStyle",
   LifeStyle:"LifeStyle",
   Personalizado:"Personalizado",
+  default:"default"
   
 }
  
@@ -432,8 +433,8 @@ const listaMenu = [
     descripcion: "Carga",
     srcimg: "/marcas/subaru/accesorios/A1.png",
     identificador: _IndentificadorMenu.Accesorios_1,
-    subFamilia: ["113A1"],
-    query: ["Organizador"],
+    subFamilia: ["113A1","113A1"],
+    query: ["Organizador","Organizador"],
     codigoGrupo:  _CodigoGrupo.Accesorios,
     display: 0,
     select:0,

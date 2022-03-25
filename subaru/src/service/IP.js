@@ -55,6 +55,8 @@ const URL = {
   LISTA_PRODUCTO_OUTLET:"/productoImagen/listaProductosOutlet",/*Privado Administrador */
   SAVE_UPDATE_PRODUCTO_OUTLET:"/productoImagen/saveUpdateProductoOutlet",/*Privado Administrador */
   UPDATE_PRODUCTO_OUTLET:"/productoImagen/updateProductoOutlet",/*Privado Administrador */
+  UPDATE_SAVE_MENU:"/correo/saveUpdateMenu",/*Privado Administrador */
+  OBTENER_MENU:"/correo/listaMenu",/*Privado Administrador */
   
   };
 

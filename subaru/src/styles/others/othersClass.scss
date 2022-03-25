@@ -1404,6 +1404,15 @@
         margin: 0.5em;
         display: flex;
         justify-content: flex-end;
+        a {
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--color-font-default);
+            &:hover {
+                color: var(--color-font-hover);
+                text-decoration: none;
+            }
+        }
     }
     .div-table {
         width: 98%;

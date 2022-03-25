@@ -157,6 +157,18 @@ export default function DashboardAdmin(props) {
               <span>Productos OutLet</span>
             </div>
           </Link>
+          <Link
+            to={"/menu"}
+            className="dashboard-card"
+          >
+            <div>
+              <i
+                className="fa fa-tags dashboard-info"
+                aria-hidden="true"
+              ></i>
+              <span>Reporte de Ventas</span>
+            </div>
+          </Link>
         </div>
         : <>
           <div className="dashboard-content"><div className="dashboard-content">

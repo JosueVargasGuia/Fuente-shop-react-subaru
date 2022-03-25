@@ -691,17 +691,17 @@ public class ClienteAuthorizationController {
 
 
 
-
-	 
+ 
+	
 	@PostConstruct
 	public void load() {
 		System.out.println("#################################HTML_CONFIRMACION_CLIENTE############################");
-		System.out.println(HTML_CONFIRMACION_CLIENTE("Josue", "josue.vargas@eanet.pe"));
-		System.out.println("#################################HTML_CONFIRMACION_CAMBIO_CONTRASEÑA############################");
-		System.out.println(HTML_CONFIRMACION_CAMBIO_CONTRASEÑA("Josue"));
+	 System.out.println(HTML_CONFIRMACION_CLIENTE("Josue", "josue.vargas@eanet.pe"));
+	
 		System.out.println("#################################HTML_PETICION_CAMBIO_CONTRASEÑA############################");
 		System.out.println(HTML_PETICION_CAMBIO_CONTRASEÑA("Josue", "tokeenn"));
-		
+		System.out.println("#################################HTML_CONFIRMACION_CAMBIO_CONTRASEÑA############################");
+		 System.out.println(HTML_CONFIRMACION_CAMBIO_CONTRASEÑA("Josue"));
 		
 	}*/
 	
@@ -721,13 +721,13 @@ public class ClienteAuthorizationController {
 				+ "        <div style='padding: 0.5em; padding-left: 1.5em; padding-right:  1.5em ;font-weight:  bold;  '>Hola "
 				+ nombrecompleto + "</div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 1.5em; padding-right:  1.5em ;'>Has creado una cuenta de cliente en  "
-				+ empresa.getAlias() + ". </div>\r\n"
+				+"<a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()+ "</a></div> "
 				+ "        <div style=' padding: 0px;height: 2px;background: #a29e9e;margin-bottom: 0.5em'></div>"				
-				+ "        <div style='margin-left: 1.5em;margin-right: 1.5em;padding: 0.5em; padding-left: 1.5em; padding-right:  1.5em ;border: solid 1px #a29e9e;'>\r\n"
+				+ "        <div style='margin-left: 1.5em;margin-right: 1.5em;padding: 0.5em; padding-left: 1.5em; padding-right:  1.5em ;'>\r\n"
 				+ "          Este es tu usuario de acceso:\r\n" + "            <br></br>\r\n"
 				+ "            <span style='font-weight: bold;'>Dirección de correo electrónico:</span> <span style='color:#25B9D7;font-weight: bold;'>"
 				+ correo + "</span>\r\n" + "        </div>\r\n" + "        <br/>\r\n"
-				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;'>Consejos Importantes de Seguridad: </div>\r\n"
+				+ "        <div style='padding: 0.5em; padding-left: 1.5em; padding-right:  2.5em ;font-weight: bold;'>Consejos Importantes de Seguridad: </div>\r\n"
 				+ "        <div style='margin-left: 1.5em;margin-right: 1.5em;padding: 0.5em;padding-left: 0.5em;padding-right: 0.5em;border: solid 1px #a29e9e;'>\r\n"
 				+ "            <ul style=' list-style: decimal;font-weight:bold;padding-inline-start: 33px '>\r\n" + "                <li>\r\n"
 				+ "                    <p style='font-weight: normal;'>Mantenga los datos de tu cuenta en un lugar seguro.</p>\r\n"
@@ -738,8 +738,8 @@ public class ClienteAuthorizationController {
 				+ "                </li>\r\n" + "                <li>\r\n"
 				+ "                    <p style='font-weight: normal;'>Si sospecha que alguien está utilizando ilegalmente tu cuenta, avísenos inmediatamente.</p>\r\n"
 				+ "                </li>\r\n" + "            </ul>\r\n" + "        </div>\r\n"
-				+ "        <div style='padding: 0.5em; padding-left: 2.5em;font-weight: normal;text-align: justify;'>\r\n"
-				+ "            Ahora ya puedes realizar compras en "+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()+ "</a>\r\n"  + "        </div>\r\n"
+				+ "        <div style='padding: 0.5em; padding-left: 1.5em;font-weight: normal;text-align: justify;'>\r\n"
+				+ "            Ahora ya puedes realizar compras en "+ "            <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()+ "</a> "  + "        </div>\r\n"
 				+ " <div style='display: flex;flex-direction: row; justify-content: flex-end;padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7;"
 				+ " ' "			 
 				+ "  > "
@@ -765,7 +765,7 @@ public class ClienteAuthorizationController {
 				  
 				+ "        <div style='margin-left: 1.5em;margin-right: 1.5em;padding: 1em; text-align: justify;'>\r\n"
 				+ "            Ha solicitado restablecer tus datos de inicio de sesión en la tienda e-commerce de <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()+ "</a>" 
-				+ ".<br/> Ten en cuenta que esta acción cambiará tu contraseña actual. Para confirmar esta acción, utiliza el siguiente enlace:\r\n"
+				+ "<br/> Ten en cuenta que esta acción cambiará tu contraseña actual. Para confirmar esta acción, utiliza el siguiente enlace:\r\n"
 				+ "             <br/> <a href='" + tokenUrl + "' style='color: #25B9D7; word-wrap: break-word;'>"
 				+ tokenUrl + "</a>\r\n" + "        </div>\r\n" + "        <br></br>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;'>Si no has solicitado esta solicitud, ignore este correo electrónico.</div>\r\n"
@@ -796,7 +796,7 @@ public class ClienteAuthorizationController {
 				+ "' style='width: 180px;height: auto;'></img>\r\n" + "            </a>\r\n" + "        </div>\r\n"
 				+ "        <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight:  bold;  '>Hola "
 				+ nombrecompleto + "</div>\r\n"
-				+ "        <div style='padding: 0.5em;font-weight: normal;text-align: center;'>\r\n"
+				+ "        <div style='font-weight: normal;padding: 0.5em;padding-left: 2.5em;'>\r\n"
 				+ "            Su contraseña ha sido actualizada correctamente en " + " <a href='" + empresa.getWeburl() + "' style='color: #25B9D7;'>" + empresa.getAlias()+ "</a> " + "        </div>\r\n"
 				+ " <div style='padding: 0.5em; padding-left: 2.5em; padding-right:  2.5em ;font-weight: bold;text-align: center;color:#25B9D7;"
 				+ " display: flex;flex-direction: row; justify-content: flex-end;\r\n"			 

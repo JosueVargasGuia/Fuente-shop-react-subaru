@@ -31,6 +31,7 @@ public class UrlAccess {
 		administrador.add("/service/correo/registrarCorreoJobs");
 		administrador.add("/service/cotizacion/reporteCotizacion");
 		administrador.add("/service/cotizacion/obtenerReporteToPdf"); 
+		administrador.add("/service/correo/saveUpdateMenu"); 
 		
 		
 	}

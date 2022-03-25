@@ -182,7 +182,23 @@ async function listaProductoFindCodByDesc(body) {
   );
   return response;
 }
+async function saveUpdateMenu(body) {     
+  const response = await tokenFetchService(
+    IP(URL.UPDATE_SAVE_MENU),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 
+async function obtenerMenus(body) {
+  const response = await tokenFetchService(
+    IP(URL.OBTENER_MENU),
+    body,
+    METHOD.POST
+  );
+  return response;
+}
 export {
   findProductos,
   obtenerTipoCambio,
@@ -206,5 +222,7 @@ export {
   saveUpdateProductoOutlet,
   updateProductoOutletRow,
   listaProductoFindCodByDesc,
-  findProductosFilterInput
+  findProductosFilterInput,
+  saveUpdateMenu,
+  obtenerMenus
 };
