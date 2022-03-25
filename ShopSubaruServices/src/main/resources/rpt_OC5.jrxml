@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-08-31T19:27:33 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_PagoCuenta" printOrder="Horizontal" pageWidth="1090" pageHeight="780" orientation="Landscape" columnWidth="1050" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="93b51a2b-91b5-47ea-864e-4693797d2aea">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="cnxOracle"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -13,9 +14,9 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT NUMFRANQUICIA ITEM , VCHTIPODOCUMENTO CODPRO, VCHMENSAJE NOMBRE,NUMDSCTOPCLUB CANT, 
-       NUMNETO COSTO, NUMDSCTO SUBTOTAL, VCHCODIGOOS CODIGOOC, 
-       VCHDOCUMENTOCLIENTE CODPROVEEDOR, VCHNOMBRECLIENTE NOMPROVEEDOR, VCHTELEFONOS TELEFONO, DTEFECHA FECHA, 
+		<![CDATA[SELECT NUMFRANQUICIA ITEM , VCHTIPODOCUMENTO CODPRO, VCHMENSAJE NOMBRE,NUMDSCTOPCLUB CANT,
+       NUMNETO COSTO, NUMDSCTO SUBTOTAL, VCHCODIGOOS CODIGOOC,
+       VCHDOCUMENTOCLIENTE CODPROVEEDOR, VCHNOMBRECLIENTE NOMPROVEEDOR, VCHTELEFONOS TELEFONO, DTEFECHA FECHA,
        VCHOBSERVACION OBS,VCHTEXTO DESCMONEDA,NUMTIPOCAMBIO TIPCAMB, VCHSELLOFECHA FIRMA,
        NUMSUBTOTAL SUBTOTAL2, NUMIGV IGV, NUMTOTAL TOTAL, VCHASEGURADO DESPACHAR, VCHTITULO PREPARADOPOR,
        VCHTEXTODSCTO TEXTO, VCHOMITEDATOS NROPEDIDO, VCHVEHICULO TXTOS, VCHCONTACTO TXTCLIENTE, VCHVIN TXTPLACA,
@@ -333,7 +334,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[ Código]]></text>
 			</staticText>
@@ -346,7 +347,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Cant. Req.]]></text>
 			</staticText>
@@ -359,7 +360,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[ Ubicacion]]></text>
 			</staticText>
@@ -372,7 +373,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[ Item]]></text>
 			</staticText>
@@ -385,7 +386,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[ Reemplazo]]></text>
 			</staticText>
@@ -398,7 +399,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[ Descripción]]></text>
 			</staticText>
@@ -411,7 +412,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[SubTotal]]></text>
 			</staticText>
@@ -424,7 +425,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Costo]]></text>
 			</staticText>
@@ -437,7 +438,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[O/S]]></text>
 			</staticText>
@@ -450,7 +451,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Descripcion de Cliente]]></text>
 			</staticText>
@@ -463,7 +464,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Placa]]></text>
 			</staticText>
@@ -480,7 +481,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -493,7 +494,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -506,7 +507,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -519,7 +520,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
 			</textField>
@@ -532,7 +533,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CANT}]]></textFieldExpression>
 			</textField>
@@ -545,7 +546,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -571,7 +572,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -584,7 +585,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CODPRO}]]></textFieldExpression>
 			</textField>
@@ -597,7 +598,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ITEM}]]></textFieldExpression>
 			</textField>
@@ -610,7 +611,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -623,7 +624,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -636,7 +637,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -649,7 +650,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{COSTO}]]></textFieldExpression>
 			</textField>
@@ -662,7 +663,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font size="11"/>
+					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SUBTOTAL}]]></textFieldExpression>
 			</textField>
@@ -675,7 +676,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -688,7 +689,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -701,7 +702,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="SansSerif" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
@@ -713,6 +714,9 @@ FROM TEMPCABECERA]]>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{TXTOS}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -723,6 +727,9 @@ FROM TEMPCABECERA]]>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{TXTCLIENTE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -733,6 +740,9 @@ FROM TEMPCABECERA]]>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{TXTPLACA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -744,7 +754,7 @@ FROM TEMPCABECERA]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="10"/>
+					<font fontName="SansSerif" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TXTREEMPLAZO}]]></textFieldExpression>
 			</textField>

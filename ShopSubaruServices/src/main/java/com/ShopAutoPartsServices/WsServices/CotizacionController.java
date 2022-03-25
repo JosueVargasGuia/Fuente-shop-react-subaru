@@ -243,6 +243,7 @@ public class CotizacionController {
 			params.setNumCodigoCotizacionOnline(cotizacionOnline.getNumCodigoCotizacionOnline());
 			try {
 				MetodoEnvioRequets metodoEnvioRequets = new MetodoEnvioRequets();
+				/*Reseteo de envio a almacen*/
 				metodoEnvioRequets.setMetodoEnvio(MetodoEnvio.EnvioRegular);
 				metodoEnvioRequets.setNumCodigoCotizacionOnline(params.getNumCodigoCotizacionOnline());
 				metodoEnvioRequets.setNumCodigoDireccion(0);

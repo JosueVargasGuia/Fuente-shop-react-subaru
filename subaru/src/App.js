@@ -350,7 +350,7 @@ function App() {
             </div>
           </Route>
           <Route path={"/shop/:descripcion/filter/:query"} exact={true}>
-            <div className="container">
+            <div className="container"> 
               <ProductoFilter
                 moneda={state.moneda}
                 handleSelectMarcaChange={handleSelectMarcaChange}

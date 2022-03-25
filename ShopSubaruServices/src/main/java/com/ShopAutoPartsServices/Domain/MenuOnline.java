@@ -10,6 +10,17 @@ public class MenuOnline {
 	CRUD crud;
 	int numSecuencia;
 	String  status;
+	
+	/*
+	descripcion: "Interior",
+    srcimg: "/marcas/subaru/accesorios/A9.png",
+    identificador: _IndentificadorMenu.Accesorios_9,
+    subFamilia: ["113A1"],
+    query: ["pedal"],
+    codigoGrupo: _CodigoGrupo.Accesorios,
+    display: 0,
+    select:0, 
+	 */
 	public String getVchrCodigo() {
 		return vchrCodigo;
 	}
