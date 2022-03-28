@@ -118,7 +118,7 @@ public class IpnController {
 	}
 	/*
 	 * JOB: Envio de correo de ordenes de compra consolidado. Este metodo esta desactivado 
-	 * por requerimientos 
+	 * por requerimiento 
 	 */
 	// @Scheduled(cron = "${shop.mail.smtp.to.oc.scheduled}")
 	public void scheduledMailOcConsolidado() {	
@@ -513,7 +513,7 @@ public class IpnController {
 		html.append("</body>" + "</html>");
 		return html.toString();
 	}
-
+ 
 	public String HTML_FE_(ClienteFactura clienteFactura, OcEmail ocEmail) throws Exception {
 		StringBuilder html = new StringBuilder();
 		html.append("<!DOCTYPE html>" + "<html lang='en'>" + "<body>");

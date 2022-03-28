@@ -653,6 +653,7 @@ export function CarritoPayment(props) {
             <button
               className="btn btn-primary"
               onClick={() => handleEnventControlMenuNext()}
+              disabled={state.numCodigoDireccion===0?true:false}
             >
               Continuar
             </button>
@@ -803,6 +804,7 @@ export function CarritoPayment(props) {
                       statusMetodoEnvio.DEFAULT ||
                       state.statusMetodoEnvio.status ===
                         statusMetodoEnvio.ACTUALIZADO)
+                        &&  state.numCodigoDireccion>=1  
                   )
                 }
                 onClick={() => handleEnventControlMenuNext()}

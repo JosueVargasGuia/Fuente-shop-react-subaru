@@ -247,7 +247,7 @@ export default function TusCompras() {
         <div className="form-body-accion">
           <button
             type="button"
-            onClick={(e) => loadTusCompras()}
+            onClick={(e) => loadTusCompras(1)}
             className=" btn btn-primary fa fa-refresh"
           >
             {" "}

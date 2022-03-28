@@ -48,7 +48,7 @@ export default function TusCompras(props) {
                             <td style={{ width: '10%' }}>{detelle.producto.chrCodigoProducto}</td>
                             <td style={{ minWidth: '380px' }}>{detelle.producto.vchDescripcion}</td>
                             <td style={{ width: '12%', minWidth: '120px', textAlign: 'center' }} title="Cantidad">{detelle.numCantidad}</td>
-                            <td style={{ width: '12%', minWidth: '120px', textAlign: 'center' }} title="Precio venta">{parseFloat(detelle.numTotalDisplay).toFixed(2)}</td>
+                            <td style={{ width: '12%', minWidth: '120px', textAlign: 'center' }} title="Precio venta">{ (detelle.numTotalDisplay)}</td>
 
                         </tr>
                     );
