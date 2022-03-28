@@ -295,7 +295,7 @@ const Empresa = {
   razonSocial:
     "CORPORACION DE EMPRESAS AUTOMOTRICES SOCIEDAD ANONIMA CERRADA - EA CORP S.A.C",
   nombreComercial: "Ea Corp. Sac",
-  urlTienda: "https://subaruparts.eanet.pe/subaruparts/shop",
+  urlTienda: "https://subaruparts.eanet.pe/shop",
   direccion: "Av. Republica de Panama Nro. 4259",
   correo: "repuestos.subaru@eacorp.pe",
   abreviaturaSucursal: "RP4259",

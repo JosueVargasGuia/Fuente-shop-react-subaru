@@ -104,7 +104,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 					cs.setString(9, productoRequets.getFilterOrder().toString());
 					cs.setString(10, builderQuery.toString());
 
-					logger.info("Size : " + productos.size() + " I_CHRCODIGOFAMILIA:"
+					/*logger.info("Size : " + productos.size() + " I_CHRCODIGOFAMILIA:"
 							+ (productoRequets.getChrCodigoFamilia() != null ? productoRequets.getChrCodigoFamilia()
 									: null)
 							+ " I_VCHDESCRIPCION:"
@@ -117,7 +117,7 @@ public class ProductoServiceRepositoryImpl implements ProductoServiceRepository 
 							+ productoRequets.getFilterOrder().toString()
 
 							+ " I_FILTERTYPELISTA:" + builderQuery.toString() + " I_FILTERSUBFAMILIA_LIST:"
-							+ builder.toString());
+							+ builder.toString());*/
 
 					cs.executeQuery();
 					ResultSet rs = (ResultSet) cs.getObject(1);

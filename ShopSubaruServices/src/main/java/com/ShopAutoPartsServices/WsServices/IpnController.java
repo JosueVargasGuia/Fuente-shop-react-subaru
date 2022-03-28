@@ -76,6 +76,11 @@ public class IpnController {
 	@Autowired
 	UtilService utilService;
 
+	/* IPN,Metodo que se encarga de recepcionar el envio del formulario de estado de la trasaccion 
+	 * desde la pasarela de pago. En este metodo realizamos el cambio del estado de una cotizacion
+	 * online dependiendo del orderStatus. 
+	 * https://docs.lyra.com/es/rest/V4.0/api/kb/ipn_usage.html
+	 * */
 	@PostMapping(value = "/confirmar")
 	public ResponseEntity<String> confirmacionIziPay(HttpServletRequest httpServletRequest) {
 		IpnRequets ipnRequets = new IpnRequets();
@@ -111,29 +116,12 @@ public class IpnController {
 		}
 		return new ResponseEntity<String>("OK:Recepcion de estado:"+ipnRequets.getStatusAction()+" Status:"+ipnRequets.getStatus(), HttpStatus.OK);
 	}
-
 	/*
-	 * INSERT INTO tipocambio(numcodigotipocambio,dtecreacion,numcodigomoneda,
-	 * numtipocambioadmcompra,numtipocambioadmventa,chrestado,
-	 * numcodigousuariocreacion,numcodigousuariomodificacion,dtemodificacion,
-	 * numtipocambiocontcompra,numtipocambiocontventa)
-	 * VALUES(ID_TIPOCAMBIO.nextval,TO_CHAR(sysdate,
-	 * 'DD/MM/YY'),1,4.05,4.05,1,198,NULL,NULL,3.902,3.913)
-	 */
-	/*
-	 * https://stackoverflow.com/questions/67179227/spring-boot-plugin-docker-oci-
-	 * image-and-jasperreports RUN apt-get update \ && apt-get install -y
-	 * --no-install-recommends \ libfreetype6 \ fontconfig \ && rm -rf
-	 * /var/lib/apt/lists/*
-	 * 
-	 * 
+	 * JOB: Envio de correo de ordenes de compra consolidado. Este metodo esta desactivado 
+	 * por requerimientos 
 	 */
 	// @Scheduled(cron = "${shop.mail.smtp.to.oc.scheduled}")
-	public void scheduledMailOcConsolidado() {
-		/*
-		 * JOB: Envio de correo de ordenes de compra consolidado
-		 * 
-		 */
+	public void scheduledMailOcConsolidado() {	
 
 		/* Ejecucion de Job de envio de Ordenes de compra consolidado */
 		ScheduledProceso scheduledProceso = new ScheduledProceso();
@@ -203,7 +191,12 @@ public class IpnController {
 	 * 
 	 * } catch (Exception e) { e.printStackTrace(); } }
 	 */
-
+	/*			 Jobs de generacion de comprobantes
+	 *Este proceso se ejecuta cada Minuto,es el encargado de obtener la lista 
+	 *de cotizacion que se encuentran en estado de de cotizacion confirmado y
+	 *statusaction facturar y factura Cancelada, este proceso genera la cotizacion,
+	 *factura/boleta, guia o OC mediante un SP
+	 **/
 	@Scheduled(fixedRateString = "${izipay.ipn.scheduled}")
 	public void scheduledConfirmaCotizacion() {	 
 		boolean correoStatusTipoCambioTomado = false;
