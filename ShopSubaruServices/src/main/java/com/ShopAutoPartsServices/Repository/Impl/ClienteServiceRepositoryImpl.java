@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import oracle.jdbc.OracleType;
 import oracle.jdbc.OracleTypes;
  
 
@@ -103,8 +104,11 @@ public class ClienteServiceRepositoryImpl implements ClienteServiceRepository {
 					cs.setString(19, clienteUsuario.getChrRol().getContex());
 					cs.setString(20, clienteUsuario.getFlgActualizaRol()+"");
 					cs.registerOutParameter(21, OracleTypes.INTEGER);
+					cs.setString(22, clienteUsuario.getCrud().toString());
+					cs.registerOutParameter(23, OracleType.NVARCHAR);
 					cs.execute();
 					clienteUsuario.getCliente().setNumCodigoCliente(cs.getInt(21));
+					clienteUsuario.setStatus(cs.getString(23));
 					return clienteUsuario;
 				}
 			};
@@ -112,7 +116,7 @@ public class ClienteServiceRepositoryImpl implements ClienteServiceRepository {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
-		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_CLIENTE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+		String sql = "{call " + PKG_TIENDA + ".REGISTRAR_CLIENTE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		return jdbcTemplate.execute(sql, callback);
 	}
 

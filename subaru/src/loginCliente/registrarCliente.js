@@ -951,7 +951,7 @@ export default function RegistrarCliente(props) {
     });
 
     const valError = await handleValidarForm(state);
-    console.log(valError.listaError)
+     
     if (valError.isValido) {
       let rowDireccion = [];
       for (let i = 0; i < state.lstDireccionData.length; i++) {
@@ -1034,6 +1034,7 @@ export default function RegistrarCliente(props) {
                 ? CRUD.INSERT.estado
                 : CRUD.UPDATE.estado,
           });
+          
         }
       } else {
         dispatch({
@@ -1045,6 +1046,16 @@ export default function RegistrarCliente(props) {
               : CRUD.UPDATE.estado,
         });
       }
+
+      dispatch({
+        type: actionType.ERROR_DISPLAY,
+        error: valError,
+        estado:
+          state.accion === CRUD.INSERT
+            ? CRUD.INSERT.estado
+            : CRUD.UPDATE.estado,
+          listaError:[]
+      });
     } else {
       dispatch({
         type: actionType.ERROR_DISPLAY,

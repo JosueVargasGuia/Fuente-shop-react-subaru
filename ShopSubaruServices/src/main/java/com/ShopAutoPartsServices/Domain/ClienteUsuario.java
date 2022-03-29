@@ -27,6 +27,7 @@ public class ClienteUsuario {
 	boolean flgDireccionDefault = false;
 	String dteModificacion;
 	int totalRegistros;
+	String status;
 	public int getNumCodigoClienteUsuario() {
 		return numCodigoClienteUsuario;
 	}
@@ -196,6 +197,14 @@ public class ClienteUsuario {
 	public ClienteUsuario setFlgActualizaRol(int flgActualizaRol) {
 		this.flgActualizaRol = flgActualizaRol;
 		return this;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override

@@ -163,34 +163,19 @@ public class IpnController {
 		}
 
 	}
+	
+	    
+	
 	/*
-	 * public void archivo() { try {
-	 * 
-	 * BeanFacturacion fac = new BeanFacturacion(); fac.setCodigo("B002-00000021");
-	 * NUMFACTURAS fac.setCodigoOrigenFactura(2); NUMCODIGOORIGENFACTURA probar cada
-	 * uno de los SP ScheduledProceso scheduledProcesoStatus = new
-	 * ScheduledProceso(); scheduledProcesoStatus.setNumTipoCambio(new
-	 * BigDecimal(3.90)); scheduledProcesoStatus.setIcbFec(new BigDecimal(3.90));
-	 * logger.info("Codigo:" + fac.getCodigo().trim() + " codigoOrigenFactura:" +
-	 * fac.getCodigoOrigenFactura()); BeanFacturacion beanFactura =
-	 * facturacionService.ObtenerFacturaElectronicaCabecera(fac,
-	 * scheduledProcesoStatus); ArrayList<BeanFacturacion> facturaDetalle =
-	 * facturacionService.ListarFacturaElectronicaDetalle(fac); BeanEmpresa
-	 * empresaFe = facturacionService
-	 * .obtenerEmpresa(Integer.parseInt(Constantes.TIPE_PAGE_APLICATIVO));
-	 * Generacion de FE, archivo .txt
-	 * Archivo.interfazFacturaElectronicaV3(empresaFe, beanFactura, facturaDetalle);
-	 * } catch (Exception e) { e.printStackTrace(); } }
-	 * 
 	 * public void archivoExcel() { try {
 	 * 
-	 * 
 	 * ScheduledProceso scheduledProcesoStatus = new ScheduledProceso();
-	 * scheduledProcesoStatus.setChrCodigoOc("OCO202239"); File file =
+	 * scheduledProcesoStatus.setChrCodigoOc("OCR202220 "); File file =
 	 * facturacionService.obtenerFileReporteOcOnline(scheduledProcesoStatus);
 	 * 
 	 * } catch (Exception e) { e.printStackTrace(); } }
 	 */
+	 
 	/*			 Jobs de generacion de comprobantes
 	 *Este proceso se ejecuta cada Minuto,es el encargado de obtener la lista 
 	 *de cotizacion que se encuentran en estado de de cotizacion confirmado y

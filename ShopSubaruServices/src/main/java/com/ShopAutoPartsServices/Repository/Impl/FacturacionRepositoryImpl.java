@@ -607,7 +607,7 @@ public class FacturacionRepositoryImpl implements FacturacionRepository {
 
 			String fileName = "OrdenCompra_" + scheduledProceso.getChrCodigoOc();
 			String fileNameRoot = System.getProperty("java.io.tmpdir") + "/" + fileName + ".xls";
-			String rptFileName = "reporteOCOnline.jasper";
+			String rptFileName = "reporteOC_Autorex.jasper";
 
 			@SuppressWarnings("rawtypes")
 			HashMap parametros = new HashMap();
